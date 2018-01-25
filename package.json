@@ -3,11 +3,16 @@
   "version": "1.0.0",
   "description": "Build your own polls, share with your friends, vote in polls created by other users, and view results of any poll.",
   "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rifkegribenes/voting-app.git"
   },
   "bugs": "https://github.com/rifkegribenes/voting-app/issues",
+  "homepage": "https://github.com/rifkegribenes/voting-app#readme",
   "keywords": [
     "MongoDB",
     "Mongoose",
@@ -16,9 +21,6 @@
     "Node",
     "javascript"
   ],
-  "scripts": {
-  "start": "node server.js"
-  },
   "author": "Sarah Schneider",
   "license": "MIT",
   "dependencies": {
