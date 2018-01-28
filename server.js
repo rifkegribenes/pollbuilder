@@ -47,9 +47,13 @@ app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
 // routes ======================================================================
-const apiRoutes     = require('./routes/apiroutes');
-const authRoutes    = require('./routes/authroutes');
-const staticRoutes  = require('./routes/staticroutes');
+const apiRoutes     = require('./app/routes/apiroutes');
+const authRoutes    = require('./app/routes/authroutes');
+const staticRoutes  = require('./app/routes/index');
+
+app.get('/api/hello', (req, res) => {
+  res.send({ express: 'Hello From Express' });
+});
 
 // launch ======================================================================
 var port = process.env.PORT || 8080;

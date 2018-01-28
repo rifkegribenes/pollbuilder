@@ -4,7 +4,7 @@
 
 /* ================================= SETUP ================================= */
 const passport  = require('passport');
-const User      = require('../models/user');
+const User      = require('../models/users');
 const projection = { signupKey: 0, passwordResetKey: 0, hash: 0, salt: 0 };
 
 // (function () {
