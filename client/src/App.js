@@ -1,4 +1,15 @@
 import React, { Component } from 'react';
+import { Switch, Route, BrowserRouter } from 'react-router-dom';
+// import { connect } from 'react-redux';
+// import { bindActionCreators } from 'redux';
+// import PropTypes from 'prop-types';
+
+import Header from './containers/Header';
+import Home from './containers/Home';
+import Login from './containers/Login';
+import Profile from './containers/Profile';
+import Footer from './containers/Footer';
+import NotFound from './containers/NotFound';
 
 class App extends Component {
   state = {
@@ -22,9 +33,21 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <p className="App-intro">{this.state.response}</p>
-      </div>
+      <BrowserRouter>
+        <div className="app">
+          <Header />
+          <main className="main" id="main">
+          <p>{this.state.response}</p>
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route exact path="/profile" component={Profile} />
+              <Route exact path="/login" component={Login} />
+              <Route path="*" component={NotFound} />
+            </Switch>
+          </main>
+          <Footer />
+        </div>
+      </BrowserRouter>
     );
   }
 }
