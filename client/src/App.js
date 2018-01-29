@@ -1,21 +1,21 @@
-import React, { Component } from 'react';
-import { Switch, Route, BrowserRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import { Switch, Route, BrowserRouter } from "react-router-dom";
+import { connect } from "react-redux";
 // import { bindActionCreators } from 'redux';
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-import Header from './containers/Header';
-import Home from './containers/Home';
-import Login from './containers/Login';
-import Profile from './containers/Profile';
-import Footer from './containers/Footer';
-import NotFound from './containers/NotFound';
-import Spinner from './containers/Spinner';
-import ModalSm from './containers/ModalSm';
+import Header from "./containers/Header";
+import Home from "./containers/Home";
+import Login from "./containers/Login";
+import Profile from "./containers/Profile";
+import Footer from "./containers/Footer";
+import NotFound from "./containers/NotFound";
+import Spinner from "./containers/Spinner";
+import ModalSm from "./containers/ModalSm";
 
 class App extends Component {
   state = {
-    response: ''
+    response: ""
   };
 
   componentDidMount() {
@@ -25,7 +25,7 @@ class App extends Component {
   }
 
   callApi = async () => {
-    const response = await fetch('/api/hello');
+    const response = await fetch("/api/hello");
     const body = await response.json();
 
     if (response.status !== 200) throw Error(body.message);
@@ -43,16 +43,14 @@ class App extends Component {
             modalText={this.props.appState.modal.text}
             modalType="modal__info"
             modalTitle={this.props.appState.modal.title}
-            dismiss={
-              () => {
-                this.props.actions.dismissModal();
-              }
-            }
+            dismiss={() => {
+              this.props.actions.dismissModal();
+            }}
           />
           <div className="app">
             <Header />
             <main className="main" id="main">
-            <p>{this.state.response}</p>
+              <p>{this.state.response}... Testing</p>
               <Switch>
                 <Route exact path="/" component={Home} />
                 <Route exact path="/profile" component={Profile} />
@@ -74,14 +72,13 @@ App.propTypes = {
     modal: PropTypes.shape({
       class: PropTypes.string,
       text: PropTypes.string,
-      title: PropTypes.string,
-    }),
-  }).isRequired,
+      title: PropTypes.string
+    })
+  }).isRequired
 };
 
 const mapStateToProps = state => ({
-  appState: state.appState,
+  appState: state.appState
 });
-
 
 export default connect(mapStateToProps)(App);
