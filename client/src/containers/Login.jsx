@@ -1,14 +1,13 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import React from "react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
-import * as Actions from '../store/actions';
-import * as apiActions from '../store/actions/apiActions';
+import * as Actions from "../store/actions";
+import * as apiActions from "../store/actions/apiActions";
 
 class Login extends React.Component {
-
   /* Function handleLogin - Perform basic validation:
   * - username is at least 1 char
   * - password is at least 1 char
@@ -17,22 +16,21 @@ class Login extends React.Component {
   */
   handleLogin() {
     // clear previous errors
-    this.props.actions.setLoginError('');
+    this.props.actions.setLoginError("");
     const email = this.props.login.loginEmail;
     const password = this.props.login.loginPassword;
 
     if (email && password) {
       const body = { email, password };
-      this.props.api.login(body)
-        .then((result) => {
-          if (result.type === 'LOGIN_SUCCESS') {
-              this.props.history.push('/');
-            }
-          });
+      this.props.api.login(body).then(result => {
+        if (result.type === "LOGIN_SUCCESS") {
+          this.props.history.push("/");
+        }
+      });
     } else if (!email) {
-      this.props.actions.setLoginError('Email cannot be blank');
+      this.props.actions.setLoginError("Email cannot be blank");
     } else if (!password) {
-      this.props.actions.setLoginError('Password cannot be blank');
+      this.props.actions.setLoginError("Password cannot be blank");
     }
   }
 
@@ -43,10 +41,10 @@ class Login extends React.Component {
   */
   handleInput(event) {
     switch (event.target.id) {
-      case 'email':
+      case "email":
         this.props.actions.setLoginEmail(event.target.value);
         break;
-      case 'password':
+      case "password":
         this.props.actions.setLoginPwd(event.target.value);
         break;
       default:
@@ -58,7 +56,7 @@ class Login extends React.Component {
   }
 
   render() {
-    const errorClass = this.props.login.errorMsg ? 'error' : 'hidden';
+    const errorClass = this.props.login.errorMsg ? "error" : "hidden";
     return (
       <form className="container form">
         <div className="form__body">
@@ -89,17 +87,58 @@ class Login extends React.Component {
               onChange={event => this.handleInput(event)}
             />
           </div>
-          <div className="form__input-group  form__link-group">
-            <Link className="aria-button form__login-link" to="/register">
-            Create new account</Link>
+          <div className="form__input-group">
+            <div className="form__button-wrap">
+              <button
+                className="form__button pointer"
+                id="btn-login"
+                onClick={() => this.loginLocal()}
+              >
+                Sign In
+              </button>
+            </div>
+          </div>
+          <div className="form__input-group">
+            <Link className="form__login-link" to="/register">
+              Create new account
+            </Link>
+          </div>
+          <div className="form__input-group">
+            <hr className="form__hr" />
+            <div className="form__text">Or log in with&hellip;</div>
+            <div className="form__button-wrap">
+              <button
+                className="form__button form__button--github"
+                id="btn-github"
+                onClick={() => this.loginGithub()}
+              >
+                <span className="sr-only">Github</span>
+              </button>
+              <button
+                className="form__button form__button--facebook"
+                id="btn-facebook"
+                onClick={() => this.loginFacebook()}
+              >
+                <span className="sr-only">Facebook</span>
+              </button>
+              <button
+                className="form__button form__button--twitter"
+                id="btn-twitter"
+                onClick={() => this.loginTwitter()}
+              >
+                <span className="sr-only">form__button--twitter</span>
+              </button>
+              <button
+                className="form__button form__button--google"
+                id="btn-google"
+                onClick={() => this.loginGoogle()}
+              >
+                <span className="sr-only">Google</span>
+              </button>
+            </div>
           </div>
           <div className="form__input-group">
             <div className={errorClass}>{this.props.login.errorMsg}</div>
-          </div>
-          <div className="form__input-group">
-            <div className="form__button-wrap">
-              <button className="form__button pointer" id="btn-login" onClick={() => this.handleLogin()}>Sign In</button>
-            </div>
           </div>
         </div>
       </form>
@@ -108,41 +147,41 @@ class Login extends React.Component {
 }
 
 Login.propTypes = {
-	appState: PropTypes.shape({
-		spinnerClass: PropTypes.string,
+  appState: PropTypes.shape({
+    spinnerClass: PropTypes.string,
     modal: PropTypes.shape({
-    	class: PropTypes.string,
-    	text: PropTypes.string,
-    	title: PropTypes.string,
-    }),
-	}).isRequired,
+      class: PropTypes.string,
+      text: PropTypes.string,
+      title: PropTypes.string
+    })
+  }).isRequired,
   actions: PropTypes.shape({
     setLoginError: PropTypes.func,
     setLoginUser: PropTypes.func,
     setLoginPwd: PropTypes.func,
-    dismissLoginModal: PropTypes.func,
+    dismissLoginModal: PropTypes.func
   }).isRequired,
   api: PropTypes.shape({
-    login: PropTypes.func,
+    login: PropTypes.func
   }).isRequired,
   login: PropTypes.shape({
     loginEmail: PropTypes.string,
     loginPassword: PropTypes.string,
-    errorMsg: PropTypes.string,
+    errorMsg: PropTypes.string
   }).isRequired,
   history: PropTypes.shape({
-    push: PropTypes.func,
-  }).isRequired,
+    push: PropTypes.func
+  }).isRequired
 };
 
 const mapStateToProps = state => ({
   appState: state.appState,
-  login: state.login,
+  login: state.login
 });
 
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(Actions, dispatch),
-  api: bindActionCreators(apiActions, dispatch),
+  api: bindActionCreators(apiActions, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
