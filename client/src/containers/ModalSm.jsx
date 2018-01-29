@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 
 const modalStyles = { overlay: { zIndex: 3, background: 'rgba(0,0,0,.7)' }, content: { background: 'transparent', border: 0 } };
+const app = document.getElementById('app');
 
 const ModalSm = props => (
   <Modal
@@ -13,6 +14,7 @@ const ModalSm = props => (
     isOpen={props.modalClass === 'modal modal__show' || props.modalClass === 'modal__show'}
     onRequestClose={props.dismiss}
     contentLabel={props.modalTitle}
+    appElement={app}
   >
     <div className={`modal ${props.modalClass}`} >
       <div className={`modal__header ${props.modalType}`}>

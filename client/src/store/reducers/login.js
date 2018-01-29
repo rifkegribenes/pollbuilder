@@ -1,4 +1,4 @@
-import { SET_LOGIN_USER, SET_LOGIN_PWD, CLEAR_LOGIN_PWD, SET_LOGIN_ERROR,
+import { SET_LOGIN_EMAIL, SET_LOGIN_PWD, CLEAR_LOGIN_PWD, SET_LOGIN_ERROR,
   DISMISS_LOGIN_MODAL } from '../actions';
 import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE } from '../actions/apiActions';
 
@@ -7,9 +7,11 @@ const INITIAL_STATE = {
   loginEmail: '',
   loginPassword: '',
   errorMsg: '',
-  loginSpinnerClass: 'spinner__hide',
-  loginModalClass: 'modal__hide',
-  loginModalText: '',
+  spinnerClass: 'spinner__hide',
+  modal: {
+    class: 'modal__hide',
+    text: '',
+  }
 };
 
 function login(state = INITIAL_STATE, action) {
@@ -21,7 +23,7 @@ function login(state = INITIAL_STATE, action) {
     *  Payload: Email value from form
     *  Purpose: Connected component handler
     */
-    case SET_LOGIN_USER:
+    case SET_LOGIN_EMAIL:
       return Object.assign({}, state, { loginEmail: action.payload });
 
     /*
@@ -54,7 +56,7 @@ function login(state = INITIAL_STATE, action) {
     *  Purpose: Activate spinner so user knows API request is in progress
     */
     case LOGIN_REQUEST:
-      return Object.assign({}, state, { loginSpinnerClass: 'spinner__show' });
+      return Object.assign({}, state, { spinnerClass: 'spinner__show' });
 
     /*
     *  Called From: <Login />
@@ -67,7 +69,7 @@ function login(state = INITIAL_STATE, action) {
         {},
         state,
         {
-          loginSpinnerClass: 'spinner__hide',
+          spinnerClass: 'spinner__hide',
           loginPassword: '',
         },
       );
@@ -83,7 +85,7 @@ function login(state = INITIAL_STATE, action) {
         {},
         state,
         {
-          loginSpinnerClass: 'spinner__hide',
+          spinnerClass: 'spinner__hide',
           errorMsg: error,
         },
       );
@@ -98,8 +100,10 @@ function login(state = INITIAL_STATE, action) {
         {},
         state,
         {
-          loginModalText: '',
-          loginModalClass: 'modal__hide',
+          modal: {
+            text: '',
+            class: 'modal__hide',
+          },
         },
       );
 
