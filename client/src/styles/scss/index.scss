@@ -41,9 +41,9 @@ body.user-is-tabbing *:focus {
 }
 
 .app {
-  background: -webkit-linear-gradient(to top, $color_aqua, $color_sky);
-  background: linear-gradient(to top, $color_aqua, $color_sky);
-  // background: url(./img/splash_pfl.svg) no-repeat top center fixed;
+  background: #4b6cb7;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to top, #182848, #4b6cb7);
+  background: linear-gradient(to top, #182848, #4b6cb7);
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;

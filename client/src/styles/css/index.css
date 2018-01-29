@@ -6,7 +6,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
   -webkit-appearance: none; }
 
 .form {
-  font-family: "Alegreya Sans", sans-serif;
+  font-family: "Titillium Web", sans-serif;
   flex-direction: column; }
   .form__link-group {
     display: flex;
@@ -26,7 +26,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
   .form__header {
     color: white;
     font-weight: 100;
-    font-family: "Alegreya Sans", sans-serif;
+    font-family: "Titillium Web", sans-serif;
     text-transform: lowercase;
     letter-spacing: 2px;
     font-size: 30px;
@@ -37,7 +37,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
   .form__connection-header {
     color: white;
     font-weight: 100;
-    font-family: "Alegreya Sans", sans-serif;
+    font-family: "Titillium Web", sans-serif;
     text-transform: lowercase;
     letter-spacing: 2px;
     font-size: 28px;
@@ -52,7 +52,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     color: white;
     padding-top: 40px; }
   .form__label--checkbox {
-    font-family: "Alegreya Sans", sans-serif;
+    font-family: "Titillium Web", sans-serif;
     color: #2B2B2B; }
   .form__icon--search {
     color: white;
@@ -192,7 +192,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
         border-radius: 50%;
         box-shadow: 0 0 10px #fcc511 !important; }
     .form__input--radio-label {
-      font-family: "Alegreya Sans", sans-serif;
+      font-family: "Titillium Web", sans-serif;
       color: #545454;
       padding: 0 15px 0 0; }
       @media (min-width: 1600px) {
@@ -200,7 +200,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
           font-size: 1.2em; } }
     .form__input--radio-wrap {
       display: inline-block;
-      font-family: "Alegreya Sans", sans-serif; }
+      font-family: "Titillium Web", sans-serif; }
     .form__input--textarea {
       overflow-y: visible; }
   .form__input-grid {
@@ -219,7 +219,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
   .form__connection-input {
     padding: 12px; }
   .form__label {
-    font-family: "Alegreya Sans", sans-serif;
+    font-family: "Titillium Web", sans-serif;
     text-transform: lowercase;
     width: 100%;
     margin-top: 10px;
@@ -229,7 +229,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
       .form__label {
         font-size: 1.2em; } }
   .form__label--white {
-    font-family: "Alegreya Sans", sans-serif;
+    font-family: "Titillium Web", sans-serif;
     text-transform: lowercase;
     width: 100%;
     margin-top: 10px;
@@ -242,7 +242,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
       .form__label--white {
         font-size: 1.2em; } }
   .form__error {
-    font-family: "Alegreya Sans", sans-serif;
+    font-family: "Titillium Web", sans-serif;
     color: #a94442;
     background-color: #f2dede;
     font-size: 1.2em;
@@ -264,7 +264,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
         flex-wrap: nowrap; } }
   .form__button {
     color: white;
-    font-family: "Alegreya Sans", sans-serif;
+    font-family: "Titillium Web", sans-serif;
     text-transform: lowercase;
     letter-spacing: 2px;
     font-size: 16px;
@@ -293,7 +293,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     color: #545454 !important;
     text-decoration: none !important;
     background-color: transparent;
-    font-family: "Alegreya Sans", sans-serif !important;
+    font-family: "Titillium Web", sans-serif !important;
     text-transform: lowercase !important;
     font-weight: 700;
     font-size: 15px;
@@ -388,8 +388,10 @@ body.user-is-tabbing *:focus {
   box-shadow: inset 0 0 0.2em #22c1c3, 0 0 1em #fcc511 !important; }
 
 .app {
-  background: -webkit-linear-gradient(to top, #22c1c3, #4981C2);
-  background: linear-gradient(to top, #22c1c3, #4981C2);
+  background: #4b6cb7;
+  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to top, #182848, #4b6cb7);
+  background: linear-gradient(to top, #182848, #4b6cb7);
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -415,7 +417,7 @@ body.user-is-tabbing *:focus {
   text-align: center;
   width: 100%;
   margin: auto;
-  font-family: "Alegreya Sans", sans-serif;
+  font-family: "Titillium Web", sans-serif;
   text-transform: lowercase; }
 
 .sr-only {
@@ -467,7 +469,7 @@ body.user-is-tabbing *:focus {
       cursor: pointer; }
 
 .error {
-  font-family: "Alegreya Sans", sans-serif;
+  font-family: "Titillium Web", sans-serif;
   color: #a94442;
   background-color: #f2dede;
   font-size: 1.2em;
@@ -483,7 +485,7 @@ input:focus:invalid {
   border: 1px solid red; }
 
 .success {
-  font-family: "Alegreya Sans", sans-serif;
+  font-family: "Titillium Web", sans-serif;
   color: #3c763d;
   background-color: #dff0d8;
   font-size: 1.2em;
@@ -508,7 +510,7 @@ input:focus:invalid {
 
 .character-count {
   text-align: right;
-  font-family: "Alegreya Sans", sans-serif;
+  font-family: "Titillium Web", sans-serif;
   color: #545454; }
 
 .skip {
@@ -533,7 +535,7 @@ input:focus:invalid {
     z-index: 100;
     border: 1px solid white;
     color: white;
-    font-family: "Alegreya Sans", sans-serif;
+    font-family: "Titillium Web", sans-serif;
     text-transform: lowercase;
     letter-spacing: 2px;
     font-size: 1.2em; }
