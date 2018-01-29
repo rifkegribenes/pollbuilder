@@ -21,8 +21,11 @@ input:not([type=checkbox]):not([type=radio]), textarea {
   margin: 0 auto;
   text-align: center;
   padding: 20px;
-  border-radius: 4px;
-  border: 1px solid $color_sky;
+  border-radius: $btn_border-radius;
+  box-shadow: 0px 0px 5px 0px $color_box-shadow;
+  background: white;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to bottom, $color_yellow, white);
+  background: linear-gradient(to bottom, $color_yellow, white);
 
   @include for-tablet-portrait-up {
       width: 60%;
@@ -87,7 +90,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
 
   &__input {
     width: 100%;
-    border-radius: 3px;
+    border-radius: $btn_border-radius;
     margin: 5px auto;
     border: 1px solid $color_gray_border;
     padding: 12px;
@@ -281,7 +284,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
   }
   &__input-grid {
     width: 100%;
-    border-radius: 3px;
+    border-radius: $btn_border-radius;
     margin: 5px auto;
     border: 1px solid $color_gray_border;
     padding: 8px !important;
@@ -308,12 +311,14 @@ input:not([type=checkbox]):not([type=radio]), textarea {
   &__label {
     font-family: $font-stack;
     text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: .8em;
     width: 100%;
     margin-top: 10px;
     position: relative;
     top: 6px;
     @include for-big-desktop-up {
-      font-size: 1.2em;
+      font-size: 1em;
     }
 
   }
@@ -342,7 +347,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     margin: 15px auto;
     border: 1px solid $color_error_text;
     padding: 7px;
-    border-radius: 3px;
+    border-radius: $btn_border-radius;
     transition: opacity .15s linear;
     text-align: center;
 
@@ -369,7 +374,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     text-decoration: none;
     margin-right: 20px;
     font-weight: 400;
-    border-radius: 50px;
+    border-radius: $btn_border-radius;
     padding: 10px 20px;
     border: 1px solid white;
     background-color: $color_sky;
@@ -397,26 +402,25 @@ input:not([type=checkbox]):not([type=radio]), textarea {
 
   &__login-link {
     cursor: pointer;
-    color: $color_gray_text !important;
-    text-decoration: none !important;
+    color: $color_gray_text;
+    text-decoration: none;
     background-color: transparent;
-    font-family: $font-stack !important;
-    text-transform: uppercase !important;
+    font-family: $font-stack;
+    text-transform: uppercase;
+    letter-spacing: 2px;
     font-weight: 700;
-    font-size: 15px;
-    margin: 5px 0;
-    border-bottom: 1px dotted transparent !important;
-    text-align: left !important;
-    border-radius: 0 !important;
+    font-size: .8em;
+    margin: 5px auto;
+    border-bottom: 1px dotted transparent;
+    text-align: center;
 
     @include for-tablet-portrait-up {
       font-weight: 400;
     }
 
     &:hover, &:active{
-      color: $color_sky;
-      margin: 5px 0;
-      border-bottom: 1px dotted white !important;
+      color: $color_aqua_darker;
+      border-bottom: 1px dotted $color_aqua_darker;
       transition: all 300ms ease-in-out;
     }
   }
