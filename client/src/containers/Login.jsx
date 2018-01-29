@@ -4,8 +4,6 @@ import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import Spinner from './Spinner';
-import ModalSm from './ModalSm';
 import * as Actions from '../store/actions';
 import * as apiActions from '../store/actions/apiActions';
 
@@ -62,7 +60,7 @@ class Login extends React.Component {
   render() {
     const errorClass = this.props.login.errorMsg ? 'error' : 'hidden';
     return (
-      <div className="container form">
+      <form className="container form">
         <div className="form__body">
           <div className="form__header">Sign In</div>
           <div className="form__input-group">
@@ -73,6 +71,7 @@ class Login extends React.Component {
               className="form__input"
               type="email"
               placeholder="Email"
+              autoComplete="email"
               id="email"
               onChange={event => this.handleInput(event)}
             />
@@ -85,6 +84,7 @@ class Login extends React.Component {
               className="form__input"
               type="password"
               placeholder="Password"
+              autoComplete="current-password"
               id="password"
               onChange={event => this.handleInput(event)}
             />
@@ -102,24 +102,20 @@ class Login extends React.Component {
             </div>
           </div>
         </div>
-        <Spinner cssClass={this.props.login.loginSpinnerClass} />
-        <ModalSm
-          modalClass={this.props.login.loginModalClass}
-          modalText={this.props.login.loginModalText}
-          modalType="modal__info"
-          modalTitle={this.props.login.loginModalTitle}
-          dismiss={
-            () => {
-              this.props.actions.dismissLoginModal();
-            }
-          }
-        />
-      </div>
+      </form>
     );
   }
 }
 
 Login.propTypes = {
+	appState: PropTypes.shape({
+		spinnerClass: PropTypes.string,
+    modal: PropTypes.shape({
+    	class: PropTypes.string,
+    	text: PropTypes.string,
+    	title: PropTypes.string,
+    }),
+	}).isRequired,
   actions: PropTypes.shape({
     setLoginError: PropTypes.func,
     setLoginUser: PropTypes.func,
@@ -133,9 +129,6 @@ Login.propTypes = {
     loginEmail: PropTypes.string,
     loginPassword: PropTypes.string,
     errorMsg: PropTypes.string,
-    loginSpinnerClass: PropTypes.string,
-    loginModalClass: PropTypes.string,
-    loginModalText: PropTypes.string,
   }).isRequired,
   history: PropTypes.shape({
     push: PropTypes.func,

@@ -2,9 +2,11 @@ import { SET_REG_ERROR, DISMISS_REG_MODAL } from '../actions';
 import { REGISTRATION_REQUEST, REGISTRATION_SUCCESS, REGISTRATION_FAILURE } from '../actions/apiActions';
 
 const INITIAL_STATE = {
-  registrationSpinnerClass: 'spinner__hide',
-  registrationModalClass: 'modal__hide',
-  registrationModalText: '',
+  spinnerClass: 'spinner__hide',
+  modal: {
+    class: 'modal__hide',
+    text: '',
+  },
   regErrorMsg: '',
 };
 function register(state = INITIAL_STATE, action) {
@@ -29,9 +31,11 @@ function register(state = INITIAL_STATE, action) {
         {},
         state,
         {
-          registrationSpinnerClass: 'spinner__show',
-          registrationModalClass: 'modal__hide',
-          registrationModalText: '',
+          spinnerClass: 'spinner__show',
+          modal: {
+            class: 'modal__hide',
+            text: '',
+          },
         },
       );
 
@@ -47,9 +51,11 @@ function register(state = INITIAL_STATE, action) {
         {},
         state,
         {
-          registrationSpinnerClass: 'spinner__hide',
-          registrationModalClass: 'modal__show',
-          registrationModalText: 'Your registration was successful.',
+          spinnerClass: 'spinner__hide',
+          modal: {
+            class: 'modal__show',
+            text: 'Your registration was successful.',
+          },
         },
       );
 
@@ -64,8 +70,10 @@ function register(state = INITIAL_STATE, action) {
         {},
         state,
         {
-          registrationSpinnerClass: 'spinner__hide',
-          registrationModalClass: 'modal__hide',
+          spinnerClass: 'spinner__hide',
+          modal: {
+            class: 'modal__hide',
+          },
           regErrorMsg: error,
         },
       );
@@ -80,8 +88,10 @@ function register(state = INITIAL_STATE, action) {
         {},
         state,
         {
-          registrationModalClass: 'modal__hide',
-          registrationModalText: '',
+          modal: {
+            class: 'modal__hide',
+            text: '',
+          },
         },
       );
 

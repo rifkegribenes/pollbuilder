@@ -1,6 +1,6 @@
 import update from 'immutability-helper';
 
-import { LOGOUT, SET_REDIRECT_URL } from '../actions';
+import { LOGOUT } from '../actions';
 import { VALIDATE_TOKEN_REQUEST, VALIDATE_TOKEN_SUCCESS,
   VALIDATE_TOKEN_FAILURE, LOGIN_SUCCESS, REGISTRATION_SUCCESS } from '../actions/apiActions';
 
@@ -13,7 +13,12 @@ const INITIAL_STATE = {
     displayName: '',
     email: '',
   },
-  loginSpinnerClass: 'spinner__hide',
+  spinnerClass: 'spinner__hide',
+  modal: {
+  	class: '',
+  	text: '',
+  	title: '',
+  }
 };
 
 /*
@@ -21,8 +26,7 @@ const INITIAL_STATE = {
 *  loggedIn: boolean
 *  authToken: {} - passed with API calls to authenticate on back endpoint
 *  userId: string - used to check if loaded data belongs to logged in user
-*  loginSpinnerClass: string - a css Class that is applied while API is performing login actions
-*  redirectUrl: string - passed by the server when a user access an Express route that is not '/'.
+*  spinnerClass: string - css class applied while API is loading
 *  Client will attempt to load the expected page for the user.
 */
 function appState(state = INITIAL_STATE, action) {
@@ -48,7 +52,7 @@ function appState(state = INITIAL_STATE, action) {
     * This activates the spinner component on the home page so user knows the action is running
     */
     case VALIDATE_TOKEN_REQUEST:
-      return Object.assign({}, state, { loginSpinnerClass: 'spinner__show' });
+      return Object.assign({}, state, { spinnerClass: 'spinner__show' });
 
     /*
     * This action is issued only from the <Home/> component,
@@ -63,7 +67,7 @@ function appState(state = INITIAL_STATE, action) {
         {},
         state,
         {
-          loginSpinnerClass: 'spinner__hide',
+          spinnerClass: 'spinner__hide',
           loggedIn: true,
           user: {
             _id: action.payload._id,
@@ -89,7 +93,7 @@ function appState(state = INITIAL_STATE, action) {
         {},
         state,
         {
-          loginSpinnerClass: 'spinner__hide',
+          spinnerClass: 'spinner__hide',
           loggedIn: false,
         },
       );
@@ -108,7 +112,7 @@ function appState(state = INITIAL_STATE, action) {
         {},
         state,
         {
-          loginSpinnerClass: 'spinner__hide',
+          spinnerClass: 'spinner__hide',
           loggedIn: true,
           user: {
             _id: action.payload.profile._id,

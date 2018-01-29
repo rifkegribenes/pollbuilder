@@ -1,14 +1,16 @@
 import update from 'immutability-helper';
-import { DISMISS_VIEWPROFILE_MODAL, SET_PROFILE_MODAL_CLASS, SET_PROFILE_MODAL_TEXT } from '../actions/';
+import { DISMISS_VIEWPROFILE_MODAL } from '../actions/';
 import { GET_PROFILE_REQUEST, GET_PROFILE_SUCCESS, GET_PROFILE_FAILURE, VALIDATE_TOKEN_SUCCESS, LOGIN_SUCCESS, REGISTRATION_SUCCESS
   } from '../actions/apiActions';
 
 const INITIAL_STATE = {
   userProfile: {},
-  profileSpinnerClass: 'spinner__hide',
-  viewProfileModalClass: 'modal__hide',
-  viewProfileModalType: 'modal__info',
-  viewProfileModalText: '',
+  spinnerClass: 'spinner__hide',
+  modal: {
+    class: 'modal__hide',
+    type: 'modal__info',
+    text: '',
+  }
 };
 
 function profile(state = INITIAL_STATE, action) {
@@ -51,7 +53,7 @@ function profile(state = INITIAL_STATE, action) {
         {
           userProfile: {},
           getSuccess: null,
-          profileSpinnerClass: 'spinner__show',
+          spinnerClass: 'spinner__show',
         },
       );
 
@@ -66,7 +68,7 @@ function profile(state = INITIAL_STATE, action) {
         {
           getSuccess: { $set: true },
           userProfile: { $set: action.payload },
-          profileSpinnerClass: { $set: 'spinner__hide' },
+          spinnerClass: { $set: 'spinner__hide' },
         },
       );
 
@@ -82,9 +84,11 @@ function profile(state = INITIAL_STATE, action) {
         state,
         {
           getSuccess: false,
-          profileSpinnerClass: 'spinner__hide',
-          viewProfileModalClass: 'modal__show',
-          viewProfileModalText: error,
+          spinnerClass: 'spinner__hide',
+          modal: {
+            class: 'modal__show',
+            text: error,
+          },
         },
       );
 
@@ -94,7 +98,16 @@ function profile(state = INITIAL_STATE, action) {
     * Purpose: Change settings to hide the modal object
     */
     case DISMISS_VIEWPROFILE_MODAL:
-      return Object.assign({}, state, { viewProfileModalText: '', viewProfileModalClass: 'modal__hide' });
+      return Object.assign(
+        {},
+        state,
+        {
+          modal: {
+            text: '',
+            class: 'modal__hide',
+          },
+        }
+      );
 
     default:
       return state;
