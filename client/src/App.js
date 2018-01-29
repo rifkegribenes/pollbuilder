@@ -50,7 +50,6 @@ class App extends Component {
           <div className="app">
             <Header />
             <main className="main" id="main">
-              <p>{this.state.response}... Testing</p>
               <Switch>
                 <Route exact path="/" component={Home} />
                 <Route exact path="/profile" component={Profile} />

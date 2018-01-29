@@ -1,23 +1,31 @@
-import { SET_LOGIN_EMAIL, SET_LOGIN_PWD, CLEAR_LOGIN_PWD, SET_LOGIN_ERROR,
-  DISMISS_LOGIN_MODAL } from '../actions';
-import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE } from '../actions/apiActions';
+import {
+  SET_LOGIN_EMAIL,
+  SET_LOGIN_PWD,
+  CLEAR_LOGIN_PWD,
+  SET_LOGIN_ERROR,
+  DISMISS_LOGIN_MODAL
+} from "../actions";
+import {
+  LOGIN_REQUEST,
+  LOGIN_SUCCESS,
+  LOGIN_FAILURE
+} from "../actions/apiActions";
 
 const INITIAL_STATE = {
-  authToken: '',
-  loginEmail: '',
-  loginPassword: '',
-  errorMsg: '',
-  spinnerClass: 'spinner__hide',
+  authToken: "",
+  loginEmail: "",
+  loginPassword: "",
+  errorMsg: "",
+  spinnerClass: "spinner__hide",
   modal: {
-    class: 'modal__hide',
-    text: '',
+    class: "modal__hide",
+    text: ""
   }
 };
 
 function login(state = INITIAL_STATE, action) {
   let error;
   switch (action.type) {
-
     /*
     *  Called From: <Login />
     *  Payload: Email value from form
@@ -40,7 +48,7 @@ function login(state = INITIAL_STATE, action) {
     *  Purpose: Clear password from redux after form submission
     */
     case CLEAR_LOGIN_PWD:
-      return Object.assign({}, state, { loginPassword: '' });
+      return Object.assign({}, state, { loginPassword: "" });
 
     /*
     *  Called From: <Login />
@@ -56,7 +64,7 @@ function login(state = INITIAL_STATE, action) {
     *  Purpose: Activate spinner so user knows API request is in progress
     */
     case LOGIN_REQUEST:
-      return Object.assign({}, state, { spinnerClass: 'spinner__show' });
+      return Object.assign({}, state, { spinnerClass: "spinner__show" });
 
     /*
     *  Called From: <Login />
@@ -65,14 +73,10 @@ function login(state = INITIAL_STATE, action) {
     *  Note: this action is also handled in the appState reducer.
     */
     case LOGIN_SUCCESS:
-      return Object.assign(
-        {},
-        state,
-        {
-          spinnerClass: 'spinner__hide',
-          loginPassword: '',
-        },
-      );
+      return Object.assign({}, state, {
+        loginEmail: "",
+        loginPassword: ""
+      });
 
     /*
     *  Called From: <Login />
@@ -80,15 +84,11 @@ function login(state = INITIAL_STATE, action) {
     *  Purpose: Display API login error to user
     */
     case LOGIN_FAILURE:
-      error = 'An unknown login error occurred';
-      return Object.assign(
-        {},
-        state,
-        {
-          spinnerClass: 'spinner__hide',
-          errorMsg: error,
-        },
-      );
+      error = "An unknown login error occurred";
+      return Object.assign({}, state, {
+        spinnerClass: "spinner__hide",
+        errorMsg: error
+      });
 
     /*
     *  Called from: <Login />
@@ -96,17 +96,12 @@ function login(state = INITIAL_STATE, action) {
     *  Purpose: update state to dismiss the modal box
     */
     case DISMISS_LOGIN_MODAL:
-      return Object.assign(
-        {},
-        state,
-        {
-          modal: {
-            text: '',
-            class: 'modal__hide',
-          },
-        },
-      );
-
+      return Object.assign({}, state, {
+        modal: {
+          text: "",
+          class: "modal__hide"
+        }
+      });
 
     default:
       return state;

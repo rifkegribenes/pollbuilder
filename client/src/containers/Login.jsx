@@ -14,23 +14,40 @@ class Login extends React.Component {
   * If valid, call the login route; store token in redux, clear password from state
   * , return to Home
   */
-  handleLogin() {
+  login(strategy) {
     // clear previous errors
     this.props.actions.setLoginError("");
-    const email = this.props.login.loginEmail;
-    const password = this.props.login.loginPassword;
-
-    if (email && password) {
-      const body = { email, password };
-      this.props.api.login(body).then(result => {
-        if (result.type === "LOGIN_SUCCESS") {
-          this.props.history.push("/");
+    switch (strategy) {
+      case "local":
+        const email = this.props.login.loginEmail;
+        const password = this.props.login.loginPassword;
+        if (email && password) {
+          const body = { email, password };
+          this.props.api.login(body).then(result => {
+            if (result.type === "LOGIN_SUCCESS") {
+              this.props.history.push("/");
+            }
+          });
+        } else if (!email) {
+          this.props.actions.setLoginError("Email cannot be blank");
+        } else if (!password) {
+          this.props.actions.setLoginError("Password cannot be blank");
         }
-      });
-    } else if (!email) {
-      this.props.actions.setLoginError("Email cannot be blank");
-    } else if (!password) {
-      this.props.actions.setLoginError("Password cannot be blank");
+        break;
+      case "github":
+        this.props.api.loginGithub().then(result => {
+          if (result.type === "GITHUB_LOGIN_SUCCESS") {
+            this.props.history.push("/");
+          }
+        });
+        break;
+      case "facebook":
+        break;
+      case "twitter":
+        break;
+      case "google":
+        break;
+      default:
     }
   }
 
@@ -92,7 +109,7 @@ class Login extends React.Component {
               <button
                 className="form__button pointer"
                 id="btn-login"
-                onClick={() => this.loginLocal()}
+                onClick={() => this.login("local")}
               >
                 Sign In
               </button>
@@ -110,28 +127,28 @@ class Login extends React.Component {
               <button
                 className="form__button form__button--github"
                 id="btn-github"
-                onClick={() => this.loginGithub()}
+                onClick={() => this.login("github")}
               >
                 <span className="sr-only">Github</span>
               </button>
               <button
                 className="form__button form__button--facebook"
                 id="btn-facebook"
-                onClick={() => this.loginFacebook()}
+                onClick={() => this.login("facebook")}
               >
                 <span className="sr-only">Facebook</span>
               </button>
               <button
                 className="form__button form__button--twitter"
                 id="btn-twitter"
-                onClick={() => this.loginTwitter()}
+                onClick={() => this.login("twitter")}
               >
                 <span className="sr-only">form__button--twitter</span>
               </button>
               <button
                 className="form__button form__button--google"
                 id="btn-google"
-                onClick={() => this.loginGoogle()}
+                onClick={() => this.login("google")}
               >
                 <span className="sr-only">Google</span>
               </button>

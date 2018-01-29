@@ -1,13 +1,13 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
 const Header = props => (
-  <div className="container">
+  <header className="header">
     <p>Header</p>
     <Link className="nav__link" to="/login">
-        Login
+      Login
     </Link>
-  </div>
+  </header>
 );
 
 export default Header;
