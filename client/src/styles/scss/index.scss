@@ -41,9 +41,9 @@ body.user-is-tabbing *:focus {
 }
 
 .app {
-  background: #4b6cb7;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to top, #182848, #4b6cb7);
-  background: linear-gradient(to top, #182848, #4b6cb7);
+  background: $color_yellow;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to top, $color_yellow, white);
+  background: linear-gradient(to top, $color_yellow, white);
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -65,7 +65,7 @@ body.user-is-tabbing *:focus {
 }
 
 .title {
-	color: white;
+	color: $color_yellow;
 	text-shadow: 0 0 20px rgba(0, 0, 0, 0.63);
   font-weight: 100;
   font-size: 10vw;
@@ -73,7 +73,7 @@ body.user-is-tabbing *:focus {
   width: 100%;
   margin: auto;
   font-family: $font-stack;
-  text-transform: lowercase;
+  text-transform: uppercase;
 }
 
 // visible to screenreader only
@@ -211,9 +211,9 @@ body.user-is-tabbing *:focus {
       background: $color_sky;
       z-index: 100;
       border: 1px solid white;
-      color: white;
+      color: $color_yellow;
       font-family: $font-stack;
-      text-transform: lowercase;
+      text-transform: uppercase;
       letter-spacing: 2px;
       font-size: 1.2em;
 

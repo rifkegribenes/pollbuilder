@@ -9,17 +9,18 @@ $color_gray_medium: #ccc;
 
 $color_light-blue: #c2e0ff;
 $color_lighter-blue: #ebf5ff;
-$color_aqua: #22c1c3;
+$color_aqua: #4b6cb7;
 $color_aqua_darker: darken($color_aqua,10%);
 $color_aqua_lighter: lighten($color_aqua,10%);
 $color_aqua_lightest: lighten($color_aqua,35%);
-$color_sky: #4981C2;
+$color_sky: #182848;
 $color_sky_darker: darken($color_sky,10%);
 $color_sky_lighter: lighten($color_sky,10%);
 $color_sky_lightest: lighten($color_sky,35%);
 $color_sky_nav: #1B75BC;
 $color_purple_sky: #6B559D;
 $color_purple_sky_dark: #151741;
+$color_yellow: #fffc00;
 
 $color_error_text: #a94442;
 $color_error_bkg: #f2dede;
@@ -31,3 +32,6 @@ $color_focus_ring: #fcc511;
 $transition_card: all 800ms linear;
 
 $font-stack: 'Titillium Web', sans-serif;
+
+
+
