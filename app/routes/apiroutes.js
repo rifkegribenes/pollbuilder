@@ -23,11 +23,6 @@ router.use(auth);
 /* ================================ ROUTES ================================= */
 
 
-// Refresh a user's JWT token
-// Returns JSON user profile + new JWT on success
-router.get('/refresh_token', userCtrl.refreshToken);
-
-
 // Get a user's profile
 // Returns JSON user profile object on success
 router.get('/profile/:id', userCtrl.getOneProfile);

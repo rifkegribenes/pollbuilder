@@ -7,6 +7,7 @@ require('dotenv').load();
 var mongoose = require('mongoose');
 var passport = require('passport');
 var flash = require('connect-flash');
+var cors = require('cors');
 
 var morgan = require('morgan');
 var cookieParser = require('cookie-parser');
@@ -27,7 +28,7 @@ app.use(cookieParser()); // read cookies (needed for auth)
 app.use(bodyParser.urlencoded({
        extended: true
 }));
-
+app.use(cors());
 app.use(bodyParser.json());
 
 app.use('/controllers', express.static(process.cwd() + '/app/controllers'));
