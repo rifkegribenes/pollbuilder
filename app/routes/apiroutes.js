@@ -27,6 +27,8 @@ router.use(auth);
 // Returns JSON user profile object on success
 router.get('/profile/:id', userCtrl.getOneProfile);
 
+router.get('/auth/github', userCtrl.authGithub);
+
 
 /* ================================ EXPORT ================================= */
 
