@@ -6,8 +6,8 @@ var app = express();
 require('dotenv').load();
 var mongoose = require('mongoose');
 var passport = require('passport');
-var flash = require('connect-flash');
 var cors = require('cors');
+var corsMiddleware = require('./app/config/cors');
 
 var morgan = require('morgan');
 var cookieParser = require('cookie-parser');
@@ -29,11 +29,8 @@ app.use(bodyParser.urlencoded({
        extended: true
 }));
 app.use(cors());
+app.use(corsMiddleware);
 app.use(bodyParser.json());
-
-app.use('/controllers', express.static(process.cwd() + '/app/controllers'));
-app.use('/public', express.static(process.cwd() + '/public'));
-app.use('/common', express.static(process.cwd() + '/app/common'));
 
 // required for passport
 app.use(session({
@@ -45,16 +42,28 @@ app.use(session({
 // session secret
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
-app.use(flash()); // use connect-flash for flash messages stored in session
 
 // routes ======================================================================
-const apiRoutes     = require('./app/routes/apiroutes');
-const authRoutes    = require('./app/routes/authroutes');
-const staticRoutes  = require('./app/routes/index');
+// const apiRoutes = require('./app/routes/apiroutes');
+// const authRoutes    = require('./app/routes/authroutes');
+// const staticRoutes  = require('./app/routes/index');
 
 app.get('/api/hello', (req, res) => {
   res.send({ express: 'Hello From Express' });
 });
+
+
+// const router = require('express').Router();
+app.get('/auth/github', passport.authenticate('github'));
+
+app.get('/auth/github/callback', passport.authenticate('github', {
+			successRedirect: '/profile',
+			failureRedirect: '/login'
+		}), function(req, res) {
+			// successful authentication, redirect home.
+			console.log('success');
+			res.redirect('/');
+		});
 
 // launch ======================================================================
 var port = process.env.PORT || 8080;

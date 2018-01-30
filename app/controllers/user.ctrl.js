@@ -129,6 +129,63 @@ function register(req, res) {
 }
 
 
+//  GITHUB AUTH
+//   Example: GET >> /auth/github
+//   Secured: no
+//   Expects:
+//     1) request body params : {
+//          email : String
+//          password : String
+//        }
+//   Returns: success status, user profile & JWT on success
+//
+function authGithub(req, res, next) {
+
+  passport.authenticate('github', (err, user, info) => {
+
+    if (err) { return next(err); }
+
+    // if auth failed, there will be no user - fail
+    if (!user) {
+      return res
+        .status(401)
+        .json(info);
+
+    } else {
+
+      // exclude sensitive info from field selection
+      const proj  = { hash : 0, salt : 0, signupKey : 0 };
+
+      // find the authenticated user
+      User.findById(user._id, proj)
+        .exec()
+        .then( (profile) => {
+
+          // generate a token
+          const token = profile.generateJWT();
+
+          // return the user profile & JWT
+          return res
+            .status(200)
+            .json({
+              'profile' : profile,
+              'token'   : token
+            });
+
+        })
+        .catch( err => {
+          console.log('Error!!!', err);
+            return res
+              .status(400)
+              .json({ message: err});
+        });
+
+      }
+
+  })(req, res, next);
+
+}
+
 // LOGIN
 //   Example: POST >> /api/login
 //   Secured: no
@@ -221,47 +278,11 @@ function getOneProfile(req, res) {
 
 }
 
-// REFRESH USER TOKEN
-//   Example: GET >> /api/refresh_token
-//   Secured: yes, valid JWT required
-//   Expects:
-//     1) '_id' from JWT
-//   Returns: user profile and new JWT on success
-//
-function refreshToken(req, res) {
-
-  const userId = req.token._id;
-
-  User.findById(userId)
-    .exec()
-    .then( user => {
-
-      // generate a token
-      const token = user.generateJWT();
-
-      // return the user profile & JWT
-      return res
-        .status(200)
-        .json({
-            profile: user,
-            token: token
-        });
-
-    })
-    .catch( err => {
-      console.log('Error!!!', err);
-        return res
-          .status(400)
-          .json({ message: err});
-    });
-
-}
-
 /* ============================== EXPORT API =============================== */
 
 module.exports = {
    register,
    login,
-   getOneProfile,
-   refreshToken
+   authGithub,
+   getOneProfile
 };

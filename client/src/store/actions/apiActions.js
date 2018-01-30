@@ -81,6 +81,7 @@ export const LOGIN_GITHUB_FAILURE = "LOGIN_GITHUB_FAILURE";
 *     Displays error to user, prompt to try again or register.
 */
 export function loginGithub() {
+  console.log("loginGithub (apiActions.js)");
   return {
     [CALL_API]: {
       endpoint: `${BASE_URL}/auth/github`,
