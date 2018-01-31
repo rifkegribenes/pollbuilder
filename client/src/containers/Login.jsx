@@ -1,14 +1,16 @@
 import React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 
 import * as Actions from "../store/actions";
 import * as apiActions from "../store/actions/apiActions";
 
 class Login extends React.Component {
-  /* Function handleLogin - Perform basic validation:
+  componentDidMount() {}
+
+  /* Function login - Perform basic validation:
   * - username is at least 1 char
   * - password is at least 1 char
   * If valid, call the login route; store token in redux, clear password from state
@@ -197,4 +199,4 @@ const mapDispatchToProps = dispatch => ({
   api: bindActionCreators(apiActions, dispatch)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login));

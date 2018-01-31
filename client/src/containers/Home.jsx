@@ -1,9 +1,12 @@
-import React from 'react';
+import React from "react";
+import { withRouter } from "react-router-dom";
 
-const Home = props => (
-  <div className="container">
-    Home
-  </div>
-);
+class Home extends React.Component {
+  componentDidMount() {}
 
-export default Home;
+  render() {
+    return <div className="container">Home</div>;
+  }
+}
+
+export default withRouter(Home);

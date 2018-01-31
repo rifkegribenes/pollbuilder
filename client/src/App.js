@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Switch, Route, BrowserRouter } from "react-router-dom";
+import { Switch, Route, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 // import { bindActionCreators } from 'redux';
 import PropTypes from "prop-types";
@@ -35,32 +35,42 @@ class App extends Component {
 
   render() {
     return (
-      <BrowserRouter>
-        <div>
-          <Spinner cssClass={this.props.appState.spinnerClass} />
-          <ModalSm
-            modalClass={this.props.appState.modal.class}
-            modalText={this.props.appState.modal.text}
-            modalType="modal__info"
-            modalTitle={this.props.appState.modal.title}
-            dismiss={() => {
-              this.props.actions.dismissModal();
-            }}
-          />
-          <div className="app">
-            <Header />
-            <main className="main" id="main">
-              <Switch>
-                <Route exact path="/" component={Home} />
-                <Route exact path="/profile" component={Profile} />
-                <Route exact path="/login" component={Login} />
-                <Route path="*" component={NotFound} />
-              </Switch>
-            </main>
-            <Footer />
-          </div>
+      <div>
+        <Spinner cssClass={this.props.appState.spinnerClass} />
+        <ModalSm
+          modalClass={this.props.appState.modal.class}
+          modalText={this.props.appState.modal.text}
+          modalType="modal__info"
+          modalTitle={this.props.appState.modal.title}
+          dismiss={() => {
+            this.props.actions.dismissModal();
+          }}
+        />
+        <div className="app">
+          <Header history={this.props.history} />
+          <main className="main" id="main">
+            <Switch>
+              <Route
+                exact
+                path="/"
+                render={routeProps => <Home {...routeProps} />}
+              />
+              <Route
+                exact
+                path="/profile"
+                render={routeProps => <Profile {...routeProps} />}
+              />
+              <Route
+                exact
+                path="/login"
+                render={routeProps => <Login {...routeProps} />}
+              />
+              <Route path="*" component={NotFound} />
+            </Switch>
+          </main>
+          <Footer />
         </div>
-      </BrowserRouter>
+      </div>
     );
   }
 }
@@ -80,4 +90,4 @@ const mapStateToProps = state => ({
   appState: state.appState
 });
 
-export default connect(mapStateToProps)(App);
+export default withRouter(connect(mapStateToProps)(App));
