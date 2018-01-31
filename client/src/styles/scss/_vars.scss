@@ -20,7 +20,8 @@ $color_sky_lightest: lighten($color_sky,35%);
 $color_sky_nav: #1B75BC;
 $color_purple_sky: #6B559D;
 $color_purple_sky_dark: #151741;
-$color_yellow: #fffc00;
+$color_cream: #fffdb7;
+$color_cream_lighter: lighten($color_cream,5%);
 
 $color_error_text: #a94442;
 $color_error_bkg: #f2dede;

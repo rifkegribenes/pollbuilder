@@ -22,10 +22,8 @@ input:not([type=checkbox]):not([type=radio]), textarea {
   text-align: center;
   padding: 20px;
   border-radius: $btn_border-radius;
+  background: $color_cream_lighter;
   box-shadow: 0px 0px 5px 0px $color_box-shadow;
-  background: white;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to bottom, $color_yellow, white);
-  background: linear-gradient(to bottom, $color_yellow, white);
 
   @include for-tablet-portrait-up {
       width: 60%;
@@ -97,6 +95,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     font-size: .9em;
     font-weight: 100;
     color: $color_gray_text;
+    background: white !important;
     @include for-big-desktop-up {
       padding: 15px;
       font-size: 1.2em;
@@ -366,7 +365,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
   }
 
   &__button {
-    color: $color_yellow;
+    color: $color_cream;
     font-family: $font-stack;
     text-transform: uppercase;
     letter-spacing: 2px;

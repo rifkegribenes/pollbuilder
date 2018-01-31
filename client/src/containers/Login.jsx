@@ -35,11 +35,7 @@ class Login extends React.Component {
         }
         break;
       case "github":
-        this.props.api.loginGithub().then(result => {
-          if (result.type === "GITHUB_LOGIN_SUCCESS") {
-            this.props.history.push("/");
-          }
-        });
+        this.props.api.loginGithub();
         break;
       case "facebook":
         break;
@@ -124,13 +120,13 @@ class Login extends React.Component {
             <hr className="form__hr" />
             <div className="form__text">Or log in with&hellip;</div>
             <div className="form__button-wrap">
-              <button
+              <a
                 className="form__button form__button--github"
+                href="http://localhost:8080/auth/github/"
                 id="btn-github"
-                onClick={() => this.login("github")}
               >
                 <span className="sr-only">Github</span>
-              </button>
+              </a>
               <button
                 className="form__button form__button--facebook"
                 id="btn-facebook"

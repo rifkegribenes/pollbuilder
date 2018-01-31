@@ -86,8 +86,12 @@ export function loginGithub() {
     [CALL_API]: {
       endpoint: `${BASE_URL}/auth/github`,
       method: "GET",
+      mode: "no-cors",
       types: [LOGIN_GITHUB_REQUEST, LOGIN_GITHUB_SUCCESS, LOGIN_GITHUB_FAILURE],
-      headers: { "Content-Type": "application/json" }
+      headers: {
+        "Content-Type": "application/jsonp",
+        "Access-Control-Allow-Origin": "*"
+      }
     }
   };
 }
