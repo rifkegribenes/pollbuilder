@@ -18,11 +18,8 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     text-align: center;
     padding: 20px;
     border-radius: 4px;
-    box-shadow: 0px 0px 5px 0px rgba(75, 108, 183, 0.4);
-    background: white;
-    /* fallback for old browsers */
-    background: -webkit-linear-gradient(to bottom, #fffc00, white);
-    background: linear-gradient(to bottom, #fffc00, white); }
+    background: #fffed1;
+    box-shadow: 0px 0px 5px 0px rgba(75, 108, 183, 0.4); }
     @media (min-width: 600px) {
       .form__body {
         width: 60%;
@@ -77,7 +74,8 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     padding: 12px;
     font-size: .9em;
     font-weight: 100;
-    color: #545454; }
+    color: #545454;
+    background: white !important; }
     @media (min-width: 1600px) {
       .form__input {
         padding: 15px;
@@ -269,7 +267,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
       .form__button-wrap {
         flex-wrap: nowrap; } }
   .form__button {
-    color: #fffc00;
+    color: #fffdb7;
     font-family: "Titillium Web", sans-serif;
     text-transform: uppercase;
     letter-spacing: 2px;
@@ -442,7 +440,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     top: 12px;
     z-index: 30;
     font-size: 1.5em !important;
-    color: #fffc00 !important;
+    color: #fffdb7 !important;
     z-index: 51; }
     @media (min-width: 650px) {
       .h-nav__inbox {
@@ -450,7 +448,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
         top: 15px; } }
     .h-nav__inbox--active {
       background-color: transparent !important;
-      color: #fffc00 !important; }
+      color: #fffdb7 !important; }
     .h-nav__inbox--icon {
       position: relative; }
     .h-nav__inbox--badge {
@@ -458,7 +456,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
       font-weight: 700;
       background-color: #a94442;
       border-radius: 100%;
-      color: #fffc00;
+      color: #fffdb7;
       padding: 2px 3px;
       font-size: 10px;
       position: absolute;
@@ -512,13 +510,13 @@ input:not([type=checkbox]):not([type=radio]), textarea {
       padding: 3px 10px 5px 10px;
       cursor: pointer; }
   .h-nav__menuspan {
-    color: #fffc00;
+    color: #fffdb7;
     width: 56px; }
     .h-nav__menuspan--open {
       color: rgba(255, 255, 255, 0);
       width: 56px; }
   .h-nav__item-link {
-    color: #fffc00;
+    color: #fffdb7;
     font-family: "Titillium Web", sans-serif;
     text-transform: uppercase;
     letter-spacing: 3px;
@@ -545,7 +543,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
       .h-nav__item-link--logout {
         display: none; } }
     .h-nav__item-link--menu {
-      color: #fffc00;
+      color: #fffdb7;
       font-family: "Titillium Web", sans-serif;
       text-transform: uppercase;
       letter-spacing: 2px;
@@ -554,7 +552,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
       text-decoration: none;
       padding: 0 0 0 30px; }
       .h-nav__item-link--menu-open {
-        color: #fffc00;
+        color: #fffdb7;
         font-family: "Titillium Web", sans-serif;
         text-transform: uppercase;
         letter-spacing: 2px;
@@ -619,7 +617,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
           border: 1px solid transparent;
           box-shadow: none; }
       .h-nav__item-link {
-        color: #fffc00;
+        color: #fffdb7;
         font-family: "Titillium Web", sans-serif;
         text-transform: uppercase;
         letter-spacing: 2px;
@@ -650,7 +648,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
       box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
       transition: box-shadow 300ms ease-in-out; }
   .a-nav__item-link {
-    color: #fffc00;
+    color: #fffdb7;
     font-family: "Titillium Web", sans-serif;
     text-transform: uppercase;
     letter-spacing: 3px;
@@ -738,7 +736,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
       color: transparent;
       transition: color 400ms ease-out; }
       .a-nav__item-link--expanded {
-        color: #fffc00;
+        color: #fffdb7;
         transition: color 400ms ease-in; }
         .a-nav__item-link--expanded--login {
           border: 1px solid rgba(255, 255, 255, 0.6); }
@@ -786,10 +784,8 @@ body.user-is-tabbing *:focus {
   box-shadow: inset 0 0 0.2em #4b6cb7, 0 0 1em #fcc511 !important; }
 
 .app {
-  background: #fffc00;
+  background: #fffdb7;
   /* fallback for old browsers */
-  background: -webkit-linear-gradient(to top, #fffc00, white);
-  background: linear-gradient(to top, #fffc00, white);
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -809,7 +805,7 @@ body.user-is-tabbing *:focus {
   min-height: 100vh; }
 
 .title {
-  color: #fffc00;
+  color: #fffdb7;
   text-shadow: 0 0 20px rgba(0, 0, 0, 0.63);
   font-weight: 100;
   font-size: 10vw;
@@ -933,7 +929,7 @@ input:focus:invalid {
     background: #182848;
     z-index: 100;
     border: 1px solid white;
-    color: #fffc00;
+    color: #fffdb7;
     font-family: "Titillium Web", sans-serif;
     text-transform: uppercase;
     letter-spacing: 2px;

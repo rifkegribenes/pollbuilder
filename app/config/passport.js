@@ -29,62 +29,35 @@ module.exports = function(passport) {
       });
   });
 
+  console.log(configAuth.githubAuth.callbackURL);
+
   // =========================================================================
   // github  =================================================================
   // =========================================================================
   passport.use(new GitHubStrategy({
   	clientID: configAuth.githubAuth.clientID,
   	clientSecret: configAuth.githubAuth.clientSecret,
-  	callbackURL: configAuth.githubAuth.callbackURL
+  	redirect_uri: configAuth.githubAuth.callbackURL
   	},
   	function (token, refreshToken, profile, done) {
   		console.log('passport.js > new GitHubStrategy');
   		process.nextTick(function () {
-        // check if the user is already logged in
-        if (!req.user) {
-  			  User.findOrCreate({ 'github.id': profile.id }, function (err, user) {
-    				if (err) {
-    					return done(err);
-    				}
+				var newUser = new User();
 
-    				if (user) {
-    					return done(null, user);
-    				} else {
-    					var newUser = new User();
+				newUser.github.id = profile.id;
+				newUser.github.username = profile.username;
+				newUser.github.displayName = profile.displayName;
+				newUser.github.publicRepos = profile._json.public_repos;
+				newUser.nbrClicks.clicks = 0;
 
-    					newUser.github.id = profile.id;
-    					newUser.github.username = profile.username;
-    					newUser.github.displayName = profile.displayName;
-    					newUser.github.publicRepos = profile._json.public_repos;
-    					newUser.nbrClicks.clicks = 0;
+				newUser.save(function (err) {
+          console.log('saving new user');
+					if (err) {
+						throw err;
+					}
 
-    					newUser.save(function (err) {
-    						if (err) {
-    							throw err;
-    						}
-
-    						return done(null, newUser);
-    					});
-    				}
-  			 });
-        } else {
-          // user already exists and is logged in, we have to link accounts
-          var user = req.user; // pull the user out of the session
-
-          // update the current user's github credentials
-          user.github.id = profile.id;
-          user.github.username = profile.username;
-          user.github.displayName = profile.displayName;
-          user.github.publicRepos = profile._json.public_repos;
-
-          // save the user
-          user.save(function(err) {
-            if (err)
-              throw err;
-            return done(null, user);
-          });
-        }
-      });
-    }
-  ));
+					return done(null, newUser);
+				});
+			});
+    }));
 }

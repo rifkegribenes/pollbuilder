@@ -112,7 +112,7 @@
     top: 12px;
     z-index: 30;
     font-size: 1.5em !important;
-    color: $color_yellow !important;
+    color: $color_cream !important;
     z-index: 51;
     @include mobile-nav-breakpoint {
       right: 85px;
@@ -120,7 +120,7 @@
     }
       &--active {
         background-color: transparent !important;
-        color: $color_yellow !important;
+        color: $color_cream !important;
       }
 
       &--icon {
@@ -132,7 +132,7 @@
         font-weight: 700;
         background-color: $color_error_text;
         border-radius: 100%;
-        color: $color_yellow;
+        color: $color_cream;
         padding: 2px 3px;
         font-size: 10px;
         position: absolute;
@@ -211,7 +211,7 @@
   }
 
   &__menuspan {
-    color: $color_yellow;
+    color: $color_cream;
     width: 56px;
 
     &--open {
@@ -221,7 +221,7 @@
   }
 
   &__item-link {
-    color: $color_yellow;
+    color: $color_cream;
     font-family: $font-stack;
     text-transform: uppercase;
     letter-spacing: 3px;
@@ -260,7 +260,7 @@
       }
 
       &--menu {
-        color: $color_yellow;
+        color: $color_cream;
         font-family: $font-stack;
         text-transform: uppercase;
         letter-spacing: 2px;
@@ -270,7 +270,7 @@
         padding: 0 0 0 30px;
 
         &-open {
-          color: $color_yellow;
+          color: $color_cream;
           font-family: $font-stack;
           text-transform: uppercase;
           letter-spacing: 2px;
@@ -359,7 +359,7 @@
     }
 
     &__item-link {
-      color: $color_yellow;
+      color: $color_cream;
       font-family: $font-stack;
       text-transform: uppercase;
       letter-spacing: 2px;
@@ -403,7 +403,7 @@
     }
 
     &__item-link {
-    color: $color_yellow;
+    color: $color_cream;
     font-family: $font-stack;
     text-transform: uppercase;
     letter-spacing: 3px;
@@ -516,7 +516,7 @@
         transition: color 400ms ease-out;
 
         &--expanded {
-        color: $color_yellow;
+        color: $color_cream;
         transition: color 400ms ease-in;
 
           &--login {

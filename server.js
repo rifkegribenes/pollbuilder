@@ -5,10 +5,9 @@ var express = require('express');
 var app = express();
 require('dotenv').load();
 var mongoose = require('mongoose');
-var passport = require('passport');
 var cors = require('cors');
 var corsMiddleware = require('./app/config/cors');
-
+var passport = require('passport');
 var morgan = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
@@ -28,6 +27,9 @@ app.use(cookieParser()); // read cookies (needed for auth)
 app.use(bodyParser.urlencoded({
        extended: true
 }));
+
+var methodOverride = require('method-override')
+app.use(methodOverride());
 app.use(cors());
 app.use(corsMiddleware);
 app.use(bodyParser.json());
@@ -43,6 +45,13 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 
+// cors
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 // routes ======================================================================
 // const apiRoutes = require('./app/routes/apiroutes');
 // const authRoutes    = require('./app/routes/authroutes');
@@ -56,7 +65,7 @@ app.get('/api/hello', (req, res) => {
 // const router = require('express').Router();
 app.get('/auth/github', passport.authenticate('github'));
 
-app.get('/auth/github/callback', passport.authenticate('github', {
+app.get('/auth/github/callback/', passport.authenticate('github', {
 			successRedirect: '/profile',
 			failureRedirect: '/login'
 		}), function(req, res) {
