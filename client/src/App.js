@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 import Header from "./containers/Header";
 import Home from "./containers/Home";
 import Login from "./containers/Login";
+import Register from "./containers/Register";
 import Profile from "./containers/Profile";
 import Footer from "./containers/Footer";
 import NotFound from "./containers/NotFound";
@@ -22,6 +23,8 @@ class App extends Component {
     // this.callApi()
     //   .then(res => this.setState({ response: res.express }))
     //   .catch(err => console.log(err));
+    console.log(`userId: ${window.localStorage.userId}`);
+    console.log(`authToken: ${window.localStorage.authToken}`);
   }
 
   callApi = async () => {
@@ -64,6 +67,11 @@ class App extends Component {
                 exact
                 path="/login"
                 render={routeProps => <Login {...routeProps} />}
+              />
+              <Route
+                exact
+                path="/register"
+                render={routeProps => <Register {...routeProps} />}
               />
               <Route path="*" component={NotFound} />
             </Switch>

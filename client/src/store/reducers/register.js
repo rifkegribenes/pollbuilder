@@ -1,18 +1,21 @@
-import { SET_REG_ERROR, DISMISS_REG_MODAL } from '../actions';
-import { REGISTRATION_REQUEST, REGISTRATION_SUCCESS, REGISTRATION_FAILURE } from '../actions/apiActions';
+import { SET_REG_ERROR, DISMISS_REG_MODAL } from "../actions";
+import {
+  REGISTRATION_REQUEST,
+  REGISTRATION_SUCCESS,
+  REGISTRATION_FAILURE
+} from "../actions/apiActions";
 
 const INITIAL_STATE = {
-  spinnerClass: 'spinner__hide',
+  spinnerClass: "spinner__hide",
   modal: {
-    class: 'modal__hide',
-    text: '',
+    class: "modal__hide",
+    text: ""
   },
-  regErrorMsg: '',
+  regErrorMsg: ""
 };
 function register(state = INITIAL_STATE, action) {
   let error;
   switch (action.type) {
-
     /*
     *  Called From: <Registration />
     *  Payload: Error message
@@ -27,18 +30,14 @@ function register(state = INITIAL_STATE, action) {
     *  Purpose: Display spinner so user knows API action is in progress.
     */
     case REGISTRATION_REQUEST:
-      return Object.assign(
-        {},
-        state,
-        {
-          spinnerClass: 'spinner__show',
-          modal: {
-            class: 'modal__hide',
-            text: '',
-          },
-        },
-      );
-
+      console.log("registration request");
+      return Object.assign({}, state, {
+        spinnerClass: "spinner__show",
+        modal: {
+          class: "modal__hide",
+          text: ""
+        }
+      });
 
     /*
     *  Called From: <Registration />
@@ -47,17 +46,13 @@ function register(state = INITIAL_STATE, action) {
     *  Note: this action is also handled in appState reducer.
     */
     case REGISTRATION_SUCCESS:
-      return Object.assign(
-        {},
-        state,
-        {
-          spinnerClass: 'spinner__hide',
-          modal: {
-            class: 'modal__show',
-            text: 'Your registration was successful.',
-          },
-        },
-      );
+      return Object.assign({}, state, {
+        spinnerClass: "spinner__hide",
+        modal: {
+          class: "modal__show",
+          text: "Your registration was successful."
+        }
+      });
 
     /*
     *  Called From: <Registration />
@@ -65,18 +60,16 @@ function register(state = INITIAL_STATE, action) {
     *  Purpose: Hide spinner and display error message to user in the form.
     */
     case REGISTRATION_FAILURE:
-      error = action.payload.response.message || 'An unknown error occurred during registration';
-      return Object.assign(
-        {},
-        state,
-        {
-          spinnerClass: 'spinner__hide',
-          modal: {
-            class: 'modal__hide',
-          },
-          regErrorMsg: error,
+      error =
+        action.payload.response.message ||
+        "An unknown error occurred during registration";
+      return Object.assign({}, state, {
+        spinnerClass: "spinner__hide",
+        modal: {
+          class: "modal__hide"
         },
-      );
+        regErrorMsg: error
+      });
 
     /*
     *  Called From: <Registration />
@@ -84,16 +77,12 @@ function register(state = INITIAL_STATE, action) {
     *  Purpose: Hide modal after successful registration.
     */
     case DISMISS_REG_MODAL:
-      return Object.assign(
-        {},
-        state,
-        {
-          modal: {
-            class: 'modal__hide',
-            text: '',
-          },
-        },
-      );
+      return Object.assign({}, state, {
+        modal: {
+          class: "modal__hide",
+          text: ""
+        }
+      });
 
     default:
       return state;
