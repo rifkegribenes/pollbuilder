@@ -1,7 +1,7 @@
+import update from "immutability-helper";
+
 import {
-  SET_LOGIN_EMAIL,
-  SET_LOGIN_PWD,
-  CLEAR_LOGIN_PWD,
+  SET_FORM_FIELD,
   SET_LOGIN_ERROR,
   DISMISS_LOGIN_MODAL
 } from "../actions";
@@ -16,13 +16,18 @@ import {
 
 const INITIAL_STATE = {
   authToken: "",
-  loginEmail: "",
-  loginPassword: "",
   errorMsg: "",
   spinnerClass: "spinner__hide",
   modal: {
     class: "modal__hide",
     text: ""
+  },
+  form: {
+    username: "",
+    email: "",
+    password: "",
+    confirmPwd: "",
+    error: false
   }
 };
 
@@ -30,28 +35,14 @@ function login(state = INITIAL_STATE, action) {
   let error;
   switch (action.type) {
     /*
-    *  Called From: <Login />
-    *  Payload: Email value from form
-    *  Purpose: Connected component handler
+    * Called from: <Login />, <Register />
+    * Payload: Form field Name and Value
+    * Purpose: Update the connected form field.
     */
-    case SET_LOGIN_EMAIL:
-      return Object.assign({}, state, { loginEmail: action.payload });
-
-    /*
-    *  Called From: <Login />
-    *  Payload: Password value from form
-    *  Purpose: Connected component handler
-    */
-    case SET_LOGIN_PWD:
-      return Object.assign({}, state, { loginPassword: action.payload });
-
-    /*
-    *  Called From: <Login />
-    *  Payload: None
-    *  Purpose: Clear password from redux after form submission
-    */
-    case CLEAR_LOGIN_PWD:
-      return Object.assign({}, state, { loginPassword: "" });
+    case SET_FORM_FIELD:
+      return update(state, {
+        form: { [action.payload.id]: { $set: action.payload.value } }
+      });
 
     /*
     *  Called From: <Login />
