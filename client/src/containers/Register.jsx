@@ -25,7 +25,7 @@ class Register extends React.Component {
     if (email && password === confirmPwd) {
       const body = { email, password };
       this.props.api
-        .register(body)
+        .registration(body)
         .then(result => {
           if (result.type === "REGISTRATION_FAILURE") {
             this.setState({ error: true });
@@ -131,6 +131,7 @@ class Register extends React.Component {
               <button
                 className="form__button pointer"
                 id="btn-register"
+                type="button"
                 onClick={() => this.handleRegister()}
               >
                 Create account
@@ -187,7 +188,7 @@ class Register extends React.Component {
 
 Register.propTypes = {
   api: PropTypes.shape({
-    register: PropTypes.func
+    registration: PropTypes.func
   }).isRequired,
   register: PropTypes.shape({
     regErrorMsg: PropTypes.string,

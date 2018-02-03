@@ -25,6 +25,7 @@ class App extends Component {
     //   .catch(err => console.log(err));
     console.log(`userId: ${window.localStorage.userId}`);
     console.log(`authToken: ${window.localStorage.authToken}`);
+    console.log(`loggedIn: ${this.props.appState.loggedIn}`);
   }
 
   callApi = async () => {
@@ -90,7 +91,8 @@ App.propTypes = {
       class: PropTypes.string,
       text: PropTypes.string,
       title: PropTypes.string
-    })
+    }),
+    loggedIn: PropTypes.bool
   }).isRequired
 };
 

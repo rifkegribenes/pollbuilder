@@ -354,7 +354,10 @@ input:not([type=checkbox]):not([type=radio]), textarea {
   transition: opacity 0.35s ease-in-out; }
 
 .header {
-  padding: 20px; }
+  padding: 20px;
+  display: flex;
+  width: 100%;
+  justify-content: space-between; }
 
 .h-nav {
   position: absolute;

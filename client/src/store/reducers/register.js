@@ -46,6 +46,7 @@ function register(state = INITIAL_STATE, action) {
     *  Note: this action is also handled in appState reducer.
     */
     case REGISTRATION_SUCCESS:
+      console.log("REG_SUCCESS (register.js)");
       return Object.assign({}, state, {
         spinnerClass: "spinner__hide",
         modal: {
@@ -60,6 +61,8 @@ function register(state = INITIAL_STATE, action) {
     *  Purpose: Hide spinner and display error message to user in the form.
     */
     case REGISTRATION_FAILURE:
+      console.log("registration failure");
+      console.log(action.payload.response.message);
       error =
         action.payload.response.message ||
         "An unknown error occurred during registration";

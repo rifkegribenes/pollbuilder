@@ -9,18 +9,22 @@ class Header extends React.Component {
   render() {
     return (
       <header className="header">
-        <p>Header</p>
+        <Link className="nav__link" to="/">
+          Home
+        </Link>
         <Link className="nav__link" to="/login">
           Login
         </Link>
-        <button
-          onClick={() => {
-            this.props.actions.logout();
-            this.props.history.push("/");
-          }}
+        <Link
+          className="nav__link"
+          to="/"
+          onClick={() => this.props.actions.logout()}
         >
           Logout
-        </button>
+        </Link>
+        {this.props.appState.loggedIn && (
+          <div className="header__email">{this.props.appState.user.email}</div>
+        )}
       </header>
     );
   }

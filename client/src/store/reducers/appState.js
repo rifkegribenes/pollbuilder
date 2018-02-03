@@ -1,23 +1,28 @@
-import update from 'immutability-helper';
+import update from "immutability-helper";
 
-import { LOGOUT } from '../actions';
-import { VALIDATE_TOKEN_REQUEST, VALIDATE_TOKEN_SUCCESS,
-  VALIDATE_TOKEN_FAILURE, LOGIN_SUCCESS, REGISTRATION_SUCCESS } from '../actions/apiActions';
+import { LOGOUT } from "../actions";
+import {
+  VALIDATE_TOKEN_REQUEST,
+  VALIDATE_TOKEN_SUCCESS,
+  VALIDATE_TOKEN_FAILURE,
+  LOGIN_SUCCESS,
+  REGISTRATION_SUCCESS
+} from "../actions/apiActions";
 
 const INITIAL_STATE = {
   loggedIn: false,
-  authToken: '',
+  authToken: "",
   user: {
-    _id: '',
-    avatarUrl: '',
-    displayName: '',
-    email: '',
+    _id: "",
+    avatarUrl: "",
+    displayName: "",
+    email: ""
   },
-  spinnerClass: 'spinner__hide',
+  spinnerClass: "spinner__hide",
   modal: {
-  	class: '',
-  	text: '',
-  	title: '',
+    class: "",
+    text: "",
+    title: ""
   }
 };
 
@@ -31,28 +36,24 @@ const INITIAL_STATE = {
 */
 function appState(state = INITIAL_STATE, action) {
   switch (action.type) {
-
     /*
     * This action is issued only from the <Logout/> component.
     * On LOGOUT action, remove the userId and token from localStorage.
     * Reset to initial state.
     */
     case LOGOUT:
-      window.localStorage.removeItem('authToken');
-      window.localStorage.removeItem('userId');
-      return update(
-        state,
-        {
-          loggedIn: { $set: false },
-        },
-      );
+      window.localStorage.removeItem("authToken");
+      window.localStorage.removeItem("userId");
+      return update(state, {
+        loggedIn: { $set: false }
+      });
     /*
     * This action is issued only from the <Home/> component.
     * On VALIDATE_TOKEN_REQUEST action, set the spinner class to show.
     * This activates the spinner component on the home page so user knows the action is running
     */
     case VALIDATE_TOKEN_REQUEST:
-      return Object.assign({}, state, { spinnerClass: 'spinner__show' });
+      return Object.assign({}, state, { spinnerClass: "spinner__show" });
 
     /*
     * This action is issued only from the <Home/> component,
@@ -63,23 +64,19 @@ function appState(state = INITIAL_STATE, action) {
     * Save the userId and token in the redux store...set loggedIn to TRUE.
     */
     case VALIDATE_TOKEN_SUCCESS:
-      return Object.assign(
-        {},
-        state,
-        {
-          spinnerClass: 'spinner__hide',
-          loggedIn: true,
-          user: {
-            _id: action.payload._id,
-            avatarUrl: action.payload.avatarUrl,
-            displayName: action.payload.displayName,
-            email: action.payload.email,
-          },
-          authToken: action.meta.token,
+      return Object.assign({}, state, {
+        spinnerClass: "spinner__hide",
+        loggedIn: true,
+        user: {
+          _id: action.payload._id,
+          avatarUrl: action.payload.avatarUrl,
+          displayName: action.payload.displayName,
+          email: action.payload.email
         },
-       );
+        authToken: action.meta.token
+      });
 
-     /*
+    /*
      * This action is issued only from the <Home/> component,
      * when the localStorage token is not validated by the server.
      * On VALIDATE_TOKEN_FAILURE action, set the spinner class to hide.
@@ -87,16 +84,12 @@ function appState(state = INITIAL_STATE, action) {
      * Set loggedIn to false.
      */
     case VALIDATE_TOKEN_FAILURE:
-      window.localStorage.removeItem('authToken');
-      window.localStorage.removeItem('userId');
-      return Object.assign(
-        {},
-        state,
-        {
-          spinnerClass: 'spinner__hide',
-          loggedIn: false,
-        },
-      );
+      window.localStorage.removeItem("authToken");
+      window.localStorage.removeItem("userId");
+      return Object.assign({}, state, {
+        spinnerClass: "spinner__hide",
+        loggedIn: false
+      });
 
     /*
     * This action is issued only from the <Login/> component.
@@ -106,46 +99,52 @@ function appState(state = INITIAL_STATE, action) {
     * Set loggedIn to true.
     */
     case LOGIN_SUCCESS:
-      window.localStorage.setItem('authToken', JSON.stringify(action.payload.token));
-      window.localStorage.setItem('userId', JSON.stringify(action.payload.profile._id));
-      return Object.assign(
-        {},
-        state,
-        {
-          spinnerClass: 'spinner__hide',
-          loggedIn: true,
-          user: {
-            _id: action.payload.profile._id,
-            avatarUrl: action.payload.profile.avatarUrl,
-            displayName: action.payload.profile.displayName,
-            email: action.payload.profile.email,
-          },
-          authToken: action.payload.token,
+      window.localStorage.setItem(
+        "authToken",
+        JSON.stringify(action.payload.token)
+      );
+      window.localStorage.setItem(
+        "userId",
+        JSON.stringify(action.payload.profile._id)
+      );
+      return Object.assign({}, state, {
+        spinnerClass: "spinner__hide",
+        loggedIn: true,
+        user: {
+          _id: action.payload.profile._id,
+          avatarUrl: action.payload.profile.avatarUrl,
+          displayName: action.payload.profile.displayName,
+          email: action.payload.profile.email
         },
-       );
+        authToken: action.payload.token
+      });
 
     /*
     * This action is issued only from the <Registration/> component.
     * On REGSTRATION_SUCCESS action, save the userId and token to localStorage.
     * Populate the store with userId and token, set logged in to true.
+    * (also handled in register.js reducer)
     */
     case REGISTRATION_SUCCESS:
-      window.localStorage.setItem('authToken', JSON.stringify(action.payload.token));
-      window.localStorage.setItem('userId', JSON.stringify(action.payload.profile._id));
-      return Object.assign(
-        {},
-        state,
-        {
-          loggedIn: true,
-          user: {
-            _id: action.payload.profile._id,
-            avatarUrl: action.payload.profile.avatarUrl || '',
-            displayName: action.payload.profile.displayName,
-            email: action.payload.profile.email,
-          },
-          authToken: action.payload.token,
+      console.log("REG_SUCCESS (appState.js)");
+      window.localStorage.setItem(
+        "authToken",
+        JSON.stringify(action.payload.token)
+      );
+      window.localStorage.setItem(
+        "userId",
+        JSON.stringify(action.payload.profile._id)
+      );
+      return Object.assign({}, state, {
+        loggedIn: true,
+        user: {
+          _id: action.payload.profile._id,
+          avatarUrl: action.payload.profile.avatarUrl || "",
+          displayName: action.payload.profile.displayName || "",
+          email: action.payload.profile.email
         },
-       );
+        authToken: action.payload.token
+      });
 
     default:
       return state;

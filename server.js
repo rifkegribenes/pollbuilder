@@ -14,6 +14,7 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 
 var configDB = require('./app/config/database.js');
+const User = require('./app/models/users');
 
 // configuration ===============================================================
 mongoose.connect(configDB.url); // connect to our database
@@ -79,10 +80,8 @@ app.get('/auth/github/callback/', passport.authenticate('github', {
 
 // Register new users
 // Returns fail status + message -or- success status + JWT
-app.post('/register', (req, res) => {
-	console.log('app/routes/index.js > 31');
-	console.log(req.body);
-
+app.post('/api/register', (req, res) => {
+	console.log('api/register');
   // fail if missing required inputs
   if (!req.body.password || !req.body.email) {
     return res
@@ -90,48 +89,47 @@ app.post('/register', (req, res) => {
       .json({ 'message': 'Please complete all required fields.' });
   }
 
- const target = { email: req.body.email };
-
-  User.findOne(target)
+  User.findOne({ 'local.email' :  req.body.email })
     .exec()
     .then( user => {
       // finding a user is bad - reject --> catch block
-      if (user && user.email === req.body.email) {
+      if (user && user.local.email === req.body.email) {
+      	console.log('user found');
         return Promise.reject('Email already registered.');
       } else {
         return undefined;
       }
     })
     .then( () => {
-      // no user found, let's build a new one
+    	console.log('no user found, building new user');
+      // no user found => build a new one
       const newUser = new User();
-      newUser.email = req.body.email;
-      newUser.hashPassword(req.body.password);
+      newUser.local.email = req.body.email;
+      newUser.local.password = newUser.generateHash(req.body.password);
+      console.log(newUser);
       return newUser;
     })
     .then( newUser => {
+    	console.log('saving new user to db');
         // save new user to database
         newUser.save( (err, savedUser ) => {
           if (err) { throw err; }
 
           // build filtered user profile for later response
           const profile = {
-            email     : savedUser.email,
-            _id       : savedUser._id
+            email: savedUser.email,
+            _id: savedUser._id
           };
 
           // generate auth token
           const token = savedUser.generateJWT();
 
           // respond with profile & JWT
-          console.log('app/routes/index.js > 75');
-          console.log(profile);
-          console.log(token);
           return res
             .status(200)
             .json({
-              'profile' : profile,
-              'token'   : token
+              'profile': profile,
+              'token': token
             });
         });
     })

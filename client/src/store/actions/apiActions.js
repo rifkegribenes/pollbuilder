@@ -1,4 +1,4 @@
-import { CALL_API } from "redux-api-middleware";
+import { RSAA } from "redux-api-middleware";
 import { BASE_URL } from "./apiConfig.js";
 
 export const VALIDATE_TOKEN_REQUEST = "VALIDATE_TOKEN_REQUEST";
@@ -22,7 +22,7 @@ export const VALIDATE_TOKEN_FAILURE = "VALIDATE_TOKEN_FAILURE";
 */
 export function validateToken(token, profileId) {
   return {
-    [CALL_API]: {
+    [RSAA]: {
       endpoint: `${BASE_URL}/api/profile/${profileId}`,
       method: "GET",
       types: [
@@ -55,7 +55,7 @@ export const LOGIN_FAILURE = "LOGIN_FAILURE";
 */
 export function login(body) {
   return {
-    [CALL_API]: {
+    [RSAA]: {
       endpoint: `${BASE_URL}/api/login`,
       method: "POST",
       types: [LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE],
@@ -83,7 +83,7 @@ export const LOGIN_GITHUB_FAILURE = "LOGIN_GITHUB_FAILURE";
 export function loginGithub() {
   console.log("loginGithub (apiActions.js)");
   return {
-    [CALL_API]: {
+    [RSAA]: {
       endpoint: `${BASE_URL}/auth/github`,
       method: "GET",
       mode: "no-cors",
@@ -112,9 +112,11 @@ export const REGISTRATION_FAILURE = "REGISTRATION_FAILURE";
 *     Dispatched if user already exists or password is invalid.
 *     Displays error to user, prompt to try again.
 */
-export function register(body) {
+export function registration(body) {
+  console.log("api register: body");
+  console.log(body);
   return {
-    [CALL_API]: {
+    [RSAA]: {
       endpoint: `${BASE_URL}/api/register`,
       method: "POST",
       types: [REGISTRATION_REQUEST, REGISTRATION_SUCCESS, REGISTRATION_FAILURE],
@@ -130,7 +132,7 @@ export const GET_PROFILE_FAILURE = "GET_PROFILE_FAILURE";
 
 export function getProfile(token, profileId) {
   return {
-    [CALL_API]: {
+    [RSAA]: {
       endpoint: `${BASE_URL}/api/profile/${profileId}`,
       method: "GET",
       types: [GET_PROFILE_REQUEST, GET_PROFILE_SUCCESS, GET_PROFILE_FAILURE],
