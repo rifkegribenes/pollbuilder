@@ -23,7 +23,7 @@ class Register extends React.Component {
     const { email, password, confirmPwd } = this.props.login.form;
 
     if (email && password === confirmPwd) {
-      const body = { password, email };
+      const body = { email, password };
       this.props.api
         .register(body)
         .then(result => {

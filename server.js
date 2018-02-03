@@ -62,7 +62,6 @@ app.get('/api/hello', (req, res) => {
 });
 
 
-// const router = require('express').Router();
 app.get('/auth/github', passport.authenticate('github'));
 
 app.get('/auth/github/callback/', passport.authenticate('github', {
@@ -73,6 +72,76 @@ app.get('/auth/github/callback/', passport.authenticate('github', {
 			console.log('success');
 			res.redirect('/');
 		});
+
+// =====================================
+// REGISTER ============================
+// =====================================
+
+// Register new users
+// Returns fail status + message -or- success status + JWT
+app.post('/register', (req, res) => {
+	console.log('app/routes/index.js > 31');
+	console.log(req.body);
+
+  // fail if missing required inputs
+  if (!req.body.password || !req.body.email) {
+    return res
+      .status(400)
+      .json({ 'message': 'Please complete all required fields.' });
+  }
+
+ const target = { email: req.body.email };
+
+  User.findOne(target)
+    .exec()
+    .then( user => {
+      // finding a user is bad - reject --> catch block
+      if (user && user.email === req.body.email) {
+        return Promise.reject('Email already registered.');
+      } else {
+        return undefined;
+      }
+    })
+    .then( () => {
+      // no user found, let's build a new one
+      const newUser = new User();
+      newUser.email = req.body.email;
+      newUser.hashPassword(req.body.password);
+      return newUser;
+    })
+    .then( newUser => {
+        // save new user to database
+        newUser.save( (err, savedUser ) => {
+          if (err) { throw err; }
+
+          // build filtered user profile for later response
+          const profile = {
+            email     : savedUser.email,
+            _id       : savedUser._id
+          };
+
+          // generate auth token
+          const token = savedUser.generateJWT();
+
+          // respond with profile & JWT
+          console.log('app/routes/index.js > 75');
+          console.log(profile);
+          console.log(token);
+          return res
+            .status(200)
+            .json({
+              'profile' : profile,
+              'token'   : token
+            });
+        });
+    })
+    .catch( err => {
+        console.log('Error!!!', err);
+        return res
+          .status(400)
+          .json({ message: err});
+    });
+});
 
 // launch ======================================================================
 var port = process.env.PORT || 8080;
