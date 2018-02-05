@@ -24,7 +24,9 @@ class App extends Component {
     //   .then(res => this.setState({ response: res.express }))
     //   .catch(err => console.log(err));
     console.log(`userId: ${window.localStorage.userId}`);
-    console.log(`authToken: ${window.localStorage.authToken}`);
+    console.log(
+      `authToken: ${window.localStorage.authToken ? "true" : "false"}`
+    );
     console.log(`loggedIn: ${this.props.appState.loggedIn}`);
   }
 

@@ -106,16 +106,17 @@ function appState(state = INITIAL_STATE, action) {
       );
       window.localStorage.setItem(
         "userId",
-        JSON.stringify(action.payload.profile._id)
+        JSON.stringify(action.payload.user._id)
       );
       return Object.assign({}, state, {
         spinnerClass: "spinner__hide",
         loggedIn: true,
         user: {
-          _id: action.payload.profile._id,
-          avatarUrl: action.payload.profile.avatarUrl,
-          displayName: action.payload.profile.displayName,
-          email: action.payload.profile.email
+          _id: action.payload.user._id,
+          avatarUrl: action.payload.user.avatarUrl || "",
+          firstName: action.payload.user.firstName || "",
+          lastName: action.payload.user.lastName || "",
+          email: action.payload.user.email
         },
         authToken: action.payload.token
       });
