@@ -50,7 +50,7 @@ class App extends Component {
             this.props.actions.dismissModal();
           }}
         />
-        <div className="app">
+        <div className="app" id="app">
           <Header history={this.props.history} />
           <main className="main" id="main">
             <Switch>

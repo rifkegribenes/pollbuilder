@@ -24,6 +24,8 @@ const INITIAL_STATE = {
   },
   form: {
     username: "",
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
     confirmPwd: "",
@@ -78,7 +80,8 @@ function login(state = INITIAL_STATE, action) {
     *  Purpose: Display API login error to user
     */
     case LOGIN_FAILURE:
-      error = "An unknown login error occurred";
+      error =
+        action.payload.message || "An unknown error occurred during login";
       return Object.assign({}, state, {
         spinnerClass: "spinner__hide",
         errorMsg: error

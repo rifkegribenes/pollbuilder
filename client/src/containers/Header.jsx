@@ -15,13 +15,16 @@ class Header extends React.Component {
         <Link className="nav__link" to="/login">
           Login
         </Link>
-        <Link
+        <button
           className="nav__link"
-          to="/"
-          onClick={() => this.props.actions.logout()}
+          onClick={() => {
+            this.props.actions.logout();
+            this.props.history.push("/");
+            console.log(`loggedIn: ${this.props.appState.loggedIn}`);
+          }}
         >
           Logout
-        </Link>
+        </button>
         {this.props.appState.loggedIn && (
           <div className="header__email">{this.props.appState.user.email}</div>
         )}

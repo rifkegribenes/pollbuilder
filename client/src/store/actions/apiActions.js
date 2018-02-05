@@ -54,9 +54,11 @@ export const LOGIN_FAILURE = "LOGIN_FAILURE";
 *     Displays error to user, prompt to try again or register.
 */
 export function login(body) {
+  console.log("login body");
+  console.log(body);
   return {
     [RSAA]: {
-      endpoint: `${BASE_URL}/api/login`,
+      endpoint: `${BASE_URL}/api/auth/login`,
       method: "POST",
       types: [LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE],
       headers: { "Content-Type": "application/json" },
@@ -117,7 +119,7 @@ export function registration(body) {
   console.log(body);
   return {
     [RSAA]: {
-      endpoint: `${BASE_URL}/api/register`,
+      endpoint: `${BASE_URL}/api/auth/register`,
       method: "POST",
       types: [REGISTRATION_REQUEST, REGISTRATION_SUCCESS, REGISTRATION_FAILURE],
       headers: { "Content-Type": "application/json" },

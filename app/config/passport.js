@@ -1,61 +1,52 @@
-'use strict';
+// Importing Passport, strategies, and config
+const passport = require('passport'),
+  User = require('../models/user'),
+  JwtStrategy = require('passport-jwt').Strategy,
+  ExtractJwt = require('passport-jwt').ExtractJwt,
+  LocalStrategy = require('passport-local');
 
-// load all the things we need
-var LocalStrategy = require('passport-local').Strategy;
-var GitHubStrategy = require('passport-github').Strategy;
+// Setting username field to email rather than username
+const localOptions = {
+  usernameField: 'email'
+};
 
-// load up the user model
-var User = require('../models/users');
-var configAuth = require('./auth');
+// Setting up local login strategy
+const localLogin = new LocalStrategy(localOptions, (email, password, done) => {
+  User.findOne({ email }, (err, user) => {
+    if (err) { return done(err); }
+    if (!user) { return done(null, false, { error: 'Your login details could not be verified. Please try again.' }); }
 
-// expose this function to our app using module.exports
-module.exports = function(passport) {
+    user.comparePassword(password, (err, isMatch) => {
+      if (err) { return done(err); }
+      if (!isMatch) { return done(null, false, { error: 'Your login details could not be verified. Please try again.' }); }
 
-  // =========================================================================
-  // passport session setup ==================================================
-  // =========================================================================
-  // required for persistent login sessions
-  // passport needs ability to serialize and deserialize users out of session
-
-  // serialize the user for the session
-  passport.serializeUser(function(user, done) {
-    done(null, user.id);
-  });
-
-  // deserialize the user
-  passport.deserializeUser(function(id, done) {
-    User.findById(id, function(err, user) {
-      done(err, user);
+      return done(null, user);
     });
   });
+});
 
-  // =========================================================================
-  // github  =================================================================
-  // =========================================================================
-  passport.use(new GitHubStrategy({
-  	clientID: configAuth.githubAuth.clientID,
-  	clientSecret: configAuth.githubAuth.clientSecret,
-  	redirect_uri: configAuth.githubAuth.callbackURL
-  	},
-  	function (token, refreshToken, profile, done) {
-  		console.log('passport.js > new GitHubStrategy');
-  		process.nextTick(function () {
-				var newUser = new User();
+// Setting JWT strategy options
+const jwtOptions = {
+  // Telling Passport to check authorization headers for JWT
+  jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme("jwt"),
+  // Telling Passport where to find the secret
+  secretOrKey: process.env.JWT_SECRET
 
-				newUser.github.id = profile.id;
-				newUser.github.username = profile.username;
-				newUser.github.displayName = profile.displayName;
-				newUser.github.publicRepos = profile._json.public_repos;
-				newUser.nbrClicks.clicks = 0;
+  // TO-DO: Add issuer and audience checks
+};
 
-				newUser.save(function (err) {
-          console.log('saving new user');
-					if (err) {
-						throw err;
-					}
+// Setting up JWT login strategy
+const jwtLogin = new JwtStrategy(jwtOptions, (payload, done) => {
+  User.findById(payload._id, (err, user) => {
+    if (err) { return done(err, false); }
 
-					return done(null, newUser);
-				});
-			});
-    }));
-}
+    if (user) {
+      done(null, user);
+    } else {
+      done(null, false);
+    }
+  });
+});
+
+passport.use(jwtLogin);
+passport.use(localLogin);

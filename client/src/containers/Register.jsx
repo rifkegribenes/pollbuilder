@@ -4,6 +4,8 @@ import { bindActionCreators } from "redux";
 import { Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 
+import Spinner from "./Spinner";
+import ModalSm from "./ModalSm";
 import * as Actions from "../store/actions";
 import * as apiActions from "../store/actions/apiActions";
 
@@ -20,10 +22,16 @@ class Register extends React.Component {
   handleRegister() {
     // clear previous errors
     this.props.actions.setRegError("");
-    const { email, password, confirmPwd } = this.props.login.form;
+    const {
+      firstName,
+      lastName,
+      email,
+      password,
+      confirmPwd
+    } = this.props.login.form;
 
-    if (email && password === confirmPwd) {
-      const body = { email, password };
+    if (firstName && lastName && email && password === confirmPwd) {
+      const body = { firstName, lastName, email, password };
       this.props.api
         .registration(body)
         .then(result => {
@@ -33,6 +41,8 @@ class Register extends React.Component {
           if (result.type === "REGISTRATION_SUCCESS") {
             // clear form
             this.props.actions.setFormField({
+              firstName: "",
+              lastName: "",
               email: "",
               password: "",
               confirmPwd: "",
@@ -42,11 +52,11 @@ class Register extends React.Component {
           }
         })
         .catch(err => {
-          console.log(err.response.data.message);
+          // console.log(err.response.data.message);
           console.log(err);
-          this.props.actions.setRegError(err.response.data.message);
+          this.props.actions.setRegError(err);
           this.props.actions.setFormField({
-            error: err.response.data.message
+            error: err
           });
         });
     } else if (!email) {
@@ -55,6 +65,9 @@ class Register extends React.Component {
     } else if (password !== confirmPwd) {
       console.log("Passwords do not match");
       this.props.actions.setRegError("Passwords do not match");
+    } else if (!firstName || !lastName) {
+      console.log("Full name is required");
+      this.props.actions.setRegError("Full name is required");
     } else {
       this.props.actions.setRegError("Please complete the form");
       console.log("Please complete the form");
@@ -80,108 +93,150 @@ class Register extends React.Component {
         ? "error"
         : "hidden";
     return (
-      <form className="container form">
-        <div className="form__body">
-          <div className="form__header">Create new Account</div>
-          <div className="form__input-group">
-            <label htmlFor="username" className="form__label">
-              Email
-            </label>
-            <input
-              className="form__input"
-              type="email"
-              placeholder="Email"
-              autoComplete="email"
-              id="email"
-              value={this.props.login.form.email}
-              onChange={event => this.handleInput(event)}
-            />
-          </div>
-          <div className="form__input-group">
-            <label htmlFor="username" className="form__label">
-              Password
-            </label>
-            <input
-              className="form__input"
-              type="password"
-              placeholder="Password"
-              autoComplete="new-password"
-              id="password"
-              value={this.props.login.form.password}
-              onChange={event => this.handleInput(event)}
-            />
-          </div>
-          <div className="form__input-group">
-            <label htmlFor="confirmPwd" className="form__label">
-              Confirm Password
-            </label>
-            <input
-              className="form__input"
-              type="password"
-              placeholder="Confirm Password"
-              autoComplete="new-password"
-              id="confirmPwd"
-              value={this.props.login.form.confirmPwd}
-              onChange={event => this.handleInput(event)}
-              required
-            />
-          </div>
-          <div className="form__input-group">
-            <div className="form__button-wrap">
-              <button
-                className="form__button pointer"
-                id="btn-register"
-                type="button"
-                onClick={() => this.handleRegister()}
-              >
-                Create account
-              </button>
+      <div>
+        <Spinner cssClass={this.props.register.spinnerClass} />
+        <ModalSm
+          modalClass={this.props.register.modal.class}
+          modalText={this.props.register.modal.text}
+          modalType="modal__info"
+          modalTitle={this.props.register.modal.title}
+          dismiss={() => {
+            this.props.actions.dismissRegModal();
+          }}
+        />
+        <form className="container form">
+          <div className="form__body">
+            <div className="form__header">Create new Account</div>
+            <div className="form__input-group">
+              <label htmlFor="firstName" className="form__label">
+                First name
+              </label>
+              <input
+                className="form__input"
+                type="text"
+                placeholder="First name"
+                autoComplete="given-name"
+                id="firstName"
+                value={this.props.login.form.firstName}
+                onChange={event => this.handleInput(event)}
+              />
+            </div>
+            <div className="form__input-group">
+              <label htmlFor="lastName" className="form__label">
+                Last name
+              </label>
+              <input
+                className="form__input"
+                type="text"
+                placeholder="Last name"
+                autoComplete="family-name"
+                id="lastName"
+                value={this.props.login.form.lastName}
+                onChange={event => this.handleInput(event)}
+              />
+            </div>
+            <div className="form__input-group">
+              <label htmlFor="email" className="form__label">
+                Email
+              </label>
+              <input
+                className="form__input"
+                type="email"
+                placeholder="Email"
+                autoComplete="email"
+                id="email"
+                value={this.props.login.form.email}
+                onChange={event => this.handleInput(event)}
+              />
+            </div>
+            <div className="form__input-group">
+              <label htmlFor="username" className="form__label">
+                Password
+              </label>
+              <input
+                className="form__input"
+                type="password"
+                placeholder="Password"
+                autoComplete="new-password"
+                id="password"
+                value={this.props.login.form.password}
+                onChange={event => this.handleInput(event)}
+              />
+            </div>
+            <div className="form__input-group">
+              <label htmlFor="confirmPwd" className="form__label">
+                Confirm Password
+              </label>
+              <input
+                className="form__input"
+                type="password"
+                placeholder="Confirm Password"
+                autoComplete="new-password"
+                id="confirmPwd"
+                value={this.props.login.form.confirmPwd}
+                onChange={event => this.handleInput(event)}
+                required
+              />
+            </div>
+            <div className="form__input-group">
+              <div className="form__button-wrap">
+                <button
+                  className="form__button pointer"
+                  id="btn-register"
+                  type="button"
+                  onClick={() => this.handleRegister()}
+                >
+                  Create account
+                </button>
+              </div>
+            </div>
+            <div className="form__input-group">
+              <Link className="form__login-link" to="/login">
+                Login with existing account
+              </Link>
+            </div>
+            <div className="form__input-group">
+              <hr className="form__hr" />
+              <div className="form__text">Or log in with&hellip;</div>
+              <div className="form__button-wrap">
+                <a
+                  className="form__button form__button--github"
+                  href="http://localhost:8080/auth/github/"
+                  id="btn-github"
+                >
+                  <span className="sr-only">Github</span>
+                </a>
+                <button
+                  className="form__button form__button--facebook"
+                  id="btn-facebook"
+                  onClick={() => this.login("facebook")}
+                >
+                  <span className="sr-only">Facebook</span>
+                </button>
+                <button
+                  className="form__button form__button--twitter"
+                  id="btn-twitter"
+                  onClick={() => this.login("twitter")}
+                >
+                  <span className="sr-only">form__button--twitter</span>
+                </button>
+                <button
+                  className="form__button form__button--google"
+                  id="btn-google"
+                  onClick={() => this.login("google")}
+                >
+                  <span className="sr-only">Google</span>
+                </button>
+              </div>
+            </div>
+            <div className="form__input-group">
+              <div className={errorClass}>
+                {this.props.register.regErrorMsg}
+              </div>
             </div>
           </div>
-          <div className="form__input-group">
-            <Link className="form__login-link" to="/login">
-              Login with existing account
-            </Link>
-          </div>
-          <div className="form__input-group">
-            <hr className="form__hr" />
-            <div className="form__text">Or log in with&hellip;</div>
-            <div className="form__button-wrap">
-              <a
-                className="form__button form__button--github"
-                href="http://localhost:8080/auth/github/"
-                id="btn-github"
-              >
-                <span className="sr-only">Github</span>
-              </a>
-              <button
-                className="form__button form__button--facebook"
-                id="btn-facebook"
-                onClick={() => this.login("facebook")}
-              >
-                <span className="sr-only">Facebook</span>
-              </button>
-              <button
-                className="form__button form__button--twitter"
-                id="btn-twitter"
-                onClick={() => this.login("twitter")}
-              >
-                <span className="sr-only">form__button--twitter</span>
-              </button>
-              <button
-                className="form__button form__button--google"
-                id="btn-google"
-                onClick={() => this.login("google")}
-              >
-                <span className="sr-only">Google</span>
-              </button>
-            </div>
-          </div>
-          <div className="form__input-group">
-            <div className={errorClass}>{this.props.register.regErrorMsg}</div>
-          </div>
-        </div>
-      </form>
+        </form>
+      </div>
     );
   }
 }

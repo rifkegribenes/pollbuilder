@@ -21,8 +21,7 @@ class Login extends React.Component {
     this.props.actions.setLoginError("");
     switch (strategy) {
       case "local":
-        const email = this.props.login.loginEmail;
-        const password = this.props.login.loginPassword;
+        const { email, password } = this.props.login.form;
         if (email && password) {
           const body = { email, password };
           this.props.api.login(body).then(result => {
@@ -56,12 +55,9 @@ class Login extends React.Component {
   * based on the input ID
   */
   handleInput(event) {
-    this.props.actions.setFormField({
-      [event.target.id]: event.target.value,
-      error: false
-    });
+    this.props.actions.setFormField(event.target.id, event.target.value);
     if (event.which === 13) {
-      this.handleRegister();
+      this.login();
     }
   }
 
@@ -103,6 +99,7 @@ class Login extends React.Component {
                 className="form__button pointer"
                 id="btn-login"
                 onClick={() => this.login("local")}
+                type="button"
               >
                 Sign In
               </button>
