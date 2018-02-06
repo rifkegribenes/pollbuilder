@@ -31,8 +31,6 @@ const jwtOptions = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme("jwt"),
   // Telling Passport where to find the secret
   secretOrKey: process.env.JWT_SECRET
-
-  // TO-DO: Add issuer and audience checks
 };
 
 // Setting up JWT login strategy

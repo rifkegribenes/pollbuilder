@@ -30,6 +30,7 @@ function register(state = INITIAL_STATE, action) {
     *  Purpose: Display spinner so user knows API action is in progress.
     */
     case REGISTRATION_REQUEST:
+      console.log("registration request");
       return Object.assign({}, state, {
         spinnerClass: "spinner__show",
         modal: {
