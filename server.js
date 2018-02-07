@@ -7,12 +7,11 @@ require('dotenv').load();
 var mongoose = require('mongoose');
 var cors = require('cors');
 var morgan = require('morgan');
-var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var session = require('express-session');
-
 var configDB = require('./app/config/database.js');
 const User = require('./app/models/user');
+const passport = require('passport');
+const session = require('express-session');
 
 
 // configuration ===============================================================
@@ -27,14 +26,23 @@ app.use(morgan('dev')); // Log requests to API using morgan
 
 // Enable CORS from client side
 app.use(cors());
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
-  res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Access-Control-Allow-Credentials');
-  res.header('Access-Control-Allow-Credentials', 'true');
-  next();
-});
+// app.use((req, res, next) => {
+//   res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+//   res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
+//   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Access-Control-Allow-Credentials');
+//   res.header('Access-Control-Allow-Credentials', 'true');
+//   next();
+// });
 
+app.use(session({
+  secret: process.env.JWT_SECRET,
+  resave: false,
+  saveUninitialized: true
+}))
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+
+// routes ======================================================================
 const router = require('./router');
 router(app);
 

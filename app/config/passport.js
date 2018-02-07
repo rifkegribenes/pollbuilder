@@ -48,3 +48,13 @@ const jwtLogin = new JwtStrategy(jwtOptions, (payload, done) => {
 
 passport.use(jwtLogin);
 passport.use(localLogin);
+
+passport.serializeUser(function (user, fn) {
+  fn(null, user.id);
+});
+
+passport.deserializeUser(function (id, fn) {
+  User.findOne({_id: id}, function (err, user) {
+    fn(err, user);
+  });
+});

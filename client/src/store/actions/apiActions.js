@@ -9,21 +9,24 @@ export const VALIDATE_TOKEN_FAILURE = "VALIDATE_TOKEN_FAILURE";
 * Function: validateToken - validates a token pulled from user's localStorage
 *  by attempting to get the profile for the user ID stored locally.
 * @param {string} token: the token from localStorage
-* @param {string} profileId: the profileId from localStorage
+* @param {string} userId: the userId from localStorage
 * This action dispatches additional actions as it executes:
 *   VALIDATE_TOKEN_REQUEST:
 *     Initiates a spinner on the home page.
 *   VALIDATE_TOKEN_SUCCESS:
-*     Dispatched if the token was valid and the profile is returned.
+*     Dispatched if the token was valid and the user object is returned.
 *     This logs the user in, stores the token and sets the current
 *     user profile.
 *   VALIDATE_TOKEN_FAILURE: Dispatched if the token was invalid.
 *     Logs the user out and deletes the values saved in localStorage.
 */
-export function validateToken(token, profileId) {
+export function validateToken(token, userId) {
+  console.log("attempting to validate token");
+  console.log(token);
+  console.log(userId);
   return {
     [RSAA]: {
-      endpoint: `${BASE_URL}/api/profile/${profileId}`,
+      endpoint: `${BASE_URL}/api/user/${userId}`,
       method: "GET",
       types: [
         VALIDATE_TOKEN_REQUEST,

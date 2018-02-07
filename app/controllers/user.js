@@ -17,9 +17,10 @@ const setUserInfo = (request) => {
 // User Routes
 //= =======================================
 exports.viewProfile = function (req, res, next) {
+  console.log('viewProfile (user controller from user route');
   const userId = req.params.userId;
 
-  if (req.user._id.toString() !== userId) { return res.status(401).json({ error: 'You are not authorized to view this user profile.' }); }
+  // if (req.user._id.toString() !== userId) { return res.status(401).json({ error: 'You are not authorized to view this user profile.' }); }
   User.findById(userId, (err, user) => {
     if (err) {
       res.status(400).json({ error: 'No user could be found for this ID.' });

@@ -60,6 +60,8 @@ const ModalSm = props => (
   </Modal>
 );
 
+Modal.setAppElement("body");
+
 ModalSm.propTypes = {
   modalClass: PropTypes.string.isRequired,
   modalText: PropTypes.string.isRequired,

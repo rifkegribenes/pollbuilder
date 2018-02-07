@@ -69,12 +69,13 @@ function appState(state = INITIAL_STATE, action) {
         spinnerClass: "spinner__hide",
         loggedIn: true,
         user: {
-          _id: action.payload._id,
-          avatarUrl: action.payload.avatarUrl,
-          displayName: action.payload.displayName,
-          email: action.payload.email
+          _id: action.payload.user._id,
+          avatarUrl: action.payload.user.avatarUrl || "",
+          firstName: action.payload.user.firstName || "",
+          lastName: action.payload.user.lastName || "",
+          email: action.payload.user.email
         },
-        authToken: action.meta.token
+        authToken: action.payload.token
       });
 
     /*

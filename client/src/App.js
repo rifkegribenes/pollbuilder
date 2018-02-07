@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Switch, Route, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-// import { bindActionCreators } from 'redux';
+import { bindActionCreators } from "redux";
 import PropTypes from "prop-types";
 
 import Header from "./containers/Header";
@@ -14,30 +14,25 @@ import NotFound from "./containers/NotFound";
 import Spinner from "./containers/Spinner";
 import ModalSm from "./containers/ModalSm";
 
-class App extends Component {
-  state = {
-    response: ""
-  };
+import * as apiActions from "./store/actions/apiActions";
 
+class App extends Component {
   componentDidMount() {
-    // this.callApi()
-    //   .then(res => this.setState({ response: res.express }))
-    //   .catch(err => console.log(err));
     console.log(`userId: ${window.localStorage.userId}`);
     console.log(
       `authToken: ${window.localStorage.authToken ? "true" : "false"}`
     );
     console.log(`loggedIn: ${this.props.appState.loggedIn}`);
+    let token = window.localStorage.getItem("authToken");
+    let userId = window.localStorage.getItem("userId");
+    if (token && token !== "undefined") {
+      console.log("found token (App.js");
+      token = JSON.parse(token);
+      userId = JSON.parse(userId);
+      // Update application state. User has token and is probably authenticated
+      this.props.api.validateToken(token, userId);
+    }
   }
-
-  callApi = async () => {
-    const response = await fetch("/api/hello");
-    const body = await response.json();
-
-    if (response.status !== 200) throw Error(body.message);
-
-    return body;
-  };
 
   render() {
     return (
@@ -102,4 +97,8 @@ const mapStateToProps = state => ({
   appState: state.appState
 });
 
-export default withRouter(connect(mapStateToProps)(App));
+const mapDispatchToProps = dispatch => ({
+  api: bindActionCreators(apiActions, dispatch)
+});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
