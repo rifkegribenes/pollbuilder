@@ -22,7 +22,6 @@ export const VALIDATE_TOKEN_FAILURE = "VALIDATE_TOKEN_FAILURE";
 */
 export function validateToken(token, userId) {
   console.log("attempting to validate token");
-  console.log(token);
   console.log(userId);
   return {
     [RSAA]: {

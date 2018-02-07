@@ -10,8 +10,9 @@ var morgan = require('morgan');
 var bodyParser = require('body-parser');
 var configDB = require('./app/config/database.js');
 const User = require('./app/models/user');
-const passport = require('passport');
 const session = require('express-session');
+const passport = require('passport');
+const user = require('./app/config/passport-serialize');
 
 
 // configuration ===============================================================
@@ -40,7 +41,11 @@ app.use(session({
   saveUninitialized: true
 }))
 app.use(passport.initialize());
-app.use(passport.session()); // persistent login sessions
+app.use(passport.session());
+
+
+passport.serializeUser(user.serialize);
+passport.deserializeUser(user.deserialize);
 
 // routes ======================================================================
 const router = require('./router');

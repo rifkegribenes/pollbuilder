@@ -7,11 +7,12 @@ const passport = require('passport'),
 
 // Setting username field to email rather than username
 const localOptions = {
-  usernameField: 'email'
+  usernameField: 'email',
+  passReqToCallback : true
 };
 
 // Setting up local login strategy
-const localLogin = new LocalStrategy(localOptions, (email, password, done) => {
+const localLogin = new LocalStrategy(localOptions, (req, email, password, done) => {
   User.findOne({ email }, (err, user) => {
     if (err) { return done(err); }
     if (!user) { return done(null, false, { error: 'Your login details could not be verified. Please try again.' }); }
@@ -28,13 +29,15 @@ const localLogin = new LocalStrategy(localOptions, (email, password, done) => {
 // Setting JWT strategy options
 const jwtOptions = {
   // Telling Passport to check authorization headers for JWT
-  jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme("jwt"),
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
   // Telling Passport where to find the secret
-  secretOrKey: process.env.JWT_SECRET
+  secretOrKey: process.env.JWT_SECRET,
+  passReqToCallback : true
 };
 
 // Setting up JWT login strategy
-const jwtLogin = new JwtStrategy(jwtOptions, (payload, done) => {
+const jwtLogin = new JwtStrategy(jwtOptions, (req, payload, done) => {
+  console.log('jwtLogin');
   User.findById(payload._id, (err, user) => {
     if (err) { return done(err, false); }
 
@@ -48,13 +51,3 @@ const jwtLogin = new JwtStrategy(jwtOptions, (payload, done) => {
 
 passport.use(jwtLogin);
 passport.use(localLogin);
-
-passport.serializeUser(function (user, fn) {
-  fn(null, user.id);
-});
-
-passport.deserializeUser(function (id, fn) {
-  User.findOne({_id: id}, function (err, user) {
-    fn(err, user);
-  });
-});

@@ -26,10 +26,9 @@ class App extends Component {
     let token = window.localStorage.getItem("authToken");
     let userId = window.localStorage.getItem("userId");
     if (token && token !== "undefined") {
-      console.log("found token (App.js");
       token = JSON.parse(token);
       userId = JSON.parse(userId);
-      // Update application state. User has token and is probably authenticated
+      // Update application state
       this.props.api.validateToken(token, userId);
     }
   }

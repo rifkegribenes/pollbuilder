@@ -52,9 +52,10 @@ module.exports = function (app) {
   apiRoutes.use('/user', userRoutes);
 
   // View user profile route
-  // userRoutes.get('/:userId', requireAuth, UserController.viewProfile);
+  userRoutes.get('/:userId', requireAuth, UserController.viewProfile);
   // apiRoutes.get('/user/:userId', requireAuth, UserController.viewProfile);
-  app.get('/api/user/:userId', UserController.viewProfile);
+  // app.get('/api/user/:userId', UserController.viewProfile);
+  // ^^ this works but is bypassing auth, need to fix
 
   // Test protected route
   apiRoutes.get('/protected', requireAuth, (req, res) => {
