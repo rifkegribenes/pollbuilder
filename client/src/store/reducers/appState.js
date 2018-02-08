@@ -42,7 +42,6 @@ function appState(state = INITIAL_STATE, action) {
     * Reset to initial state.
     */
     case LOGOUT:
-      console.log("logout");
       window.localStorage.removeItem("authToken");
       window.localStorage.removeItem("userId");
       return update(state, {
@@ -129,8 +128,6 @@ function appState(state = INITIAL_STATE, action) {
     * (also handled in register.js reducer)
     */
     case REGISTRATION_SUCCESS:
-      console.log("REG_SUCCESS (appState.js)");
-      console.log(action.payload);
       window.localStorage.setItem(
         "authToken",
         JSON.stringify(action.payload.token)

@@ -113,8 +113,6 @@ export const REGISTRATION_FAILURE = "REGISTRATION_FAILURE";
 *     Displays error to user, prompt to try again.
 */
 export function registration(body) {
-  console.log("api register: body");
-  console.log(body);
   return {
     [RSAA]: {
       endpoint: `${BASE_URL}/api/auth/register`,
