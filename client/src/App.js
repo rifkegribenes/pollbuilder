@@ -18,10 +18,6 @@ import * as apiActions from "./store/actions/apiActions";
 
 class App extends Component {
   componentDidMount() {
-    console.log(`userId: ${window.localStorage.userId}`);
-    console.log(
-      `authToken: ${window.localStorage.authToken ? "true" : "false"}`
-    );
     console.log(`loggedIn: ${this.props.appState.loggedIn}`);
     let token = window.localStorage.getItem("authToken");
     let userId = window.localStorage.getItem("userId");
