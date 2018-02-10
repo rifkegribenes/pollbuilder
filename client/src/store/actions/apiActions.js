@@ -112,7 +112,6 @@ export const LOGIN_FACEBOOK_FAILURE = "LOGIN_FACEBOOK_FAILURE";
 *     Displays error to user, prompt to try again or register.
 */
 export function loginFacebook() {
-  console.log("loginFacebook (apiActions.js)");
   return {
     [RSAA]: {
       endpoint: `${BASE_URL}/auth/facebook`,
