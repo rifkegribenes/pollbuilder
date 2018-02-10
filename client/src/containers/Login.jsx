@@ -39,6 +39,7 @@ class Login extends React.Component {
         this.props.api.loginGithub();
         break;
       case "facebook":
+        this.props.api.loginFacebook();
         break;
       case "twitter":
         break;
@@ -119,28 +120,28 @@ class Login extends React.Component {
                 href="http://localhost:8080/auth/github/"
                 id="btn-github"
               >
-                <span className="sr-only">Github</span>
+                <span>GH</span>
               </a>
-              <button
+              <a
                 className="form__button form__button--facebook"
                 id="btn-facebook"
-                onClick={() => this.login("facebook")}
+                href="http://localhost:8080/auth/facebook"
               >
-                <span className="sr-only">Facebook</span>
-              </button>
+                <span>FB</span>
+              </a>
               <button
                 className="form__button form__button--twitter"
                 id="btn-twitter"
                 onClick={() => this.login("twitter")}
               >
-                <span className="sr-only">form__button--twitter</span>
+                <span>TW</span>
               </button>
               <button
                 className="form__button form__button--google"
                 id="btn-google"
                 onClick={() => this.login("google")}
               >
-                <span className="sr-only">Google</span>
+                <span>G+</span>
               </button>
             </div>
           </div>

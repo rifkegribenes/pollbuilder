@@ -18,7 +18,6 @@ import * as apiActions from "./store/actions/apiActions";
 
 class App extends Component {
   componentDidMount() {
-    console.log(`loggedIn: ${this.props.appState.loggedIn}`);
     let token = window.localStorage.getItem("authToken");
     let userId = window.localStorage.getItem("userId");
     if (token && token !== "undefined") {

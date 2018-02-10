@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const User = require('../models/user');
+const passport = require('passport');
 
 // Generate JWT
 function generateToken(user) {
@@ -22,7 +23,7 @@ const setUserInfo = (request) => {
 };
 
 //= =======================================
-// Login Route
+// Local Login Route
 //= =======================================
 exports.login = function (req, res, next) {
   const userInfo = setUserInfo(req.user);
@@ -35,7 +36,7 @@ exports.login = function (req, res, next) {
 
 
 //= =======================================
-// Registration Route
+// Local Registration Route
 //= =======================================
 exports.register = function (req, res, next) {
 
@@ -89,6 +90,23 @@ exports.register = function (req, res, next) {
     });
   });
 };
+
+//= =======================================
+// Facebook Login Route
+//= =======================================
+exports.loginFacebook = () => {
+  console.log('loginFacebook');
+  passport.authenticate('facebook', {
+      scope : ['public_profile', 'email']
+    });
+};
+
+exports.fbCallback = (req, res, next) => {
+  passport.authenticate('facebook', {
+      successRedirect : '/profile',
+      failureRedirect : '/'
+  });
+}
 
 //= =======================================
 // Authorization Middleware

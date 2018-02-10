@@ -26,6 +26,17 @@ module.exports = function (app) {
     // communicationRoutes = express.Router();
 
   //= ========================
+  // Social logins
+  //= ========================
+
+  // app.get('/auth/facebook', AuthenticationController.loginFacebook);
+  app.get('/auth/facebook', passport.authenticate('facebook'));
+
+  // handle the callback after facebook has authenticated the user
+  app.get('/auth/facebook/callback', AuthenticationController.fbCallback);
+
+
+  //= ========================
   // Auth Routes
   //= ========================
 
@@ -53,9 +64,6 @@ module.exports = function (app) {
 
   // View user profile route
   userRoutes.get('/:userId', requireAuth, UserController.viewProfile);
-  // apiRoutes.get('/user/:userId', requireAuth, UserController.viewProfile);
-  // app.get('/api/user/:userId', UserController.viewProfile);
-  // ^^ this works but is bypassing auth, need to fix
 
   // Test protected route
   apiRoutes.get('/protected', requireAuth, (req, res) => {

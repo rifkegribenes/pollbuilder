@@ -1,4 +1,3 @@
-// Importing Node packages required for schema
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt-nodejs');
 
@@ -8,6 +7,7 @@ const Schema = mongoose.Schema;
 // User Schema
 //= ===============================
 const UserSchema = new Schema({
+  _id: { type: String },
   email: {
     type: String,
     lowercase: true,
@@ -20,7 +20,25 @@ const UserSchema = new Schema({
   },
   profile: {
     firstName: { type: String },
-    lastName: { type: String }
+    lastName: { type: String },
+    avatarUrl: { type: String },
+    displayName: { type: String },
+  },
+  facebook: {
+    token: { type: String },
+    id: { type: String },
+  },
+  github: {
+    token: { type: String },
+    id: { type: String },
+  },
+  twitter: {
+    token: { type: String },
+    id: { type: String },
+  },
+  google: {
+    token: { type: String },
+    id: { type: String },
   },
   resetPasswordToken: { type: String },
   resetPasswordExpires: { type: Date }

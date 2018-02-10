@@ -96,6 +96,41 @@ export function loginGithub() {
   };
 }
 
+export const LOGIN_FACEBOOK_REQUEST = "LOGIN_FACEBOOK_REQUEST";
+export const LOGIN_FACEBOOK_SUCCESS = "LOGIN_FACEBOOK_SUCCESS";
+export const LOGIN_FACEBOOK_FAILURE = "LOGIN_FACEBOOK_FAILURE";
+
+/*
+* Function: login - Attempts to log in by authenticating with facebook.
+*   returns a JWT if successful.
+* @param {string} body - the userID/password entered by user
+* This action dispatches additional actions as it executes:
+*   LOGIN_REQUEST: Initiates a spinner on the login page.
+*   LOGIN_SUCCESS: Dispatched if credentials valid and profile returned.
+*     Logs user in, stores token, sets current user profile in app state.
+*   LOGIN_FAILURE: Dispatched if credentials invalid.
+*     Displays error to user, prompt to try again or register.
+*/
+export function loginFacebook() {
+  console.log("loginFacebook (apiActions.js)");
+  return {
+    [RSAA]: {
+      endpoint: `${BASE_URL}/auth/facebook`,
+      method: "GET",
+      mode: "no-cors",
+      types: [
+        LOGIN_FACEBOOK_REQUEST,
+        LOGIN_FACEBOOK_SUCCESS,
+        LOGIN_FACEBOOK_FAILURE
+      ],
+      headers: {
+        "Content-Type": "application/jsonp",
+        "Access-Control-Allow-Origin": "*"
+      }
+    }
+  };
+}
+
 export const REGISTRATION_REQUEST = "REGISTRATION_REQUEST";
 export const REGISTRATION_SUCCESS = "REGISTRATION_SUCCESS";
 export const REGISTRATION_FAILURE = "REGISTRATION_FAILURE";
