@@ -26,6 +26,9 @@ class App extends Component {
       // Update application state
       this.props.api.validateToken(token, userId);
     }
+    const query = new URLSearchParams(window.location.search);
+    const code = query.get("code");
+    console.log(code);
   }
 
   render() {
@@ -48,6 +51,10 @@ class App extends Component {
               <Route
                 exact
                 path="/"
+                render={routeProps => <Home {...routeProps} />}
+              />
+              <Route
+                path="/auth/facebook/callback"
                 render={routeProps => <Home {...routeProps} />}
               />
               <Route
