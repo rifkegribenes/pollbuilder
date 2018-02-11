@@ -12,19 +12,23 @@ class Header extends React.Component {
         <Link className="nav__link" to="/">
           Home
         </Link>
-        <Link className="nav__link" to="/login">
-          Login
-        </Link>
-        <button
-          className="nav__link"
-          onClick={() => {
-            this.props.actions.logout();
-            this.props.history.push("/");
-            console.log(`loggedIn: ${this.props.appState.loggedIn}`);
-          }}
-        >
-          Logout
-        </button>
+        {!this.props.appState.loggedIn && (
+          <Link className="nav__link" to="/login">
+            Login
+          </Link>
+        )}
+        {this.props.appState.loggedIn && (
+          <button
+            className="nav__link"
+            onClick={() => {
+              this.props.actions.logout();
+              this.props.history.push("/");
+              console.log(`loggedIn: ${this.props.appState.loggedIn}`);
+            }}
+          >
+            Logout
+          </button>
+        )}
         {this.props.appState.loggedIn && (
           <div className="header__email">{this.props.appState.user.email}</div>
         )}

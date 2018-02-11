@@ -3,6 +3,7 @@ import { Switch, Route, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import PropTypes from "prop-types";
+// import { parse } from 'query-string';
 
 import Header from "./containers/Header";
 import Home from "./containers/Home";
@@ -13,11 +14,25 @@ import Footer from "./containers/Footer";
 import NotFound from "./containers/NotFound";
 import Spinner from "./containers/Spinner";
 import ModalSm from "./containers/ModalSm";
+import FBCallback from "./containers/FBCallback";
+import Verify from "./containers/FBCallback";
 
 import * as apiActions from "./store/actions/apiActions";
+import * as Actions from "../store/actions";
 
 class App extends Component {
   componentDidMount() {
+    if (window.location.hash == "#_=_") {
+      console.log("found facebook callback hash");
+      this.props.actions.setLoggedIn();
+      window.history.replaceState
+        ? window.history.replaceState(
+            null,
+            null,
+            window.location.href.split("#")[0]
+          )
+        : (window.location.hash = "");
+    }
     let token = window.localStorage.getItem("authToken");
     let userId = window.localStorage.getItem("userId");
     if (token && token !== "undefined") {
@@ -26,9 +41,6 @@ class App extends Component {
       // Update application state
       this.props.api.validateToken(token, userId);
     }
-    const query = new URLSearchParams(window.location.search);
-    const code = query.get("code");
-    console.log(code);
   }
 
   render() {
@@ -54,8 +66,12 @@ class App extends Component {
                 render={routeProps => <Home {...routeProps} />}
               />
               <Route
+                path="/verify_account"
+                render={routeProps => <Verify {...routeProps} />}
+              />
+              <Route
                 path="/auth/facebook/callback"
-                render={routeProps => <Home {...routeProps} />}
+                render={routeProps => <FBCallback {...routeProps} />}
               />
               <Route
                 exact
@@ -99,6 +115,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  actions: bindActionCreators(Actions, dispatch),
   api: bindActionCreators(apiActions, dispatch)
 });
 

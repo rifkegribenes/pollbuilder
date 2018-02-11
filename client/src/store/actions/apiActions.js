@@ -130,6 +130,41 @@ export function loginFacebook() {
   };
 }
 
+export const CALLBACK_FACEBOOK_REQUEST = "CALLBACK_FACEBOOK_REQUEST";
+export const CALLBACK_FACEBOOK_SUCCESS = "CALLBACK_FACEBOOK_SUCCESS";
+export const CALLBACK_FACEBOOK_FAILURE = "CALLBACK_FACEBOOK_FAILURE";
+
+/*
+* Function: FB Callback - Attempts to log in by authenticating with facebook.
+*   returns a JWT if successful.
+* @param {string} body - the userID/password entered by user
+* This action dispatches additional actions as it executes:
+*   CALLBACK_FACEBOOK_REQUEST: Initiates a spinner on the login page.
+*   CALLBACK_FACEBOOK_SUCCESS: Dispatched if credentials valid and profile returned.
+*     Logs user in, stores fb token, sets current user profile in app state.
+*   CALLBACK_FACEBOOK_FAILURE: Dispatched if credentials invalid.
+*     Displays error to user, prompt to try again or register.
+*/
+export function callbackFacebook() {
+  console.log(`apiActions > callbackFacebook`);
+  return {
+    [RSAA]: {
+      endpoint: `${BASE_URL}/auth/facebook/callback`,
+      method: "GET",
+      mode: "no-cors",
+      types: [
+        CALLBACK_FACEBOOK_REQUEST,
+        CALLBACK_FACEBOOK_SUCCESS,
+        CALLBACK_FACEBOOK_FAILURE
+      ],
+      headers: {
+        "Content-Type": "application/jsonp",
+        "Access-Control-Allow-Origin": "*"
+      }
+    }
+  };
+}
+
 export const REGISTRATION_REQUEST = "REGISTRATION_REQUEST";
 export const REGISTRATION_SUCCESS = "REGISTRATION_SUCCESS";
 export const REGISTRATION_FAILURE = "REGISTRATION_FAILURE";

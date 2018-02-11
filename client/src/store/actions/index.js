@@ -1,4 +1,5 @@
 export const LOGOUT = "LOGOUT";
+export const SET_LOGGEDIN = "SET_LOGGEDIN";
 export const SET_FORM_FIELD = "SET_FORM_FIELD";
 export const SET_LOGIN_ERROR = "SET_LOGIN_ERROR";
 export const SET_PROFILE_VIEW = "SET_PROFILE_VIEW";
@@ -29,6 +30,12 @@ export function dismissRegModal() {
 export function logout() {
   return {
     type: LOGOUT
+  };
+}
+
+export function setLoggedIn() {
+  return {
+    type: SET_LOGGEDIN
   };
 }
 

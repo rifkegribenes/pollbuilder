@@ -5,7 +5,9 @@ import {
   VALIDATE_TOKEN_REQUEST,
   VALIDATE_TOKEN_SUCCESS,
   VALIDATE_TOKEN_FAILURE,
+  CALLBACK_FACEBOOK_SUCCESS,
   LOGIN_SUCCESS,
+  SET_LOGGEDIN,
   REGISTRATION_SUCCESS
 } from "../actions/apiActions";
 
@@ -15,8 +17,13 @@ const INITIAL_STATE = {
   user: {
     _id: "",
     avatarUrl: "",
-    displayName: "",
-    email: ""
+    firstName: "",
+    lastName: "",
+    email: "",
+    facebook: {
+      token: "",
+      id: ""
+    }
   },
   spinnerClass: "spinner__hide",
   modal: {
@@ -108,6 +115,42 @@ function appState(state = INITIAL_STATE, action) {
         "userId",
         JSON.stringify(action.payload.user._id)
       );
+      return Object.assign({}, state, {
+        spinnerClass: "spinner__hide",
+        loggedIn: true,
+        user: {
+          _id: action.payload.user._id,
+          avatarUrl: action.payload.user.avatarUrl || "",
+          firstName: action.payload.user.firstName || "",
+          lastName: action.payload.user.lastName || "",
+          email: action.payload.user.email
+        },
+        authToken: action.payload.token
+      });
+
+    /*
+    * This action is issued from the <App/> component if it finds a
+    * Facebook redirect hash in the URL, indicating that Facebook auth
+    * was successful.
+    * Hide the spinner, Set loggedIn to true.
+    */
+    case SET_LOGGEDIN:
+      return Object.assign({}, state, {
+        spinnerClass: "spinner__hide",
+        loggedIn: true
+      });
+
+    /*
+    * This action is issued from the <FBCallback/> component,
+    * when the FB token is successfully validated by the server.
+    * On CALLBACK_FACEBOOK_SUCCESS action, set the spinner class to hide.
+    * This hides the spinner component on the home page so user knows
+    * the action is complete.
+    * Save the userId and fb token in the redux store...set loggedIn to TRUE.
+    */
+    case CALLBACK_FACEBOOK_SUCCESS:
+      console.log("callback facebook success");
+      console.log(action.payload);
       return Object.assign({}, state, {
         spinnerClass: "spinner__hide",
         loggedIn: true,
