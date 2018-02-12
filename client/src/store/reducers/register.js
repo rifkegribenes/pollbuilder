@@ -61,10 +61,13 @@ function register(state = INITIAL_STATE, action) {
     */
     case REGISTRATION_FAILURE:
       console.log("registration failure:");
-      console.log(action.payload.Error);
-      error =
-        JSON.parse(action.payload.Error) ||
-        "An unknown error occurred during registration";
+      console.dir(action.payload);
+      typeof action.payload === "string"
+        ? (error = action.payload)
+        : (error = action.payload.response.error);
+      if (typeof error === "undefined") {
+        error = "An unknown error occurred during registration";
+      }
       return Object.assign({}, state, {
         spinnerClass: "spinner__hide",
         modal: {

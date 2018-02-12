@@ -1,13 +1,12 @@
 import update from "immutability-helper";
 
-import { LOGOUT } from "../actions";
+import { LOGOUT, SET_LOGGEDIN } from "../actions";
 import {
   VALIDATE_TOKEN_REQUEST,
   VALIDATE_TOKEN_SUCCESS,
   VALIDATE_TOKEN_FAILURE,
   CALLBACK_FACEBOOK_SUCCESS,
   LOGIN_SUCCESS,
-  SET_LOGGEDIN,
   REGISTRATION_SUCCESS
 } from "../actions/apiActions";
 

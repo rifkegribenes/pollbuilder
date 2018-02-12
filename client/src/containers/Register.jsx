@@ -53,8 +53,11 @@ class Register extends React.Component {
         })
         .catch(err => {
           // console.log(err.response.data.message);
+          let error;
           console.log(err);
-          this.props.actions.setRegError(err);
+          typeof err === "string" ? (error = err) : (error = err.error);
+          console.log(error);
+          this.props.actions.setRegError(error);
           this.props.actions.setFormField({
             error: err
           });

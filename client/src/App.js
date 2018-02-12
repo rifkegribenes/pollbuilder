@@ -14,15 +14,13 @@ import Footer from "./containers/Footer";
 import NotFound from "./containers/NotFound";
 import Spinner from "./containers/Spinner";
 import ModalSm from "./containers/ModalSm";
-import FBCallback from "./containers/FBCallback";
-import Verify from "./containers/FBCallback";
 
 import * as apiActions from "./store/actions/apiActions";
-import * as Actions from "../store/actions";
+import * as Actions from "./store/actions";
 
 class App extends Component {
   componentDidMount() {
-    if (window.location.hash == "#_=_") {
+    if (window.location.hash === "#_=_") {
       console.log("found facebook callback hash");
       this.props.actions.setLoggedIn();
       window.history.replaceState
@@ -64,14 +62,6 @@ class App extends Component {
                 exact
                 path="/"
                 render={routeProps => <Home {...routeProps} />}
-              />
-              <Route
-                path="/verify_account"
-                render={routeProps => <Verify {...routeProps} />}
-              />
-              <Route
-                path="/auth/facebook/callback"
-                render={routeProps => <FBCallback {...routeProps} />}
               />
               <Route
                 exact
