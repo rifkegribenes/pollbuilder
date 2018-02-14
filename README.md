@@ -18,6 +18,6 @@
 
 * As an authenticated user, if I don't like the options on a poll, I can create a new option.
 
-#### Screenshot
+#### Screenshot:
 
 ![voting app screenshot](#)
