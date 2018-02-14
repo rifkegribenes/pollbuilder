@@ -15,13 +15,29 @@ const INITIAL_STATE = {
   authToken: "",
   user: {
     _id: "",
-    avatarUrl: "",
-    firstName: "",
-    lastName: "",
-    email: "",
+    local: {
+      email: ""
+    },
+    profile: {
+      avatarUrl: "",
+      firstName: "",
+      lastName: "",
+      email: ""
+    },
     facebook: {
       token: "",
-      id: ""
+      id: "",
+      email: ""
+    },
+    github: {
+      token: "",
+      id: "",
+      email: ""
+    },
+    google: {
+      token: "",
+      id: "",
+      email: ""
     }
   },
   spinnerClass: "spinner__hide",
@@ -70,9 +86,12 @@ function appState(state = INITIAL_STATE, action) {
     * Save the userId and token in the redux store...set loggedIn to TRUE.
     */
     case VALIDATE_TOKEN_SUCCESS:
-      return Object.assign({}, state, {
-        spinnerClass: "spinner__hide",
-        loggedIn: true,
+      return update(state, {
+        loggedIn: { $set: false }
+      });
+      return update(state, {
+        spinnerClass: { $set: "spinner__hide" },
+        loggedIn: { $set: true },
         user: {
           _id: action.payload.user._id,
           avatarUrl: action.payload.user.avatarUrl || "",

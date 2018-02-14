@@ -7,38 +7,30 @@ const Schema = mongoose.Schema;
 // User Schema
 //= ===============================
 const UserSchema = new Schema({
-  _id: { type: String },
-  email: {
-    type: String,
-    lowercase: true,
-    unique: true,
-    required: true
-  },
-  password: {
-    type: String,
-    required: true
+  local: {
+    email: { type: String },
+    password: { type: String }
   },
   profile: {
     firstName: { type: String },
     lastName: { type: String },
     avatarUrl: { type: String },
-    displayName: { type: String },
+    email: { type: String }
   },
   facebook: {
     token: { type: String },
     id: { type: String },
+    email: { type: String }
   },
   github: {
     token: { type: String },
     id: { type: String },
-  },
-  twitter: {
-    token: { type: String },
-    id: { type: String },
+    email: { type: String }
   },
   google: {
     token: { type: String },
     id: { type: String },
+    email: { type: String }
   },
   resetPasswordToken: { type: String },
   resetPasswordExpires: { type: Date }

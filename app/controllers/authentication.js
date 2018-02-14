@@ -40,6 +40,8 @@ exports.login = function (req, res, next) {
 //= =======================================
 exports.register = function (req, res, next) {
 
+  console.log(req.body);
+
   // Check for registration errors
   const email = req.body.email;
   const firstName = req.body.firstName;
@@ -62,7 +64,11 @@ exports.register = function (req, res, next) {
   }
 
   User.findOne({ email }, (err, existingUser) => {
-    if (err) { return next(err); }
+    if (err) {
+      console.log('authentication.js > 68');
+      console.log(err);
+      return next(err);
+    }
 
       // If user is not unique, return error
     if (existingUser) {
@@ -77,7 +83,11 @@ exports.register = function (req, res, next) {
     });
 
     user.save((err, user) => {
-      if (err) { return next(err); }
+      if (err) {
+        console.log('authentication.js > 87');
+        console.log(err);
+        return next(err);
+      }
 
       // Respond with JWT if user was created
 

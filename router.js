@@ -1,16 +1,20 @@
+const APP_HOST = process.env.APP_HOST;
+const CLIENT_URL = process.env.NODE_ENV === 'production' ? APP_HOST : '//localhost:3000';
+const SERVER_URL = process.env.NODE_ENV === 'production' ? APP_HOST : '//localhost:8080';
+
+
 const AuthenticationController = require('./app/controllers/authentication');
 const UserController = require('./app/controllers/user');
-// const ChatController = require('./controllers/chat');
-// const CommunicationController = require('./controllers/communication');
-// const StripeController = require('./controllers/stripe');
+
 const express = require('express');
 const passport = require('passport');
-// const ROLE_MEMBER = require('./constants').ROLE_MEMBER;
-// const ROLE_CLIENT = require('./constants').ROLE_CLIENT;
-// const ROLE_OWNER = require('./constants').ROLE_OWNER;
-// const ROLE_ADMIN = require('./constants').ROLE_ADMIN;
+const FacebookStrategy = require('passport-facebook').Strategy;
+const User = require('./app/models/user');
+const Auth = require('./app/config/auth');
 
 const passportService = require('./app/config/passport');
+
+
 
 // Middleware to require login/auth
 const requireAuth = passport.authenticate('jwt', { session: false });
@@ -21,19 +25,89 @@ module.exports = function (app) {
   const apiRoutes = express.Router(),
     authRoutes = express.Router(),
     userRoutes = express.Router();
-    // chatRoutes = express.Router(),
-    // payRoutes = express.Router(),
-    // communicationRoutes = express.Router();
+
 
   //= ========================
   // Social logins
   //= ========================
 
-  // app.get('/auth/facebook', AuthenticationController.loginFacebook);
-  app.get('/auth/facebook', passport.authenticate('facebook'));
+  // Facebook strategy options
+const facebookOptions = {
+  clientID: Auth.facebookAuth.clientID,
+  clientSecret: Auth.facebookAuth.clientSecret,
+  callbackURL: Auth.facebookAuth.callbackURL,
+  profileFields: ['id', 'emails', 'name', 'photos'],
+  passReqToCallback: true
+};
 
-  // handle the callback after facebook has authenticated the user
-  app.get('/auth/facebook/callback', AuthenticationController.fbCallback);
+// Facebook login strategy
+passport.use(new FacebookStrategy(facebookOptions,
+  (req, token, refreshToken, profile, done) => {
+    console.log(`Facebook login by ${profile.name.givenName} ${profile.name.familyName}, ID: ${profile.id}`);
+    console.log(profile);
+    process.nextTick(function() {
+      User.findOne({'facebook.id': profile.id}, function(err, user) {
+        if (err) {
+            return done(err, false);
+        }
+        if (!user) {
+          console.log('fb new user');
+
+          // if no user found with that facebook id, create one
+          var newUser = new User();
+          newUser.facebook.id = profile.id;
+          newUser.facebook.token = token;
+          newUser.firstName = profile.name.givenName;
+          newUser.lastName = profile.name.familyName;
+          newUser.email = profile.emails[0].value;
+          newUser.avatarUrl = profile.photos[0].value;
+
+          // save new user to the database
+          newUser.save(function(err) {
+              console.log('saving new user to db');
+              if (err)
+                console.log(err);
+
+              return done(err, user);
+          });
+        } else {
+          //found user. Return
+          console.log('fb found user');
+          return done(err, user);
+        }
+      });
+    });
+  }));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.serializeUser(function (user, done) {
+    done(null, user);
+});
+
+passport.deserializeUser(function (user, done) {
+    done(null, user);
+});
+
+// app.get('/auth/facebook', AuthenticationController.loginFacebook);
+app.get('/auth/facebook', passport.authenticate(
+     'facebook',
+     {scope:['public_profile', 'email']}
+   ));
+
+// handle the callback after facebook has authenticated the user
+// return user object and fb token to client
+// app.get('/auth/facebook/callback', AuthenticationController.fbCallback);
+app.get('/auth/facebook/callback', passport.authenticate('facebook', {
+  // need to handle login errors client-side here if redirected to login
+  failureRedirect: `${CLIENT_URL}/login` }), ((req, res) => {
+    // successful authentication from facebook
+    console.log('Facebook Auth Succeeded');
+    console.log(req.isAuthenticated());
+    let postLoginPath = `${CLIENT_URL}/`
+    res.redirect(postLoginPath);
+}));
 
 
   //= ========================

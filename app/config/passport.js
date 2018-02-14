@@ -66,6 +66,8 @@ const facebookOptions = {
 const facebookLogin = new FacebookStrategy(facebookOptions,
   (req, token, refreshToken, profile, done) => {
     console.log('facebookStrategy');
+    console.log(`token: ${token}`);
+    console.log(`Facebook login by ${profile.displayName}, ID: ${profile.id}`);
     process.nextTick(function() {
       User.findOrCreate({ [facebook.id]: profile.id }, (err, user) => {
         if (err) { return done(err, false); }
@@ -86,6 +88,7 @@ const facebookLogin = new FacebookStrategy(facebookOptions,
 
           // save new user to the database
           newUser.save(function(err) {
+            console.log('saving new user to db');
             if (err)
               throw err;
 
