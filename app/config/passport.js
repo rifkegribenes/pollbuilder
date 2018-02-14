@@ -17,9 +17,9 @@ const localOptions = {
 // Local login strategy
 const localLogin = new LocalStrategy(localOptions,
   (req, email, password, done) => {
-    User.findOne({ email }, (err, user) => {
+    User.findOne({ 'local.email': email }, (err, user) => {
       if (err) { return done(err); }
-      if (!user) { return done(null, false, { error: 'Your login details could not be verified. Please try again.' }); }
+      if (!user) { return done(null, false, { error: 'No user account found with that email. Please try again.' }); }
 
       user.comparePassword(password, (err, isMatch) => {
         if (err) { return done(err); }

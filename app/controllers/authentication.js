@@ -15,8 +15,7 @@ const setUserInfo = (request) => {
     _id: request._id,
     firstName: request.profile.firstName,
     lastName: request.profile.lastName,
-    email: request.email,
-    role: request.role
+    email: request.profile.email
   };
 
   return getUserInfo;
@@ -63,7 +62,7 @@ exports.register = function (req, res, next) {
     return res.status(422).send({ error: 'You must enter a password.' });
   }
 
-  User.findOne({ email }, (err, existingUser) => {
+  User.findOne({ 'local.email': email }, (err, existingUser) => {
     if (err) {
       console.log('authentication.js > 68');
       console.log(err);
@@ -77,9 +76,8 @@ exports.register = function (req, res, next) {
 
       // If email is unique and password was provided, create account
     const user = new User({
-      email,
-      password,
-      profile: { firstName, lastName }
+      local: { email, password },
+      profile: { firstName, lastName, email }
     });
 
     user.save((err, user) => {

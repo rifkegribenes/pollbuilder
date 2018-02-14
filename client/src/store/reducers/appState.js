@@ -87,19 +87,18 @@ function appState(state = INITIAL_STATE, action) {
     */
     case VALIDATE_TOKEN_SUCCESS:
       return update(state, {
-        loggedIn: { $set: false }
-      });
-      return update(state, {
         spinnerClass: { $set: "spinner__hide" },
         loggedIn: { $set: true },
         user: {
-          _id: action.payload.user._id,
-          avatarUrl: action.payload.user.avatarUrl || "",
-          firstName: action.payload.user.firstName || "",
-          lastName: action.payload.user.lastName || "",
-          email: action.payload.user.email
+          _id: { $set: action.payload.user._id },
+          profile: {
+            avatarUrl: { $set: action.payload.user.avatarUrl || "" },
+            firstName: { $set: action.payload.user.firstName || "" },
+            lastName: { $set: action.payload.user.lastName || "" },
+            email: { $set: action.payload.user.email }
+          }
         },
-        authToken: action.payload.token
+        authToken: { $set: action.payload.token }
       });
 
     /*
@@ -133,17 +132,19 @@ function appState(state = INITIAL_STATE, action) {
         "userId",
         JSON.stringify(action.payload.user._id)
       );
-      return Object.assign({}, state, {
-        spinnerClass: "spinner__hide",
-        loggedIn: true,
+      return update(state, {
+        spinnerClass: { $set: "spinner__hide" },
+        loggedIn: { $set: true },
         user: {
-          _id: action.payload.user._id,
-          avatarUrl: action.payload.user.avatarUrl || "",
-          firstName: action.payload.user.firstName || "",
-          lastName: action.payload.user.lastName || "",
-          email: action.payload.user.email
+          _id: { $set: action.payload.user._id },
+          profile: {
+            avatarUrl: { $set: action.payload.user.avatarUrl || "" },
+            firstName: { $set: action.payload.user.firstName || "" },
+            lastName: { $set: action.payload.user.lastName || "" },
+            email: { $set: action.payload.user.email }
+          }
         },
-        authToken: action.payload.token
+        authToken: { $set: action.payload.token }
       });
 
     /*
@@ -169,17 +170,19 @@ function appState(state = INITIAL_STATE, action) {
     case CALLBACK_FACEBOOK_SUCCESS:
       console.log("callback facebook success");
       console.log(action.payload);
-      return Object.assign({}, state, {
-        spinnerClass: "spinner__hide",
-        loggedIn: true,
+      return update(state, {
+        spinnerClass: { $set: "spinner__hide" },
+        loggedIn: { $set: true },
         user: {
-          _id: action.payload.user._id,
-          avatarUrl: action.payload.user.avatarUrl || "",
-          firstName: action.payload.user.firstName || "",
-          lastName: action.payload.user.lastName || "",
-          email: action.payload.user.email
+          _id: { $set: action.payload.user._id },
+          profile: {
+            avatarUrl: { $set: action.payload.user.avatarUrl || "" },
+            firstName: { $set: action.payload.user.firstName || "" },
+            lastName: { $set: action.payload.user.lastName || "" },
+            email: { $set: action.payload.user.email }
+          }
         },
-        authToken: action.payload.token
+        authToken: { $set: action.payload.token }
       });
 
     /*
@@ -197,16 +200,19 @@ function appState(state = INITIAL_STATE, action) {
         "userId",
         JSON.stringify(action.payload.user._id)
       );
-      return Object.assign({}, state, {
-        loggedIn: true,
+      return update(state, {
+        spinnerClass: { $set: "spinner__hide" },
+        loggedIn: { $set: true },
         user: {
-          _id: action.payload.user._id,
-          avatarUrl: action.payload.user.avatarUrl || "",
-          firstName: action.payload.user.firstName || "",
-          lastName: action.payload.user.lastName || "",
-          email: action.payload.user.email
+          _id: { $set: action.payload.user._id },
+          profile: {
+            avatarUrl: { $set: action.payload.user.avatarUrl || "" },
+            firstName: { $set: action.payload.user.firstName || "" },
+            lastName: { $set: action.payload.user.lastName || "" },
+            email: { $set: action.payload.user.email }
+          }
         },
-        authToken: action.payload.token
+        authToken: { $set: action.payload.token }
       });
 
     default:

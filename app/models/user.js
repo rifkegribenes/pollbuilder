@@ -48,14 +48,14 @@ UserSchema.pre('save', function (next) {
   const user = this,
     SALT_FACTOR = 5;
 
-  if (!user.isModified('password')) return next();
+  if (!user.isModified('local.password')) return next();
 
   bcrypt.genSalt(SALT_FACTOR, (err, salt) => {
     if (err) return next(err);
 
-    bcrypt.hash(user.password, salt, null, (err, hash) => {
+    bcrypt.hash(user.local.password, salt, null, (err, hash) => {
       if (err) return next(err);
-      user.password = hash;
+      user.local.password = hash;
       next();
     });
   });
@@ -63,7 +63,7 @@ UserSchema.pre('save', function (next) {
 
 // Method to compare password for login
 UserSchema.methods.comparePassword = function (candidatePassword, cb) {
-  bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
+  bcrypt.compare(candidatePassword, this.local.password, (err, isMatch) => {
     if (err) { return cb(err); }
 
     cb(null, isMatch);

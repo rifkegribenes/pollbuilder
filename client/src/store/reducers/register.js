@@ -62,10 +62,13 @@ function register(state = INITIAL_STATE, action) {
     case REGISTRATION_FAILURE:
       console.log("registration failure:");
       console.dir(action.payload);
-      typeof action.payload === "string"
-        ? (error = action.payload)
-        : (error = action.payload.response.error);
-      if (typeof error === "undefined") {
+      if (typeof action.payload === "string") {
+        error = action.payload;
+      } else if (typeof action.payload.message === "string") {
+        error = action.payload.message;
+      } else if (typeof action.payload.response.error === "string") {
+        error = action.payload.response.error;
+      } else if (typeof error === "undefined") {
         error = "An unknown error occurred during registration";
       }
       return Object.assign({}, state, {

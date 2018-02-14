@@ -9,12 +9,33 @@ const UserController = require('./app/controllers/user');
 const express = require('express');
 const passport = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
+const LocalStrategy = require('passport-local').Strategy;
 const User = require('./app/models/user');
 const Auth = require('./app/config/auth');
 
 const passportService = require('./app/config/passport');
 
+// Local strategy options
+const localOptions = {
+  usernameField: 'email',
+  passReqToCallback : true
+};
 
+// Local login strategy
+const localLogin = new LocalStrategy(localOptions,
+  (req, email, password, done) => {
+    User.findOne({ 'local.email': email }, (err, user) => {
+      if (err) { return done(err); }
+      if (!user) { return done(null, false, { error: 'No user account found with that email. Please try again.' }); }
+
+      user.comparePassword(password, (err, isMatch) => {
+        if (err) { return done(err); }
+        if (!isMatch) { return done(null, false, { error: 'Your login details could not be verified. Please try again.' }); }
+
+        return done(null, user);
+      });
+    });
+});
 
 // Middleware to require login/auth
 const requireAuth = passport.authenticate('jwt', { session: false });
@@ -57,18 +78,19 @@ passport.use(new FacebookStrategy(facebookOptions,
           var newUser = new User();
           newUser.facebook.id = profile.id;
           newUser.facebook.token = token;
-          newUser.firstName = profile.name.givenName;
-          newUser.lastName = profile.name.familyName;
-          newUser.email = profile.emails[0].value;
-          newUser.avatarUrl = profile.photos[0].value;
+          newUser.facebook.email = profile.emails[0].value;
+          newUser.profile.firstName = profile.name.givenName;
+          newUser.profile.lastName = profile.name.familyName;
+          newUser.profile.email = profile.emails[0].value;
+          newUser.profile.avatarUrl = profile.photos[0].value;
 
           // save new user to the database
           newUser.save(function(err) {
-              console.log('saving new user to db');
-              if (err)
-                console.log(err);
+            console.log('saving new user to db');
+            if (err)
+              console.log(err);
 
-              return done(err, user);
+            return done(err, user);
           });
         } else {
           //found user. Return

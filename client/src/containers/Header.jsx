@@ -23,14 +23,15 @@ class Header extends React.Component {
             onClick={() => {
               this.props.actions.logout();
               this.props.history.push("/");
-              console.log(`loggedIn: ${this.props.appState.loggedIn}`);
             }}
           >
             Logout
           </button>
         )}
         {this.props.appState.loggedIn && (
-          <div className="header__email">{this.props.appState.user.email}</div>
+          <div className="header__email">
+            {this.props.appState.user.profile.email}
+          </div>
         )}
       </header>
     );
