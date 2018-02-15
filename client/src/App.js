@@ -20,6 +20,9 @@ import * as Actions from "./store/actions";
 
 class App extends Component {
   componentDidMount() {
+    if (this.props.appState.loggedIn) {
+      console.log(this.props.appState.user.profile.email);
+    }
     if (window.location.hash === "#_=_") {
       console.log("found facebook callback hash");
       this.props.actions.setLoggedIn();

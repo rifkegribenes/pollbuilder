@@ -1,3 +1,5 @@
+const User = require('../models/user');
+
 const user = {
   serialize: (user, done) => {
   	console.log('serialize: ' + user._id)

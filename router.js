@@ -65,7 +65,6 @@ const facebookOptions = {
 passport.use(new FacebookStrategy(facebookOptions,
   (req, token, refreshToken, profile, done) => {
     console.log(`Facebook login by ${profile.name.givenName} ${profile.name.familyName}, ID: ${profile.id}`);
-    console.log(profile);
     process.nextTick(function() {
       User.findOne({'facebook.id': profile.id}, function(err, user) {
         if (err) {

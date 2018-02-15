@@ -16,36 +16,21 @@ class Login extends React.Component {
   * If valid, call the login route; store token in redux, clear password from state
   * , return to Home
   */
-  login(strategy) {
+  login() {
     // clear previous errors
     this.props.actions.setLoginError("");
-    switch (strategy) {
-      case "local":
-        const { email, password } = this.props.login.form;
-        if (email && password) {
-          const body = { email, password };
-          this.props.api.login(body).then(result => {
-            if (result.type === "LOGIN_SUCCESS") {
-              this.props.history.push("/");
-            }
-          });
-        } else if (!email) {
-          this.props.actions.setLoginError("Email cannot be blank");
-        } else if (!password) {
-          this.props.actions.setLoginError("Password cannot be blank");
+    const { email, password } = this.props.login.form;
+    if (email && password) {
+      const body = { email, password };
+      this.props.api.login(body).then(result => {
+        if (result.type === "LOGIN_SUCCESS") {
+          this.props.history.push("/");
         }
-        break;
-      case "github":
-        this.props.api.loginGithub();
-        break;
-      case "facebook":
-        this.props.api.loginFacebook();
-        break;
-      case "twitter":
-        break;
-      case "google":
-        break;
-      default:
+      });
+    } else if (!email) {
+      this.props.actions.setLoginError("Email cannot be blank");
+    } else if (!password) {
+      this.props.actions.setLoginError("Password cannot be blank");
     }
   }
 
@@ -99,7 +84,7 @@ class Login extends React.Component {
               <button
                 className="form__button pointer"
                 id="btn-login"
-                onClick={() => this.login("local")}
+                onClick={() => this.login()}
                 type="button"
               >
                 Sign In
@@ -129,20 +114,13 @@ class Login extends React.Component {
               >
                 <span>FB</span>
               </a>
-              <button
-                className="form__button form__button--twitter"
-                id="btn-twitter"
-                onClick={() => this.login("twitter")}
-              >
-                <span>TW</span>
-              </button>
-              <button
+              <a
                 className="form__button form__button--google"
                 id="btn-google"
-                onClick={() => this.login("google")}
+                href="http://localhost:8080/auth/google"
               >
                 <span>G+</span>
-              </button>
+              </a>
             </div>
           </div>
           <div className="form__input-group">
