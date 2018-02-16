@@ -154,9 +154,20 @@ function appState(state = INITIAL_STATE, action) {
     * Hide the spinner, Set loggedIn to true.
     */
     case SET_LOGGEDIN:
-      return Object.assign({}, state, {
-        spinnerClass: "spinner__hide",
-        loggedIn: true
+      console.log("SET_LOGGEDIN");
+      return update(state, {
+        spinnerClass: { $set: "spinner__hide" },
+        loggedIn: { $set: true }
+        // user: {
+        //   _id: { $set: action.payload._id },
+        //   profile: {
+        //     avatarUrl: { $set: action.payload.avatarUrl || "" },
+        //     firstName: { $set: action.payload.firstName || "" },
+        //     lastName: { $set: action.payload.lastName || "" },
+        //     email: { $set: action.payload.email }
+        //   }
+        // },
+        // authToken: { $set: action.payload.token }
       });
 
     /*

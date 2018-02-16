@@ -33,9 +33,10 @@ export function logout() {
   };
 }
 
-export function setLoggedIn() {
+export function setLoggedIn(user) {
   return {
-    type: SET_LOGGEDIN
+    type: SET_LOGGEDIN,
+    payload: user
   };
 }
 
