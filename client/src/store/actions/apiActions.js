@@ -197,10 +197,11 @@ export const GET_PROFILE_REQUEST = "GET_PROFILE_REQUEST";
 export const GET_PROFILE_SUCCESS = "GET_PROFILE_SUCCESS";
 export const GET_PROFILE_FAILURE = "GET_PROFILE_FAILURE";
 
-export function getProfile(token, profileId) {
+export function getProfile(token, userId) {
+  console.log("getProfile");
   return {
     [RSAA]: {
-      endpoint: `${BASE_URL}/api/profile/${profileId}`,
+      endpoint: `${BASE_URL}/api/user/${userId}`,
       method: "GET",
       types: [GET_PROFILE_REQUEST, GET_PROFILE_SUCCESS, GET_PROFILE_FAILURE],
       headers: { Authorization: `Bearer ${token}` }

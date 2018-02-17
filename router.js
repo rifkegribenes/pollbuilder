@@ -131,9 +131,11 @@ app.get('/auth/facebook/callback',
     if (userObj) {
       // successful authentication from facebook
       console.log('Facebook Auth Succeeded');
-      console.log(req.isAuthenticated());
-      console.log(userObj._doc.profile);
-      return res.redirect(`${CLIENT_URL}/${userObj._id}`);
+
+      // generate token and return user ID & token to client as URL parameters
+      const userInfo = AuthenticationController.setUserInfo(userObj._doc);
+      const token = AuthenticationController.generateToken(userInfo);
+      return res.redirect(`${CLIENT_URL}/user/${userObj._doc._id}/${token}`);
     }
 
     return res.redirect('/login');

@@ -4,13 +4,13 @@ const User = require('../models/user');
 const passport = require('passport');
 
 // Generate JWT
-function generateToken(user) {
+exports.generateToken = (user) => {
   return jwt.sign(user, process.env.JWT_SECRET, {
     expiresIn: '7d'
   });
 }
 
-const setUserInfo = (request) => {
+exports.setUserInfo = (request) => {
   const getUserInfo = {
     _id: request._id,
     firstName: request.profile.firstName,

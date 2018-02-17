@@ -6,8 +6,8 @@ const setUserInfo = (request) => {
     _id: request._id,
     firstName: request.profile.firstName,
     lastName: request.profile.lastName,
-    email: request.email,
-    role: request.role
+    email: request.profile.email,
+    avatarUrl: request.profile.avatarUrl
   };
 
   return getUserInfo;
@@ -17,8 +17,10 @@ const setUserInfo = (request) => {
 // User Routes
 //= =======================================
 exports.viewProfile = function (req, res, next) {
+  console.log('viewProfile controllers/user.js > 20');
   const userId = req.params.userId;
 
+// add client-side error handling here
   if (req.user._id.toString() !== userId) { return res.status(401).json({ error: 'You are not authorized to view this user profile.' }); }
   User.findById(userId, (err, user) => {
     if (err) {

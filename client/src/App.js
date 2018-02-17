@@ -67,8 +67,7 @@ class App extends Component {
                 render={routeProps => <Home {...routeProps} />}
               />
               <Route
-                exact
-                path="/profile"
+                path="/user/:id/:token"
                 render={routeProps => <Profile {...routeProps} />}
               />
               <Route
