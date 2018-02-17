@@ -7,18 +7,30 @@ import * as apiActions from "../store/actions/apiActions";
 
 class Profile extends React.Component {
   componentDidMount() {
-    // copy requested profile data into currentProfile
+    // get user id and token
     let userId;
     let token;
+    // if landing on this page from a callback from social login,
+    // the userid and token will be in the route params.
+    // extract them to use in the api call, then strip them from
+    // the URL. there is probably a better way to do this but idk what it is...
     if (this.props.match && this.props.match.params.id) {
       userId = this.props.match.params.id;
       token = this.props.match.params.token;
+      window.history.replaceState(null, null, `${window.location.origin}/user`);
     } else {
-      userId = this.props.appState.user._id;
-      token = this.props.appState.authToken;
+      // if they're not in the route params
+      // then they've already been saved to app state or local storage;
+      // look for them there
+      userId =
+        this.props.appState.user._id ||
+        JSON.parse(window.localStorage.getItem("userId"));
+      token =
+        this.props.appState.authToken ||
+        JSON.parse(window.localStorage.getItem("authToken"));
     }
 
-    // if logged in through social auth, need to set authToken & userId
+    // if logged in through social auth, need to save them to local storage
     window.localStorage.setItem("authToken", JSON.stringify(token));
     window.localStorage.setItem("userId", JSON.stringify(userId));
 

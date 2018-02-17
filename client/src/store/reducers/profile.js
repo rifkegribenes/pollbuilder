@@ -72,7 +72,6 @@ function profile(state = INITIAL_STATE, action) {
     * Purpose: Populate the ViewProfile object
     */
     case GET_PROFILE_SUCCESS:
-      console.log(action.payload);
       return update(state, {
         getSuccess: { $set: true },
         user: {
@@ -93,6 +92,8 @@ function profile(state = INITIAL_STATE, action) {
     * Purpose: Populate the ViewProfile modal with an error message
     */
     case GET_PROFILE_FAILURE:
+      console.log("GET_PROFILE_FAILURE");
+      console.log(action.payload);
       error = "An error occurred while getting the profile";
       return Object.assign({}, state, {
         getSuccess: false,
