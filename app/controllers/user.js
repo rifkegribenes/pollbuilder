@@ -1,17 +1,5 @@
 const User = require('../models/user');
-
-
-const setUserInfo = (request) => {
-  const getUserInfo = {
-    _id: request._id,
-    firstName: request.profile.firstName,
-    lastName: request.profile.lastName,
-    email: request.profile.email,
-    avatarUrl: request.profile.avatarUrl
-  };
-
-  return getUserInfo;
-};
+const helpers = require('./helpers');
 
 //= =======================================
 // User Routes
@@ -28,7 +16,7 @@ exports.viewProfile = function (req, res, next) {
       return next(err);
     }
 
-    const userToReturn = setUserInfo(user);
+    const userToReturn = helpers.setUserInfo(user);
 
     return res.status(200).json({ user: userToReturn });
   });

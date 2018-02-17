@@ -18,6 +18,11 @@ class Header extends React.Component {
           </Link>
         )}
         {this.props.appState.loggedIn && (
+          <Link className="nav__link" to="/user">
+            Profile
+          </Link>
+        )}
+        {this.props.appState.loggedIn && (
           <button
             className="nav__link"
             onClick={() => {

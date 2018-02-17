@@ -64,10 +64,10 @@ function register(state = INITIAL_STATE, action) {
       console.dir(action.payload);
       if (typeof action.payload === "string") {
         error = action.payload;
-      } else if (typeof action.payload.message === "string") {
-        error = action.payload.message;
       } else if (typeof action.payload.response.error === "string") {
         error = action.payload.response.error;
+      } else if (typeof action.payload.message === "string") {
+        error = action.payload.message;
       } else if (typeof error === "undefined") {
         error = "An unknown error occurred during registration";
       }

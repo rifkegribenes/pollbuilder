@@ -1,34 +1,16 @@
-const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const User = require('../models/user');
 const passport = require('passport');
-
-// Generate JWT
-exports.generateToken = (user) => {
-  return jwt.sign(user, process.env.JWT_SECRET, {
-    expiresIn: '7d'
-  });
-}
-
-exports.setUserInfo = (request) => {
-  const getUserInfo = {
-    _id: request._id,
-    firstName: request.profile.firstName,
-    lastName: request.profile.lastName,
-    email: request.profile.email
-  };
-
-  return getUserInfo;
-};
+const helpers = require('./helpers');
 
 //= =======================================
 // Local Login Route
 //= =======================================
 exports.login = function (req, res, next) {
-  const userInfo = setUserInfo(req.user);
+  const userInfo = helpers.setUserInfo(req.user);
 
   res.status(200).json({
-    token: generateToken(userInfo),
+    token: helpers.generateToken(userInfo),
     user: userInfo
   });
 };
@@ -89,10 +71,10 @@ exports.register = function (req, res, next) {
 
       // Respond with JWT if user was created
 
-      const userInfo = setUserInfo(user);
+      const userInfo = helpers.setUserInfo(user);
 
       res.status(201).json({
-        token: `JWT ${generateToken(userInfo)}`,
+        token: `JWT ${helpers.generateToken(userInfo)}`,
         user: userInfo
       });
     });
