@@ -25,15 +25,8 @@ module.exports = function (app) {
 app.use(passport.initialize());
 app.use(passport.session());
 
-// app.get('/auth/facebook', AuthenticationController.loginFacebook);
-app.get('/auth/facebook', passport.authenticate(
-     'facebook',
-     {scope:['public_profile', 'email']}
-   ));
-
-// handle the callback after facebook has authenticated the user
+// handle callback after facebook has authenticated the user
 // return user object and fb token to client
-// app.get('/auth/facebook/callback', AuthenticationController.fbCallback);
 // need to handle login errors client-side here if redirected to login
 app.get('/auth/facebook/callback',
   passport.authenticate('facebook', {failureRedirect: `${CLIENT_URL}/login`}),
@@ -59,6 +52,10 @@ app.get('/auth/facebook/callback',
 
   // Password reset route (change password using token)
   authRoutes.post('/reset-password/:token', AuthenticationController.verifyToken);
+
+  // Facebook authentication with passport
+  authRoutes.get('/facebook',
+    passport.authenticate('facebook', {scope:['public_profile', 'email']} ));
 
   //= ========================
   // User Routes

@@ -102,7 +102,7 @@ class Login extends React.Component {
             <div className="form__button-wrap">
               <a
                 className="form__button form__button--github"
-                href="http://localhost:8080/auth/github/"
+                href="http://localhost:8080/api/auth/github/"
                 id="btn-github"
               >
                 <span>GH</span>
@@ -110,14 +110,14 @@ class Login extends React.Component {
               <a
                 className="form__button form__button--facebook"
                 id="btn-facebook"
-                href="http://localhost:8080/auth/facebook"
+                href="http://localhost:8080/api/auth/facebook"
               >
                 <span>FB</span>
               </a>
               <a
                 className="form__button form__button--google"
                 id="btn-google"
-                href="http://localhost:8080/auth/google"
+                href="http://localhost:8080/api/auth/google"
               >
                 <span>G+</span>
               </a>
