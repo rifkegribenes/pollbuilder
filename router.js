@@ -14,30 +14,6 @@ const User = require('./app/models/user');
 const Auth = require('./app/config/auth');
 const helpers = require('./app/controllers/helpers');
 
-const passportService = require('./app/config/passport');
-
-// Local strategy options
-const localOptions = {
-  usernameField: 'email',
-  passReqToCallback : true
-};
-
-// Local login strategy
-const localLogin = new LocalStrategy(localOptions,
-  (req, email, password, done) => {
-    User.findOne({ 'local.email': email }, (err, user) => {
-      if (err) { return done(err); }
-      if (!user) { return done(null, false, { error: 'No user account found with that email. Please try again.' }); }
-
-      user.comparePassword(password, (err, isMatch) => {
-        if (err) { return done(err); }
-        if (!isMatch) { return done(null, false, { error: 'Your login details could not be verified. Please try again.' }); }
-
-        return done(null, user);
-      });
-    });
-});
-
 // Middleware to require login/auth
 const requireAuth = passport.authenticate('jwt', { session: false });
 const requireLogin = passport.authenticate('local', { session: false });
