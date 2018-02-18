@@ -55,52 +55,57 @@ module.exports = function(passport) {
       });
   }));
 
+  //= ========================
+  // Social logins
+  //= ========================
+
   // Facebook strategy options
-  const facebookOptions = {
-    clientID: Auth.facebookAuth.clientID,
-    clientSecret: Auth.facebookAuth.clientSecret,
-    callbackURL: Auth.facebookAuth.callbackURL,
-    profileFields: ['id', 'name', 'emails', 'photos'],
-    passReqToCallback: true
-  };
+const facebookOptions = {
+  clientID: Auth.facebookAuth.clientID,
+  clientSecret: Auth.facebookAuth.clientSecret,
+  callbackURL: Auth.facebookAuth.callbackURL,
+  profileFields: ['id', 'emails', 'name', 'photos'],
+  passReqToCallback: true
+};
 
-  // Facebook login strategy
-  passport.use('facebook', new  FacebookStrategy(facebookOptions,
-    (req, token, refreshToken, profile, done) => {
-      console.log('facebookStrategy');
-      console.log(`token: ${token}`);
-      console.log(`Facebook login by ${profile.displayName}, ID: ${profile.id}`);
-      process.nextTick(function() {
-        User.findOrCreate({ [facebook.id]: profile.id }, (err, user) => {
-          if (err) { return done(err, false); }
+// Facebook login strategy
+passport.use('facebook', new FacebookStrategy(facebookOptions,
+  (req, token, refreshToken, profile, done) => {
+    console.log(`Facebook login by ${profile.name.givenName} ${profile.name.familyName}, ID: ${profile.id}`);
+    process.nextTick(function() {
+      User.findOne({'facebook.id': profile.id}, function(err, user) {
+        if (err) {
+            return done(err, false);
+        }
+        if (!user) {
+          console.log('fb new user');
 
-          if (user) {
-            console.log('fb found user');
-            done(null, user);
-          } else {
-            console.log('fb new user');
-            // if there is no user found with that facebook id, create them
-            var newUser = new User();
-            newUser.facebook.id = profile.id;
-            newUser.facebook.token = token;
-            newUser.firstName = profile.name.givenName;
-            newUser.lastName = profile.name.familyName;
-            newUser.email = profile.emails[0].value;
-            newUser.avatarUrl = profile.photos[0].value;
+          // if no user found with that facebook id, create one
+          var newUser = new User();
+          newUser.facebook.id = profile.id;
+          newUser.facebook.token = token;
+          newUser.facebook.email = profile.emails[0].value;
+          newUser.profile.firstName = profile.name.givenName;
+          newUser.profile.lastName = profile.name.familyName;
+          newUser.profile.email = profile.emails[0].value;
+          newUser.profile.avatarUrl = profile.photos[0].value;
 
-            // save new user to the database
-            newUser.save(function(err) {
-              console.log('saving new user to db');
-              if (err)
-                throw err;
+          // save new user to the database
+          newUser.save(function(err) {
+            console.log('saving new user to db');
+            if (err)
+              console.log(err);
 
-              // if successful, return the new user
-              return done(null, newUser);
-            });
-          }
-        });
+            return done(err, user);
+          });
+        } else {
+          //found user. Return
+          console.log('fb found user');
+          return done(err, user);
+        }
       });
-    }));
+    });
+  }));
 
   // Github strategy options
   const githubOptions = {

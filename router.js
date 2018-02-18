@@ -8,8 +8,6 @@ const UserController = require('./app/controllers/user');
 
 const express = require('express');
 const passport = require('passport');
-const FacebookStrategy = require('passport-facebook').Strategy;
-const LocalStrategy = require('passport-local').Strategy;
 const User = require('./app/models/user');
 const Auth = require('./app/config/auth');
 const helpers = require('./app/controllers/helpers');
@@ -23,59 +21,6 @@ module.exports = function (app) {
   const apiRoutes = express.Router(),
     authRoutes = express.Router(),
     userRoutes = express.Router();
-
-
-  //= ========================
-  // Social logins
-  //= ========================
-
-  // Facebook strategy options
-const facebookOptions = {
-  clientID: Auth.facebookAuth.clientID,
-  clientSecret: Auth.facebookAuth.clientSecret,
-  callbackURL: Auth.facebookAuth.callbackURL,
-  profileFields: ['id', 'emails', 'name', 'photos'],
-  passReqToCallback: true
-};
-
-// Facebook login strategy
-passport.use(new FacebookStrategy(facebookOptions,
-  (req, token, refreshToken, profile, done) => {
-    console.log(`Facebook login by ${profile.name.givenName} ${profile.name.familyName}, ID: ${profile.id}`);
-    process.nextTick(function() {
-      User.findOne({'facebook.id': profile.id}, function(err, user) {
-        if (err) {
-            return done(err, false);
-        }
-        if (!user) {
-          console.log('fb new user');
-
-          // if no user found with that facebook id, create one
-          var newUser = new User();
-          newUser.facebook.id = profile.id;
-          newUser.facebook.token = token;
-          newUser.facebook.email = profile.emails[0].value;
-          newUser.profile.firstName = profile.name.givenName;
-          newUser.profile.lastName = profile.name.familyName;
-          newUser.profile.email = profile.emails[0].value;
-          newUser.profile.avatarUrl = profile.photos[0].value;
-
-          // save new user to the database
-          newUser.save(function(err) {
-            console.log('saving new user to db');
-            if (err)
-              console.log(err);
-
-            return done(err, user);
-          });
-        } else {
-          //found user. Return
-          console.log('fb found user');
-          return done(err, user);
-        }
-      });
-    });
-  }));
 
 app.use(passport.initialize());
 app.use(passport.session());
