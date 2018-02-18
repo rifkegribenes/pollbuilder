@@ -12,6 +12,7 @@ const FacebookStrategy = require('passport-facebook').Strategy;
 const LocalStrategy = require('passport-local').Strategy;
 const User = require('./app/models/user');
 const Auth = require('./app/config/auth');
+const helpers = require('./app/controllers/helpers');
 
 const passportService = require('./app/config/passport');
 
@@ -133,8 +134,8 @@ app.get('/auth/facebook/callback',
       console.log('Facebook Auth Succeeded');
 
       // generate token and return user ID & token to client as URL parameters
-      const userInfo = AuthenticationController.setUserInfo(userObj._doc);
-      const token = AuthenticationController.generateToken(userInfo);
+      const userInfo = helpers.setUserInfo(userObj._doc);
+      const token = helpers.generateToken(userInfo);
       return res.redirect(`${CLIENT_URL}/user/${userObj._doc._id}/${token}`);
     }
 
