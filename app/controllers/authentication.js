@@ -3,6 +3,10 @@ const User = require('../models/user');
 const passport = require('passport');
 const helpers = require('./helpers');
 
+const APP_HOST = process.env.APP_HOST;
+const CLIENT_URL = process.env.NODE_ENV === 'production' ? APP_HOST : '//localhost:3000';
+const SERVER_URL = process.env.NODE_ENV === 'production' ? APP_HOST : '//localhost:8080';
+
 //= =======================================
 // Local Login Route
 //= =======================================
@@ -89,14 +93,23 @@ exports.loginFacebook = () => {
   passport.authenticate('facebook', {
       scope : ['public_profile', 'email']
     });
-};
+  };
 
-exports.fbCallback = (req, res, next) => {
-  passport.authenticate('facebook', {
-      successRedirect : '/profile',
-      failureRedirect : '/'
-  });
-}
+exports.fbCallback = (req, res) => {
+    const userObj = req.user ? { ...req.user } :
+      req.session.user ? { ...req.session.user } :
+      undefined;
+    if (userObj) {
+      // successful authentication from facebook
+      console.log('Facebook Auth Succeeded');
+
+      // generate token and return user ID & token to client as URL parameters
+      const userInfo = helpers.setUserInfo(userObj._doc);
+      const token = helpers.generateToken(userInfo);
+      return res.redirect(`${CLIENT_URL}/user/${userObj._doc._id}/${token}`);
+    }
+    return res.redirect('/login');
+  };
 
 //= =======================================
 // Authorization Middleware

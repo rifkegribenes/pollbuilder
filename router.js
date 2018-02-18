@@ -34,27 +34,11 @@ app.get('/auth/facebook', passport.authenticate(
 // handle the callback after facebook has authenticated the user
 // return user object and fb token to client
 // app.get('/auth/facebook/callback', AuthenticationController.fbCallback);
+// need to handle login errors client-side here if redirected to login
 app.get('/auth/facebook/callback',
-  passport.authenticate('facebook', {
-
-  // need to handle login errors client-side here if redirected to login
-  failureRedirect: `${CLIENT_URL}/login` }), ((req, res) => {
-    const userObj = req.user ? { ...req.user } :
-      req.session.user ? { ...req.session.user } :
-      undefined;
-    if (userObj) {
-      // successful authentication from facebook
-      console.log('Facebook Auth Succeeded');
-
-      // generate token and return user ID & token to client as URL parameters
-      const userInfo = helpers.setUserInfo(userObj._doc);
-      const token = helpers.generateToken(userInfo);
-      return res.redirect(`${CLIENT_URL}/user/${userObj._doc._id}/${token}`);
-    }
-
-    return res.redirect('/login');
-
-}));
+  passport.authenticate('facebook', {failureRedirect: `${CLIENT_URL}/login`}),
+  AuthenticationController.fbCallback
+  );
 
 
   //= ========================
