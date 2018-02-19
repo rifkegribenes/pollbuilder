@@ -8,13 +8,7 @@ import {
 import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
-  LOGIN_FAILURE,
-  LOGIN_GITHUB_REQUEST,
-  LOGIN_GITHUB_SUCCESS,
-  LOGIN_GITHUB_FAILURE,
-  CALLBACK_FACEBOOK_REQUEST,
-  CALLBACK_FACEBOOK_SUCCESS,
-  CALLBACK_FACEBOOK_FAILURE
+  LOGIN_FAILURE
 } from "../actions/apiActions";
 
 const INITIAL_STATE = {
@@ -85,76 +79,6 @@ function login(state = INITIAL_STATE, action) {
     case LOGIN_FAILURE:
       error =
         action.payload.message || "An unknown error occurred during login";
-      return Object.assign({}, state, {
-        spinnerClass: "spinner__hide",
-        errorMsg: error
-      });
-
-    /*
-    *  Called From: <FBCallback />
-    *  Payload: None
-    *  Purpose: Activate spinner so user knows API request is in progress
-    */
-
-    case CALLBACK_FACEBOOK_REQUEST:
-      console.log("CB FACEBOOK REQUEST");
-      return Object.assign({}, state, { spinnerClass: "spinner__show" });
-
-    /*
-    *  Called From: <FBCallback />
-    *  Payload: N/A
-    *  Purpose: De-activate the progress spinner.
-    *  Note: this action is also handled in the appState reducer.
-    */
-    case CALLBACK_FACEBOOK_SUCCESS:
-      console.log("CB FACEBOOK SUCCESS");
-      return Object.assign({}, state, { spinnerClass: "spinner__show" });
-
-    /*
-    *  Called From:  <FBCallback />
-    *  Payload: Error Message
-    *  Purpose: Display API login error to user
-    */
-    case CALLBACK_FACEBOOK_FAILURE:
-      console.log("CB FACEBOOK FAILURE");
-      error =
-        action.payload.message || "An unknown error occurred during login";
-      return Object.assign({}, state, {
-        spinnerClass: "spinner__hide",
-        errorMsg: error
-      });
-
-    /*
-    *  Called From: <Login />
-    *  Payload: None
-    *  Purpose: Activate spinner so user knows API request is in progress
-    */
-    case LOGIN_GITHUB_REQUEST:
-      console.log("login github request");
-      return Object.assign({}, state, { spinnerClass: "spinner__show" });
-
-    /*
-    *  Called From: <Login />
-    *  Payload: N/A
-    *  Purpose: De-activate the progress spinner.
-    *  Note: this action is also handled in the appState reducer.
-    */
-    case LOGIN_GITHUB_SUCCESS:
-      console.log("login github success");
-      return Object.assign({}, state, {
-        loginEmail: "",
-        loginPassword: ""
-      });
-
-    /*
-    *  Called From: <Login />
-    *  Payload: Error Message
-    *  Purpose: Display API login error to user
-    */
-    case LOGIN_GITHUB_FAILURE:
-      console.log("login github error");
-      console.log(error);
-      error = "An unknown login error occurred";
       return Object.assign({}, state, {
         spinnerClass: "spinner__hide",
         errorMsg: error

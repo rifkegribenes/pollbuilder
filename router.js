@@ -1,16 +1,12 @@
 const APP_HOST = process.env.APP_HOST;
 const CLIENT_URL = process.env.NODE_ENV === 'production' ? APP_HOST : '//localhost:3000';
-const SERVER_URL = process.env.NODE_ENV === 'production' ? APP_HOST : '//localhost:8080';
-
 
 const AuthenticationController = require('./app/controllers/authentication');
 const UserController = require('./app/controllers/user');
 
 const express = require('express');
 const passport = require('passport');
-const User = require('./app/models/user');
 const Auth = require('./app/config/auth');
-const helpers = require('./app/controllers/helpers');
 
 // Middleware to require login/auth
 const requireAuth = passport.authenticate('jwt', { session: false });
@@ -22,8 +18,8 @@ module.exports = function (app) {
     authRoutes = express.Router(),
     userRoutes = express.Router();
 
-app.use(passport.initialize());
-app.use(passport.session());
+  app.use(passport.initialize());
+  app.use(passport.session());
 
   //= ========================
   // Auth Routes
@@ -54,6 +50,22 @@ app.use(passport.session());
   authRoutes.get('/facebook/callback',
     passport.authenticate('facebook', {failureRedirect: `${CLIENT_URL}/login`}),
     AuthenticationController.fbCallback
+    );
+
+  // Github authentication with passport
+  authRoutes.get('/github',
+    passport.authenticate('github'));
+
+  // Handle callback after Github auth
+  // return user object and fb token to client
+  // need to handle login errors client-side here if redirected to login
+  authRoutes.get('/github/callback',
+    passport.authenticate('github'),
+    //   passport.authenticate('github', {
+    //     successRedirect: `${CLIENT_URL}/user`,
+    //     failureRedirect: `${CLIENT_URL}/login`});
+    // },
+    AuthenticationController.ghCallback
     );
 
   //= ========================

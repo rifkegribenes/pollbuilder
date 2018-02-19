@@ -5,7 +5,6 @@ const helpers = require('./helpers');
 // User Routes
 //= =======================================
 exports.viewProfile = function (req, res, next) {
-  console.log('viewProfile controllers/user.js > 20');
   const userId = req.params.userId;
 
 // add client-side error handling here

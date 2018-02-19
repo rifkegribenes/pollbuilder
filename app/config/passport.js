@@ -5,7 +5,7 @@ const passport = require('passport'),
   JwtStrategy = require('passport-jwt').Strategy,
   ExtractJwt = require('passport-jwt').ExtractJwt,
   LocalStrategy = require('passport-local'),
-  GithubStrategy = require('passport-github').Strategy,
+  GithubStrategy = require('passport-github2').Strategy,
   FacebookStrategy = require('passport-facebook').Strategy;
 
 module.exports = function(passport) {
@@ -60,72 +60,99 @@ module.exports = function(passport) {
   //= ========================
 
   // Facebook strategy options
-const facebookOptions = {
-  clientID: Auth.facebookAuth.clientID,
-  clientSecret: Auth.facebookAuth.clientSecret,
-  callbackURL: Auth.facebookAuth.callbackURL,
-  profileFields: ['id', 'emails', 'name', 'photos'],
-  passReqToCallback: true
-};
+  const facebookOptions = {
+    clientID: Auth.facebookAuth.clientID,
+    clientSecret: Auth.facebookAuth.clientSecret,
+    callbackURL: Auth.facebookAuth.callbackURL,
+    profileFields: ['id', 'emails', 'name', 'photos'],
+    passReqToCallback: true
+  };
 
-// Facebook login strategy
-passport.use('facebook', new FacebookStrategy(facebookOptions,
-  (req, token, refreshToken, profile, done) => {
-    console.log(`Facebook login by ${profile.name.givenName} ${profile.name.familyName}, ID: ${profile.id}`);
-    process.nextTick(function() {
-      User.findOne({'facebook.id': profile.id}, function(err, user) {
-        if (err) {
-            return done(err, false);
-        }
-        if (!user) {
-          console.log('fb new user');
+  // Facebook login strategy
+  passport.use('facebook', new FacebookStrategy(facebookOptions,
+    (req, token, refreshToken, profile, done) => {
+      console.log(`Facebook login by ${profile.name.givenName} ${profile.name.familyName}, ID: ${profile.id}`);
+      process.nextTick(function() {
+        User.findOne({'facebook.id': profile.id}, function(err, user) {
+          if (err) {
+              return done(err, false);
+          }
+          if (!user) {
+            console.log('fb new user');
 
-          // if no user found with that facebook id, create one
-          var newUser = new User();
-          newUser.facebook.id = profile.id;
-          newUser.facebook.token = token;
-          newUser.facebook.email = profile.emails[0].value;
-          newUser.profile.firstName = profile.name.givenName;
-          newUser.profile.lastName = profile.name.familyName;
-          newUser.profile.email = profile.emails[0].value;
-          newUser.profile.avatarUrl = profile.photos[0].value;
+            // if no user found with that facebook id, create one
+            var newUser = new User();
+            newUser.facebook.id = profile.id;
+            newUser.facebook.token = token;
+            newUser.facebook.email = profile.emails[0].value;
+            newUser.profile.firstName = profile.name.givenName;
+            newUser.profile.lastName = profile.name.familyName;
+            newUser.profile.email = profile.emails[0].value;
+            newUser.profile.avatarUrl = profile.photos[0].value;
 
-          // save new user to the database
-          newUser.save(function(err) {
-            console.log('saving new user to db');
-            if (err)
-              console.log(err);
+            // save new user to the database
+            newUser.save(function(err) {
+              console.log('saving new user to db');
+              if (err)
+                console.log(err);
 
+              return done(err, user);
+            });
+          } else {
+            //found user. Return
+            console.log('fb found user');
             return done(err, user);
-          });
-        } else {
-          //found user. Return
-          console.log('fb found user');
-          return done(err, user);
-        }
+          }
+        });
       });
-    });
-  }));
+    }));
 
   // Github strategy options
   const githubOptions = {
     clientID: Auth.githubAuth.clientID,
     clientSecret: Auth.githubAuth.clientSecret,
-    callbackURL: Auth.githubAuth.callbackURL,
+    redirect_uri: Auth.githubAuth.callbackURL,
     passReqToCallback: true
   };
 
   // Github login strategy
-  passport.use('github', new  GithubStrategy(githubOptions,
-    (req, accessToken, refreshToken, profile, done) => {
-      User.findOrCreate({ [github.id]: profile.id }, (err, user) => {
-        if (err) { return done(err, false); }
+  passport.use('github', new GithubStrategy(githubOptions,
+      (req, token, refreshToken, profile, done) => {
+        console.log('github strategy');
+        process.nextTick(function() {
+          User.findOne({ 'github.id': profile.id }, (err, user) => {
+            if (err) {
+              console.log(err);
+              return done(err, false);
+            }
 
-        if (user) {
-          done(null, user);
-        } else {
-          done(null, false);
-        }
-      });
+            if (!user) {
+              console.log('gh new user');
+
+              // if no user found with that github id, create one
+              var newUser = new User();
+              newUser.github.id = profile.id;
+              newUser.github.token = token;
+              newUser.github.email = profile.emails[0].value;
+              newUser.profile.firstName = profile.displayName.split(' ')[0];
+              newUser.profile.lastName = profile.displayName.split(' ').slice(1);
+              newUser.profile.email = profile.emails[0].value;
+              newUser.profile.avatarUrl = profile.photos[0].value;
+
+              // save new user to the database
+              newUser.save(function(err) {
+                console.log('saving new github user to db');
+                if (err)
+                  console.log(err);
+                return done(err, newUser);
+              });
+            } else {
+              //found user. Return
+              console.log('github found user');
+              return done(err, user);
+            }
+          });
+        });
     }));
+
 }

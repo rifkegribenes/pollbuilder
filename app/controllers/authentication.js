@@ -86,14 +86,8 @@ exports.register = function (req, res, next) {
 };
 
 //= =======================================
-// Facebook Login Route
+// Facebook Callback
 //= =======================================
-exports.loginFacebook = () => {
-  console.log('loginFacebook');
-  passport.authenticate('facebook', {
-      scope : ['public_profile', 'email']
-    });
-  };
 
 exports.fbCallback = (req, res) => {
     const userObj = req.user ? { ...req.user } :
@@ -102,6 +96,28 @@ exports.fbCallback = (req, res) => {
     if (userObj) {
       // successful authentication from facebook
       console.log('Facebook Auth Succeeded');
+
+      // generate token and return user ID & token to client as URL parameters
+      const userInfo = helpers.setUserInfo(userObj._doc);
+      const token = helpers.generateToken(userInfo);
+      return res.redirect(`${CLIENT_URL}/user/${userObj._doc._id}/${token}`);
+    }
+    return res.redirect('/login');
+  };
+
+//= =======================================
+// Github Callback
+//= =======================================
+
+exports.ghCallback = (req, res) => {
+  console.log('ghCallback');
+  console.log(req.user);
+    const userObj = req.user ? { ...req.user } :
+      req.session.user ? { ...req.session.user } :
+      undefined;
+    if (userObj) {
+      // successful authentication from github
+      console.log('Github Auth Succeeded');
 
       // generate token and return user ID & token to client as URL parameters
       const userInfo = helpers.setUserInfo(userObj._doc);

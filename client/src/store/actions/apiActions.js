@@ -65,71 +65,6 @@ export function login(body) {
   };
 }
 
-export const LOGIN_GITHUB_REQUEST = "LOGIN_GITHUB_REQUEST";
-export const LOGIN_GITHUB_SUCCESS = "LOGIN_GITHUB_SUCCESS";
-export const LOGIN_GITHUB_FAILURE = "LOGIN_GITHUB_FAILURE";
-
-/*
-* Function: login - Attempts to log in by authenticating with github.
-*   returns a JWT if successful.
-* @param {string} body - the userID/password entered by user
-* This action dispatches additional actions as it executes:
-*   LOGIN_REQUEST: Initiates a spinner on the login page.
-*   LOGIN_SUCCESS: Dispatched if credentials valid and profile returned.
-*     Logs user in, stores token, sets current user profile in app state.
-*   LOGIN_FAILURE: Dispatched if credentials invalid.
-*     Displays error to user, prompt to try again or register.
-*/
-export function loginGithub() {
-  console.log("loginGithub (apiActions.js)");
-  return {
-    [RSAA]: {
-      endpoint: `${BASE_URL}/auth/github`,
-      method: "GET",
-      mode: "no-cors",
-      types: [LOGIN_GITHUB_REQUEST, LOGIN_GITHUB_SUCCESS, LOGIN_GITHUB_FAILURE],
-      headers: {
-        "Content-Type": "application/jsonp",
-        "Access-Control-Allow-Origin": "*"
-      }
-    }
-  };
-}
-
-export const LOGIN_FACEBOOK_REQUEST = "LOGIN_FACEBOOK_REQUEST";
-export const LOGIN_FACEBOOK_SUCCESS = "LOGIN_FACEBOOK_SUCCESS";
-export const LOGIN_FACEBOOK_FAILURE = "LOGIN_FACEBOOK_FAILURE";
-
-/*
-* Function: login - Attempts to log in by authenticating with facebook.
-*   returns a JWT if successful.
-* @param {string} body - the userID/password entered by user
-* This action dispatches additional actions as it executes:
-*   LOGIN_REQUEST: Initiates a spinner on the login page.
-*   LOGIN_SUCCESS: Dispatched if credentials valid and profile returned.
-*     Logs user in, stores token, sets current user profile in app state.
-*   LOGIN_FAILURE: Dispatched if credentials invalid.
-*     Displays error to user, prompt to try again or register.
-*/
-export function loginFacebook() {
-  return {
-    [RSAA]: {
-      endpoint: `${BASE_URL}/auth/facebook`,
-      method: "GET",
-      mode: "no-cors",
-      types: [
-        LOGIN_FACEBOOK_REQUEST,
-        LOGIN_FACEBOOK_SUCCESS,
-        LOGIN_FACEBOOK_FAILURE
-      ],
-      headers: {
-        "Content-Type": "application/jsonp",
-        "Access-Control-Allow-Origin": "*"
-      }
-    }
-  };
-}
-
 export const CALLBACK_FACEBOOK_REQUEST = "CALLBACK_FACEBOOK_REQUEST";
 export const CALLBACK_FACEBOOK_SUCCESS = "CALLBACK_FACEBOOK_SUCCESS";
 export const CALLBACK_FACEBOOK_FAILURE = "CALLBACK_FACEBOOK_FAILURE";
@@ -198,7 +133,6 @@ export const GET_PROFILE_SUCCESS = "GET_PROFILE_SUCCESS";
 export const GET_PROFILE_FAILURE = "GET_PROFILE_FAILURE";
 
 export function getProfile(token, userId) {
-  console.log("getProfile");
   return {
     [RSAA]: {
       endpoint: `${BASE_URL}/api/user/${userId}`,
