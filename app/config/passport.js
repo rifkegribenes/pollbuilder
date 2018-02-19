@@ -74,38 +74,66 @@ module.exports = function(passport) {
     (req, token, refreshToken, profile, done) => {
       console.log(`Facebook login by ${profile.name.givenName} ${profile.name.familyName}, ID: ${profile.id}`);
       process.nextTick(function() {
-        User.findOne({'facebook.id': profile.id}, function(err, user) {
-          if (err) {
-              return done(err, false);
-          }
-          if (!user) {
-            console.log('fb new user');
+        // check if user is already logged in
+        if (!req.user) {
+          console.log('not signed in, facebook strategy');
+          User.findOne({'facebook.id': profile.id}, function(err, user) {
+            if (err) {
+                return done(err, false);
+            }
+            if (!user) {
+              console.log('fb new user');
 
-            // if no user found with that facebook id, create one
-            var newUser = new User();
-            newUser.facebook.id = profile.id;
-            newUser.facebook.token = token;
-            newUser.facebook.email = profile.emails[0].value;
-            newUser.profile.firstName = profile.name.givenName;
-            newUser.profile.lastName = profile.name.familyName;
-            newUser.profile.email = profile.emails[0].value;
-            newUser.profile.avatarUrl = profile.photos[0].value;
+              // if no user found with that facebook id, create one
+              var newUser = new User();
+              newUser.facebook.id = profile.id;
+              newUser.facebook.token = token;
+              newUser.facebook.email = profile.emails[0].value;
+              newUser.profile.firstName = profile.name.givenName;
+              newUser.profile.lastName = profile.name.familyName;
+              newUser.profile.email = profile.emails[0].value;
+              newUser.profile.avatarUrl = profile.photos[0].value;
 
-            // save new user to the database
-            newUser.save(function(err) {
-              console.log('saving new user to db');
-              if (err)
-                console.log(err);
-
+              // save new user to the database
+              newUser.save(function(err) {
+                console.log('saving new user to db');
+                if (err)
+                  console.log(err);
+                  throw err;
+                return done(err, user);
+              });
+            } else {
+              //found user. Return
+              console.log('fb found user');
               return done(err, user);
-            });
-          } else {
-            //found user. Return
-            console.log('fb found user');
-            return done(err, user);
-          }
-        });
-      });
+            }
+          });
+        } else {
+          console.log('logged in, link facebook');
+        // user already exists and is logged in, we have to link accounts
+          const user = req.user; // pull the user out of the session
+          console.log('passport.js > 115: user');
+          console.log(user);
+          console.log('passport.js > 117: profile');
+          console.log(profile);
+          // update the current user's record with info from fb profile
+          user.facebook.id = profile.id;
+          user.facebook.token = token;
+          user.facebook.email = profile.emails[0].value;
+          user.profile.firstName = profile.name.givenName;
+          user.profile.lastName = profile.name.familyName;
+          user.profile.email = profile.emails[0].value;
+          user.profile.avatarUrl = profile.photos[0].value;
+
+          // save the user
+          user.save(function(err) {
+            if (err)
+              console.log(err);
+              throw err;
+            return done(null, user);
+          });
+        }
+      }); // process.nextTick
     }));
 
   // Github strategy options

@@ -7,6 +7,7 @@ import * as apiActions from "../store/actions/apiActions";
 
 class Profile extends React.Component {
   componentDidMount() {
+    console.log(this.props.appState.user.profile.firstName);
     // get user id and token
     let userId;
     let token;
@@ -35,9 +36,11 @@ class Profile extends React.Component {
     window.localStorage.setItem("userId", JSON.stringify(userId));
 
     // retrieve profile & save to app state
+    console.log(userId);
+    console.log(token);
     this.props.api.getProfile(token, userId).then(result => {
-      if (result === "GET_PROFILE_SUCCESS") {
-        console.log(this.props.appState.user);
+      if (result.type === "GET_PROFILE_SUCCESS") {
+        console.log(this.props.appState.user.profile);
       }
     });
   }
@@ -60,6 +63,63 @@ class Profile extends React.Component {
               this.props.appState.user.profile.lastName
             }`}
           />
+        </div>
+        <div className="form__input-group">
+          <hr className="form__hr" />
+          <div className="form__text">Connect with&hellip;</div>
+          <div className="form__button-wrap">
+            {!this.props.appState.user.github.token ? (
+              <a
+                className="form__button form__button--github"
+                href="http://localhost:8080/api/auth/connect/github/"
+                id="btn-github"
+              >
+                <span>Link GH</span>
+              </a>
+            ) : (
+              <a
+                className="form__button form__button--github"
+                href="http://localhost:8080/api/auth/unlink/github/"
+                id="btn-github"
+              >
+                <span>Unlink GH</span>
+              </a>
+            )}
+            {!this.props.appState.user.facebook.token ? (
+              <a
+                className="form__button form__button--facebook"
+                id="btn-facebook"
+                href="http://localhost:8080/api/auth/connect/facebook"
+              >
+                <span>Link FB</span>
+              </a>
+            ) : (
+              <a
+                className="form__button form__button--facebook"
+                id="btn-facebook"
+                href="http://localhost:8080/api/auth/unlink/facebook"
+              >
+                <span>Unlink FB</span>
+              </a>
+            )}
+            {!this.props.appState.user.google.token ? (
+              <a
+                className="form__button form__button--google"
+                id="btn-google"
+                href="http://localhost:8080/api/auth/connect/google"
+              >
+                <span>Link G+</span>
+              </a>
+            ) : (
+              <a
+                className="form__button form__button--google"
+                id="btn-google"
+                href="http://localhost:8080/api/auth/unlink/google"
+              >
+                <span>Unlink G+</span>
+              </a>
+            )}
+          </div>
         </div>
       </div>
     );
