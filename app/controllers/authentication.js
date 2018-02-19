@@ -124,6 +124,30 @@ exports.ghCallback = (req, res) => {
       const token = helpers.generateToken(userInfo);
       return res.redirect(`${CLIENT_URL}/user/${userObj._doc._id}/${token}`);
     }
+    // need client-side error handling here
+    return res.redirect('/login');
+  };
+
+//= =======================================
+// Google Callback
+//= =======================================
+
+exports.googleCallback = (req, res) => {
+  console.log('googleCallback');
+  console.log(req.user);
+    const userObj = req.user ? { ...req.user } :
+      req.session.user ? { ...req.session.user } :
+      undefined;
+    if (userObj) {
+      // successful authentication from github
+      console.log('Google Auth Succeeded');
+
+      // generate token and return user ID & token to client as URL parameters
+      const userInfo = helpers.setUserInfo(userObj._doc);
+      const token = helpers.generateToken(userInfo);
+      return res.redirect(`${CLIENT_URL}/user/${userObj._doc._id}/${token}`);
+    }
+    // need client-side error handling here
     return res.redirect('/login');
   };
 

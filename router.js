@@ -48,8 +48,7 @@ module.exports = function (app) {
   // return user object and fb token to client
   // need to handle login errors client-side here if redirected to login
   authRoutes.get('/facebook/callback',
-    passport.authenticate('facebook', {failureRedirect: `${CLIENT_URL}/login`}),
-    AuthenticationController.fbCallback
+    passport.authenticate('facebook'), AuthenticationController.fbCallback
     );
 
   // Github authentication with passport
@@ -60,12 +59,18 @@ module.exports = function (app) {
   // return user object and fb token to client
   // need to handle login errors client-side here if redirected to login
   authRoutes.get('/github/callback',
-    passport.authenticate('github'),
-    //   passport.authenticate('github', {
-    //     successRedirect: `${CLIENT_URL}/user`,
-    //     failureRedirect: `${CLIENT_URL}/login`});
-    // },
-    AuthenticationController.ghCallback
+    passport.authenticate('github'), AuthenticationController.ghCallback
+    );
+
+  // Google authentication with passport
+  authRoutes.get('/google',
+    passport.authenticate('google'));
+
+  // Handle callback after Github auth
+  // return user object and fb token to client
+  // need to handle login errors client-side here if redirected to login
+  authRoutes.get('/google/callback',
+    passport.authenticate('google'), AuthenticationController.googleCallback
     );
 
   //= ========================

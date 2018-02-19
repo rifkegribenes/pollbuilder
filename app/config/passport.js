@@ -6,6 +6,7 @@ const passport = require('passport'),
   ExtractJwt = require('passport-jwt').ExtractJwt,
   LocalStrategy = require('passport-local'),
   GithubStrategy = require('passport-github2').Strategy,
+  GoogleStrategy = require('passport-google-oauth2').Strategy,
   FacebookStrategy = require('passport-facebook').Strategy;
 
 module.exports = function(passport) {
@@ -153,6 +154,55 @@ module.exports = function(passport) {
             }
           });
         });
+    }));
+
+// Google strategy options
+  const googleOptions = {
+    clientID: Auth.googleAuth.clientID,
+    clientSecret: Auth.googleAuth.clientSecret,
+    callbackURL: Auth.googleAuth.callbackURL,
+    passReqToCallback: true
+  };
+
+  // Google login strategy
+  passport.use('google', new GoogleStrategy(facebookOptions,
+    (req, token, refreshToken, profile, done) => {
+      console.log(`Google login by ${profile.name}, ID: ${profile.id}`);
+      process.nextTick(function() {
+        console.log('google profile');
+        console.log(profile);
+        User.findOne({'google.id': profile.id}, function(err, user) {
+          if (err) {
+              return done(err, false);
+          }
+          if (!user) {
+            console.log('google new user');
+
+            // if no user found with that google id, create one
+            var newUser = new User();
+            newUser.google.id = profile.id;
+            newUser.google.token = token;
+            newUser.google.email = profile.emails[0].value;
+            newUser.profile.firstName = profile.name.givenName;
+            newUser.profile.lastName = profile.name.familyName;
+            newUser.profile.email = profile.emails[0].value;
+            newUser.profile.avatarUrl = profile.photos[0].value;
+
+            // save new user to the database
+            newUser.save(function(err) {
+              console.log('saving new user to db');
+              if (err)
+                console.log(err);
+
+              return done(err, user);
+            });
+          } else {
+            //found user. Return
+            console.log('google found user');
+            return done(err, user);
+          }
+        });
+      });
     }));
 
 }
