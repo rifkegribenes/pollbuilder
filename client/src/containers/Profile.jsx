@@ -36,11 +36,11 @@ class Profile extends React.Component {
     window.localStorage.setItem("userId", JSON.stringify(userId));
 
     // retrieve profile & save to app state
-    console.log(userId);
-    console.log(token);
     this.props.api.getProfile(token, userId).then(result => {
       if (result.type === "GET_PROFILE_SUCCESS") {
-        console.log(this.props.appState.user.profile);
+        console.log(userId);
+        console.log(token);
+        console.log(this.props.profile.user.profile);
       }
     });
   }
@@ -50,17 +50,17 @@ class Profile extends React.Component {
       <div className="profile">
         <div className="profile__header">Profile</div>
         <div className="profile__name">
-          {this.props.appState.user.profile.firstName}{" "}
-          {this.props.appState.user.profile.lastName}
+          {this.props.profile.user.profile.firstName}{" "}
+          {this.props.profile.user.profile.lastName}
         </div>
         <div className="profile__email">
-          {this.props.appState.user.profile.email}
+          {this.props.profile.user.profile.email}
         </div>
         <div className="profile__pic">
           <img
-            src={this.props.appState.user.profile.avatarUrl}
-            alt={`${this.props.appState.user.profile.firstName} ${
-              this.props.appState.user.profile.lastName
+            src={this.props.profile.user.profile.avatarUrl}
+            alt={`${this.props.profile.user.profile.firstName} ${
+              this.props.profile.user.profile.lastName
             }`}
           />
         </div>
@@ -68,7 +68,7 @@ class Profile extends React.Component {
           <hr className="form__hr" />
           <div className="form__text">Connect with&hellip;</div>
           <div className="form__button-wrap">
-            {!this.props.appState.user.github.token ? (
+            {!this.props.profile.user.github.token ? (
               <a
                 className="form__button form__button--github"
                 href="http://localhost:8080/api/auth/connect/github/"
@@ -85,7 +85,7 @@ class Profile extends React.Component {
                 <span>Unlink GH</span>
               </a>
             )}
-            {!this.props.appState.user.facebook.token ? (
+            {!this.props.profile.user.facebook.token ? (
               <a
                 className="form__button form__button--facebook"
                 id="btn-facebook"
@@ -127,7 +127,8 @@ class Profile extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  appState: state.appState
+  appState: state.appState,
+  profile: state.profile
 });
 
 const mapDispatchToProps = dispatch => ({

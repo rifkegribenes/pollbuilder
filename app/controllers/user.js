@@ -15,8 +15,8 @@ exports.viewProfile = function (req, res, next) {
       return next(err);
     }
 
-    const userToReturn = helpers.setUserInfo(user);
+    // const userToReturn = helpers.setUserInfo(user);
 
-    return res.status(200).json({ user: userToReturn });
+    return res.status(200).json({ user });
   });
 };

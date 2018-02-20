@@ -18,10 +18,28 @@ const INITIAL_STATE = {
   },
   user: {
     _id: "",
+    local: {
+      email: ""
+    },
     profile: {
       avatarUrl: "",
       firstName: "",
       lastName: "",
+      email: ""
+    },
+    facebook: {
+      token: "",
+      id: "",
+      email: ""
+    },
+    github: {
+      token: "",
+      id: "",
+      email: ""
+    },
+    google: {
+      token: "",
+      id: "",
       email: ""
     }
   }
@@ -29,6 +47,11 @@ const INITIAL_STATE = {
 
 function profile(state = INITIAL_STATE, action) {
   let error;
+  let local = { email: "" };
+  let profile = {};
+  let facebook = { email: "", token: "", id: "" };
+  let github = { email: "", token: "", id: "" };
+  let google = { email: "", token: "", id: "" };
   switch (action.type) {
     /*
     * Called from: <Home />
@@ -72,18 +95,63 @@ function profile(state = INITIAL_STATE, action) {
     * Purpose: Populate the ViewProfile object
     */
     case GET_PROFILE_SUCCESS:
+      console.log(action.payload);
+      if (action.payload.user.local) {
+        console.log("local key exists on payload.user");
+        local = { ...action.payload.user.local };
+      } else {
+        console.log("local key does not exist on payload.user");
+      }
+      if (action.payload.user.profile) {
+        profile = { ...action.payload.user.profile };
+        console.log("profile from payload.user");
+        console.log(profile);
+      }
+      if (action.payload.user.facebook) {
+        facebook = { ...action.payload.user.facebook };
+      }
+      if (action.payload.user.github) {
+        console.log("github key exists on payload.user");
+        github = { ...action.payload.user.github };
+        console.log(github);
+      } else {
+        console.log("github key does not exist on payload.user");
+      }
+      if (action.payload.user.google) {
+        google = { ...action.payload.user.google };
+      }
       return update(state, {
-        getSuccess: { $set: true },
-        user: {
-          _id: { $set: action.payload.user._id },
-          profile: {
-            avatarUrl: { $set: action.payload.user.avatarUrl },
-            firstName: { $set: action.payload.user.firstName },
-            lastName: { $set: action.payload.user.lastName },
-            email: { $set: action.payload.user.email }
-          }
-        },
-        spinnerClass: { $set: "spinner__hide" }
+        $merge: {
+          getSuccess: true,
+          user: {
+            _id: action.payload.user._id,
+            profile: {
+              avatarUrl: profile.avatarUrl,
+              firstName: profile.firstName,
+              lastName: profile.lastName,
+              email: profile.email
+            },
+            local: {
+              email: local.email
+            },
+            facebook: {
+              token: facebook.token,
+              id: facebook.id,
+              email: facebook.email
+            },
+            github: {
+              token: github.token,
+              id: github.id,
+              email: github.email
+            },
+            google: {
+              token: google.token,
+              id: google.id,
+              email: google.email
+            }
+          },
+          spinnerClass: { $set: "spinner__hide" }
+        }
       });
 
     /*

@@ -168,6 +168,8 @@ module.exports = function(passport) {
               newUser.profile.email = profile.emails[0].value;
               newUser.profile.avatarUrl = profile.photos[0].value;
 
+              console.log(newUser);
+
               // save new user to the database
               newUser.save(function(err) {
                 console.log('saving new github user to db');
@@ -178,6 +180,7 @@ module.exports = function(passport) {
             } else {
               //found user. Return
               console.log('github found user');
+              console.log(user);
               return done(err, user);
             }
           });
