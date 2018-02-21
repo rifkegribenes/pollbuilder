@@ -112,9 +112,9 @@ module.exports = function(passport) {
           console.log('logged in, link facebook');
         // user already exists and is logged in, we have to link accounts
           const user = req.user; // pull the user out of the session
-          console.log('passport.js > 115: user');
+          console.log('passport.js > 115: fb user');
           console.log(user);
-          console.log('passport.js > 117: profile');
+          console.log('passport.js > 117: fb profile');
           console.log(profile);
           // update the current user's record with info from fb profile
           user.facebook.id = profile.id;

@@ -10,7 +10,15 @@ const Auth = require('./app/config/auth');
 
 // Middleware to require login/auth
 const requireAuth = passport.authenticate('jwt', { session: false });
-const requireLogin = passport.authenticate('local', { session: false });
+// const requireLogin = passport.authenticate('local', { session: false });
+const requireLogin = (req, res, next) => {
+  passport.authenticate('local', { session: false },
+  (err, user) => {
+    if (!user) {
+      return res.status(422).send({ message: 'Could not find that account. \nPlease check your email and password and try again.' });
+    }
+})(req, res, next);
+};
 
 module.exports = function (app) {
   // Initializing route groups

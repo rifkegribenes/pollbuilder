@@ -7,7 +7,6 @@ import * as apiActions from "../store/actions/apiActions";
 
 class Profile extends React.Component {
   componentDidMount() {
-    console.log(this.props.appState.user.profile.firstName);
     // get user id and token
     let userId;
     let token;
@@ -38,9 +37,7 @@ class Profile extends React.Component {
     // retrieve profile & save to app state
     this.props.api.getProfile(token, userId).then(result => {
       if (result.type === "GET_PROFILE_SUCCESS") {
-        console.log(userId);
-        console.log(token);
-        console.log(this.props.profile.user.profile);
+        console.log(this.props.profile.user);
       }
     });
   }
@@ -68,7 +65,8 @@ class Profile extends React.Component {
           <hr className="form__hr" />
           <div className="form__text">Connect with&hellip;</div>
           <div className="form__button-wrap">
-            {!this.props.profile.user.github.token ? (
+            {!this.props.profile.user.github ||
+            !this.props.profile.user.github.token ? (
               <a
                 className="form__button form__button--github"
                 href="http://localhost:8080/api/auth/connect/github/"
@@ -85,7 +83,8 @@ class Profile extends React.Component {
                 <span>Unlink GH</span>
               </a>
             )}
-            {!this.props.profile.user.facebook.token ? (
+            {!this.props.profile.user.facebook ||
+            !this.props.profile.user.facebook.token ? (
               <a
                 className="form__button form__button--facebook"
                 id="btn-facebook"
@@ -102,7 +101,8 @@ class Profile extends React.Component {
                 <span>Unlink FB</span>
               </a>
             )}
-            {!this.props.appState.user.google.token ? (
+            {!this.props.profile.user.google ||
+            !this.props.profile.user.google.token ? (
               <a
                 className="form__button form__button--google"
                 id="btn-google"

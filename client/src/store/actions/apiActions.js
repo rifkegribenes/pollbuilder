@@ -58,7 +58,27 @@ export function login(body) {
     [RSAA]: {
       endpoint: `${BASE_URL}/api/auth/login`,
       method: "POST",
-      types: [LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE],
+      types: [
+        LOGIN_REQUEST,
+        LOGIN_SUCCESS,
+        {
+          type: LOGIN_FAILURE,
+          payload: (action, state, res) => {
+            return res.json().then(data => {
+              let message = "Sorry, something went wrong :(";
+              if (data) {
+                if (data.message) {
+                  message = data.message;
+                }
+                return { message };
+              } else {
+                return { message };
+              }
+            });
+          }
+        }
+      ],
+      // types: [LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE],
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body)
     }
