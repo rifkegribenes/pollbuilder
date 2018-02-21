@@ -4,7 +4,7 @@ module.exports = {
 	'githubAuth': {
 		'clientID': process.env.GITHUB_KEY,
 		'clientSecret': process.env.GITHUB_SECRET,
-		'callbackURL': process.env.CLIENT_URL + 'api/auth/github/callback/'
+		'callbackURL': process.env.SERVER_URL + 'api/auth/github/callback/'
 	},
 	'facebookAuth': {
 		'clientID': process.env.FACEBOOK_KEY,
@@ -14,6 +14,6 @@ module.exports = {
 	'googleAuth': {
 		'clientID': process.env.GOOGLE_KEY,
 		'clientSecret': process.env.GOOGLE_SECRET,
-		'callbackURL': process.env.CLIENT_URL + 'api/auth/google/callback'
+		'callbackURL': process.env.SERVER_URL + 'api/auth/google/callback'
 	}
 };

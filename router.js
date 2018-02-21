@@ -87,6 +87,7 @@ module.exports = function (app) {
   authRoutes.get('/google',
     passport.authenticate('google', {scope : ['profile', 'email']} ));
 
+
   // Handle callback after Github auth
   // return user object and fb token to client
   // need to handle login errors client-side here if redirected to login

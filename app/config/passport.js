@@ -141,6 +141,7 @@ module.exports = function(passport) {
     clientID: Auth.githubAuth.clientID,
     clientSecret: Auth.githubAuth.clientSecret,
     redirect_uri: Auth.githubAuth.callbackURL,
+    profileFields: ['id', 'emails', 'name', 'photos'],
     passReqToCallback: true
   };
 
@@ -192,7 +193,9 @@ module.exports = function(passport) {
     clientID: Auth.googleAuth.clientID,
     clientSecret: Auth.googleAuth.clientSecret,
     callbackURL: Auth.googleAuth.callbackURL,
-    passReqToCallback: true
+    passReqToCallback: true,
+    profileFields: ['id', 'emails', 'name', 'photos'],
+    scope: ['profile', 'email'],
   };
 
   // Google login strategy
