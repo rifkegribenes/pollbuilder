@@ -117,10 +117,7 @@ module.exports = function (app) {
 
   // handle the callback after facebook has authorized the user
   authRoutes.get('/connect/facebook/callback',
-    passport.authorize('facebook', {
-      successRedirect : '/user',
-      failureRedirect : '/'
-    }));
+    passport.authorize('facebook'), AuthenticationController.fbConnectCallback);
 
   // github --------------------------------
 

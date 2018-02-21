@@ -2,35 +2,38 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt-nodejs');
 
 const Schema = mongoose.Schema;
+const toLower = (str) => {
+  return str.toLowerCase();
+};
 
 //= ===============================
 // User Schema
 //= ===============================
 const UserSchema = new Schema({
   local: {
-    email: { type: String },
+    email: { type: String, set: toLower },
     password: { type: String }
   },
   profile: {
     firstName: { type: String },
     lastName: { type: String },
     avatarUrl: { type: String },
-    email: { type: String }
+    email: { type: String, set: toLower }
   },
   facebook: {
     token: { type: String },
     id: { type: String },
-    email: { type: String }
+    email: { type: String, set: toLower }
   },
   github: {
     token: { type: String },
     id: { type: String },
-    email: { type: String }
+    email: { type: String, set: toLower }
   },
   google: {
     token: { type: String },
     id: { type: String },
-    email: { type: String }
+    email: { type: String, set: toLower }
   },
   resetPasswordToken: { type: String },
   resetPasswordExpires: { type: Date }

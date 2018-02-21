@@ -1,0 +1,18 @@
+.profile {
+	&__row {
+		width: 100%;
+		display: flex;
+		flex-wrap: wrap;
+	}
+	&__card {
+		padding: 20px;
+		margin: 20px;
+		border: 1px solid $color_gray_text;
+	}
+	&__header {
+		font-weight: 700;
+		text-transform: uppercase;
+		text-align: center;
+		letter-spacing: 2px;
+	}
+}
