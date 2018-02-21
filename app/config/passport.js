@@ -196,7 +196,7 @@ module.exports = function(passport) {
   };
 
   // Google login strategy
-  passport.use('google', new GoogleStrategy(facebookOptions,
+  passport.use('google', new GoogleStrategy(googleOptions,
     (req, token, refreshToken, profile, done) => {
       console.log(`Google login by ${profile.name}, ID: ${profile.id}`);
       process.nextTick(function() {

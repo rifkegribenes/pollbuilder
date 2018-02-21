@@ -35,7 +35,8 @@ class Header extends React.Component {
         )}
         {this.props.appState.loggedIn && (
           <div className="header__email">
-            {this.props.appState.user.profile.email}
+            {this.props.appState.user.profile.email ||
+              this.props.profile.user.profile.email}
           </div>
         )}
       </header>
@@ -63,7 +64,8 @@ Header.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  appState: state.appState
+  appState: state.appState,
+  profile: state.profile
 });
 
 const mapDispatchToProps = dispatch => ({

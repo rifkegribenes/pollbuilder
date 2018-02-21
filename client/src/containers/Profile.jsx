@@ -10,6 +10,8 @@ class Profile extends React.Component {
     // get user id and token
     let userId;
     let token;
+    console.log(this.props.appState);
+    console.log(this.props.profile);
     // if landing on this page from a callback from social login,
     // the userid and token will be in the route params.
     // extract them to use in the api call, then strip them from
@@ -24,9 +26,11 @@ class Profile extends React.Component {
       // look for them there
       userId =
         this.props.appState.user._id ||
+        this.props.profile.user._id ||
         JSON.parse(window.localStorage.getItem("userId"));
       token =
         this.props.appState.authToken ||
+        this.props.profile.token ||
         JSON.parse(window.localStorage.getItem("authToken"));
     }
 

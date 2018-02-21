@@ -124,6 +124,7 @@ function appState(state = INITIAL_STATE, action) {
     * Set loggedIn to true.
     */
     case LOGIN_SUCCESS:
+      console.log(action.payload);
       window.localStorage.setItem(
         "authToken",
         JSON.stringify(action.payload.token)

@@ -7,18 +7,31 @@ const UserController = require('./app/controllers/user');
 const express = require('express');
 const passport = require('passport');
 const Auth = require('./app/config/auth');
+// const helpers = require('.app/controllers/helpers');
 
 // Middleware to require login/auth
 const requireAuth = passport.authenticate('jwt', { session: false });
-// const requireLogin = passport.authenticate('local', { session: false });
-const requireLogin = (req, res, next) => {
-  passport.authenticate('local', { session: false },
-  (err, user) => {
-    if (!user) {
-      return res.status(422).send({ message: 'Could not find that account. \nPlease check your email and password and try again.' });
-    }
-})(req, res, next);
-};
+const requireLogin = passport.authenticate('local', { session: false });
+// const requireLogin = (req, res, next) => {
+//   console.log('requireLogin');
+//   passport.authenticate('local', { session: false },
+//   (err, user) => {
+//     if (!user) {
+//       return res.status(422).send({ message: 'Login error: No account found.' });
+//     }
+//     if (err) {
+//       console.log(err);
+//       throw err;
+//       return res.status(422).send({ message: err });
+//     }
+//     if (user) {
+//       const userInfo = helpers.setUserInfo(user);
+//       return res.status(200).json({
+//         token: helpers.generateToken(userInfo),
+//         user
+//       });
+//   })(req, res, next);
+// };
 
 module.exports = function (app) {
   // Initializing route groups
@@ -72,7 +85,7 @@ module.exports = function (app) {
 
   // Google authentication with passport
   authRoutes.get('/google',
-    passport.authenticate('google'));
+    passport.authenticate('google', {scope : ['profile', 'email']} ));
 
   // Handle callback after Github auth
   // return user object and fb token to client
@@ -141,38 +154,43 @@ module.exports = function (app) {
 
   // local -----------------------------------
   authRoutes.get('/unlink/local', function(req, res) {
-    const user = req.user;
+    const user = req.user || req.session.user;
     user.local.email = undefined;
     user.local.password = undefined;
     user.save(function(err) {
-      res.redirect('/user');
+      res.redirect(`${CLIENT_URL}/user`);
     });
   });
 
   // facebook -------------------------------
   authRoutes.get('/unlink/facebook', function(req, res) {
-    var user = req.user;
+    const user = req.user || req.session.user;
     user.facebook.token = undefined;
     user.save(function(err) {
-      res.redirect('/user');
+      res.redirect(`${CLIENT_URL}/user`);
     });
   });
 
   // github --------------------------------
   authRoutes.get('/unlink/github', function(req, res) {
-    var user = req.user;
+    console.log('unlink github');
+    const user = req.user || req.session.user;
+    if (!user) {
+      console.log('no user found');
+      return res.send({message: 'no user found'});
+    }
     user.github.token = undefined;
     user.save(function(err) {
-       res.redirect('/user');
+       res.redirect(`${CLIENT_URL}/user`);
     });
   });
 
   // google ---------------------------------
   authRoutes.get('/unlink/google', function(req, res) {
-    var user = req.user;
+    const user = req.user || req.session.user;
     user.google.token = undefined;
     user.save(function(err) {
-       res.redirect('/user');
+       res.redirect(`${CLIENT_URL}/user`);
     });
   });
 

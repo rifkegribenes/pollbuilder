@@ -20,9 +20,32 @@ import * as Actions from "./store/actions";
 
 class App extends Component {
   componentDidMount() {
-    if (this.props.appState.loggedIn) {
+    // If not logged in, check local storage for authToken
+    // if it doesn't exist, it returns the string "undefined"
+    if (!this.props.appState.loggedIn) {
+      let token = window.localStorage.getItem("authToken");
+      if (token && token !== "undefined") {
+        console.log("found token");
+        token = JSON.parse(token);
+        const user = JSON.parse(window.localStorage.getItem("userId"));
+        console.log(`user: ${user}`);
+        // If we validate successfully, look for redirect_url and follow it
+        this.props.api.validateToken(token, user).then(result => {
+          if (result.type === "VALIDATE_TOKEN_SUCCESS") {
+            if (this.props.appState.redirectUrl) {
+              // this.props.history.push(this.props.appState.redirectUrl);
+              // this.props.actions.setRedirectUrl('');
+            }
+          }
+        });
+      } else if (this.props.location.hash) {
+        this.props.history.push("/login");
+      }
+    } else {
+      console.log("logged in:");
       console.log(this.props.appState.user.profile.email);
     }
+    // check for facebook redirect hash
     if (window.location.hash === "#_=_") {
       console.log("found facebook callback hash");
       this.props.actions.setLoggedIn();
@@ -33,14 +56,6 @@ class App extends Component {
             window.location.href.split("#")[0]
           )
         : (window.location.hash = "");
-    }
-    let token = window.localStorage.getItem("authToken");
-    let userId = window.localStorage.getItem("userId");
-    if (token && token !== "undefined") {
-      token = JSON.parse(token);
-      userId = JSON.parse(userId);
-      // Update application state
-      this.props.api.validateToken(token, userId);
     }
   }
 

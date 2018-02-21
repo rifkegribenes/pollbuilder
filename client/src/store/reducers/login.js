@@ -77,8 +77,7 @@ function login(state = INITIAL_STATE, action) {
     *  Purpose: Display API login error to user
     */
     case LOGIN_FAILURE:
-      error =
-        action.payload.message || "An unknown error occurred during login";
+      error = action.payload.message || "Unknown login error";
       return Object.assign({}, state, {
         spinnerClass: "spinner__hide",
         errorMsg: error
