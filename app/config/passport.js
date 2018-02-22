@@ -154,7 +154,12 @@ module.exports = function(passport) {
       if (!req.user) {
         console.log('not signed in, github strategy');
         // if mongo user exists with matching github id, return user
-        User.findOne({'profile.email': profile.emails[0].value, 'github.id': profile.id }, function(err, user) {
+        User.findOne(
+          {
+            'profile.email': profile.emails[0].value,
+            'github.id': profile.id
+          },
+          (err, user) => {
             if (err) {
               console.log(err);
               return done(err, false);
@@ -240,12 +245,13 @@ module.exports = function(passport) {
                   }
               }); // findOneAndUpdate matching id, empty gh key
             }
-          }); // User.findOne with matching mongo id & github id
-        } else {
+          }
+        ); // User.findOne with matching mongo id & github id
+      } else {
           // found logged-in user. Return
           console.log('github found user');
-          console.log(user);
-          return done(err, user);
+          console.log(req.user);
+          return done(err, req.user);
         }
       }
     )
