@@ -12,21 +12,15 @@ const SERVER_URL = process.env.NODE_ENV === 'production' ? APP_HOST : '//localho
 // Local Login Route
 //= =======================================
 exports.login = function (req, res, next) {
+  console.log('login controller');
   if (!req.user) {
       return res.status(422).send({ message: 'Login error: No account found.' });
     }
-    // if (err) {
-    //   console.log(err);
-    //   throw err;
-    //   return res.status(422).send({ message: err });
-    // }
-    if (req.user) {
-      const userInfo = helpers.setUserInfo(req.user);
-      res.status(200).json({
-        token: helpers.generateToken(userInfo),
-        user: req.user
-      });
-    }
+    const userInfo = helpers.setUserInfo(req.user);
+    res.status(200).json({
+      token: helpers.generateToken(userInfo),
+      user: req.user
+    });
 };
 
 
@@ -58,7 +52,7 @@ exports.register = function (req, res, next) {
     return res.status(422).send({ error: 'You must enter a password.' });
   }
 
-  User.findOne({ 'local.email': email }, (err, existingUser) => {
+  User.findOne({ 'profile.email': email }, (err, existingUser) => {
     if (err) {
       console.log('authentication.js > 68');
       console.log(err);

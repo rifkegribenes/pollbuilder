@@ -65,6 +65,7 @@ export function login(body) {
           type: LOGIN_FAILURE,
           payload: (action, state, res) => {
             return res.json().then(data => {
+              console.log(data);
               let message = "Sorry, something went wrong :(";
               if (data) {
                 if (data.message) {
@@ -153,6 +154,8 @@ export const GET_PROFILE_SUCCESS = "GET_PROFILE_SUCCESS";
 export const GET_PROFILE_FAILURE = "GET_PROFILE_FAILURE";
 
 export function getProfile(token, userId) {
+  console.log(token);
+  console.log(userId);
   return {
     [RSAA]: {
       endpoint: `${BASE_URL}/api/user/${userId}`,

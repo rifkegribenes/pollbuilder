@@ -115,55 +115,37 @@ class Profile extends React.Component {
             !this.props.profile.user.github.token ? (
               <a
                 className="form__button form__button--github"
-                href="http://localhost:8080/api/auth/connect/github/"
+                href="http://localhost:8080/api/auth/github/"
                 id="btn-github"
               >
                 <span>Link GH</span>
               </a>
             ) : (
-              <a
-                className="form__button form__button--github"
-                href="http://localhost:8080/api/auth/unlink/github/"
-                id="btn-github"
-              >
-                <span>Unlink GH</span>
-              </a>
+              ""
             )}
             {!this.props.profile.user.facebook ||
             !this.props.profile.user.facebook.token ? (
               <a
                 className="form__button form__button--facebook"
                 id="btn-facebook"
-                href="http://localhost:8080/api/auth/connect/facebook"
+                href="http://localhost:8080/api/auth/facebook"
               >
                 <span>Link FB</span>
               </a>
             ) : (
-              <a
-                className="form__button form__button--facebook"
-                id="btn-facebook"
-                href="http://localhost:8080/api/auth/unlink/facebook"
-              >
-                <span>Unlink FB</span>
-              </a>
+              ""
             )}
             {!this.props.profile.user.google ||
             !this.props.profile.user.google.token ? (
               <a
                 className="form__button form__button--google"
                 id="btn-google"
-                href="http://localhost:8080/api/auth/connect/google"
+                href="http://localhost:8080/api/auth/google"
               >
                 <span>Link G+</span>
               </a>
             ) : (
-              <a
-                className="form__button form__button--google"
-                id="btn-google"
-                href="http://localhost:8080/api/auth/unlink/google"
-              >
-                <span>Unlink G+</span>
-              </a>
+              ""
             )}
           </div>
         </div>
