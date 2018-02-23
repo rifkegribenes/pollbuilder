@@ -12,6 +12,8 @@ const helpers = require('./app/controllers/helpers');
 // Middleware to require login/auth
 const requireAuth = passport.authenticate('jwt', { session: false });
 // const requireLogin = passport.authenticate('local', { session: false });
+
+// TODO: move this function into the auth controller
 const requireLogin = (req, res, next) => {
   console.log('requireLogin');
   passport.authenticate('local', { session: false },

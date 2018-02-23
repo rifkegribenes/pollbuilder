@@ -16,7 +16,7 @@ const user = require('./app/config/passport-serialize');
 
 
 // configuration ===============================================================
-mongoose.connect(configDB.url); // connect to our database
+mongoose.connect(configDB.url, configDB.options); // connect to our database
 mongoose.Promise = global.Promise;
 require('./app/config/passport')(passport); // pass passport for configuration
 
