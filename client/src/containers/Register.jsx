@@ -204,32 +204,25 @@ class Register extends React.Component {
               <div className="form__button-wrap">
                 <a
                   className="form__button form__button--github"
-                  href="http://localhost:8080/auth/github/"
+                  href="http://localhost:8080/api/auth/github/"
                   id="btn-github"
                 >
-                  <span className="sr-only">Github</span>
+                  <span>GH</span>
                 </a>
-                <button
+                <a
                   className="form__button form__button--facebook"
                   id="btn-facebook"
-                  onClick={() => this.login("facebook")}
+                  href="http://localhost:8080/api/auth/facebook"
                 >
-                  <span className="sr-only">Facebook</span>
-                </button>
-                <button
-                  className="form__button form__button--twitter"
-                  id="btn-twitter"
-                  onClick={() => this.login("twitter")}
-                >
-                  <span className="sr-only">form__button--twitter</span>
-                </button>
-                <button
+                  <span>FB</span>
+                </a>
+                <a
                   className="form__button form__button--google"
                   id="btn-google"
-                  onClick={() => this.login("google")}
+                  href="http://localhost:8080/api/auth/google"
                 >
-                  <span className="sr-only">Google</span>
-                </button>
+                  <span>G+</span>
+                </a>
               </div>
             </div>
             <div className="form__input-group">
