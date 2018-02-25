@@ -70,72 +70,215 @@ module.exports = function(passport) {
     scope: ['profile', 'email'],
   };
 
+  // FB findUser subroutine
+  // updates profile with fb info
+  const fbFindUser = (err, user) => {
+    if (err) {
+      console.log(err);
+      return done(err, false);
+    }
+    if (user) {
+      // console.log('fb found matching user');
+      // console.log(user);
+      return done(err, user);
+    }
+    // if mongo user exists with empty fb key,
+    // update with fb info and then return updated user
+    console.log('no user found with matching fb key, try searching for existing user with empty fb id...');
+    const target = {
+      'profile.email': profile.emails[0].value,
+      'facebook.id': null
+      };
+    const updates = {
+      facebook: {
+        id: profile.id,
+        token: token,
+        email: profile.emails[0].value
+      },
+      profile: {
+        firstName: profile.name.givenName,
+        lastName: profile.name.familyName,
+        email: profile.emails[0].value,
+        avatarUrl: profile.photos[0].value
+      }
+    };
+    // return updated document rather than the original
+    const options = { new: true };
+    User.findOneAndUpdate(target, updates, options)
+      .exec()
+      .then( (user) => {
+        if (!user) {
+          console.log('no user found with empty fb key, try looking for existing user with different fb id...');
+          const target2 = {
+            'profile.email': profile.emails[0].value
+          };
+          User.findOneAndUpdate(target2, updates, options)
+            .exec()
+            .then( (user) => {
+              if (err) {
+                console.log(err);
+                return done(err, false);
+              }
+              if (!user) {
+                console.log('no user found, make a new user');
+                console.log('fb new user');
+
+                // if no user found with that email, create one
+                var newUser = new User();
+                newUser.facebook.id = profile.id;
+                newUser.facebook.token = token;
+                newUser.facebook.email = profile.emails[0].value;
+                newUser.profile.firstName = profile.name.givenName;
+                newUser.profile.lastName = profile.name.familyName;
+                newUser.profile.email = profile.emails[0].value;
+                newUser.profile.avatarUrl = profile.photos[0].value;
+
+                console.log(newUser);
+
+                // save new user to the database
+                newUser.save(function(err) {
+                  console.log('saving new fb user to db');
+                  if (err)
+                    console.log(err);
+                    throw err;
+                  return done(err, newUser);
+                });
+              }
+              // found user with matching id and different fb key
+              // update & return new user
+              console.log('fb found and updated user with different fb id');
+              console.log(user);
+              return done(err, user);
+            })
+            .catch( (err) => {
+              console.log(err);
+            }); // findOneAndUpdate.then() existing user, no fb match
+        }
+        // found user with matching id and empty fb key.
+        // update & return new user
+        console.log('fb found and updated user with empty fb key');
+        console.log(user);
+        return done(err, user);
+    })
+      .catch( (err) => {
+        console.log(err);
+      }); // findOneAndUpdate.then() matching id, empty fb key
+  } // fbFindUser
+
   // Facebook login strategy
   passport.use('facebook', new FacebookStrategy(facebookOptions,
-    (req, token, refreshToken, profile, done) => {
+    function(req, token, refreshToken, profile, done) {
       console.log(`Facebook login by ${profile.name.givenName} ${profile.name.familyName}, ID: ${profile.id}`);
-      process.nextTick(function() {
+      process.nextTick(function(){
+        console.log(req.user);
         // check if user is already logged in
         if (!req.user) {
           console.log('not signed in, facebook strategy');
-          User.findOne({'profile.email': profile.emails[0].value}, function(err, user) {
-            if (err) {
-                return done(err, false);
-            }
-            if (!user) {
-              console.log('fb new user');
-
-              // if no user found with that email, create one
-              var newUser = new User();
-              newUser.facebook.id = profile.id;
-              newUser.facebook.token = token;
-              newUser.facebook.email = profile.emails[0].value;
-              newUser.profile.firstName = profile.name.givenName;
-              newUser.profile.lastName = profile.name.familyName;
-              newUser.profile.email = profile.emails[0].value;
-              newUser.profile.avatarUrl = profile.photos[0].value;
-
-              // save new user to the database
-              newUser.save(function(err) {
-                console.log('saving new user to db');
-                if (err)
-                  console.log(err);
-                  throw err;
-                return done(err, user);
-              });
-            } else {
-              //found user. Return
-              console.log('fb found user');
+          // if mongo user exists with matching fb id, return user
+          User.findOne(
+            {
+              'profile.email': profile.emails[0].value,
+              'facebook.id': profile.id
+            })
+          .then( function(user){
+              if (user) {
+              // console.log('fb found matching user');
+              // console.log(user);
               return done(err, user);
-            }
-          });
-        } else {
-          console.log('logged in, link facebook');
-        // user already exists and is logged in, we have to link accounts
-          const user = req.user; // pull the user out of the session
-          console.log('passport.js > 115: fb user');
-          console.log(user);
-          console.log('passport.js > 117: fb profile');
-          console.log(profile);
-          // update the current user's record with info from fb profile
-          user.facebook.id = profile.id;
-          user.facebook.token = token;
-          user.facebook.email = profile.emails[0].value;
-          user.profile.firstName = profile.name.givenName;
-          user.profile.lastName = profile.name.familyName;
-          user.profile.email = profile.emails[0].value;
-          user.profile.avatarUrl = profile.photos[0].value;
+              }
+              // if mongo user exists with empty fb key,
+              // update with fb info and then return updated user
+              console.log('no user found with matching fb key, try searching for existing user with empty fb id...');
+              const target = {
+              'profile.email': profile.emails[0].value,
+              'facebook.id': null
+              };
+              const updates = {
+              facebook: {
+                id: profile.id,
+                token: token,
+                email: profile.emails[0].value
+              },
+              profile: {
+                firstName: profile.name.givenName,
+                lastName: profile.name.familyName,
+                email: profile.emails[0].value,
+                avatarUrl: profile.photos[0].value
+              }
+              };
+              // return updated document rather than the original
+              const options = { new: true };
+              User.findOneAndUpdate(target, updates, options)
+              .exec()
+              .then( function(user) {
+                if (!user) {
+                  console.log('no user found with empty fb key, try looking for existing user with different fb id...');
+                  const target2 = {
+                    'profile.email': profile.emails[0].value
+                  };
+                  User.findOneAndUpdate(target2, updates, options)
+                    .exec()
+                    .then( function(user) {
+                      if (!user) {
+                        console.log('no user found, make a new user');
+                        console.log('fb new user');
 
-          // save the user
-          user.save(function(err) {
-            if (err)
-              console.log(err);
-              throw err;
-            return done(null, user);
-          });
+                        // if no user found with that email, create one
+                        var newUser = new User();
+                        newUser.facebook.id = profile.id;
+                        newUser.facebook.token = token;
+                        newUser.facebook.email = profile.emails[0].value;
+                        newUser.profile.firstName = profile.name.givenName;
+                        newUser.profile.lastName = profile.name.familyName;
+                        newUser.profile.email = profile.emails[0].value;
+                        newUser.profile.avatarUrl = profile.photos[0].value;
+
+                        console.log(newUser);
+
+                        // save new user to the database
+                        newUser.save(function(err) {
+                          console.log('saving new fb user to db');
+                          if (err) {
+                            console.log(err);
+                            throw err;
+                          }
+                          return done(err, newUser);
+                        });
+                      } else {
+                        // found user with matching id and different fb key
+                        // update & return new user
+                        console.log('fb found and updated user with different fb id');
+                        console.log(user);
+                        return done(err, user);
+                      }
+
+                    })
+                    .catch( (err) => {
+                      console.log(err);
+                    }); // findOneAndUpdate.then() existing user, no fb match
+                }
+                // found user with matching id and empty fb key.
+                // update & return new user
+                console.log('fb found and updated user with empty fb key');
+                console.log(user);
+                return done(err, user);
+              })
+              .catch( (err) => {
+                console.log(err);
+              }); // findOneAndUpdate.then() matching id, empty fb key
+            })
+          .catch( (err) => {
+            console.log(err);
+          }); // User.findOne.then() with matching mongo id & fb id
+        } else {
+          // found logged-in user. Return
+          console.log('fb found user');
+          console.log(req.user);
+          return done(req.user);
         }
-      }); // process.nextTick
-    }));
+      }); // process.nextTick()
+    }) // FacebookStrategy
+  );
 
   // Github strategy options
   const githubOptions = {
@@ -152,7 +295,7 @@ module.exports = function(passport) {
     (req, token, refreshToken, profile, done) => {
       // check if user is already logged in
       if (!req.user) {
-        console.log('not signed in, github strategy');
+        // console.log('not signed in, github strategy');
         // if mongo user exists with matching github id, return user
         User.findOne(
           {
@@ -165,13 +308,13 @@ module.exports = function(passport) {
               return done(err, false);
             }
             if (user) {
-              console.log('github found matching user');
-              console.log(user);
+              // console.log('github found matching user');
+              // console.log(user);
               return done(err, user);
             } else {
               // if mongo user exists with empty github key,
               // update with github info and then return updated user
-              console.log('no user found with matching github key, try searching for existing user with empty github id...');
+              // console.log('no user found with matching github key, try searching for existing user with empty github id...');
               const target = {
                 'profile.email': profile.emails[0].value,
                 'github.id': null
@@ -195,7 +338,7 @@ module.exports = function(passport) {
                 .exec()
                 .then( (user) => {
                   if (!user) {
-                    console.log('no user found, with empty github key, try looking for existing user with different github id...');
+                    // console.log('no user found, with empty github key, try looking for existing user with different github id...');
                     const target2 = {
                       'profile.email': profile.emails[0].value
                     };
@@ -207,8 +350,8 @@ module.exports = function(passport) {
                         return done(err, false);
                       }
                       if (!user) {
-                        console.log('no user found, make a new user');
-                        console.log('gh new user');
+                        // console.log('no user found, make a new user');
+                        // console.log('gh new user');
                         // if no user found with that email, create one
                         var newUser = new User();
                         newUser.github.id = profile.id;
@@ -219,10 +362,10 @@ module.exports = function(passport) {
                         newUser.profile.email = profile.emails[0].value;
                         newUser.profile.avatarUrl = profile.photos[0].value;
 
-                        console.log(newUser);
+                        // console.log(newUser);
 
                         // save new user to the database
-                        newUser.save(function(err) {
+                        newUser.save((err) => {
                           console.log('saving new github user to db');
                           if (err)
                             console.log(err);
@@ -231,16 +374,16 @@ module.exports = function(passport) {
                       } else {
                         // found user with matching id and different gh key
                         // update & return new user
-                        console.log('github found and updated user with different gh id');
-                        console.log(user);
+                        // console.log('github found and updated user with different gh id');
+                        // console.log(user);
                         return done(err, user);
                       }
                     }); // findOneAndUpdate (existing user with no gh match)
                   } else {
                     // found user with matching id and empty gh key.
                     // update & return new user
-                    console.log('github found and updated user with empty gh key');
-                    console.log(user);
+                    // console.log('github found and updated user with empty gh key');
+                    // console.log(user);
                     return done(err, user);
                   }
               }); // findOneAndUpdate matching id, empty gh key
@@ -249,8 +392,8 @@ module.exports = function(passport) {
         ); // User.findOne with matching mongo id & github id
       } else {
           // found logged-in user. Return
-          console.log('github found user');
-          console.log(req.user);
+          // console.log('github found user');
+          // console.log(req.user);
           return done(err, req.user);
         }
       }

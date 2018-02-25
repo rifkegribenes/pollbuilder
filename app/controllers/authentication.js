@@ -105,29 +105,9 @@ exports.fbCallback = (req, res) => {
       const userInfo = helpers.setUserInfo(userObj._doc);
       const token = helpers.generateToken(userInfo);
       return res.redirect(`${CLIENT_URL}/user/${userObj._doc._id}/${token}`);
+    } else {
+      return res.redirect('/login');
     }
-    return res.redirect('/login');
-  };
-
-exports.fbConnectCallback = (req, res, next) => {
-    console.log('fbConnectCallback');
-    const userObj = req.user ? { ...req.user } :
-      req.session.user ? { ...req.session.user } :
-      undefined;
-    if (userObj) {
-      // successful authentication from facebook
-      console.log('Facebook Connect Succeeded');
-      console.log(userObj);
-
-      userController.updateProfile(req, res, next, userObj);
-
-      // generate token and return user ID & token to client as URL parameters
-      const userInfo = helpers.setUserInfo(userObj._doc);
-      const token = helpers.generateToken(userInfo);
-      console.log('made it to line 132 of authentication.js');
-      return res.redirect(`${CLIENT_URL}/user/${userObj._doc._id}/${token}`);
-    }
-    return res.redirect('/login');
   };
 
 //= =======================================

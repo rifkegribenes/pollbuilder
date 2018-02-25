@@ -97,54 +97,6 @@ module.exports = function (app) {
     passport.authenticate('google'), AuthenticationController.googleCallback
     );
 
-// ============================================================================
-// AUTHORIZE (ALREADY LOGGED IN / CONNECTING OTHER SOCIAL ACCOUNT) ============
-// ============================================================================
-
-  // local --------------------------------
-  authRoutes.get('/connect/local', function(req, res) {
-      res.render('connect-local.ejs', { message: req.flash('loginMessage') });
-  });
-  authRoutes.post('/connect/local', passport.authenticate('local-signup', {
-      successRedirect : '/user', // redirect to the secure profile section
-      failureRedirect : '/connect/local' // back to signup page if error
-  }));
-
-  // facebook -------------------------------
-
-  // send to facebook to do the authentication
-  authRoutes.get('/connect/facebook', passport.authorize('facebook', {
-    scope : ['public_profile', 'email']
-  }));
-
-  // handle the callback after facebook has authorized the user
-  authRoutes.get('/connect/facebook/callback',
-    passport.authorize('facebook'), AuthenticationController.fbConnectCallback);
-
-  // github --------------------------------
-
-  // send to github to do the authentication
-  authRoutes.get('/connect/github', passport.authorize('github', { scope : 'email' }));
-
-  // handle the callback after twitter has authorized the user
-  authRoutes.get('/connect/github/callback',
-    passport.authorize('github', {
-      successRedirect : '/user',
-      failureRedirect : '/'
-    }));
-
-  // google ---------------------------------
-
-  // send to google to do the authentication
-  authRoutes.get('/connect/google', passport.authorize('google', { scope : ['profile', 'email'] }));
-
-  // the callback after google has authorized the user
-  authRoutes.get('/connect/google/callback',
-    passport.authorize('google', {
-      successRedirect : '/profile',
-      failureRedirect : '/'
-    }));
-
   //= ========================
   // User Routes
   //= ========================
