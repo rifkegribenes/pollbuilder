@@ -36,9 +36,11 @@ class Register extends React.Component {
         .registration(body)
         .then(result => {
           if (result.type === "REGISTRATION_FAILURE") {
+            console.log("registration failure");
             this.setState({ error: true });
           }
           if (result.type === "REGISTRATION_SUCCESS") {
+            console.log("registration success");
             // clear form
             this.props.actions.setFormField({
               firstName: "",
@@ -52,10 +54,18 @@ class Register extends React.Component {
           }
         })
         .catch(err => {
+          console.log("neither success nor failure???");
           // console.log(err.response.data.message);
           let error;
           console.log(err);
-          typeof err === "string" ? (error = err) : (error = err.error);
+          console.dir(err);
+          typeof err === "string"
+            ? (error = err)
+            : typeof err.error === "string"
+              ? (error = err.error)
+              : typeof err.message === "string"
+                ? (error = err.message)
+                : (error = undefined);
           console.log(error);
           this.props.actions.setRegError(error);
           this.props.actions.setFormField({

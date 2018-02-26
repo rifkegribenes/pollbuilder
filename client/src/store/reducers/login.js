@@ -3,6 +3,7 @@ import update from "immutability-helper";
 import {
   SET_FORM_FIELD,
   SET_LOGIN_ERROR,
+  CLEAR_LOGIN_ERROR,
   DISMISS_LOGIN_MODAL
 } from "../actions";
 import {
@@ -50,6 +51,19 @@ function login(state = INITIAL_STATE, action) {
     */
     case SET_LOGIN_ERROR:
       return Object.assign({}, state, { errorMsg: action.payload });
+
+    /*
+    *  Called From: <Login />
+    *  Payload: none
+    *  Purpose: Clear login errors
+    */
+    case CLEAR_LOGIN_ERROR:
+      return update(state, {
+        errorMsg: { $set: null },
+        form: {
+          error: { $set: false }
+        }
+      });
 
     /*
     *  Called From: <Login />

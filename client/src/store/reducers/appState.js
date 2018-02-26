@@ -204,7 +204,8 @@ function appState(state = INITIAL_STATE, action) {
     * (also handled in register.js reducer)
     */
     case REGISTRATION_SUCCESS:
-      console.log("registration success");
+      console.log("registration success appstate.js");
+      console.log(action.payload.user);
       window.localStorage.setItem(
         "authToken",
         JSON.stringify(action.payload.token)

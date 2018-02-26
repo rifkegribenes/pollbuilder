@@ -46,6 +46,7 @@ function register(state = INITIAL_STATE, action) {
     *  Note: this action is also handled in appState reducer.
     */
     case REGISTRATION_SUCCESS:
+      console.log("registration success register.js > 49");
       return Object.assign({}, state, {
         spinnerClass: "spinner__hide",
         modal: {

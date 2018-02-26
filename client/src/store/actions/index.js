@@ -2,6 +2,7 @@ export const LOGOUT = "LOGOUT";
 export const SET_LOGGEDIN = "SET_LOGGEDIN";
 export const SET_FORM_FIELD = "SET_FORM_FIELD";
 export const SET_LOGIN_ERROR = "SET_LOGIN_ERROR";
+export const CLEAR_LOGIN_ERROR = "CLEAR_LOGIN_ERROR";
 export const SET_PROFILE_VIEW = "SET_PROFILE_VIEW";
 export const DISMISS_LOGIN_MODAL = "DISMISS_LOGIN_MODAL";
 export const SET_REG_ERROR = "SET_REG_ERROR";
@@ -54,6 +55,12 @@ export function setLoginError(msg) {
   return {
     type: SET_LOGIN_ERROR,
     payload: msg
+  };
+}
+
+export function clearLoginError() {
+  return {
+    type: CLEAR_LOGIN_ERROR
   };
 }
 

@@ -67,7 +67,7 @@ function profile(state = INITIAL_STATE, action) {
     * Purpose: Set current user data when user successfully logs in
     */
     case LOGIN_SUCCESS:
-      user = action.payload.user;
+      user = { ...action.payload.user };
       return update(state, {
         $merge: { user }
       });
@@ -79,15 +79,13 @@ function profile(state = INITIAL_STATE, action) {
     */
     case REGISTRATION_SUCCESS:
       console.log("profile.js");
+      console.log("REGISTRATION_SUCCESS");
       console.log(action.payload);
-      user = action.payload.user;
+      user = { ...action.payload.user };
+      console.log(user);
+      console.log(user.email);
       return update(state, {
-        user: {
-          profile: { $set: user },
-          local: {
-            email: { $set: user.email }
-          }
-        }
+        $merge: { user }
       });
 
     /*

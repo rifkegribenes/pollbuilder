@@ -52,42 +52,106 @@ exports.register = function (req, res, next) {
     return res.status(422).send({ error: 'You must enter a password.' });
   }
 
-  User.findOne({ 'profile.email': email }, (err, existingUser) => {
-    if (err) {
-      console.log('authentication.js > 68');
-      console.log(err);
-      return next(err);
-    }
+  User.findOne({ 'profile.email': email })
+    .then( (existingUser) => {
+      console.log('authentication.js > 57');
+      console.log(existingUser.profile.email);
+      // If email is not unique
+      if (existingUser) {
+        // check if local account already exists.
+        // because i can't figure out how to handle the error thrown when
+        // i check for a key that doesn't exist without
+        // crashing the whole $##$#$ app, doing this ass-backwards...
+        // (check if any social accounts exist; if not then the match
+        // has to be in the local object)...
+        // fix this later
+        console.log('authentication.js > 63');
+        // if (!existingUser.hasOwnProperty("github") &&
+        //   !existingUser.hasOwnProperty("facebook") &&
+        //   !existingUser.hasOwnProperty("google")) {
+        //     return res.status(422).send({ error: 'That email address is already in use.' });
+        // } else {
+        if (existingUser.hasOwnProperty("local")) {
+            console.log('existing user has property local');
+            return res.status(422).send({ error: 'That email address is already in use.' });
+        } else {
+          console.log('skipped matching email block');
+          // if not, email matches an acct created with social login.
+          // allow user to create new local acct & merge w social login details
+          // update existing and return updated user
+          const target = { 'profile.email': email }
+          console.log(target);
+          const updates = {
+            local: { email, password },
+            profile: {
+              firstName,
+              lastName,
+              email,
+              avatarUrl: existingUser.profile.avatarUrl
+            }
+          };
+          console.log(updates);
+          // return updated document rather than the original
+          const options = { new: true };
 
-      // If user is not unique, return error
-    if (existingUser) {
-      return res.status(422).send({ error: 'That email address is already in use.' });
-    }
+          User.findOneAndUpdate(target, updates, options)
+          .exec()
+          .then( (user) => {
+            console.log('authentication.js > 100');
+            console.log(user.profile.email);
+            console.log('found and updated user with no local acct');
+            console.log(user);
 
-      // If email is unique and password was provided, create account
-    const user = new User({
-      local: { email, password },
-      profile: { firstName, lastName, email }
-    });
+            // Respond with JWT if user was updated
+            const userInfo = helpers.setUserInfo(user);
+            console.log(userInfo);
+            console.log('authentication.js > 104');
+            const token = `JWT ${helpers.generateToken(userInfo)}`;
+            console.log(token);
+            res.status(201).json({
+              token,
+              user
+            });
+          }) // then
+          .catch( (err) => {
+            console.log('authentication.js > 100');
+            console.log(err);
+            return next(err);
+          }); // catch
+        }
+      } else {
+        // If email is unique and password was provided, create account
+        console.log('creating new account');
+        const user = new User({
+          local: { email, password },
+          profile: { firstName, lastName, email }
+        });
 
-    user.save((err, user) => {
-      if (err) {
-        console.log('authentication.js > 87');
-        console.log(err);
-        return next(err);
+        user.save((err, user) => {
+          if (err) {
+            console.log('authentication.js > 87');
+            console.log(err);
+            return next(err);
+          }
+
+          // Respond with JWT if user was created
+
+          const userInfo = helpers.setUserInfo(user);
+          console.log('authentication.js > 135');
+          const token = `JWT ${helpers.generateToken(userInfo)}`;
+          res.status(201).json({
+            token,
+            user
+          });
+        });
       }
-
-      // Respond with JWT if user was created
-
-      const userInfo = helpers.setUserInfo(user);
-
-      res.status(201).json({
-        token: `JWT ${helpers.generateToken(userInfo)}`,
-        user: userInfo
-      });
-    });
-  });
-};
+  }) // then (User.findOne)
+    .catch( (err) => {
+      console.log('catch block line 143');
+      console.log(err);
+      throw err;
+    }); // catch (User.findOne)
+} // register
 
 //= =======================================
 // Facebook Callbacks

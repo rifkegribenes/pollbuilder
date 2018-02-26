@@ -60,7 +60,7 @@ module.exports = (passport) => {
   // Social logins
   //= ========================
 
-  // helper methods for updating profile with social login info
+  // helper methods for updating existing profile with social login info
 
   const nameFormula = (platform, profile) => {
     let firstName, lastName;
@@ -76,7 +76,7 @@ module.exports = (passport) => {
 
   const findExistingUser = (profile, token, platform, done) => {
     // if mongo user exists with empty platform key,
-    // update with platform info and then return updated user
+    // update with platform info and return updated user
     const pID = `${platform}.id`;
     const { firstName, lastName } = nameFormula(platform, profile);
     console.log(`no user found with matching ${platform} key, try searching for existing user with empty ${platform} id`);
@@ -102,7 +102,7 @@ module.exports = (passport) => {
 
     User.findOneAndUpdate(target, updates, options)
     .exec()
-    .then( function(user) {
+    .then( (user) => {
       if (!user) {
         saveNewUser(updates, options, profile, token, platform, done);
       } else {
@@ -239,7 +239,7 @@ module.exports = (passport) => {
   // Google login strategy
   passport.use('google', new GoogleStrategy(googleOptions,
     function(req, token, refreshToken, profile, done) {
-      console.log(`Github login by ${profile.name}, ID: ${profile.id}`);
+      console.log(`Google login by ${profile.name}, ID: ${profile.id}`);
       process.nextTick( () => {
         console.log(req.user);
         // check if user is already logged in

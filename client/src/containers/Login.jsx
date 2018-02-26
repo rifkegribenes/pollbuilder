@@ -18,7 +18,7 @@ class Login extends React.Component {
   */
   login() {
     // clear previous errors
-    this.props.actions.setLoginError("");
+    this.props.actions.clearLoginError();
     const { email, password } = this.props.login.form;
     if (email && password) {
       const body = { email, password };
