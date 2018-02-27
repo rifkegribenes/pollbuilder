@@ -22,7 +22,7 @@ class Profile extends React.Component {
       window.history.replaceState(null, null, `${window.location.origin}/user`);
     } else {
       // if they're not in the route params
-      // then they've already been saved to app state or local storage;
+      // then they've already been saved to redux store or local storage;
       // look for them there
       userId =
         this.props.appState.user._id ||

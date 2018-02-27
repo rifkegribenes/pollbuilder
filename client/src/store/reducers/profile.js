@@ -47,10 +47,6 @@ const INITIAL_STATE = {
 
 function profile(state = INITIAL_STATE, action) {
   let error;
-  // let local = { email: "" };
-  // let facebook = { email: "", token: "", id: "" };
-  // let github = { email: "", token: "", id: "" };
-  // let google = { email: "", token: "", id: "" };
   let user = {};
   switch (action.type) {
     /*

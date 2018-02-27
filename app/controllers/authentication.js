@@ -3,6 +3,7 @@ const User = require('../models/user');
 const passport = require('passport');
 const helpers = require('./helpers');
 const userController = require('./user');
+const emailService = require('./config/emailService')
 
 const APP_HOST = process.env.APP_HOST;
 const CLIENT_URL = process.env.NODE_ENV === 'production' ? APP_HOST : '//localhost:3000';
@@ -283,6 +284,13 @@ exports.forgotPassword = function (req, res, next) {
 
           // Otherwise, send user email via Mailgun
         mailgun.sendEmail(existingUser.email, message);
+        emailService.sendText(email, 'Welcome!', 'Do something great!')
+        .then(() => {
+          // Email sent successfully
+        })
+        .catch(() => {
+          // Error sending email
+        })
 
         return res.status(200).json({ message: 'Please check your email for the link to reset your password.' });
       });

@@ -159,16 +159,6 @@ function appState(state = INITIAL_STATE, action) {
       return update(state, {
         spinnerClass: { $set: "spinner__hide" },
         loggedIn: { $set: true }
-        // user: {
-        //   _id: { $set: action.payload._id },
-        //   profile: {
-        //     avatarUrl: { $set: action.payload.avatarUrl || "" },
-        //     firstName: { $set: action.payload.firstName || "" },
-        //     lastName: { $set: action.payload.lastName || "" },
-        //     email: { $set: action.payload.email }
-        //   }
-        // },
-        // authToken: { $set: action.payload.token }
       });
 
     /*
