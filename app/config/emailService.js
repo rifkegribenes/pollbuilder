@@ -8,7 +8,8 @@ const mailgunOptions = {
     domain: process.env.MAILGUN_DOMAIN,
   }
 }
-const transport = mailgunTransport(mailgunOptions)
+const transport = mailgunTransport(mailgunOptions);
+
 // EmailService
 class EmailService {
   constructor() {
@@ -17,7 +18,7 @@ class EmailService {
   sendText(to, subject, text) {
     return new Promise((resolve, reject) => {
       this.emailClient.sendMail({
-        from: '"Your Name' <youremail@yourdomain.com>',
+        from: 'rifkegribenes <hello@rifkegribenes.io>',
         to,
         subject,
         text,
@@ -31,4 +32,4 @@ class EmailService {
     })
   }
 }
-module.exports = new EmailService()
+module.exports = new EmailService();

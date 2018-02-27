@@ -3,7 +3,7 @@ const User = require('../models/user');
 const passport = require('passport');
 const helpers = require('./helpers');
 const userController = require('./user');
-const emailService = require('./config/emailService')
+const emailService = require('../config/emailService')
 
 const APP_HOST = process.env.APP_HOST;
 const CLIENT_URL = process.env.NODE_ENV === 'production' ? APP_HOST : '//localhost:3000';
@@ -56,7 +56,7 @@ exports.register = function (req, res, next) {
   User.findOne({ 'profile.email': email })
     .then( (existingUser) => {
       console.log('authentication.js > 57');
-      console.log(existingUser.profile.email);
+      // console.log(existingUser.profile.email);
       // If email is not unique
       if (existingUser) {
         // check if local account already exists.
@@ -134,6 +134,16 @@ exports.register = function (req, res, next) {
             console.log(err);
             return next(err);
           }
+          // Send validation email
+          const subject = "Welcome to the voting app!";
+          const text = "Here is the message.";
+          emailService.sendText(email, subject, text)
+            .then(() => {
+              console.log('email sent');
+            })
+            .catch((err) => {
+              console.log(err);
+            });
 
           // Respond with JWT if user was created
 
