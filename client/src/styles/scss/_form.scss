@@ -409,9 +409,16 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     letter-spacing: 2px;
     font-weight: 700;
     font-size: .8em;
-    margin: 5px auto;
+    margin: 5px 0;
+    border: 1px solid transparent;
     border-bottom: 1px dotted transparent;
-    text-align: center;
+    appearance: none;
+    -webkit-appearance: none;
+    text-align: left;
+
+    &:last-child {
+      text-align: right;
+    }
 
     @include for-tablet-portrait-up {
       font-weight: 400;

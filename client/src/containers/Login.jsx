@@ -34,6 +34,15 @@ class Login extends React.Component {
     }
   }
 
+  resetPassword = () => {
+    const email = this.props.login.form.email;
+    if (!email) {
+      this.props.actions.setLoginError("Email required to reset password");
+      return;
+    }
+    this.props.api.sendResetEmail({ email });
+  };
+
   /*
   * Function: handleInput - On Change, send updated value to redux
   * @param {object} event - the change event triggered by the input.
@@ -91,7 +100,10 @@ class Login extends React.Component {
               </button>
             </div>
           </div>
-          <div className="form__input-group">
+          <div className="form__input-group  form__link-group">
+            <button className="form__login-link" onClick={this.resetPassword}>
+              Reset Password
+            </button>
             <Link className="form__login-link" to="/register">
               Create new account
             </Link>

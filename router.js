@@ -126,6 +126,8 @@ module.exports = function (app) {
   // User Routes
   //= ========================
 
+  apiRoutes.get('refresh_token', UserController.refreshToken);
+
   // Set user routes as a subgroup/middleware to apiRoutes
   apiRoutes.use('/user', userRoutes);
 

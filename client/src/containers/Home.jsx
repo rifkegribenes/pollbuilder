@@ -56,7 +56,7 @@ class Home extends React.Component {
       }
     } else {
       console.log("logged in:");
-      console.log(this.props.appState.user.profile.email);
+      console.log(this.props.profile.user.profile.email);
     }
   }
 
@@ -66,7 +66,8 @@ class Home extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  appState: state.appState
+  appState: state.appState,
+  profile: state.profile
 });
 
 const mapDispatchToProps = dispatch => ({

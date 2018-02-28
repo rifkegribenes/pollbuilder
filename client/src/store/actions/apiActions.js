@@ -198,3 +198,49 @@ export function getProfile(token, userId) {
     }
   };
 }
+
+export const RESET_PW_REQUEST = "RESET_PW_REQUEST";
+export const RESET_PW_SUCCESS = "RESET_PW_SUCCESS";
+export const RESET_PW_FAILURE = "RESET_PW_FAILURE";
+
+/*
+* Function: resetPassword
+*/
+export function resetPassword(body) {
+  return {
+    [RSAA]: {
+      endpoint: `${BASE_URL}/api/resetpassword`,
+      method: "POST",
+      types: [RESET_PW_REQUEST, RESET_PW_SUCCESS, RESET_PW_FAILURE],
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body)
+    }
+  };
+}
+
+export const SEND_RESET_EMAIL_REQUEST = "SEND_RESET_EMAIL_REQUEST";
+export const SEND_RESET_EMAIL_SUCCESS = "SEND_RESET_EMAIL_SUCCESS";
+export const SEND_RESET_EMAIL_FAILURE = "SEND_RESET_EMAIL_FAILURE";
+
+/*
+* Function: sendResetEmail
+* @param {String} - the username to send the reset email to
+*/
+export function sendResetEmail(username) {
+  return {
+    [RSAA]: {
+      endpoint: `${BASE_URL}/api/sendresetemail`,
+      method: "POST",
+      types: [
+        SEND_RESET_EMAIL_REQUEST,
+        {
+          type: SEND_RESET_EMAIL_SUCCESS,
+          meta: username
+        },
+        SEND_RESET_EMAIL_FAILURE
+      ],
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(username)
+    }
+  };
+}

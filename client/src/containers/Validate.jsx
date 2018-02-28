@@ -74,7 +74,7 @@ class Validate extends React.Component {
             </div>
           </div>
         )}
-        <Spinner cssClass={this.props.login.validateSpinnerClass} />
+        <Spinner cssClass={this.props.login.spinnerClass} />
         <ModalSm
           modalClass={this.props.login.modal.class}
           modalTitle={this.props.login.modal.title}
@@ -107,7 +107,7 @@ Validate.propTypes = {
     }).isRequired
   }).isRequired,
   login: PropTypes.shape({
-    validateSpinnerClass: PropTypes.string,
+    spinnerClass: PropTypes.string,
     tokenRefreshComplete: PropTypes.boolean,
     modal: PropTypes.shape({
       class: PropTypes.string,
