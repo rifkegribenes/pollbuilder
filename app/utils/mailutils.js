@@ -47,7 +47,7 @@ function makeSignupKey() {
 */
 function makeValidationUrl(user_id, key) {
   console.log('makeValidationUrl');
-    const baseUrl = `${SERVER_URL}/api/validate`;
+    const baseUrl = `${SERVER_URL}/api/auth/validate`;
 
     return `${baseUrl}?uid=${user_id}&key=${key}`;
 }

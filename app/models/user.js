@@ -35,8 +35,19 @@ const UserSchema = new Schema({
     id: { type: String },
     email: { type: String, set: toLower }
   },
-  resetPasswordToken: { type: String },
-  resetPasswordExpires: { type: Date }
+  signupKey: {
+    key: String,
+    ts: String,
+    exp: String
+  },
+  passwordResetKey: {
+    key: String,
+    ts: String,
+    exp: String,
+  },
+  validated: { type: Boolean, default: false }
+  // resetPasswordToken: { type: String },
+  // resetPasswordExpires: { type: Date }
 },
   {
     timestamps: true

@@ -251,6 +251,57 @@ exports.roleAuthorization = function (requiredRole) {
 };
 
 //= =======================================
+// Validate Email Route
+//= =======================================
+
+// HANDLE EMAIL VALIDATION LINKS
+// Toggles user's `validated` property to `true`
+//   Example: GET >> /api/auth/validate
+//   Secured: no
+//   Expects:
+//     1) request query params
+//        * uid : String
+//        * key : String
+//   Returns: redirect to client-side validation landing page
+//
+exports.validate = function (req, res) {
+  const user_id  = req.query.uid;
+  const test_key = req.query.key;
+  const target = {
+    _id : user_id
+  };
+  const updates = {
+    validated: true
+  };
+
+  User.findOneAndUpdate(target, updates)
+    .exec()
+    .then( user => {
+    if (!user) {
+      return res
+          .status(404)
+          .json({ message: 'No user with that ID found.' });
+    } else if (user.signupKey.key !== test_key) {
+        return res
+          .status(400)
+          .json({ message: 'Registration key mismatch.' });
+    } else {
+        // build hash fragment for client-side routing
+        const hash = '#/redirect=validate';
+        return res
+          // redirect to client-side validation landing page
+          .redirect(302, `/${hash}`);
+    }
+  })
+  .catch( err => {
+    console.log('Error!!!', err);
+      return res
+        .status(400)
+        .json({ message: err});
+  });
+}
+
+//= =======================================
 // Forgot Password Route
 //= =======================================
 
