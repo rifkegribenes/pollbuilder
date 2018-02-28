@@ -117,6 +117,7 @@ class Register extends React.Component {
             this.props.actions.dismissRegModal();
           }}
           action={() => {
+            this.props.actions.dismissRegModal();
             this.props.history.push("/");
           }}
         />

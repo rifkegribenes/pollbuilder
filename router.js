@@ -3,13 +3,29 @@ const CLIENT_URL = process.env.NODE_ENV === 'production' ? APP_HOST : '//localho
 
 const AuthenticationController = require('./app/controllers/authentication');
 const UserController = require('./app/controllers/user');
+const StaticController = require('./app/controllers/static');
 
 const express = require('express');
 const passport = require('passport');
 const Auth = require('./app/config/auth');
 const helpers = require('./app/controllers/helpers');
 
-// Middleware to require login/auth
+/* =========================== ROUTE MIDDLEWARE ============================ */
+
+// Checks wheather user has validated their account.
+// If `validated: false`, bail out early.
+const checkValidated = (req, res, next) => {
+  const validatedErrMsg = 'You need to validate your account before you can access this resource.\nPlease visit your Profile and generate a new validation email.';
+
+  if (!req.token.validated) {
+    return res
+      .status(400)  // bad request
+      .json({ message : validatedErrMsg });
+  } else {
+    next();
+  }
+}
+
 const requireAuth = passport.authenticate('jwt', { session: false });
 // const requireLogin = passport.authenticate('local', { session: false });
 
@@ -43,6 +59,10 @@ module.exports = function (app) {
 
   app.use(passport.initialize());
   app.use(passport.session());
+
+  // Catch client-side routes that don't exist on the back-end.
+  // Redirects to /#/redirect={route}/{optional_id}
+  app.get('/:client_route/:uid?', StaticController.redirectHash);
 
 // ============================================================================
 // AUTHENTICATE (FIRST LOGIN) =================================================

@@ -3,7 +3,7 @@ const User = require('../models/user');
 const passport = require('passport');
 const helpers = require('./helpers');
 const userController = require('./user');
-const mailutils = require('../utils/mailutils')
+const mailUtils = require('../utils/mailUtils')
 
 const APP_HOST = process.env.APP_HOST;
 const CLIENT_URL = process.env.NODE_ENV === 'production' ? APP_HOST : '//localhost:3000';
@@ -112,9 +112,11 @@ exports.register = function (req, res, next) {
       } else {
         // If email is unique and password was provided, create account
         console.log('creating new account');
+        const key = mailUtils.makeSignupKey();
         const user = new User({
           local: { email, password },
-          profile: { firstName, lastName, email }
+          profile: { firstName, lastName, email },
+          signupKey: key
         });
 
         user.save((err, user) => {
@@ -127,11 +129,10 @@ exports.register = function (req, res, next) {
           console.log(`saved new user with id ${user.id}`);
           // Send validation email
           const subject = "Voting App: Email Confirmation Required";
-          const key = mailutils.makeSignupKey();
           console.log(user.id);
-          const url = mailutils.makeValidationUrl(user.id, key.key);
+          const url = mailUtils.makeValidationUrl(user.id, key.key);
           const text = `Please click here to validate your email: ${url}`;
-          mailutils.sendMail(email, subject, text)
+          mailUtils.sendMail(email, subject, text)
             .then(() => {
               console.log('email sent');
             })
@@ -267,6 +268,7 @@ exports.roleAuthorization = function (requiredRole) {
 exports.validate = function (req, res) {
   const user_id  = req.query.uid;
   const test_key = req.query.key;
+  console.log(`testkey: ${test_key}`);
   const target = {
     _id : user_id
   };
@@ -279,9 +281,10 @@ exports.validate = function (req, res) {
     .then( user => {
     if (!user) {
       return res
-          .status(404)
-          .json({ message: 'No user with that ID found.' });
+        .status(404)
+        .json({ message: 'No user with that ID found.' });
     } else if (user.signupKey.key !== test_key) {
+      console.log(`user signupKey: ${user.signupKey.key}`);
         return res
           .status(400)
           .json({ message: 'Registration key mismatch.' });
@@ -290,7 +293,7 @@ exports.validate = function (req, res) {
         const hash = '#/redirect=validate';
         return res
           // redirect to client-side validation landing page
-          .redirect(302, `/${hash}`);
+          .redirect(302, `${CLIENT_URL}/${hash}`);
     }
   })
   .catch( err => {
