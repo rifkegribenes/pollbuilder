@@ -51,7 +51,8 @@ function register(state = INITIAL_STATE, action) {
         spinnerClass: "spinner__hide",
         modal: {
           class: "modal__show",
-          text: "Your registration was successful.",
+          text:
+            "Your registration was successful. Please check your email for a validation link. You must validate your account to continue using this app.",
           title: "Success"
         }
       });

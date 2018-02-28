@@ -12,7 +12,7 @@ var configDB = require('./app/config/database.js');
 const User = require('./app/models/user');
 const session = require('express-session');
 const passport = require('passport');
-const user = require('./app/config/passport-serialize');
+const user = require('./app/utils/passport-serialize');
 
 
 // configuration ===============================================================

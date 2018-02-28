@@ -78,12 +78,7 @@ function profile(state = INITIAL_STATE, action) {
     * Purpose: Set current user data when user successfully registers
     */
     case REGISTRATION_SUCCESS:
-      console.log("profile.js");
-      console.log("REGISTRATION_SUCCESS");
-      console.log(action.payload);
       user = { ...action.payload.user };
-      console.log(user);
-      console.log(user.email);
       return update(state, {
         $merge: { user }
       });

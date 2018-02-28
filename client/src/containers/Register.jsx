@@ -50,7 +50,7 @@ class Register extends React.Component {
               confirmPwd: "",
               error: ""
             });
-            this.props.history.push("/");
+            // this.props.history.push("/");
           }
         })
         .catch(err => {
@@ -115,6 +115,9 @@ class Register extends React.Component {
           modalTitle={this.props.register.modal.title}
           dismiss={() => {
             this.props.actions.dismissRegModal();
+          }}
+          action={() => {
+            this.props.history.push("/");
           }}
         />
         <form className="container form">

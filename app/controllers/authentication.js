@@ -3,7 +3,7 @@ const User = require('../models/user');
 const passport = require('passport');
 const helpers = require('./helpers');
 const userController = require('./user');
-const emailService = require('../config/emailService')
+const mailutils = require('../utils/mailutils')
 
 const APP_HOST = process.env.APP_HOST;
 const CLIENT_URL = process.env.NODE_ENV === 'production' ? APP_HOST : '//localhost:3000';
@@ -60,18 +60,7 @@ exports.register = function (req, res, next) {
       // If email is not unique
       if (existingUser) {
         // check if local account already exists.
-        // because i can't figure out how to handle the error thrown when
-        // i check for a key that doesn't exist without
-        // crashing the whole $##$#$ app, doing this ass-backwards...
-        // (check if any social accounts exist; if not then the match
-        // has to be in the local object)...
-        // fix this later
         console.log('authentication.js > 63');
-        // if (!existingUser.hasOwnProperty("github") &&
-        //   !existingUser.hasOwnProperty("facebook") &&
-        //   !existingUser.hasOwnProperty("google")) {
-        //     return res.status(422).send({ error: 'That email address is already in use.' });
-        // } else {
         if (existingUser.hasOwnProperty("local")) {
             console.log('existing user has property local');
             return res.status(422).send({ error: 'That email address is already in use.' });
@@ -134,10 +123,15 @@ exports.register = function (req, res, next) {
             console.log(err);
             return next(err);
           }
+
+          console.log(`saved new user with id ${user.id}`);
           // Send validation email
-          const subject = "Welcome to the voting app!";
-          const text = "Here is the message.";
-          emailService.sendText(email, subject, text)
+          const subject = "Voting App: Email Confirmation Required";
+          const key = mailutils.makeSignupKey();
+          console.log(user.id);
+          const url = mailutils.makeValidationUrl(user.id, key.key);
+          const text = `Please click here to validate your email: ${url}`;
+          mailutils.sendMail(email, subject, text)
             .then(() => {
               console.log('email sent');
             })

@@ -25,8 +25,10 @@
     background-color: $color_sky_darker;
     padding: 5px;
     text-align: center;
-    border-top-left-radius: 6px;
-    border-top-right-radius: 6px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    // border-top-left-radius: 6px;
+    // border-top-right-radius: 6px;
   }
   &__info {
     background-color: $color_sky;
@@ -46,8 +48,8 @@
     padding: 5px 40px;
     text-align: center;
     background: $color_sky;
-    border-bottom-right-radius: 6px;
-    border-bottom-left-radius: 6px;
+    // border-bottom-right-radius: 6px;
+    // border-bottom-left-radius: 6px;
   }
 
   &__button {
@@ -63,7 +65,6 @@
     font-weight: 300;
     text-decoration: none;
     border: 1px solid transparent;
-    border-radius: 40px;
     display: inline-block;
 
       &:hover, &:focus {

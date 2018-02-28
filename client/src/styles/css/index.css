@@ -836,8 +836,8 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     background-color: #0b1322;
     padding: 5px;
     text-align: center;
-    border-top-left-radius: 6px;
-    border-top-right-radius: 6px; }
+    text-transform: uppercase;
+    letter-spacing: 2px; }
   .modal__info {
     background-color: #182848; }
   .modal__error {
@@ -851,9 +851,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     cursor: pointer;
     padding: 5px 40px;
     text-align: center;
-    background: #182848;
-    border-bottom-right-radius: 6px;
-    border-bottom-left-radius: 6px; }
+    background: #182848; }
   .modal__button {
     -webkit-appearance: none;
     appearance: none;
@@ -867,7 +865,6 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     font-weight: 300;
     text-decoration: none;
     border: 1px solid transparent;
-    border-radius: 40px;
     display: inline-block; }
     .modal__button:hover, .modal__button:focus {
       -webkit-appearance: none;
