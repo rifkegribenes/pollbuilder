@@ -8,7 +8,7 @@ const StaticController = require('./app/controllers/static');
 const express = require('express');
 const passport = require('passport');
 const Auth = require('./app/config/auth');
-const helpers = require('./app/controllers/helpers');
+const helpers = require('./app/utils/index');
 
 /* =========================== ROUTE MIDDLEWARE ============================ */
 

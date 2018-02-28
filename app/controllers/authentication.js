@@ -1,7 +1,7 @@
 const crypto = require('crypto');
 const User = require('../models/user');
 const passport = require('passport');
-const helpers = require('./helpers');
+const helpers = require('../utils/index');
 const userController = require('./user');
 const mailUtils = require('../utils/mailUtils')
 
