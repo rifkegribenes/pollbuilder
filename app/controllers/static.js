@@ -23,5 +23,6 @@ exports.redirectHash = (req, res) => {
   });
 
   // send the redirect
+  console.log(`redirecting to ${hash_string}`);
   res.redirect(302, `/${hash_string}`);
 }

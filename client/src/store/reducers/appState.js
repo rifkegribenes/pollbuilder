@@ -1,6 +1,6 @@
 import update from "immutability-helper";
 
-import { LOGOUT, SET_LOGGEDIN } from "../actions";
+import { LOGOUT, SET_LOGGEDIN, SET_REDIRECT_URL } from "../actions";
 import {
   VALIDATE_TOKEN_REQUEST,
   VALIDATE_TOKEN_SUCCESS,
@@ -115,6 +115,16 @@ function appState(state = INITIAL_STATE, action) {
         spinnerClass: "spinner__hide",
         loggedIn: false
       });
+
+    /*
+    * This action is issued <Login/> and <Home/> components.
+    * If the user requests a deep link from the server, they are redirected to the root link,
+    * and their requested link is passed to the app, via a hash fragment in the URL
+    * The client then tries to set the client route to the hash fragment.
+    * This function may be called to clear the redirectUrl after client routing occurs.
+    */
+    case SET_REDIRECT_URL:
+      return Object.assign({}, state, { redirectUrl: action.payload });
 
     /*
     * This action is issued only from the <Login/> component.

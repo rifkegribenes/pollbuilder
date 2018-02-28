@@ -291,6 +291,7 @@ exports.validate = function (req, res) {
     } else {
         // build hash fragment for client-side routing
         const hash = '#/redirect=validate';
+        console.log(`redirecting to: ${CLIENT_URL}/${hash}`);
         return res
           // redirect to client-side validation landing page
           .redirect(302, `${CLIENT_URL}/${hash}`);

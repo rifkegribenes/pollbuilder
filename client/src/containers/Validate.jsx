@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import PropTypes from "prop-types";
@@ -8,7 +7,7 @@ import {
   refreshToken,
   resetValidateModal,
   validateToken
-} from "../store/actions/apiLoginActions";
+} from "../store/actions/apiActions";
 import { setLoginError, setRedirectUrl } from "../store/actions";
 import Spinner from "./Spinner";
 import ModalSm from "./ModalSm";
@@ -20,10 +19,13 @@ class Validate extends React.Component {
   * If localStorage fails, force login with a specific message
   */
   componentDidMount() {
+    console.log("Validate component");
     if (this.props.appState.loggedIn) {
+      console.log("Validate component: Logged in");
       this.props.api.refreshToken(this.props.appState.authToken);
       this.props.actions.setRedirectUrl("");
     } else {
+      console.log("Validate component: JWT authenticating");
       let token = window.localStorage.getItem("authToken");
       if (token && token !== "undefined") {
         token = JSON.parse(token);
@@ -35,12 +37,13 @@ class Validate extends React.Component {
           }
           if (result.type === "REFRESH_TOKEN_FAILURE") {
             this.props.actions.setLoginError(
-              "You must log in to validate account"
+              "You must log in to validate your account"
             );
             this.props.history.push("/login");
           }
         });
       } else {
+        console.log("Validate component: Not logged in");
         this.props.actions.setLoginError(
           "You must log in to validate your account"
         );
@@ -73,10 +76,10 @@ class Validate extends React.Component {
         )}
         <Spinner cssClass={this.props.login.validateSpinnerClass} />
         <ModalSm
-          modalClass={this.props.login.validateModal.class}
-          modalTitle={this.props.login.validateModal.title}
-          modalText={this.props.login.validateModal.text}
-          modalType={this.props.login.validateModal.type}
+          modalClass={this.props.login.modal.class}
+          modalTitle={this.props.login.modal.title}
+          modalText={this.props.login.modal.text}
+          modalType={this.props.login.modal.type}
           dismiss={() => {
             this.props.api.resetValidateModal({
               class: "modal__hide",
@@ -97,14 +100,16 @@ Validate.propTypes = {
     loggedIn: PropTypes.boolean
   }).isRequired,
   profile: PropTypes.shape({
-    userProfile: PropTypes.shape({
-      username: PropTypes.string
+    user: PropTypes.shape({
+      profile: PropTypes.shape({
+        firstName: PropTypes.string
+      }).isRequired
     }).isRequired
   }).isRequired,
   login: PropTypes.shape({
     validateSpinnerClass: PropTypes.string,
     tokenRefreshComplete: PropTypes.boolean,
-    validateModal: PropTypes.shape({
+    modal: PropTypes.shape({
       class: PropTypes.string,
       type: PropTypes.string,
       title: PropTypes.string,

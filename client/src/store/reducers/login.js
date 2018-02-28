@@ -18,6 +18,8 @@ const INITIAL_STATE = {
   spinnerClass: "spinner__hide",
   modal: {
     class: "modal__hide",
+    type: "",
+    title: "",
     text: ""
   },
   form: {
