@@ -224,9 +224,9 @@ export const SEND_RESET_EMAIL_FAILURE = "SEND_RESET_EMAIL_FAILURE";
 
 /*
 * Function: sendResetEmail
-* @param {String} - the username to send the reset email to
+* @param {String} - email to address the reset email to
 */
-export function sendResetEmail(username) {
+export function sendResetEmail(email) {
   return {
     [RSAA]: {
       endpoint: `${BASE_URL}/api/sendresetemail`,
@@ -235,12 +235,28 @@ export function sendResetEmail(username) {
         SEND_RESET_EMAIL_REQUEST,
         {
           type: SEND_RESET_EMAIL_SUCCESS,
-          meta: username
+          meta: email
         },
-        SEND_RESET_EMAIL_FAILURE
+        {
+          type: SEND_RESET_EMAIL_FAILURE,
+          payload: (action, state, res) => {
+            return res.json().then(data => {
+              console.log(data);
+              let message = "Sorry, something went wrong :(";
+              if (data) {
+                if (data.message) {
+                  message = data.message;
+                }
+                return { message };
+              } else {
+                return { message };
+              }
+            });
+          }
+        }
       ],
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(username)
+      body: JSON.stringify(email)
     }
   };
 }

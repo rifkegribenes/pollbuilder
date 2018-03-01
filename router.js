@@ -77,8 +77,9 @@ module.exports = function (app) {
   // Login route
   authRoutes.post('/login', requireLogin, AuthenticationController.login);
 
-  // Password reset request route (generate/send token)
-  authRoutes.post('/forgot-password', AuthenticationController.forgotPassword);
+  // Handle requests for password reset (generate/send token)
+  // Returns fail status + message -or- success status + message
+  apiRoutes.post('/sendresetemail', AuthenticationController.sendReset);
 
   // Handle email validation links
   // Toggle user's `validated` property to `true`.

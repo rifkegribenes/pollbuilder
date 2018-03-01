@@ -78,3 +78,9 @@ export function dismissLoginModal() {
     type: DISMISS_LOGIN_MODAL
   };
 }
+
+export function dismissPWResetModal() {
+  return {
+    type: DISMISS_PWRESET_MODAL
+  };
+}

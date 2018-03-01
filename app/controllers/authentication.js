@@ -226,30 +226,6 @@ exports.googleCallback = (req, res) => {
     return res.redirect('/login');
   };
 
-//= =======================================
-// Authorization Middleware
-//= =======================================
-
-// Role authorization check
-exports.roleAuthorization = function (requiredRole) {
-  return function (req, res, next) {
-    const user = req.user;
-
-    User.findById(user._id, (err, foundUser) => {
-      if (err) {
-        res.status(422).json({ error: 'No user was found.' });
-        return next(err);
-      }
-
-      // If user is found, check role.
-      if (getRole(foundUser.role) >= getRole(requiredRole)) {
-        return next();
-      }
-
-      return res.status(401).json({ error: 'You are not authorized to view this content.' });
-    });
-  };
-};
 
 //= =======================================
 // Validate Email Route
@@ -305,57 +281,146 @@ exports.validate = function (req, res) {
   });
 }
 
-//= =======================================
-// Forgot Password Route
-//= =======================================
-
-exports.forgotPassword = function (req, res, next) {
-  const email = req.body.email;
-
-  User.findOne({ email }, (err, existingUser) => {
-    // If user is not found, return error
-    if (err || existingUser == null) {
-      res.status(422).json({ error: 'Your request could not be processed as entered. Please try again.' });
-      return next(err);
-    }
-
-      // If user is found, generate and save resetToken
-
-      // Generate a token with Crypto
-    crypto.randomBytes(48, (err, buffer) => {
-      const resetToken = buffer.toString('hex');
-      if (err) { return next(err); }
-
-      existingUser.resetPasswordToken = resetToken;
-      existingUser.resetPasswordExpires = Date.now() + 3600000; // 1 hour
-
-      existingUser.save((err) => {
-          // If error in saving token, return it
-        if (err) { return next(err); }
-
-        const message = {
-          subject: 'Reset Password',
-          text: `${'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
-            'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
-            'http://'}${req.headers.host}/reset-password/${resetToken}\n\n` +
-            `If you did not request this, please ignore this email and your password will remain unchanged.\n`
-        };
-
-          // Otherwise, send user email via Mailgun
-        mailgun.sendEmail(existingUser.email, message);
-        emailService.sendText(email, 'Welcome!', 'Do something great!')
-        .then(() => {
-          // Email sent successfully
-        })
-        .catch(() => {
-          // Error sending email
-        })
-
-        return res.status(200).json({ message: 'Please check your email for the link to reset your password.' });
+/* Dispatch new password reset email
+ *
+ * @ params   [object]   params
+ * @ params   [string]    * key      [randomly generated key]
+ * @ params   [string]    * to_email [user/recipient email address]
+ * @ params   [string]    * recUsesrId [user/recipient _id]
+*/
+const sendPWResetEmail = (params) => {
+    console.log('pwreset', params);
+    const url     = `${CLIENT_URL}/resetpassword/${params.key}`;
+    const subject = 'Voting App - Password Reset Request';
+    const text = `Please click here to reset your password: ${url}`;
+    mailUtils.sendMail(params.to_email, subject, text)
+      .then(() => {
+        console.log('password reset email sent');
+      })
+      .catch((err) => {
+        console.log(err);
       });
+}
+
+// SEND PW RESET EMAIL
+// Finds user, generates key, calls sendPWResetEmail to send msg
+//   Example: POST >> /api/sendresetemail
+//   Secured: no
+//   Expects:
+//     1) request body params : {
+//          email : String
+//        }
+//   Returns: success status & message on success
+//
+exports.sendReset = (req, res) => {
+  console.log(`preparing to send email to ${req.body.email}`);
+
+  // generate reset key
+  const resetKey = mailUtils.makeSignupKey();
+
+  // find user by email
+  User.findOne({ 'profile.email': req.body.email })
+    .exec()
+    .then(user => {
+      if (!user) {
+        console.log('no user found');
+        return res
+          .status(400)
+          .json({ message: 'No user found with that email' });
+      } else {
+        console.log('found user');
+        //store key on user
+        user.passwordResetKey = resetKey;
+
+        user.save((err, user) => {
+
+          if (err) { throw err; }
+          console.log('saving user');
+          console.log(user);
+          // build email parameter map
+          const emailParams = {
+            key         : user.passwordResetKey.key,
+            to_email    : user.profile.email,
+            recUserId   : user._id
+          };
+
+          console.log(emailParams);
+
+          // send password reset email
+          try {
+            sendPWResetEmail(emailParams);
+            return res
+              .status(200)
+              .json( {message: 'Password Reset email sent!'});
+          } catch (err) {
+            console.log(err);
+            return res
+              .status(400)
+              .json({ message: err});
+          }
+        }); // user.save
+      }
+    }) // User.findOne.then()
+    .catch( err => {
+      console.log('Error!!!', err);
+      return res
+        .status(400)
+        .json({ message: err});
     });
-  });
-};
+}
+
+
+// RESET PASSWORD
+//   Example: POST >> /api/resetpassword
+//   Secured: no
+//   Expects:
+//     1) request body params : {
+//          username : String
+//          password : String
+//          key      : String
+//        }
+//   Returns: success status & message on success
+//
+function resetPass(req, res) {
+
+    const target = { username: req.body.username };
+
+    User.findOne(target)
+        .exec()
+        .then(user => {
+
+            if (!user) {
+                return res
+                    .status(400)
+                    .json({ message: 'No user with that username' });
+            }
+
+            if (user.passwordResetKey.key !== req.body.key) {
+                return res
+                    .status(400)
+                    .json({ message: 'Invalid password reset key' });
+            }
+
+            // reset password, clear the key, save the user
+            user.hashPassword(req.body.password);
+            user.passwordResetKey = {};
+            user.save( (err, user) => {
+
+                if (err) { throw err; }
+
+                return res
+                    .status(200)
+                    .json({ message: 'Password reset successful' });
+            });
+
+        })
+        .catch(err => {
+            console.log('Error!!!', err);
+            return res
+                .status(400)
+                .json({ message: err});
+        });
+}
 
 //= =======================================
 // Reset Password Route

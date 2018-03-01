@@ -7,6 +7,9 @@ import PropTypes from "prop-types";
 import * as Actions from "../store/actions";
 import * as apiActions from "../store/actions/apiActions";
 
+import Spinner from "./Spinner";
+import ModalSm from "./ModalSm";
+
 class Login extends React.Component {
   componentDidMount() {}
 
@@ -34,14 +37,14 @@ class Login extends React.Component {
     }
   }
 
-  resetPassword = () => {
+  resetPassword() {
     const email = this.props.login.form.email;
     if (!email) {
       this.props.actions.setLoginError("Email required to reset password");
-      return;
+    } else {
+      this.props.api.sendResetEmail({ email });
     }
-    this.props.api.sendResetEmail({ email });
-  };
+  }
 
   /*
   * Function: handleInput - On Change, send updated value to redux
@@ -59,87 +62,107 @@ class Login extends React.Component {
   render() {
     const errorClass = this.props.login.errorMsg ? "error" : "hidden";
     return (
-      <form className="container form">
-        <div className="form__body">
-          <div className="form__header">Sign In</div>
-          <div className="form__input-group">
-            <label htmlFor="username" className="form__label">
-              Email
-            </label>
-            <input
-              className="form__input"
-              type="email"
-              placeholder="Email"
-              autoComplete="email"
-              id="email"
-              onChange={event => this.handleInput(event)}
-            />
-          </div>
-          <div className="form__input-group">
-            <label htmlFor="username" className="form__label">
-              Password
-            </label>
-            <input
-              className="form__input"
-              type="password"
-              placeholder="Password"
-              autoComplete="current-password"
-              id="password"
-              onChange={event => this.handleInput(event)}
-            />
-          </div>
-          <div className="form__input-group">
-            <div className="form__button-wrap">
+      <div>
+        <Spinner cssClass={this.props.login.spinnerClass} />
+        <ModalSm
+          modalClass={this.props.login.modal.class}
+          modalText={this.props.login.modal.text}
+          modalType="modal__info"
+          modalTitle={this.props.login.modal.title}
+          dismiss={() => {
+            this.props.actions.dismissRegModal();
+          }}
+          action={() => {
+            this.props.actions.dismissRegModal();
+            this.props.history.push("/");
+          }}
+        />
+        <form className="container form">
+          <div className="form__body">
+            <div className="form__header">Sign In</div>
+            <div className="form__input-group">
+              <label htmlFor="username" className="form__label">
+                Email
+              </label>
+              <input
+                className="form__input"
+                type="email"
+                placeholder="Email"
+                autoComplete="email"
+                id="email"
+                onChange={event => this.handleInput(event)}
+              />
+            </div>
+            <div className="form__input-group">
+              <label htmlFor="username" className="form__label">
+                Password
+              </label>
+              <input
+                className="form__input"
+                type="password"
+                placeholder="Password"
+                autoComplete="current-password"
+                id="password"
+                onChange={event => this.handleInput(event)}
+              />
+            </div>
+            <div className="form__input-group">
+              <div className="form__button-wrap">
+                <button
+                  className="form__button pointer"
+                  id="btn-login"
+                  onClick={() => this.login()}
+                  type="button"
+                >
+                  Sign In
+                </button>
+              </div>
+            </div>
+            <div className="form__input-group  form__link-group">
               <button
-                className="form__button pointer"
-                id="btn-login"
-                onClick={() => this.login()}
+                className="form__login-link"
                 type="button"
+                onClick={() => this.resetPassword()}
               >
-                Sign In
+                Reset Password
               </button>
+              <Link className="form__login-link" to="/register">
+                Create new account
+              </Link>
+            </div>
+            <div className="form__input-group">
+              <hr className="form__hr" />
+              <div className="form__text">Or log in with&hellip;</div>
+              <div className="form__button-wrap">
+                <a
+                  className="form__button form__button--github"
+                  href="http://localhost:8080/api/auth/github/"
+                  id="btn-github"
+                >
+                  <span>GH</span>
+                </a>
+                <a
+                  className="form__button form__button--facebook"
+                  id="btn-facebook"
+                  href="http://localhost:8080/api/auth/facebook"
+                >
+                  <span>FB</span>
+                </a>
+                <a
+                  className="form__button form__button--google"
+                  id="btn-google"
+                  href="http://localhost:8080/api/auth/google"
+                >
+                  <span>G+</span>
+                </a>
+              </div>
+            </div>
+            <div className="form__input-group">
+              <div className={errorClass}>{this.props.login.errorMsg}</div>
             </div>
           </div>
-          <div className="form__input-group  form__link-group">
-            <button className="form__login-link" onClick={this.resetPassword}>
-              Reset Password
-            </button>
-            <Link className="form__login-link" to="/register">
-              Create new account
-            </Link>
-          </div>
-          <div className="form__input-group">
-            <hr className="form__hr" />
-            <div className="form__text">Or log in with&hellip;</div>
-            <div className="form__button-wrap">
-              <a
-                className="form__button form__button--github"
-                href="http://localhost:8080/api/auth/github/"
-                id="btn-github"
-              >
-                <span>GH</span>
-              </a>
-              <a
-                className="form__button form__button--facebook"
-                id="btn-facebook"
-                href="http://localhost:8080/api/auth/facebook"
-              >
-                <span>FB</span>
-              </a>
-              <a
-                className="form__button form__button--google"
-                id="btn-google"
-                href="http://localhost:8080/api/auth/google"
-              >
-                <span>G+</span>
-              </a>
-            </div>
-          </div>
-          <div className="form__input-group">
-            <div className={errorClass}>{this.props.login.errorMsg}</div>
-          </div>
-        </div>
-      </form>
+        </form>
+      </div>
     );
   }
 }
@@ -165,7 +188,13 @@ Login.propTypes = {
   login: PropTypes.shape({
     loginEmail: PropTypes.string,
     loginPassword: PropTypes.string,
-    errorMsg: PropTypes.string
+    errorMsg: PropTypes.string,
+    spinnerClass: PropTypes.string,
+    modal: PropTypes.shape({
+      class: PropTypes.string,
+      text: PropTypes.string,
+      title: PropTypes.string
+    })
   }).isRequired,
   history: PropTypes.shape({
     push: PropTypes.func

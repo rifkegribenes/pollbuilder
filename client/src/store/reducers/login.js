@@ -166,8 +166,10 @@ function login(state = INITIAL_STATE, action) {
     */
     case SEND_RESET_EMAIL_REQUEST:
       return Object.assign({}, state, {
-        loginSpinnerClass: "spinner__show",
-        loginModalClass: "modal__hide",
+        spinnerClass: "spinner__show",
+        modal: {
+          class: "modal__hide"
+        },
         errorMsg: ""
       });
 
@@ -177,13 +179,15 @@ function login(state = INITIAL_STATE, action) {
     *  Purpose: Display success message to user
     */
     case SEND_RESET_EMAIL_SUCCESS:
+      console.log("SEND_RESET_EMAIL_SUCCESS");
       return Object.assign({}, state, {
-        loginSpinnerClass: "spinner__hide",
-        loginModalClass: "modal__show",
-        loginModalText: `A password reset link has been sent to the email registered to ${
-          action.meta.username
-        }.
-          Follow the instructions to complete the password reset`
+        spinnerClass: "spinner__hide",
+        modal: {
+          class: "modal__show",
+          text: `A password reset link has been sent to ${
+            action.meta.email
+          }. Follow the instructions to complete the password reset`
+        }
       });
 
     /*
@@ -192,7 +196,9 @@ function login(state = INITIAL_STATE, action) {
     *  Purpose: Display a spinner to indicate API call in progress
     */
     case SEND_RESET_EMAIL_FAILURE:
-      error = "An unknown error occurred while sending reset email";
+      error =
+        action.payload.message ||
+        "An unknown error occurred while sending reset email";
       return Object.assign({}, state, {
         loginSpinnerClass: "spinner__hide",
         errorMsg: error
