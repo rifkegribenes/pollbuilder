@@ -144,7 +144,7 @@ class ResetPassword extends React.Component {
               : "Continue"
           }
           dismiss={() => {
-            this.props.actions.dismissPWResetModal();
+            this.props.actions.dismissModal();
             this.props.history.push("/login");
           }}
         />
@@ -155,7 +155,7 @@ class ResetPassword extends React.Component {
 
 ResetPassword.propTypes = {
   actions: PropTypes.shape({
-    dismissPWResetModal: PropTypes.func,
+    dismissModal: PropTypes.func,
     setFormField: PropTypes.func,
     setLoginError: PropTypes.func,
     clearLoginError: PropTypes.func

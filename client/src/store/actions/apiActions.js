@@ -63,14 +63,6 @@ export function refreshToken(token) {
   };
 }
 
-export const RESET_VALIDATE_MODAL = "RESET_VALIDATE_MODAL";
-export function resetValidateModal(options) {
-  return {
-    type: RESET_VALIDATE_MODAL,
-    payload: options
-  };
-}
-
 export const LOGIN_REQUEST = "LOGIN_REQUEST";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAILURE = "LOGIN_FAILURE";

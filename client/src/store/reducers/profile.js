@@ -1,5 +1,5 @@
 import update from "immutability-helper";
-import { DISMISS_VIEWPROFILE_MODAL } from "../actions/";
+import { DISMISS_MODAL } from "../actions/";
 import {
   GET_PROFILE_REQUEST,
   GET_PROFILE_SUCCESS,
@@ -146,11 +146,13 @@ function profile(state = INITIAL_STATE, action) {
     * Payload: N/A
     * Purpose: Change settings to hide the modal object
     */
-    case DISMISS_VIEWPROFILE_MODAL:
+    case DISMISS_MODAL:
       return Object.assign({}, state, {
         modal: {
           text: "",
-          class: "modal__hide"
+          class: "modal__hide",
+          type: "",
+          title: ""
         }
       });
 

@@ -1,14 +1,26 @@
 .modal {
   color: rgba(0, 0, 0, 0.6);
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border-radius: 6px;
-  background-color: $color_gray_bkgrd;
-  z-index: 20;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  padding: 40px 20px 20px 20px;
+  background-color: white;
   font-family: $font-stack;
-  box-shadow: 10px 10px 20px rgba(0,0,0,.5);
+  @include for-phone-landscape-up {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 80%;
+    box-shadow: 10px 10px 20px rgba(0,0,0,.5);
+  }
+  @include for-tablet-portrait-up {
+    padding: 10vh 10vw;
+  }
 
   &__hide {
     display: none;
@@ -17,12 +29,12 @@
     display: block;
   }
   &__header {
-    color: white;
+    color: $color_sky;
     line-height: 2em;
     font-family: $font-stack;
     font-weight: 300;
     font-size: 1.3em;
-    background-color: $color_sky_darker;
+    background-color: white;
     padding: 5px;
     text-align: center;
     text-transform: uppercase;
@@ -31,13 +43,13 @@
     // border-top-right-radius: 6px;
   }
   &__info {
-    background-color: $color_sky;
+    color: $color_sky;
   }
   &__error {
-    background-color: darken($color_error_bkg,35%);
+    color: $color_error_text;
   }
   &__success {
-    background-color: darken($color_success_bkg,35%);
+    color: $color_success_text;
   }
   &__body {
     padding: 20px;
@@ -47,7 +59,6 @@
     cursor: pointer;
     padding: 5px 40px;
     text-align: center;
-    background: $color_sky;
     // border-bottom-right-radius: 6px;
     // border-bottom-left-radius: 6px;
   }
@@ -56,7 +67,7 @@
     -webkit-appearance: none;
     appearance: none;
     background: transparent;
-    color: white;
+    color: $color_sky;
     font-family: $font-stack;
     text-transform: uppercase;
     letter-spacing: 2px;
@@ -78,7 +89,7 @@
 
     &__danger {
     &:hover, &:active, &:focus {
-      background-color: darken($color_error_bkg,35%);
+      color: $color_error_text;
     }
   }
 }
@@ -107,5 +118,31 @@
 }
 
 .ReactModal__Content .ReactModal__Content--after-open {
+
+}
+
+.overlay {
+  z-index: 3;
   background: rgba(0,0,0,.7) !important;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.react-modal {
+  background: transparent;
+  border: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  @include for-phone-landscape-up {
+    top: 40px;
+    left: 40px;
+    right: 40px;
+    bottom: 40px;
+  }
 }

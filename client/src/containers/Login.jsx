@@ -70,10 +70,10 @@ class Login extends React.Component {
           modalType="modal__info"
           modalTitle={this.props.login.modal.title}
           dismiss={() => {
-            this.props.actions.dismissRegModal();
+            this.props.actions.dismissModal();
           }}
           action={() => {
-            this.props.actions.dismissRegModal();
+            this.props.actions.dismissModal();
             this.props.history.push("/");
           }}
         />
@@ -180,7 +180,7 @@ Login.propTypes = {
     setLoginError: PropTypes.func,
     setLoginUser: PropTypes.func,
     setLoginPwd: PropTypes.func,
-    dismissLoginModal: PropTypes.func
+    dismissModal: PropTypes.func
   }).isRequired,
   api: PropTypes.shape({
     login: PropTypes.func

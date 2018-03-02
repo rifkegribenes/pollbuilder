@@ -820,48 +820,59 @@ input:not([type=checkbox]):not([type=radio]), textarea {
 .modal {
   color: rgba(0, 0, 0, 0.6);
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border-radius: 6px;
-  background-color: #e7e7e7;
-  z-index: 20;
-  font-family: "Titillium Web", sans-serif;
-  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5); }
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  padding: 40px 20px 20px 20px;
+  background-color: white;
+  font-family: "Titillium Web", sans-serif; }
+  @media (min-width: 480px) {
+    .modal {
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80%;
+      height: 80%;
+      box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5); } }
+  @media (min-width: 600px) {
+    .modal {
+      padding: 10vh 10vw; } }
   .modal__hide {
     display: none; }
   .modal__show {
     display: block; }
   .modal__header {
-    color: white;
+    color: #182848;
     line-height: 2em;
     font-family: "Titillium Web", sans-serif;
     font-weight: 300;
     font-size: 1.3em;
-    background-color: #0b1322;
+    background-color: white;
     padding: 5px;
     text-align: center;
     text-transform: uppercase;
     letter-spacing: 2px; }
   .modal__info {
-    background-color: #182848; }
+    color: #182848; }
   .modal__error {
-    background-color: #c05e5e; }
+    color: #a94442; }
   .modal__success {
-    background-color: #75be57; }
+    color: #3c763d; }
   .modal__body {
     padding: 20px;
     white-space: pre-wrap; }
   .modal__action {
     cursor: pointer;
     padding: 5px 40px;
-    text-align: center;
-    background: #182848; }
+    text-align: center; }
   .modal__button {
     -webkit-appearance: none;
     appearance: none;
     background: transparent;
-    color: white;
+    color: #182848;
     font-family: "Titillium Web", sans-serif;
     text-transform: uppercase;
     letter-spacing: 2px;
@@ -878,7 +889,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
       text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
       border: 1px solid white; }
   .modal__danger:hover, .modal__danger:active, .modal__danger:focus {
-    background-color: #c05e5e; }
+    color: #a94442; }
 
 .modal-close {
   position: absolute;
@@ -899,8 +910,29 @@ input:not([type=checkbox]):not([type=radio]), textarea {
   .modal-close-sm:hover, .modal-close-sm:focus {
     opacity: 1; }
 
-.ReactModal__Content .ReactModal__Content--after-open {
-  background: rgba(0, 0, 0, 0.7) !important; }
+.overlay {
+  z-index: 3;
+  background: rgba(0, 0, 0, 0.7) !important;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0; }
+
+.react-modal {
+  background: transparent;
+  border: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0; }
+  @media (min-width: 480px) {
+    .react-modal {
+      top: 40px;
+      left: 40px;
+      right: 40px;
+      bottom: 40px; } }
 
 .profile__row {
   width: 100%;
@@ -990,7 +1022,6 @@ body.user-is-tabbing *:focus {
   border: none;
   background: transparent;
   color: inherit;
-  font-size: inherit;
   font-family: inherit;
   letter-spacing: inherit;
   text-transform: inherit;
@@ -1003,7 +1034,6 @@ body.user-is-tabbing *:focus {
     background: transparent;
     outline: none;
     color: inherit;
-    font-size: inherit;
     font-family: inherit;
     letter-spacing: inherit;
     text-transform: inherit;

@@ -6,16 +6,7 @@ export const CLEAR_LOGIN_ERROR = "CLEAR_LOGIN_ERROR";
 export const SET_PROFILE_VIEW = "SET_PROFILE_VIEW";
 export const SET_REG_ERROR = "SET_REG_ERROR";
 export const SET_REDIRECT_URL = "SET_REDIRECT_URL";
-export const DISMISS_LOGIN_MODAL = "DISMISS_LOGIN_MODAL";
-export const DISMISS_REG_MODAL = "DISMISS_REG_MODAL";
-export const DISMISS_VIEWPROFILE_MODAL = "DISMISS_VIEWPROFILE_MODAL";
-export const DISMISS_PWRESET_MODAL = "DISMISS_PWRESET_MODAL";
-
-export function dismissViewProfileModal() {
-  return {
-    type: DISMISS_VIEWPROFILE_MODAL
-  };
-}
+export const DISMISS_MODAL = "DISMISS_MODAL";
 
 export function setRegError(msg) {
   return {
@@ -28,12 +19,6 @@ export function setRedirectUrl(url) {
   return {
     type: SET_REDIRECT_URL,
     payload: url
-  };
-}
-
-export function dismissRegModal() {
-  return {
-    type: DISMISS_REG_MODAL
   };
 }
 
@@ -73,14 +58,8 @@ export function clearLoginError() {
   };
 }
 
-export function dismissLoginModal() {
+export function dismissModal() {
   return {
-    type: DISMISS_LOGIN_MODAL
-  };
-}
-
-export function dismissPWResetModal() {
-  return {
-    type: DISMISS_PWRESET_MODAL
+    type: DISMISS_MODAL
   };
 }

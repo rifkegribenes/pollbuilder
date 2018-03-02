@@ -67,7 +67,8 @@ function appState(state = INITIAL_STATE, action) {
       window.localStorage.removeItem("authToken");
       window.localStorage.removeItem("userId");
       return update(state, {
-        loggedIn: { $set: false }
+        loggedIn: { $set: false },
+        spinnerClass: { $set: "spinner__hide" }
       });
     /*
     * This action is issued only from the <Home/> component.

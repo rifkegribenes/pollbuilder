@@ -114,10 +114,10 @@ class Register extends React.Component {
           modalType="modal__info"
           modalTitle={this.props.register.modal.title}
           dismiss={() => {
-            this.props.actions.dismissRegModal();
+            this.props.actions.dismissModal();
           }}
           action={() => {
-            this.props.actions.dismissRegModal();
+            this.props.actions.dismissModal();
             this.props.history.push("/");
           }}
         />
@@ -266,7 +266,7 @@ Register.propTypes = {
   }).isRequired,
   actions: PropTypes.shape({
     setRegError: PropTypes.func,
-    dismissRegModal: PropTypes.func
+    dismissModal: PropTypes.func
   }).isRequired,
   history: PropTypes.shape({
     push: PropTypes.func

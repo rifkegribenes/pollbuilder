@@ -3,12 +3,8 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import PropTypes from "prop-types";
 
-import {
-  refreshToken,
-  resetValidateModal,
-  validateToken
-} from "../store/actions/apiActions";
-import { setLoginError, setRedirectUrl } from "../store/actions";
+import * as Actions from "../store/actions";
+import * as apiActions from "../store/actions/apiActions";
 import Spinner from "./Spinner";
 import ModalSm from "./ModalSm";
 
@@ -81,7 +77,7 @@ class Validate extends React.Component {
           modalText={this.props.login.modal.text}
           modalType={this.props.login.modal.type}
           dismiss={() => {
-            this.props.api.resetValidateModal({
+            this.props.actions.dismissModal({
               class: "modal__hide",
               text: "",
               type: "",
@@ -118,12 +114,12 @@ Validate.propTypes = {
   }).isRequired,
   api: PropTypes.shape({
     refreshToken: PropTypes.func,
-    resetValidateModal: PropTypes.func,
     validateToken: PropTypes.func
   }).isRequired,
   actions: PropTypes.shape({
     setLoginError: PropTypes.func,
-    setRedirectUrl: PropTypes.func
+    setRedirectUrl: PropTypes.func,
+    dismissModal: PropTypes.func
   }).isRequired
 };
 
@@ -134,11 +130,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  actions: bindActionCreators({ setLoginError, setRedirectUrl }, dispatch),
-  api: bindActionCreators(
-    { refreshToken, resetValidateModal, validateToken },
-    dispatch
-  )
+  actions: bindActionCreators(Actions, dispatch),
+  api: bindActionCreators(apiActions, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Validate);

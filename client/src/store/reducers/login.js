@@ -4,8 +4,7 @@ import {
   SET_FORM_FIELD,
   SET_LOGIN_ERROR,
   CLEAR_LOGIN_ERROR,
-  DISMISS_LOGIN_MODAL,
-  DISMISS_PWRESET_MODAL
+  DISMISS_MODAL
 } from "../actions";
 import {
   LOGIN_REQUEST,
@@ -117,11 +116,13 @@ function login(state = INITIAL_STATE, action) {
     *  Payload: None
     *  Purpose: update state to dismiss the modal box
     */
-    case DISMISS_LOGIN_MODAL:
+    case DISMISS_MODAL:
       return Object.assign({}, state, {
         modal: {
           text: "",
-          class: "modal__hide"
+          class: "modal__hide",
+          type: "",
+          title: ""
         }
       });
 
@@ -221,20 +222,6 @@ function login(state = INITIAL_STATE, action) {
       return Object.assign({}, state, {
         spinnerClass: "spinner__hide",
         errorMsg: error
-      });
-
-    /*
-    *  Called from: <ResetPassword />
-    *  Payload: None
-    *  Purpose: update state to dismiss the modal box
-    */
-    case DISMISS_PWRESET_MODAL:
-      return Object.assign({}, state, {
-        modal: {
-          text: "",
-          class: "modal__hide",
-          type: ""
-        }
       });
 
     default:

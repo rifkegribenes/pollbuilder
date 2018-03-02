@@ -1,4 +1,4 @@
-import { SET_REG_ERROR, DISMISS_REG_MODAL } from "../actions";
+import { SET_REG_ERROR, DISMISS_MODAL } from "../actions";
 import {
   REGISTRATION_REQUEST,
   REGISTRATION_SUCCESS,
@@ -87,11 +87,13 @@ function register(state = INITIAL_STATE, action) {
     *  Payload: None
     *  Purpose: Hide modal after successful registration.
     */
-    case DISMISS_REG_MODAL:
+    case DISMISS_MODAL:
       return Object.assign({}, state, {
         modal: {
+          text: "",
           class: "modal__hide",
-          text: ""
+          type: "",
+          title: ""
         }
       });
 
