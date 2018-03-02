@@ -30,7 +30,6 @@ const INITIAL_STATE = {
     text: ""
   },
   form: {
-    username: "",
     firstName: "",
     lastName: "",
     email: "",
@@ -59,7 +58,14 @@ function login(state = INITIAL_STATE, action) {
     *  Purpose: Show error message on form
     */
     case SET_LOGIN_ERROR:
-      return Object.assign({}, state, { errorMsg: action.payload });
+      if (typeof action.payload === "string") {
+        error = action.payload;
+      } else if (typeof action.payload.message === "string") {
+        error = action.payload.message;
+      } else {
+        error = "Sorry, something went wrong :( \n Please try again.";
+      }
+      return Object.assign({}, state, { errorMsg: error });
 
     /*
     *  Called From: <Login />
@@ -126,9 +132,11 @@ function login(state = INITIAL_STATE, action) {
     */
     case RESET_PW_REQUEST:
       return Object.assign({}, state, {
-        pwResetSpinnerClass: "spinner__show",
-        pwResetModalClass: "modal__hide",
-        pwResetModalText: ""
+        spinnerClass: "spinner__show",
+        modal: {
+          class: "modal__hide",
+          text: ""
+        }
       });
 
     /*
@@ -138,11 +146,12 @@ function login(state = INITIAL_STATE, action) {
     */
     case RESET_PW_SUCCESS:
       return Object.assign({}, state, {
-        pwResetSpinnerClass: "spinner__hide",
-        pwResetModalClass: "modal__show",
-        pwResetModalType: "modal__success",
-        pwResetModalText:
-          "Your password has been reset. Click Sign In to continue"
+        spinnerClass: "spinner__hide",
+        modal: {
+          class: "modal__show",
+          type: "modal__success",
+          text: "Your password has been reset. Click Sign In to continue"
+        }
       });
 
     /*
@@ -151,12 +160,20 @@ function login(state = INITIAL_STATE, action) {
     *  Purpose: Display an error message to the user.
     */
     case RESET_PW_FAILURE:
-      error = "An unknown error occurred while resetting password";
+      if (typeof action.payload === "string") {
+        error = action.payload;
+      } else if (typeof action.payload.message === "string") {
+        error = action.payload.message;
+      } else {
+        error = "Sorry, something went wrong :( \n Please try again.";
+      }
       return Object.assign({}, state, {
-        pwResetSpinnerClass: "spinner__hide",
-        pwResetModalClass: "modal__show",
-        pwResetModalType: "modal__error",
-        pwResetModalText: error
+        spinnerClass: "spinner__hide",
+        modal: {
+          class: "modal__show",
+          type: "modal__error",
+          text: error
+        }
       });
 
     /*
@@ -186,7 +203,9 @@ function login(state = INITIAL_STATE, action) {
           class: "modal__show",
           text: `A password reset link has been sent to ${
             action.meta.email
-          }. Follow the instructions to complete the password reset`
+          }. Follow the instructions to reset your password.`,
+          title: "Check your Email",
+          type: "modal__success"
         }
       });
 
@@ -200,7 +219,7 @@ function login(state = INITIAL_STATE, action) {
         action.payload.message ||
         "An unknown error occurred while sending reset email";
       return Object.assign({}, state, {
-        loginSpinnerClass: "spinner__hide",
+        spinnerClass: "spinner__hide",
         errorMsg: error
       });
 
@@ -211,9 +230,11 @@ function login(state = INITIAL_STATE, action) {
     */
     case DISMISS_PWRESET_MODAL:
       return Object.assign({}, state, {
-        pwResetModalText: "",
-        pwResetModalClass: "modal__hide",
-        pwResetModalType: ""
+        modal: {
+          text: "",
+          class: "modal__hide",
+          type: ""
+        }
       });
 
     default:

@@ -81,13 +81,14 @@ module.exports = function (app) {
   // Returns fail status + message -or- success status + message
   apiRoutes.post('/sendresetemail', AuthenticationController.sendReset);
 
+  // Handle password resets
+  // Returns fail status + message -or- success status + message
+  apiRoutes.post('/resetpassword', AuthenticationController.resetPass);
+
   // Handle email validation links
   // Toggle user's `validated` property to `true`.
   // Redirects to /#/redirect=validate
   authRoutes.get('/validate', AuthenticationController.validate);
-
-  // Password reset route (change password using token)
-  authRoutes.post('/reset-password/:token', AuthenticationController.verifyToken);
 
   // Facebook authentication with passport
   authRoutes.get('/facebook',

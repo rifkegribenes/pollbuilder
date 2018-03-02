@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
 import Spinner from "./Spinner";
@@ -10,21 +9,16 @@ import * as Actions from "../store/actions";
 import * as apiActions from "../store/actions/apiActions";
 
 class ResetPassword extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      email: "",
-      password: "",
-      confirmPwd: "",
-      error: false,
-      errorMsg: ""
-    };
+  ComponentDidMount() {
+    this.props.actions.clearLoginError();
   }
 
   handleReset = () => {
+    console.log("handleReset");
     const key = this.props.match.params.key;
-    const { email, password, confirmPwd } = this.state;
+    console.log(key);
+    const { email, password, confirmPwd } = this.props.login.form;
+    console.log(password, confirmPwd);
     // validate form data
     if (email && password && password === confirmPwd) {
       const body = {
@@ -35,21 +29,18 @@ class ResetPassword extends React.Component {
       this.props.api.resetPassword(body);
     } else {
       if (!email) {
-        this.setState({
-          error: true,
-          errorMsg: "Email is required"
+        this.props.actions.setLoginError({
+          message: "Email is required"
         });
       }
       if (!password) {
-        this.setState({
-          error: true,
-          errorMsg: "Password is required"
+        this.props.actions.setLoginError({
+          message: "Password is required"
         });
       }
-      if (!password === confirmPwd) {
-        this.setState({
-          error: true,
-          errorMsg: "Passwords do not match"
+      if (password !== confirmPwd) {
+        this.props.actions.setLoginError({
+          message: "Passwords do not match"
         });
       }
     }
@@ -67,7 +58,7 @@ class ResetPassword extends React.Component {
   }
 
   render() {
-    const showError = this.state.error ? "" : "form__hidden";
+    const showError = this.props.login.errorMsg ? "" : "form__hidden";
     return (
       <div className="container form">
         <div className="form__body">
@@ -81,7 +72,10 @@ class ResetPassword extends React.Component {
               type="email"
               placeholder="Email"
               id="email"
-              onChange={event => this.handleInput(event)}
+              value={this.props.login.form.email}
+              onChange={e =>
+                this.props.actions.setFormField(e.target.id, e.target.value)
+              }
               required
             />
           </div>
@@ -94,7 +88,10 @@ class ResetPassword extends React.Component {
               type="password"
               placeholder="Password"
               id="password"
-              onChange={event => this.handleInput(event)}
+              value={this.props.login.form.password}
+              onChange={e =>
+                this.props.actions.setFormField(e.target.id, e.target.value)
+              }
               required
             />
           </div>
@@ -107,13 +104,16 @@ class ResetPassword extends React.Component {
               type="password"
               placeholder="Confirm Password"
               id="confirmPwd"
-              onChange={event => this.handleInput(event)}
+              value={this.props.login.form.confirmPwd}
+              onChange={e =>
+                this.props.actions.setFormField(e.target.id, e.target.value)
+              }
               required
             />
           </div>
           <div className="form__input-group">
             <div className={`form__error ${showError}`}>
-              {this.state.errorMsg}
+              {this.props.login.errorMsg}
             </div>
           </div>
           <div className="form__input-group">
@@ -132,10 +132,20 @@ class ResetPassword extends React.Component {
         <ModalSm
           modalClass={this.props.login.modal.class}
           modalText={this.props.login.modal.text}
-          modalTitle="RESET PASSWORD"
+          modalTitle={
+            this.props.login.modal.type === "modal__success"
+              ? "RESET PASSWORD SUCCESS"
+              : "RESET PASSWORD FAILURE"
+          }
           modalType={this.props.login.modal.type}
+          buttonText={
+            this.props.login.modal.type === "modal__success"
+              ? "Sign In"
+              : "Continue"
+          }
           dismiss={() => {
             this.props.actions.dismissPWResetModal();
+            this.props.history.push("/login");
           }}
         />
       </div>
@@ -145,12 +155,20 @@ class ResetPassword extends React.Component {
 
 ResetPassword.propTypes = {
   actions: PropTypes.shape({
-    dismissPWResetModal: PropTypes.func
+    dismissPWResetModal: PropTypes.func,
+    setFormField: PropTypes.func,
+    setLoginError: PropTypes.func,
+    clearLoginError: PropTypes.func
   }).isRequired,
   api: PropTypes.shape({
     resetPassword: PropTypes.func
   }).isRequired,
   login: PropTypes.shape({
+    form: PropTypes.shape({
+      email: PropTypes.string,
+      password: PropTypes.string,
+      confirmPwd: PropTypes.string
+    }).isRequired,
     modal: PropTypes.shape({
       class: PropTypes.string,
       text: PropTypes.string,

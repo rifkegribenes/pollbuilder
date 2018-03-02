@@ -15,6 +15,7 @@ import NotFound from "./containers/NotFound";
 import Spinner from "./containers/Spinner";
 import ModalSm from "./containers/ModalSm";
 import Validate from "./containers/Validate";
+import ResetPassword from "./containers/ResetPassword";
 
 import * as apiActions from "./store/actions/apiActions";
 import * as Actions from "./store/actions";
@@ -59,6 +60,7 @@ class App extends Component {
                 render={routeProps => <Register {...routeProps} />}
               />
               <Route path="/validate" component={Validate} />
+              <Route path="/resetpassword/:key" component={ResetPassword} />
               <Route path="*" component={NotFound} />
             </Switch>
           </main>

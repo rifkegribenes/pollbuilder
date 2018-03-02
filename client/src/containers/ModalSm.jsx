@@ -52,7 +52,7 @@ const ModalSm = props => (
             className="modal__button"
             onClick={props.action || props.dismiss}
           >
-            Continue
+            {props.buttonText || "Continue"}
           </button>
         </div>
       )}
@@ -68,6 +68,7 @@ ModalSm.propTypes = {
   modalType: PropTypes.string,
   modalTitle: PropTypes.string,
   action: PropTypes.func,
+  buttonText: PropTypes.string,
   dismiss: PropTypes.func.isRequired,
   modalDanger: PropTypes.bool
 };

@@ -382,76 +382,91 @@ exports.sendReset = (req, res) => {
 //   Returns: success status & message on success
 //
 function resetPass(req, res) {
+  console.log('resetPass');
+  const target = { 'profile.email': req.body.email };
 
-    const target = { username: req.body.username };
+  User.findOne(target)
+      .exec()
+      .then(user => {
 
-    User.findOne(target)
-        .exec()
-        .then(user => {
+          if (!user) {
+              return res
+                  .status(400)
+                  .json({ message: 'No user found with that email' });
+          }
 
-            if (!user) {
-                return res
-                    .status(400)
-                    .json({ message: 'No user with that username' });
-            }
+          if (user.passwordResetKey.key !== req.body.key) {
+              return res
+                  .status(400)
+                  .json({ message: 'Invalid password reset key' });
+          }
 
-            if (user.passwordResetKey.key !== req.body.key) {
-                return res
-                    .status(400)
-                    .json({ message: 'Invalid password reset key' });
-            }
+          // reset password, clear the key, save the user
+          user.hashPassword(req.body.password);
+          user.passwordResetKey = {};
+          user.save( (err, user) => {
 
-            // reset password, clear the key, save the user
-            user.hashPassword(req.body.password);
-            user.passwordResetKey = {};
-            user.save( (err, user) => {
+              if (err) { throw err; }
 
-                if (err) { throw err; }
+              return res
+                  .status(200)
+                  .json({ message: 'Password reset successful' });
+          });
 
-                return res
-                    .status(200)
-                    .json({ message: 'Password reset successful' });
-            });
-
-        })
-        .catch(err => {
-            console.log('Error!!!', err);
-            return res
-                .status(400)
-                .json({ message: err});
-        });
+      })
+      .catch(err => {
+          console.log('Error!!!', err);
+          return res
+              .status(400)
+              .json({ message: err});
+      });
 }
 
 //= =======================================
 // Reset Password Route
 //= =======================================
 
-exports.verifyToken = function (req, res, next) {
-  User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, (err, resetUser) => {
-    // If query returned no results, token expired or was invalid. Return error.
-    if (!resetUser) {
-      res.status(422).json({ error: 'Your token has expired. Please attempt to reset your password again.' });
-    }
+exports.resetPass = (req, res, next) => {
+  console.log('resetPass');
+  console.log(req.body.key);
+  const target = {
+    'passwordResetKey.key': req.body.key,
+    'passwordResetKey.exp': { $gt: Date.now() }
+    };
+  User.findOne(target)
+    .exec()
+    .then(user => {
+      // If query returned no results, token expired or was invalid. Return error.
+      if (!user) {
+        return res.status(422).json({ error: 'Your token has expired. Please attempt to reset your password again.' });
+      }
 
-      // Otherwise, save new password and clear resetToken from database
-    resetUser.password = req.body.password;
-    resetUser.resetPasswordToken = undefined;
-    resetUser.resetPasswordExpires = undefined;
+      // Otherwise, save new password and clear passwordResetKey
+      user.local.password = req.body.password;
+      user.passwordResetKey = {};
 
-    resetUser.save((err) => {
-      if (err) { return next(err); }
+      user.save((err) => {
+        if (err) { return next(err); };
 
-        // If password change saved successfully, alert user via email
-      const message = {
-        subject: 'Password Changed',
-        text: 'You are receiving this email because you changed your password. \n\n' +
-          'If you did not request this change, please contact us immediately.'
-      };
+        // Send user email confirmation of password change via Mailgun
+        const subject = "Voting App: Password Changed";
+        const text = 'You are receiving this email because you changed your password. \n\n' +
+        'If you did not request this change, please contact us immediately.';
+        mailUtils.sendMail(user.profile.email, subject, text)
+          .then(() => {
+            console.log('password reset confirmation email sent');
+          })
+          .catch((err) => {
+            console.log(err);
+          });
 
-        // Otherwise, send user email confirmation of password change via Mailgun
-      mailgun.sendEmail(resetUser.email, message);
-
-      return res.status(200).json({ message: 'Password changed successfully. Please login with your new password.' });
-    });
-  });
-};
+        return res.status(200).json({ message: 'Password changed successfully. Please log in with your new password.' });
+      });
+    })
+    .catch(err => {
+      console.log('Error!!!', err);
+      return res
+        .status(400)
+        .json({ message: err});
+      });
+  };

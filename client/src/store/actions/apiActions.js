@@ -211,7 +211,30 @@ export function resetPassword(body) {
     [RSAA]: {
       endpoint: `${BASE_URL}/api/resetpassword`,
       method: "POST",
-      types: [RESET_PW_REQUEST, RESET_PW_SUCCESS, RESET_PW_FAILURE],
+      types: [
+        RESET_PW_REQUEST,
+        RESET_PW_SUCCESS,
+        {
+          type: RESET_PW_FAILURE,
+          payload: (action, state, res) => {
+            return res.json().then(data => {
+              console.log(data);
+              let message = "Sorry, something went wrong :(";
+              if (data) {
+                if (data.message) {
+                  message = data.message;
+                }
+                if (data.error) {
+                  message = data.error;
+                }
+                return { message };
+              } else {
+                return { message };
+              }
+            });
+          }
+        }
+      ],
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body)
     }
