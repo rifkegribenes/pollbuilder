@@ -850,6 +850,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     font-family: "Titillium Web", sans-serif;
     font-weight: 300;
     font-size: 1.3em;
+    font-weight: 700;
     background-color: white;
     padding: 5px;
     text-align: center;
@@ -880,14 +881,16 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     font-size: 16px;
     font-weight: 300;
     text-decoration: none;
-    border: 1px solid transparent;
-    display: inline-block; }
+    border: 1px solid #182848;
+    display: inline-block;
+    border-radius: 4px;
+    transition: all 300ms linear; }
     .modal__button:hover, .modal__button:focus {
       -webkit-appearance: none;
       appearance: none;
-      background: transparent;
-      text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
-      border: 1px solid white; }
+      background: #182848;
+      color: white;
+      transition: all 300ms linear; }
   .modal__danger:hover, .modal__danger:active, .modal__danger:focus {
     color: #a94442; }
 
@@ -895,7 +898,8 @@ input:not([type=checkbox]):not([type=radio]), textarea {
   position: absolute;
   top: 8px;
   right: 8px;
-  cursor: pointer; }
+  cursor: pointer;
+  font-weight: 100 !important; }
   .modal-close--pg {
     top: 4px;
     right: 4px; }
@@ -906,7 +910,8 @@ input:not([type=checkbox]):not([type=radio]), textarea {
   right: 0;
   opacity: .6;
   padding: 0 12px 2px 12px;
-  border-radius: 100%; }
+  border-radius: 100%;
+  font-weight: 100 !important; }
   .modal-close-sm:hover, .modal-close-sm:focus {
     opacity: 1; }
 
