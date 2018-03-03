@@ -12,6 +12,18 @@ class Profile extends React.Component {
     let token;
     console.log(this.props.appState);
     console.log(this.props.profile);
+    // check for facebook redirect hash
+    if (window.location.hash === "#_=_") {
+      console.log("found facebook callback hash");
+      this.props.actions.setLoggedIn();
+      window.history.replaceState
+        ? window.history.replaceState(
+            null,
+            null,
+            window.location.href.split("#")[0]
+          )
+        : (window.location.hash = "");
+    }
     // if landing on this page from a callback from social login,
     // the userid and token will be in the route params.
     // extract them to use in the api call, then strip them from
@@ -19,6 +31,7 @@ class Profile extends React.Component {
     if (this.props.match && this.props.match.params.id) {
       userId = this.props.match.params.id;
       token = this.props.match.params.token;
+      this.props.actions.setLoggedIn();
       window.history.replaceState(null, null, `${window.location.origin}/user`);
     } else {
       // if they're not in the route params

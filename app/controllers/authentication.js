@@ -93,6 +93,8 @@ exports.register = function (req, res, next) {
             console.log(user);
 
             // Respond with JWT if user was updated
+            // don't need to validate email bc it has already been validated
+            // by passport (matched the email used with another social account)
             const userInfo = helpers.setUserInfo(user);
             console.log(userInfo);
             console.log('authentication.js > 104');
@@ -281,7 +283,7 @@ exports.validate = function (req, res) {
   });
 }
 
-/* Dispatch new password reset email
+/* Dispatch new password reset email (called from sendReset())
  *
  * @ params   [object]   params
  * @ params   [string]    * key      [randomly generated key]
@@ -381,46 +383,6 @@ exports.sendReset = (req, res) => {
 //        }
 //   Returns: success status & message on success
 //
-function resetPass(req, res) {
-  console.log('resetPass');
-  const target = { 'profile.email': req.body.email };
-
-  User.findOne(target)
-      .exec()
-      .then(user => {
-
-          if (!user) {
-              return res
-                  .status(400)
-                  .json({ message: 'No user found with that email' });
-          }
-
-          if (user.passwordResetKey.key !== req.body.key) {
-              return res
-                  .status(400)
-                  .json({ message: 'Invalid password reset key' });
-          }
-
-          // reset password, clear the key, save the user
-          user.hashPassword(req.body.password);
-          user.passwordResetKey = {};
-          user.save( (err, user) => {
-
-              if (err) { throw err; }
-
-              return res
-                  .status(200)
-                  .json({ message: 'Password reset successful' });
-          });
-
-      })
-      .catch(err => {
-          console.log('Error!!!', err);
-          return res
-              .status(400)
-              .json({ message: err});
-      });
-}
 
 //= =======================================
 // Reset Password Route

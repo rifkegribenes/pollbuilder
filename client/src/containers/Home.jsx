@@ -12,18 +12,6 @@ class Home extends React.Component {
     if (this.props.location.hash) {
       const hash = this.props.location.hash.slice(2);
       const url = `/${hash.split("=")[1]}`;
-      // check for facebook redirect hash
-      if (window.location.hash === "#_=_") {
-        console.log("found facebook callback hash");
-        this.props.actions.setLoggedIn();
-        window.history.replaceState
-          ? window.history.replaceState(
-              null,
-              null,
-              window.location.href.split("#")[0]
-            )
-          : (window.location.hash = "");
-      }
       if (url.startsWith("/resetpassword")) {
         this.props.history.push(url);
         return;

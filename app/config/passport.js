@@ -188,10 +188,19 @@ module.exports = (passport) => {
         if (!req.user) {
           findExistingUser(profile, token, 'facebook', done)
         } else {
-          // found logged-in user. Return
-          console.log('fb found user');
-          console.log(req.user);
-          return done(null, req.user);
+          // found logged-in user.
+          // if this is their first time logging in with FB
+          // we still have to update their mongo profile
+          // with the FB account info
+          if (!req.user.facebook.id) {
+            console.log('mongo user with no facebook id');
+            findExistingUser(profile, token, 'facebook', done)
+            } else {
+              // otherwise just return the existing user
+              console.log('user with existing facebook id');
+              console.log(req.user);
+              return done(null, req.user);
+            }
         }
       }); // process.nextTick()
     }) // FacebookStrategy
@@ -239,17 +248,26 @@ module.exports = (passport) => {
   // Google login strategy
   passport.use('google', new GoogleStrategy(googleOptions,
     function(req, token, refreshToken, profile, done) {
-      console.log(`Google login by ${profile.name}, ID: ${profile.id}`);
+      console.log(`Google login by ${profile.name.givenName} ${profile.name.familyName}, ID: ${profile.id}`);
       process.nextTick( () => {
         console.log(req.user);
         // check if user is already logged in
         if (!req.user) {
           findExistingUser(profile, token, 'google', done)
         } else {
-          // found logged-in user. Return
-          console.log('google found user');
-          console.log(req.user);
-          return done(null, req.user);
+          // found logged-in user.
+          // if this is their first time logging in with Google
+          // we still have to update their mongo profile
+          // with the Google account info
+          if (!req.user.google.id) {
+            console.log('mongo user with no google id');
+            findExistingUser(profile, token, 'google', done)
+            } else {
+              // otherwise just return the existing user
+              console.log('user with existing google id');
+              console.log(req.user);
+              return done(null, req.user);
+            }
         }
       }); // process.nextTick()
     }) // GoogleStrategy
