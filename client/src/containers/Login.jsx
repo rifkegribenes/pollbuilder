@@ -168,26 +168,20 @@ class Login extends React.Component {
 }
 
 Login.propTypes = {
-  appState: PropTypes.shape({
-    spinnerClass: PropTypes.string,
-    modal: PropTypes.shape({
-      class: PropTypes.string,
-      text: PropTypes.string,
-      title: PropTypes.string
-    })
-  }).isRequired,
   actions: PropTypes.shape({
+    setFormField: PropTypes.func,
     setLoginError: PropTypes.func,
-    setLoginUser: PropTypes.func,
-    setLoginPwd: PropTypes.func,
     dismissModal: PropTypes.func
   }).isRequired,
   api: PropTypes.shape({
     login: PropTypes.func
   }).isRequired,
   login: PropTypes.shape({
-    loginEmail: PropTypes.string,
-    loginPassword: PropTypes.string,
+    form: PropTypes.shape({
+      email: PropTypes.string,
+      password: PropTypes.string,
+      confirmPwd: PropTypes.string
+    }).isRequired,
     errorMsg: PropTypes.string,
     spinnerClass: PropTypes.string,
     modal: PropTypes.shape({
@@ -202,7 +196,6 @@ Login.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  appState: state.appState,
   login: state.login
 });
 

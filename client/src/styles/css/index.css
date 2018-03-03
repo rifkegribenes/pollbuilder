@@ -834,8 +834,8 @@ input:not([type=checkbox]):not([type=radio]), textarea {
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 80%;
-      height: 80%;
+      width: 600px;
+      height: auto;
       box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5); } }
   @media (min-width: 600px) {
     .modal {
@@ -869,6 +869,9 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     cursor: pointer;
     padding: 5px 40px;
     text-align: center; }
+    @media (min-width: 480px) {
+      .modal__action {
+        margin-top: 40px; } }
   .modal__button {
     -webkit-appearance: none;
     appearance: none;

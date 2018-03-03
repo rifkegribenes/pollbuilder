@@ -2,16 +2,18 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import PropTypes from "prop-types";
 import * as Actions from "../store/actions";
 import * as apiActions from "../store/actions/apiActions";
+
+import Spinner from "./Spinner";
+import ModalSm from "./ModalSm";
 
 class Profile extends React.Component {
   componentDidMount() {
     // get user id and token
     let userId;
     let token;
-    console.log(this.props.appState);
-    console.log(this.props.profile);
     // check for facebook redirect hash
     if (window.location.hash === "#_=_") {
       console.log("found facebook callback hash");
@@ -61,111 +63,176 @@ class Profile extends React.Component {
 
   render() {
     return (
-      <div className="profile">
-        <div className="profile__row">
-          <div className="profile__card">
-            <div className="profile__header">Profile</div>
-            <div className="profile__name">
-              {this.props.profile.user.profile.firstName}{" "}
-              {this.props.profile.user.profile.lastName}
+      <div>
+        <Spinner cssClass={this.props.profile.spinnerClass} />
+        <ModalSm
+          modalClass={this.props.profile.modal.class}
+          modalText={this.props.profile.modal.text}
+          modalType="modal__info"
+          modalTitle={this.props.profile.modal.title}
+          dismiss={() => {
+            this.props.actions.dismissModal();
+          }}
+          action={() => {
+            this.props.actions.dismissModal();
+          }}
+        />
+        <div className="profile">
+          <div className="profile__row">
+            <div className="profile__card">
+              <div className="profile__header">Profile</div>
+              <div className="profile__name">
+                {this.props.profile.user.profile.firstName}{" "}
+                {this.props.profile.user.profile.lastName}
+              </div>
+              <div className="profile__email">
+                {this.props.profile.user.profile.email}
+              </div>
+              <div className="profile__pic">
+                <img
+                  src={this.props.profile.user.profile.avatarUrl}
+                  alt={`${this.props.profile.user.profile.firstName} ${
+                    this.props.profile.user.profile.lastName
+                  }`}
+                />
+              </div>
             </div>
-            <div className="profile__email">
-              {this.props.profile.user.profile.email}
+            <div className="profile__card">
+              <div className="profile__header">Local</div>
+              {this.props.profile.user.local && (
+                <div className="profile__email">
+                  {this.props.profile.user.local.email}
+                </div>
+              )}
             </div>
-            <div className="profile__pic">
-              <img
-                src={this.props.profile.user.profile.avatarUrl}
-                alt={`${this.props.profile.user.profile.firstName} ${
-                  this.props.profile.user.profile.lastName
-                }`}
-              />
+            <div className="profile__card">
+              <div className="profile__header">Github</div>
+              {this.props.profile.user.github && (
+                <div className="profile__email">
+                  {this.props.profile.user.github.email}
+                  <br />
+                  {`${this.props.profile.user.github.token.slice(0, 5)}...`}
+                </div>
+              )}
+            </div>
+            <div className="profile__card">
+              <div className="profile__header">Facebook</div>
+              {this.props.profile.user.facebook && (
+                <div className="profile__email">
+                  {this.props.profile.user.facebook.email}
+                  <br />
+                  {`${this.props.profile.user.facebook.token.slice(0, 5)}...`}
+                </div>
+              )}
+            </div>
+            <div className="profile__card">
+              <div className="profile__header">Google+</div>
+              {this.props.profile.user.google && (
+                <div className="profile__email">
+                  {this.props.profile.user.google.email}
+                  <br />
+                  {`${this.props.profile.user.google.token.slice(0, 5)}...`}
+                </div>
+              )}
             </div>
           </div>
-          <div className="profile__card">
-            <div className="profile__header">Local</div>
-            {this.props.profile.user.local && (
-              <div className="profile__email">
-                {this.props.profile.user.local.email}
-              </div>
-            )}
-          </div>
-          <div className="profile__card">
-            <div className="profile__header">Github</div>
-            {this.props.profile.user.github && (
-              <div className="profile__email">
-                {this.props.profile.user.github.email}
-                <br />
-                {`${this.props.profile.user.github.token.slice(0, 5)}...`}
-              </div>
-            )}
-          </div>
-          <div className="profile__card">
-            <div className="profile__header">Facebook</div>
-            {this.props.profile.user.facebook && (
-              <div className="profile__email">
-                {this.props.profile.user.facebook.email}
-                <br />
-                {`${this.props.profile.user.facebook.token.slice(0, 5)}...`}
-              </div>
-            )}
-          </div>
-          <div className="profile__card">
-            <div className="profile__header">Google+</div>
-            {this.props.profile.user.google && (
-              <div className="profile__email">
-                {this.props.profile.user.google.email}
-                <br />
-                {`${this.props.profile.user.google.token.slice(0, 5)}...`}
-              </div>
-            )}
-          </div>
-        </div>
-        <div className="form__input-group">
-          <hr className="form__hr" />
-          <div className="form__text">Connect with&hellip;</div>
-          <div className="form__button-wrap">
-            {!this.props.profile.user.github ||
-            !this.props.profile.user.github.token ? (
-              <a
-                className="form__button form__button--github"
-                href="http://localhost:8080/api/auth/github/"
-                id="btn-github"
-              >
-                <span>Link GH</span>
-              </a>
-            ) : (
-              ""
-            )}
-            {!this.props.profile.user.facebook ||
-            !this.props.profile.user.facebook.token ? (
-              <a
-                className="form__button form__button--facebook"
-                id="btn-facebook"
-                href="http://localhost:8080/api/auth/facebook"
-              >
-                <span>Link FB</span>
-              </a>
-            ) : (
-              ""
-            )}
-            {!this.props.profile.user.google ||
-            !this.props.profile.user.google.token ? (
-              <a
-                className="form__button form__button--google"
-                id="btn-google"
-                href="http://localhost:8080/api/auth/google"
-              >
-                <span>Link G+</span>
-              </a>
-            ) : (
-              ""
-            )}
+          <div className="form__input-group">
+            <hr className="form__hr" />
+            <div className="form__text">Connect with&hellip;</div>
+            <div className="form__button-wrap">
+              {!this.props.profile.user.github ||
+              !this.props.profile.user.github.token ? (
+                <a
+                  className="form__button form__button--github"
+                  href="http://localhost:8080/api/auth/github/"
+                  id="btn-github"
+                >
+                  <span>Link GH</span>
+                </a>
+              ) : (
+                ""
+              )}
+              {!this.props.profile.user.facebook ||
+              !this.props.profile.user.facebook.token ? (
+                <a
+                  className="form__button form__button--facebook"
+                  id="btn-facebook"
+                  href="http://localhost:8080/api/auth/facebook"
+                >
+                  <span>Link FB</span>
+                </a>
+              ) : (
+                ""
+              )}
+              {!this.props.profile.user.google ||
+              !this.props.profile.user.google.token ? (
+                <a
+                  className="form__button form__button--google"
+                  id="btn-google"
+                  href="http://localhost:8080/api/auth/google"
+                >
+                  <span>Link G+</span>
+                </a>
+              ) : (
+                ""
+              )}
+            </div>
           </div>
         </div>
       </div>
     );
   }
 }
+
+Profile.propTypes = {
+  appState: PropTypes.shape({
+    user: PropTypes.shape({
+      _id: PropTypes.string
+    })
+  }).isRequired,
+  actions: PropTypes.shape({
+    setLoggedIn: PropTypes.func,
+    dismissModal: PropTypes.func
+  }).isRequired,
+  api: PropTypes.shape({
+    getProfile: PropTypes.func
+  }).isRequired,
+  profile: PropTypes.shape({
+    user: PropTypes.shape({
+      profile: PropTypes.shape({
+        firstName: PropTypes.string,
+        lastName: PropTypes.string,
+        email: PropTypes.string,
+        avatarUrl: PropTypes.string
+      }).isRequired,
+      local: PropTypes.shape({
+        email: PropTypes.string
+      }),
+      facebook: PropTypes.shape({
+        email: PropTypes.string,
+        token: PropTypes.string
+      }),
+      github: PropTypes.shape({
+        email: PropTypes.string,
+        token: PropTypes.string
+      }),
+      google: PropTypes.shape({
+        email: PropTypes.string,
+        token: PropTypes.string
+      })
+    }),
+    errorMsg: PropTypes.string,
+    spinnerClass: PropTypes.string,
+    modal: PropTypes.shape({
+      class: PropTypes.string,
+      text: PropTypes.string,
+      title: PropTypes.string
+    })
+  }).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func
+  }).isRequired
+};
 
 const mapStateToProps = state => ({
   appState: state.appState,
