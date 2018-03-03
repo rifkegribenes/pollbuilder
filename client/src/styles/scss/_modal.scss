@@ -13,6 +13,8 @@
   @include for-phone-landscape-up {
     top: 50%;
     left: 50%;
+    bottom: auto;
+    right: auto;
     transform: translate(-50%, -50%);
     width: 600px;
     // height: auto;

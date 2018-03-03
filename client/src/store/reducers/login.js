@@ -4,7 +4,8 @@ import {
   SET_FORM_FIELD,
   SET_LOGIN_ERROR,
   CLEAR_LOGIN_ERROR,
-  DISMISS_MODAL
+  DISMISS_MODAL,
+  LOGOUT
 } from "../actions";
 import {
   LOGIN_REQUEST,
@@ -66,14 +67,27 @@ function login(state = INITIAL_STATE, action) {
       }
       return Object.assign({}, state, { errorMsg: error });
 
+    case LOGOUT:
+      return update(state, {
+        spinnerClass: { $set: "spinner__hide" },
+        modal: {
+          class: { $set: "modal__hide" },
+          type: { $set: "" },
+          title: { $set: "" },
+          text: { $set: "" }
+        }
+      });
+
     /*
     *  Called From: <Login />
     *  Payload: none
     *  Purpose: Clear login errors
     */
     case CLEAR_LOGIN_ERROR:
+      console.log("clear login error");
       return update(state, {
         errorMsg: { $set: null },
+        spinnerClass: { $set: "spinner__hide" },
         form: {
           error: { $set: false }
         }

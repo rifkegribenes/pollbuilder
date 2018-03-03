@@ -377,6 +377,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     padding: 10px 20px;
     border: 1px solid white;
     background-color: $color_sky;
+    display: flex;
 
     &:last-child {
       margin-right: 0;

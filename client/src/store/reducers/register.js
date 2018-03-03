@@ -1,4 +1,6 @@
-import { SET_REG_ERROR, DISMISS_MODAL } from "../actions";
+import update from "immutability-helper";
+
+import { SET_REG_ERROR, DISMISS_MODAL, LOGOUT } from "../actions";
 import {
   REGISTRATION_REQUEST,
   REGISTRATION_SUCCESS,
@@ -80,6 +82,17 @@ function register(state = INITIAL_STATE, action) {
           class: "modal__hide"
         },
         regErrorMsg: error
+      });
+
+    case LOGOUT:
+      return update(state, {
+        spinnerClass: { $set: "spinner__hide" },
+        modal: {
+          class: { $set: "modal__hide" },
+          type: { $set: "" },
+          title: { $set: "" },
+          text: { $set: "" }
+        }
       });
 
     /*

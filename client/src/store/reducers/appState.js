@@ -42,7 +42,7 @@ const INITIAL_STATE = {
   },
   spinnerClass: "spinner__hide",
   modal: {
-    class: "",
+    class: "modal__hide",
     text: "",
     title: ""
   }
@@ -62,13 +62,18 @@ function appState(state = INITIAL_STATE, action) {
     * This action is issued only from the <Logout/> component.
     * On LOGOUT action, remove the userId and token from localStorage.
     * Reset to initial state.
+    * The action is handled here and also in each other reducer
+    * to hide spinner & modal on all pages
     */
     case LOGOUT:
       window.localStorage.removeItem("authToken");
       window.localStorage.removeItem("userId");
       return update(state, {
         loggedIn: { $set: false },
-        spinnerClass: { $set: "spinner__hide" }
+        spinnerClass: { $set: "spinner__hide" },
+        modal: {
+          class: { $set: "modal__hide" }
+        }
       });
     /*
     * This action is issued only from the <Home/> component.

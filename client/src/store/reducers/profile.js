@@ -1,5 +1,5 @@
 import update from "immutability-helper";
-import { DISMISS_MODAL } from "../actions/";
+import { DISMISS_MODAL, LOGOUT } from "../actions/";
 import {
   GET_PROFILE_REQUEST,
   GET_PROFILE_SUCCESS,
@@ -72,6 +72,17 @@ function profile(state = INITIAL_STATE, action) {
       user = { ...action.payload.user };
       return update(state, {
         $merge: { user }
+      });
+
+    case LOGOUT:
+      return update(state, {
+        spinnerClass: { $set: "spinner__hide" },
+        modal: {
+          class: { $set: "modal__hide" },
+          type: { $set: "" },
+          title: { $set: "" },
+          text: { $set: "" }
+        }
       });
 
     /*

@@ -208,6 +208,11 @@ class Register extends React.Component {
               </div>
             </div>
             <div className="form__input-group">
+              <div className={errorClass}>
+                {this.props.register.regErrorMsg}
+              </div>
+            </div>
+            <div className="form__input-group">
               <Link className="form__login-link" to="/login">
                 Login with existing account
               </Link>
@@ -237,11 +242,6 @@ class Register extends React.Component {
                 >
                   <span>G+</span>
                 </a>
-              </div>
-            </div>
-            <div className="form__input-group">
-              <div className={errorClass}>
-                {this.props.register.regErrorMsg}
               </div>
             </div>
           </div>
