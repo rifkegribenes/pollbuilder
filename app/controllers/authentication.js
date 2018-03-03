@@ -115,9 +115,13 @@ exports.register = function (req, res, next) {
         // If email is unique and password was provided, create account
         console.log('creating new account');
         const key = mailUtils.makeSignupKey();
+
+        // assign generic avatar URL, will be overwritten if user later links
+        // a social media accout
+        const avatarUrl = 'https://raw.githubusercontent.com/rifkegribenes/voting-app/master/public/rainbow_icon_120.png';
         const user = new User({
           local: { email, password },
-          profile: { firstName, lastName, email },
+          profile: { firstName, lastName, email, avatarUrl },
           signupKey: key
         });
 

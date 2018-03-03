@@ -9,6 +9,34 @@ import {
   REGISTRATION_SUCCESS
 } from "../actions/apiActions";
 
+const EMPTY_USER = {
+  _id: "",
+  local: {
+    email: ""
+  },
+  profile: {
+    avatarUrl: "",
+    firstName: "",
+    lastName: "",
+    email: ""
+  },
+  facebook: {
+    token: "",
+    id: "",
+    email: ""
+  },
+  github: {
+    token: "",
+    id: "",
+    email: ""
+  },
+  google: {
+    token: "",
+    id: "",
+    email: ""
+  }
+};
+
 const INITIAL_STATE = {
   spinnerClass: "spinner__hide",
   modal: {
@@ -16,33 +44,7 @@ const INITIAL_STATE = {
     type: "modal__info",
     text: ""
   },
-  user: {
-    _id: "",
-    local: {
-      email: ""
-    },
-    profile: {
-      avatarUrl: "",
-      firstName: "",
-      lastName: "",
-      email: ""
-    },
-    facebook: {
-      token: "",
-      id: "",
-      email: ""
-    },
-    github: {
-      token: "",
-      id: "",
-      email: ""
-    },
-    google: {
-      token: "",
-      id: "",
-      email: ""
-    }
-  }
+  user: { ...EMPTY_USER }
 };
 
 function profile(state = INITIAL_STATE, action) {
@@ -89,10 +91,11 @@ function profile(state = INITIAL_STATE, action) {
     * Purpose: Show a spinner to indicate API call in progress.
     */
     case GET_PROFILE_REQUEST:
-      return Object.assign({}, state, {
-        userProfile: {},
-        getSuccess: null,
-        spinnerClass: "spinner__show"
+      return update(state, {
+        $merge: {
+          user: { ...EMPTY_USER },
+          spinnerClass: "spinner__show"
+        }
       });
 
     /*
@@ -117,9 +120,8 @@ function profile(state = INITIAL_STATE, action) {
       user.profile = { ...action.payload.user.profile };
       return update(state, {
         $merge: {
-          getSuccess: true,
           user,
-          spinnerClass: { $set: "spinner__hide" }
+          spinnerClass: "spinner__hide"
         }
       });
 
@@ -131,13 +133,13 @@ function profile(state = INITIAL_STATE, action) {
     case GET_PROFILE_FAILURE:
       console.log("GET_PROFILE_FAILURE");
       console.log(action.payload);
-      error = "An error occurred while getting the profile";
+      error = "An error occurred while getting the profile.";
       return Object.assign({}, state, {
-        getSuccess: false,
         spinnerClass: "spinner__hide",
         modal: {
           class: "modal__show",
-          text: error
+          text: error,
+          type: "modal__error"
         }
       });
 

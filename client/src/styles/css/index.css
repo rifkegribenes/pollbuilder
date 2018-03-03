@@ -825,7 +825,6 @@ input:not([type=checkbox]):not([type=radio]), textarea {
   right: 0;
   bottom: 0;
   width: 100%;
-  height: 100%;
   padding: 40px 20px 20px 20px;
   background-color: white;
   font-family: "Titillium Web", sans-serif; }
@@ -835,7 +834,6 @@ input:not([type=checkbox]):not([type=radio]), textarea {
       left: 50%;
       transform: translate(-50%, -50%);
       width: 600px;
-      height: auto;
       box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5); } }
   @media (min-width: 600px) {
     .modal {
@@ -864,7 +862,8 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     color: #3c763d; }
   .modal__body {
     padding: 20px;
-    white-space: pre-wrap; }
+    white-space: pre-wrap;
+    text-align: center; }
   .modal__action {
     cursor: pointer;
     padding: 5px 40px;
