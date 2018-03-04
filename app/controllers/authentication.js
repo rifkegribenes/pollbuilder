@@ -61,8 +61,8 @@ exports.register = function (req, res, next) {
       if (existingUser) {
         // check if local account already exists.
         console.log('authentication.js > 63');
-        if (existingUser.hasOwnProperty("local")) {
-            console.log('existing user has property local');
+        if (existingUser.local && existingUser.local.email === email) {
+            console.log('existing user has matching email in local key');
             return res.status(422).send({ error: 'That email address is already in use.' });
         } else {
           console.log('skipped matching email block');
