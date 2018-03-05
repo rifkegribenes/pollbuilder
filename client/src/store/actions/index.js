@@ -1,6 +1,8 @@
 export const LOGOUT = "LOGOUT";
 export const SET_LOGGEDIN = "SET_LOGGEDIN";
 export const SET_FORM_FIELD = "SET_FORM_FIELD";
+export const SET_TOUCHED = "SET_TOUCHED";
+export const SET_VALIDATION_ERRORS = "SET_VALIDATION_ERRORS";
 export const SET_LOGIN_ERROR = "SET_LOGIN_ERROR";
 export const CLEAR_LOGIN_ERROR = "CLEAR_LOGIN_ERROR";
 export const SET_PROFILE_VIEW = "SET_PROFILE_VIEW";
@@ -45,10 +47,25 @@ export function setFormField(id, value) {
   };
 }
 
+export function setTouched(name) {
+  console.log("index.js (actions) > 51: setTouched");
+  return {
+    type: SET_TOUCHED,
+    payload: name
+  };
+}
+
 export function setLoginError(msg) {
   return {
     type: SET_LOGIN_ERROR,
     payload: msg
+  };
+}
+
+export function setValidationErrors(errorsObj) {
+  return {
+    type: SET_VALIDATION_ERRORS,
+    payload: errorsObj
   };
 }
 

@@ -30,6 +30,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     font-family: "Titillium Web", sans-serif;
     text-transform: uppercase;
     letter-spacing: 2px;
+    line-height: .95em;
     font-size: 30px;
     padding: 0px 20px 10px 20px; }
     @media (min-width: 600px) {
@@ -76,6 +77,8 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     font-weight: 100;
     color: #545454;
     background: white !important; }
+    .form__input--error {
+      border: 1px solid red; }
     @media (min-width: 1600px) {
       .form__input {
         padding: 15px;
@@ -257,6 +260,8 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     border-radius: 4px;
     transition: opacity .15s linear;
     text-align: center; }
+  .form__error-content {
+    color: red; }
   .form__button-wrap {
     width: 100%;
     margin: 20px auto 0 auto;

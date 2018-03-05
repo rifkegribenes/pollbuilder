@@ -5,6 +5,8 @@ import {
   SET_LOGIN_ERROR,
   CLEAR_LOGIN_ERROR,
   DISMISS_MODAL,
+  SET_TOUCHED,
+  SET_VALIDATION_ERRORS,
   LOGOUT
 } from "../actions";
 import {
@@ -22,6 +24,7 @@ import {
 const INITIAL_STATE = {
   authToken: "",
   errorMsg: "",
+  validationErrors: {},
   spinnerClass: "spinner__hide",
   modal: {
     class: "modal__hide",
@@ -36,6 +39,13 @@ const INITIAL_STATE = {
     password: "",
     confirmPwd: "",
     error: false
+  },
+  touched: {
+    firstName: false,
+    lastName: false,
+    email: false,
+    password: false,
+    confirmPwd: false
   }
 };
 
@@ -50,6 +60,27 @@ function login(state = INITIAL_STATE, action) {
     case SET_FORM_FIELD:
       return update(state, {
         form: { [action.payload.id]: { $set: action.payload.value } }
+      });
+
+    /*
+    * Called from: <Login />, <Register />
+    * Payload: Form field Name
+    * Purpose: Update 'touched' value for form field.
+    */
+    case SET_TOUCHED:
+      console.log(`setTouched: ${action.payload}`);
+      return update(state, {
+        touched: { [action.payload]: { $set: true } }
+      });
+
+    /*
+    * Called from: <Login />, <Register />
+    * Payload: Validation errors object
+    * Purpose: Update validation errors object for form
+    */
+    case SET_VALIDATION_ERRORS:
+      return update(state, {
+        validationErrors: { $set: action.payload }
       });
 
     /*

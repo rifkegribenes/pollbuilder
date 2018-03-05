@@ -36,6 +36,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     font-family: $font-stack;
     text-transform: uppercase;
     letter-spacing: 2px;
+    line-height: .95em;
     font-size: 30px;
     padding: 0px 20px 10px 20px;
     @include for-tablet-portrait-up {
@@ -96,6 +97,10 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     font-weight: 100;
     color: $color_gray_text;
     background: white !important;
+
+    &--error {
+      border: 1px solid red;
+    }
     @include for-big-desktop-up {
       padding: 15px;
       font-size: 1.2em;
@@ -350,6 +355,10 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     transition: opacity .15s linear;
     text-align: center;
 
+  }
+
+  &__error-content {
+    color: red;
   }
 
   &__button-wrap {

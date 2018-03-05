@@ -30,6 +30,7 @@ class FormInput extends Component {
               : "form__input"
           }
           type={this.props.type || "text"}
+          autoComplete={this.props.autoComplete || null}
           placeholder={this.props.placeholder}
           value={this.props.value}
           onChange={this.props.handleChange}
@@ -48,11 +49,11 @@ class FormInput extends Component {
   }
 }
 
-FormInput.PropTypes = {
-  showError: PropTypes.boolean,
+FormInput.propTypes = {
+  showError: PropTypes.bool,
   errorText: PropTypes.string,
-  touched: PropTypes.boolean,
-  submit: PropTypes.boolean,
+  touched: PropTypes.bool,
+  submit: PropTypes.bool,
   name: PropTypes.string,
   placeholder: PropTypes.string,
   type: PropTypes.string,

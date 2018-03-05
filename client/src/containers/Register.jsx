@@ -6,10 +6,24 @@ import PropTypes from "prop-types";
 
 import Spinner from "./Spinner";
 import ModalSm from "./ModalSm";
+import FormInput from "./FormInput";
 import * as Actions from "../store/actions";
 import * as apiActions from "../store/actions/apiActions";
+import { fieldValidationsRegister, run } from "../utils/";
 
 class Register extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showErrors: false,
+      submit: false
+    };
+    this.handleInput = this.handleInput.bind(this);
+    this.handleFocus = this.handleFocus.bind(this);
+    this.handleBlur = this.handleBlur.bind(this);
+    this.errorFor = this.errorFor.bind(this);
+  }
+
   componentDidMount() {}
 
   /* Function handleRegister - Perform basic validation:
@@ -30,14 +44,22 @@ class Register extends React.Component {
       confirmPwd
     } = this.props.login.form;
 
-    if (firstName && lastName && email && password === confirmPwd) {
+    // show validation errors
+    this.setState({ showErrors: true, submit: true });
+    const validationErrors = run(
+      this.props.login.form,
+      fieldValidationsRegister
+    );
+    this.setValidationErrors(validationErrors);
+
+    if (!Object.values(this.props.login.validationErrors).length) {
       const body = { firstName, lastName, email, password };
       this.props.api
         .registration(body)
         .then(result => {
           if (result.type === "REGISTRATION_FAILURE") {
             console.log("registration failure");
-            this.setState({ error: true });
+            this.setState({ showErrors: true });
           }
           if (result.type === "REGISTRATION_SUCCESS") {
             console.log("registration success");
@@ -71,6 +93,7 @@ class Register extends React.Component {
           this.props.actions.setFormField({
             error: err
           });
+          this.setState({ showErrors: true });
         });
     } else if (!email) {
       console.log("Email cannot be blank");
@@ -93,11 +116,64 @@ class Register extends React.Component {
   * All form inputs will use this handler; trigger the proper action
   * based on the input ID
   */
-  handleInput(event) {
-    this.props.actions.setFormField(event.target.id, event.target.value);
-    if (event.which === 13) {
+  handleInput(e) {
+    this.props.actions.setFormField(e.target.id, e.target.value);
+    if (e.which === 13) {
       this.handleRegister();
     }
+  }
+
+  handleBlur(e) {
+    // set current field as 'touched'
+    const field = e.target.name;
+    this.props.actions.setTouched(field);
+    console.log("touched:");
+    console.dir(this.props.login.touched);
+    // run fieldValidations on fields in form object and save to redux store
+    const validationErrors = run(
+      this.props.login.form,
+      fieldValidationsRegister
+    );
+    console.log("validationErrors:");
+    console.dir(validationErrors);
+    this.props.actions.setValidationErrors(validationErrors);
+    console.log(
+      `testing showErrors: Object.values(validationErrors).length = ${
+        Object.values(validationErrors).length
+      }`
+    );
+    console.log("touched:");
+    console.dir(this.props.login.touched);
+    const showErrors = !!(
+      Object.values(validationErrors).length && this.props.login.touched[field]
+    );
+    this.setState({ showErrors });
+  }
+
+  handleFocus(e) {
+    // hide validation errors for focused field
+    const field = e.target.name;
+    const validationErrors = run(
+      this.props.login.form,
+      fieldValidationsRegister
+    );
+    validationErrors[field] = false;
+    this.props.actions.setValidationErrors(validationErrors);
+    this.setState({ showErrors: false });
+  }
+
+  errorFor(field) {
+    // run validation check and return error(s) for this field
+    if (
+      this.props.login.validationErrors[field] &&
+      this.state.showErrors === true
+    ) {
+      console.log(
+        `${field} error: ${this.props.login.validationErrors[field]}`
+      );
+      return this.props.login.validationErrors[field] || "";
+    }
+    return null;
   }
 
   render() {
@@ -105,7 +181,11 @@ class Register extends React.Component {
       this.props.register.regErrorMsg || this.props.login.form.error
         ? "error"
         : "hidden";
+    const { showErrors, submit } = this.state;
+    console.log(`showErrors: ${showErrors}`);
+    console.log(`submit: ${submit}`);
     return (
+      // const showErrors = !!(Object.values(this.props.login.validationErrors).length && this.props.login.touched[field]);
       <div>
         <Spinner cssClass={this.props.register.spinnerClass} />
         <ModalSm
@@ -125,74 +205,81 @@ class Register extends React.Component {
           <div className="form__body">
             <div className="form__header">Create new Account</div>
             <div className="form__input-group">
-              <label htmlFor="firstName" className="form__label">
-                First name
-              </label>
-              <input
-                className="form__input"
-                type="text"
+              <FormInput
+                handleChange={this.handleInput}
+                handleBlur={this.handleBlur}
+                handleFocus={this.handleFocus}
                 placeholder="First name"
                 autoComplete="given-name"
-                id="firstName"
+                showError={showErrors}
                 value={this.props.login.form.firstName}
-                onChange={event => this.handleInput(event)}
+                errorText={this.errorFor("firstName")}
+                touched={this.props.login.touched.firstName}
+                name="firstName"
+                submit={submit}
               />
             </div>
             <div className="form__input-group">
-              <label htmlFor="lastName" className="form__label">
-                Last name
-              </label>
-              <input
-                className="form__input"
-                type="text"
+              <FormInput
+                handleChange={this.handleInput}
+                handleBlur={this.handleBlur}
+                handleFocus={this.handleFocus}
                 placeholder="Last name"
                 autoComplete="family-name"
-                id="lastName"
+                showError={showErrors}
                 value={this.props.login.form.lastName}
-                onChange={event => this.handleInput(event)}
+                errorText={this.errorFor("lastName")}
+                touched={this.props.login.touched.lastName}
+                name="lastName"
+                submit={submit}
               />
             </div>
             <div className="form__input-group">
-              <label htmlFor="email" className="form__label">
-                Email
-              </label>
-              <input
-                className="form__input"
-                type="email"
+              <FormInput
+                handleChange={this.handleInput}
+                handleBlur={this.handleBlur}
+                handleFocus={this.handleFocus}
                 placeholder="Email"
                 autoComplete="email"
-                id="email"
+                type="email"
+                showError={showErrors}
                 value={this.props.login.form.email}
-                onChange={event => this.handleInput(event)}
+                errorText={this.errorFor("email")}
+                touched={this.props.login.touched.email}
+                name="email"
+                submit={submit}
               />
             </div>
             <div className="form__input-group">
-              <label htmlFor="username" className="form__label">
-                Password
-              </label>
-              <input
-                className="form__input"
-                type="password"
+              <FormInput
+                handleChange={this.handleInput}
+                handleBlur={this.handleBlur}
+                handleFocus={this.handleFocus}
                 placeholder="Password"
                 autoComplete="new-password"
-                id="password"
+                type="password"
+                showError={showErrors}
                 value={this.props.login.form.password}
-                onChange={event => this.handleInput(event)}
+                errorText={this.errorFor("password")}
+                touched={this.props.login.touched.password}
+                name="password"
+                submit={submit}
               />
             </div>
             <div className="form__input-group">
-              <label htmlFor="confirmPwd" className="form__label">
-                Confirm Password
-              </label>
-              <input
-                className="form__input"
-                type="password"
+              <FormInput
+                handleChange={this.handleInput}
+                handleBlur={this.handleBlur}
+                handleFocus={this.handleFocus}
                 placeholder="Confirm Password"
                 autoComplete="new-password"
-                id="confirmPwd"
+                type="password"
+                showError={showErrors}
                 value={this.props.login.form.confirmPwd}
-                onChange={event => this.handleInput(event)}
-                required
+                errorText={this.errorFor("confirmPwd")}
+                touched={this.props.login.touched.confirmPwd}
+                name="confirmPwd"
+                submit={submit}
               />
             </div>
             <div className="form__input-group">
