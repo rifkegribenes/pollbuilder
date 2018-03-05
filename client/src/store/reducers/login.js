@@ -7,6 +7,8 @@ import {
   DISMISS_MODAL,
   SET_TOUCHED,
   SET_VALIDATION_ERRORS,
+  SHOW_ERRORS,
+  SET_SUBMIT,
   LOGOUT
 } from "../actions";
 import {
@@ -24,6 +26,8 @@ import {
 const INITIAL_STATE = {
   authToken: "",
   errorMsg: "",
+  showErrors: false,
+  submit: false,
   validationErrors: {},
   spinnerClass: "spinner__hide",
   modal: {
@@ -80,7 +84,7 @@ function login(state = INITIAL_STATE, action) {
     */
     case SET_VALIDATION_ERRORS:
       return update(state, {
-        validationErrors: { $set: action.payload }
+        validationErrors: { $set: { ...action.payload } }
       });
 
     /*
@@ -122,6 +126,28 @@ function login(state = INITIAL_STATE, action) {
         form: {
           error: { $set: false }
         }
+      });
+
+    /*
+    *  Called From: <Login />, <Register />
+    *  Payload: none
+    *  Purpose: Show or hide client side validation errors on form fields
+    */
+    case SHOW_ERRORS:
+      console.log("show errors");
+      return update(state, {
+        showErrors: { $set: action.payload }
+      });
+
+    /*
+    *  Called From: <Login />, <Register />
+    *  Payload: none
+    *  Purpose: Set submit state to display any client-side validation errors
+    */
+    case SET_SUBMIT:
+      console.log("set submit");
+      return update(state, {
+        submit: { $set: true }
       });
 
     /*

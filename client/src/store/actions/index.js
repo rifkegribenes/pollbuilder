@@ -2,6 +2,8 @@ export const LOGOUT = "LOGOUT";
 export const SET_LOGGEDIN = "SET_LOGGEDIN";
 export const SET_FORM_FIELD = "SET_FORM_FIELD";
 export const SET_TOUCHED = "SET_TOUCHED";
+export const SET_SUBMIT = "SET_SUBMIT";
+export const SHOW_ERRORS = "SHOW_ERRORS";
 export const SET_VALIDATION_ERRORS = "SET_VALIDATION_ERRORS";
 export const SET_LOGIN_ERROR = "SET_LOGIN_ERROR";
 export const CLEAR_LOGIN_ERROR = "CLEAR_LOGIN_ERROR";
@@ -78,5 +80,18 @@ export function clearLoginError() {
 export function dismissModal() {
   return {
     type: DISMISS_MODAL
+  };
+}
+
+export function showErrors(bool) {
+  return {
+    type: SHOW_ERRORS,
+    payload: bool
+  };
+}
+
+export function setSubmit() {
+  return {
+    type: SET_SUBMIT
   };
 }

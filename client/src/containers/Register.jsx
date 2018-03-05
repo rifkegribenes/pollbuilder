@@ -14,10 +14,27 @@ import { fieldValidationsRegister, run } from "../utils/";
 class Register extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
-      showErrors: false,
+      showFormErrors: false,
+      showFieldErrors: {
+        firstName: false,
+        lastName: false,
+        email: false,
+        password: false,
+        confirmPwd: false
+      },
+      validationErrors: {},
+      touched: {
+        firstName: false,
+        lastName: false,
+        email: false,
+        password: false,
+        confirmPwd: false
+      },
       submit: false
     };
+
     this.handleInput = this.handleInput.bind(this);
     this.handleFocus = this.handleFocus.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
@@ -45,21 +62,28 @@ class Register extends React.Component {
     } = this.props.login.form;
 
     // show validation errors
-    this.setState({ showErrors: true, submit: true });
+    // this.props.actions.showErrors(true);
+    // this.props.actions.setSubmit();
+    const newState = { ...this.state };
+    newState.submit = true;
+    newState.showFormErrors = true;
+
     const validationErrors = run(
       this.props.login.form,
       fieldValidationsRegister
     );
-    this.setValidationErrors(validationErrors);
+    // this.props.actions.setValidationErrors(validationErrors);
+    newState.validationErrors = { ...validationErrors };
+    this.setState({ ...newState });
 
-    if (!Object.values(this.props.login.validationErrors).length) {
+    if (!Object.values(this.state.validationErrors).length) {
       const body = { firstName, lastName, email, password };
       this.props.api
         .registration(body)
         .then(result => {
           if (result.type === "REGISTRATION_FAILURE") {
             console.log("registration failure");
-            this.setState({ showErrors: true });
+            this.props.actions.showErrors(true);
           }
           if (result.type === "REGISTRATION_SUCCESS") {
             console.log("registration success");
@@ -93,7 +117,7 @@ class Register extends React.Component {
           this.props.actions.setFormField({
             error: err
           });
-          this.setState({ showErrors: true });
+          this.props.actions.showErrors(true);
         });
     } else if (!email) {
       console.log("Email cannot be blank");
@@ -126,52 +150,78 @@ class Register extends React.Component {
   handleBlur(e) {
     // set current field as 'touched'
     const field = e.target.name;
-    this.props.actions.setTouched(field);
-    console.log("touched:");
-    console.dir(this.props.login.touched);
+    console.log(`${field} blur`);
+    const touched = { ...this.state.touched };
+    const showFieldErrors = { ...this.state.showFieldErrors };
+    touched[field] = true;
+    showFieldErrors[field] = true;
+    // this.props.actions.setTouched(field);
+    const newState = { ...this.state };
+    newState.touched[field] = true;
+    newState.showFieldErrors[field] = true;
     // run fieldValidations on fields in form object and save to redux store
     const validationErrors = run(
       this.props.login.form,
       fieldValidationsRegister
     );
+    newState.validationErrors = { ...validationErrors };
     console.log("validationErrors:");
-    console.dir(validationErrors);
-    this.props.actions.setValidationErrors(validationErrors);
-    console.log(
-      `testing showErrors: Object.values(validationErrors).length = ${
-        Object.values(validationErrors).length
-      }`
-    );
-    console.log("touched:");
-    console.dir(this.props.login.touched);
-    const showErrors = !!(
-      Object.values(validationErrors).length && this.props.login.touched[field]
-    );
-    this.setState({ showErrors });
+    console.log(newState.validationErrors);
+    // console.dir(validationErrors);
+    // // this.props.actions.setValidationErrors(validationErrors);
+    // console.log(
+    //   `testing showErrors: Object.values(validationErrors).length = ${
+    //     Object.values(validationErrors).length
+    //   }`
+    // );
+    const showFormErrors = !!Object.values(validationErrors).length;
+    console.log(`showFormErrors (from handleBlur): ${showFormErrors}`);
+    newState.showFormErrors = showFormErrors;
+    // this.props.actions.showErrors(showErrors);
+    this.setState({ ...newState });
   }
 
   handleFocus(e) {
-    // hide validation errors for focused field
+    console.log(`${e.target.name}: focus`);
+    const newState = { ...this.state };
     const field = e.target.name;
+    newState.showFormErrors = false;
+    newState.showFieldErrors[field] = false;
+    // this.props.actions.showErrors(false);
+    // hide validation errors for focused field
     const validationErrors = run(
       this.props.login.form,
       fieldValidationsRegister
     );
     validationErrors[field] = false;
-    this.props.actions.setValidationErrors(validationErrors);
-    this.setState({ showErrors: false });
+    newState.validationErorrs = { ...validationErrors };
+    // this.props.actions.setValidationErrors(validationErrors);
+
+    this.setState({ ...newState }, () => {
+      console.log("validationErrors:");
+      console.log(this.state.validationErrors);
+    });
   }
 
   errorFor(field) {
     // run validation check and return error(s) for this field
     if (
-      this.props.login.validationErrors[field] &&
-      this.state.showErrors === true
+      // this.props.login.validationErrors[field] &&
+      // this.props.login.showErrors === true
+      Object.values(this.state.validationErrors).length
     ) {
-      console.log(
-        `${field} error: ${this.props.login.validationErrors[field]}`
-      );
-      return this.props.login.validationErrors[field] || "";
+      console.log(this.state.validationErrors);
+      if (
+        this.state.validationErrors[field] &&
+        (this.state.showFormErrors === true ||
+          this.state.showFieldErrors[field] === true)
+      ) {
+        // console.log(
+        //   `${field} error: ${this.props.login.validationErrors[field]}`
+        // );
+        // return this.props.login.validationErrors[field] || "";
+        return this.state.validationErrors[field] || "";
+      }
     }
     return null;
   }
@@ -181,9 +231,6 @@ class Register extends React.Component {
       this.props.register.regErrorMsg || this.props.login.form.error
         ? "error"
         : "hidden";
-    const { showErrors, submit } = this.state;
-    console.log(`showErrors: ${showErrors}`);
-    console.log(`submit: ${submit}`);
     return (
       // const showErrors = !!(Object.values(this.props.login.validationErrors).length && this.props.login.touched[field]);
       <div>
@@ -211,12 +258,12 @@ class Register extends React.Component {
                 handleFocus={this.handleFocus}
                 placeholder="First name"
                 autoComplete="given-name"
-                showError={showErrors}
+                showError={this.state.showFieldErrors.firstName}
                 value={this.props.login.form.firstName}
                 errorText={this.errorFor("firstName")}
-                touched={this.props.login.touched.firstName}
+                touched={this.state.touched.firstName}
                 name="firstName"
-                submit={submit}
+                submit={this.state.submit}
               />
             </div>
             <div className="form__input-group">
@@ -226,12 +273,12 @@ class Register extends React.Component {
                 handleFocus={this.handleFocus}
                 placeholder="Last name"
                 autoComplete="family-name"
-                showError={showErrors}
+                showError={this.state.showFieldErrors.lastName}
                 value={this.props.login.form.lastName}
                 errorText={this.errorFor("lastName")}
-                touched={this.props.login.touched.lastName}
+                touched={this.state.touched.lastName}
                 name="lastName"
-                submit={submit}
+                submit={this.state.submit}
               />
             </div>
             <div className="form__input-group">
@@ -242,12 +289,12 @@ class Register extends React.Component {
                 placeholder="Email"
                 autoComplete="email"
                 type="email"
-                showError={showErrors}
+                showError={this.state.showFieldErrors.email}
                 value={this.props.login.form.email}
                 errorText={this.errorFor("email")}
-                touched={this.props.login.touched.email}
+                touched={this.state.touched.email}
                 name="email"
-                submit={submit}
+                submit={this.state.submit}
               />
             </div>
             <div className="form__input-group">
@@ -258,12 +305,12 @@ class Register extends React.Component {
                 placeholder="Password"
                 autoComplete="new-password"
                 type="password"
-                showError={showErrors}
+                showError={this.state.showFieldErrors.password}
                 value={this.props.login.form.password}
                 errorText={this.errorFor("password")}
-                touched={this.props.login.touched.password}
+                touched={this.state.touched.password}
                 name="password"
-                submit={submit}
+                submit={this.state.submit}
               />
             </div>
             <div className="form__input-group">
@@ -274,12 +321,12 @@ class Register extends React.Component {
                 placeholder="Confirm Password"
                 autoComplete="new-password"
                 type="password"
-                showError={showErrors}
+                showError={this.state.showFieldErrors.confirmPwd}
                 value={this.props.login.form.confirmPwd}
                 errorText={this.errorFor("confirmPwd")}
-                touched={this.props.login.touched.confirmPwd}
+                touched={this.state.touched.confirmPwd}
                 name="confirmPwd"
-                submit={submit}
+                submit={this.state.submit}
               />
             </div>
             <div className="form__input-group">
