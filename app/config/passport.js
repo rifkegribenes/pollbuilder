@@ -158,7 +158,7 @@ module.exports = (passport) => {
         // update & return new user
         console.log(`${platform} found and updated user with a different ${platform} id`);
         console.log(user);
-        return done(user);
+        return done(null, user);
       }
     }) // then
     .catch( (err) => {

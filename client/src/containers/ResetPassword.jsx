@@ -40,7 +40,7 @@ class ResetPassword extends React.Component {
 
   handleReset = () => {
     const key = this.props.match.params.key;
-    const { email, password, confirmPwd } = this.props.login.form;
+    const { password, confirmPwd } = this.props.login.form;
 
     // show validation errors
     const newState = { ...this.state };
