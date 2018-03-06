@@ -3,15 +3,43 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
+import update from "immutability-helper";
 
 import * as Actions from "../store/actions";
 import * as apiActions from "../store/actions/apiActions";
 
 import Spinner from "./Spinner";
 import ModalSm from "./ModalSm";
+import FormInput from "./FormInput";
+import { fieldValidationsLogin, run } from "../utils/";
 
 class Login extends React.Component {
-  componentDidMount() {}
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      showFormErrors: false,
+      showFieldErrors: {
+        email: false,
+        password: false
+      },
+      validationErrors: {},
+      touched: {
+        email: false,
+        password: false
+      },
+      submit: false
+    };
+
+    this.handleInput = this.handleInput.bind(this);
+    this.handleFocus = this.handleFocus.bind(this);
+    this.handleBlur = this.handleBlur.bind(this);
+    this.errorFor = this.errorFor.bind(this);
+  }
+  componentDidMount() {
+    // clear previous errors
+    this.props.actions.clearLoginError();
+  }
 
   /* Function login - Perform basic validation:
   * - username is at least 1 char
@@ -20,9 +48,18 @@ class Login extends React.Component {
   * , return to Home
   */
   login() {
-    // clear previous errors
-    this.props.actions.clearLoginError();
     const { email, password } = this.props.login.form;
+
+    // show validation errors
+    const newState = { ...this.state };
+    newState.submit = true;
+    newState.showFormErrors = true;
+
+    const validationErrors = run(this.props.login.form, fieldValidationsLogin);
+
+    newState.validationErrors = { ...validationErrors };
+    this.setState({ ...newState });
+
     if (email && password) {
       const body = { email, password };
       this.props.api.login(body).then(result => {
@@ -52,11 +89,69 @@ class Login extends React.Component {
   * All form inputs will use this handler; trigger the proper action
   * based on the input ID
   */
-  handleInput(event) {
-    this.props.actions.setFormField(event.target.id, event.target.value);
-    if (event.which === 13) {
+  handleInput(e) {
+    this.props.actions.setFormField(e.target.id, e.target.value);
+    if (e.which === 13) {
       this.login();
     }
+  }
+
+  handleBlur(e) {
+    const field = e.target.name;
+
+    // run fieldValidations on fields in form object and save to state
+    const validationErrors = run(this.props.login.form, fieldValidationsLogin);
+
+    const showFormErrors = !!Object.values(validationErrors).length;
+
+    // set current field as 'touched' and display errors onBlur
+    const newState = update(this.state, {
+      touched: {
+        [field]: { $set: true }
+      },
+      showFieldErrors: {
+        [field]: { $set: true }
+      },
+      validationErrors: { $set: { ...validationErrors } },
+      showFormErrors: { $set: showFormErrors }
+    });
+
+    this.setState({ ...newState });
+  }
+
+  handleFocus(e) {
+    const field = e.target.name;
+
+    // hide validation errors for focused field
+    const validationErrors = run(
+      this.props.login.form[field],
+      fieldValidationsLogin
+    );
+    validationErrors[field] = false;
+
+    const newState = update(this.state, {
+      showFieldErrors: {
+        [field]: { $set: false }
+      },
+      validationErrors: { $set: { ...validationErrors } },
+      showFormErrors: { $set: false }
+    });
+
+    this.setState({ ...newState });
+  }
+
+  errorFor(field) {
+    // run validation check and return error(s) for this field
+    if (Object.values(this.state.validationErrors).length) {
+      if (
+        this.state.validationErrors[field] &&
+        (this.state.showFormErrors === true ||
+          this.state.showFieldErrors[field] === true)
+      ) {
+        return this.state.validationErrors[field] || "";
+      }
+    }
+    return null;
   }
 
   render() {
@@ -81,29 +176,36 @@ class Login extends React.Component {
           <div className="form__body">
             <div className="form__header">Sign In</div>
             <div className="form__input-group">
-              <label htmlFor="email" className="form__label">
-                Email
-              </label>
-              <input
-                className="form__input"
-                type="email"
+              <FormInput
+                handleChange={this.handleInput}
+                handleBlur={this.handleBlur}
+                handleFocus={this.handleFocus}
                 placeholder="Email"
                 autoComplete="email"
-                id="email"
-                onChange={event => this.handleInput(event)}
+                type="email"
+                showError={this.state.showFieldErrors.email}
+                value={this.props.login.form.email}
+                errorText={this.errorFor("email")}
+                touched={this.state.touched.email}
+                name="email"
+                inputRef={el => (this.emailInput = el)}
+                submit={this.state.submit}
               />
             </div>
             <div className="form__input-group">
-              <label htmlFor="username" className="form__label">
-                Password
-              </label>
-              <input
-                className="form__input"
-                type="password"
+              <FormInput
+                handleChange={this.handleInput}
+                handleBlur={this.handleBlur}
+                handleFocus={this.handleFocus}
                 placeholder="Password"
-                autoComplete="current-password"
-                id="password"
-                onChange={event => this.handleInput(event)}
+                autoComplete="new-password"
+                type="password"
+                showError={this.state.showFieldErrors.password}
+                value={this.props.login.form.password}
+                errorText={this.errorFor("password")}
+                touched={this.state.touched.password}
+                name="password"
+                submit={this.state.submit}
               />
             </div>
             <div className="form__input-group">

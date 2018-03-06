@@ -2,37 +2,67 @@ import React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import PropTypes from "prop-types";
+import update from "immutability-helper";
 
 import Spinner from "./Spinner";
 import ModalSm from "./ModalSm";
+import FormInput from "./FormInput";
+import { fieldValidationsResetPassword, run } from "../utils/";
 import * as Actions from "../store/actions";
 import * as apiActions from "../store/actions/apiActions";
 
 class ResetPassword extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      showFormErrors: false,
+      showFieldErrors: {
+        password: false,
+        confirmPwd: false
+      },
+      validationErrors: {},
+      touched: {
+        password: false,
+        confirmPwd: false
+      },
+      submit: false
+    };
+
+    this.handleInput = this.handleInput.bind(this);
+    this.handleFocus = this.handleFocus.bind(this);
+    this.handleBlur = this.handleBlur.bind(this);
+    this.errorFor = this.errorFor.bind(this);
+  }
   ComponentDidMount() {
     this.props.actions.clearLoginError();
   }
 
   handleReset = () => {
-    console.log("handleReset");
     const key = this.props.match.params.key;
-    console.log(key);
     const { email, password, confirmPwd } = this.props.login.form;
-    console.log(password, confirmPwd);
+
+    // show validation errors
+    const newState = { ...this.state };
+    newState.submit = true;
+    newState.showFormErrors = true;
+
+    const validationErrors = run(
+      this.props.login.form,
+      fieldValidationsResetPassword
+    );
+
+    newState.validationErrors = { ...validationErrors };
+    this.setState({ ...newState });
+
     // validate form data
-    if (email && password && password === confirmPwd) {
+    if (password && password === confirmPwd) {
       const body = {
-        email,
         password,
         key
       };
       this.props.api.resetPassword(body);
     } else {
-      if (!email) {
-        this.props.actions.setLoginError({
-          message: "Email is required"
-        });
-      }
       if (!password) {
         this.props.actions.setLoginError({
           message: "Password is required"
@@ -45,16 +75,79 @@ class ResetPassword extends React.Component {
       }
     }
   };
+
   /*
-  * Function: handleInput - On Change to the inputs, send updated value to redux store
-  * @param {object} event - the change event triggered by the input.  All form inputs will
-  *   use this handler; trigger the proper action based on the input ID
+  * Function: handleInput - On Change, send updated value to redux
+  * @param {object} event - the change event triggered by the input.
+  * All form inputs will use this handler; trigger the proper action
+  * based on the input ID
   */
-  handleInput(event) {
-    this.setState({ [event.target.id]: event.target.value, error: false });
-    if (event.which === 13) {
-      this.handleReset();
+  handleInput(e) {
+    this.props.actions.setFormField(e.target.id, e.target.value);
+    if (e.which === 13) {
+      this.login();
     }
+  }
+
+  handleBlur(e) {
+    const field = e.target.name;
+    console.log(`blur: ${field}`);
+    // run fieldValidations on fields in form object and save to state
+    const validationErrors = run(
+      this.props.login.form,
+      fieldValidationsResetPassword
+    );
+
+    const showFormErrors = !!Object.values(validationErrors).length;
+
+    // set current field as 'touched' and display errors onBlur
+    const newState = update(this.state, {
+      touched: {
+        [field]: { $set: true }
+      },
+      showFieldErrors: {
+        [field]: { $set: true }
+      },
+      validationErrors: { $set: { ...validationErrors } },
+      showFormErrors: { $set: showFormErrors }
+    });
+
+    this.setState({ ...newState });
+  }
+
+  handleFocus(e) {
+    const field = e.target.name;
+    console.log(`focus: ${field}`);
+    // hide validation errors for focused field
+    const validationErrors = run(
+      this.props.login.form,
+      fieldValidationsResetPassword
+    );
+    validationErrors[field] = false;
+
+    const newState = update(this.state, {
+      showFieldErrors: {
+        [field]: { $set: false }
+      },
+      validationErrors: { $set: { ...validationErrors } },
+      showFormErrors: { $set: false }
+    });
+
+    this.setState({ ...newState });
+  }
+
+  errorFor(field) {
+    // run validation check and return error(s) for this field
+    if (Object.values(this.state.validationErrors).length) {
+      if (
+        this.state.validationErrors[field] &&
+        (this.state.showFormErrors === true ||
+          this.state.showFieldErrors[field] === true)
+      ) {
+        return this.state.validationErrors[field] || "";
+      }
+    }
+    return null;
   }
 
   render() {
@@ -64,51 +157,35 @@ class ResetPassword extends React.Component {
         <div className="form__body">
           <div className="form__header">Reset Password</div>
           <div className="form__input-group">
-            <label htmlFor="email" className="form__label">
-              Email
-            </label>
-            <input
-              className="form__input"
-              type="email"
-              placeholder="Email"
-              id="email"
-              value={this.props.login.form.email}
-              onChange={e =>
-                this.props.actions.setFormField(e.target.id, e.target.value)
-              }
-              required
-            />
-          </div>
-          <div className="form__input-group">
-            <label htmlFor="password" className="form__label">
-              Password
-            </label>
-            <input
-              className="form__input"
+            <FormInput
+              handleChange={this.handleInput}
+              handleBlur={this.handleBlur}
+              handleFocus={this.handleFocus}
+              placeholder="New Password"
+              autoComplete="new-password"
               type="password"
-              placeholder="Password"
-              id="password"
+              showError={this.state.showFieldErrors.password}
               value={this.props.login.form.password}
-              onChange={e =>
-                this.props.actions.setFormField(e.target.id, e.target.value)
-              }
-              required
+              errorText={this.errorFor("password")}
+              touched={this.state.touched.password}
+              name="password"
+              submit={this.state.submit}
             />
           </div>
           <div className="form__input-group">
-            <label htmlFor="username" className="form__label">
-              Confirm password
-            </label>
-            <input
-              className="form__input"
-              type="password"
+            <FormInput
+              handleChange={this.handleInput}
+              handleBlur={this.handleBlur}
+              handleFocus={this.handleFocus}
               placeholder="Confirm Password"
-              id="confirmPwd"
+              autoComplete="new-password"
+              type="password"
+              showError={this.state.showFieldErrors.confirmPwd}
               value={this.props.login.form.confirmPwd}
-              onChange={e =>
-                this.props.actions.setFormField(e.target.id, e.target.value)
-              }
-              required
+              errorText={this.errorFor("confirmPwd")}
+              touched={this.state.touched.confirmPwd}
+              name="confirmPwd"
+              submit={this.state.submit}
             />
           </div>
           <div className="form__input-group">

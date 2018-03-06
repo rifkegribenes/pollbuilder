@@ -42,7 +42,10 @@ class Register extends React.Component {
     this.errorFor = this.errorFor.bind(this);
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    // clear previous errors
+    this.props.actions.setRegError("");
+  }
 
   /* Function handleRegister - Perform basic validation:
   * - username is at least 1 char
@@ -52,8 +55,6 @@ class Register extends React.Component {
   * from state, return to Home
   */
   handleRegister() {
-    // clear previous errors
-    this.props.actions.setRegError("");
     const {
       firstName,
       lastName,
@@ -63,8 +64,6 @@ class Register extends React.Component {
     } = this.props.login.form;
 
     // show validation errors
-    // this.props.actions.showErrors(true);
-    // this.props.actions.setSubmit();
     const newState = { ...this.state };
     newState.submit = true;
     newState.showFormErrors = true;
@@ -73,7 +72,6 @@ class Register extends React.Component {
       this.props.login.form,
       fieldValidationsRegister
     );
-    // this.props.actions.setValidationErrors(validationErrors);
     newState.validationErrors = { ...validationErrors };
     this.setState({ ...newState });
 

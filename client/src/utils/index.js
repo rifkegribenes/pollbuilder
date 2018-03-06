@@ -40,6 +40,15 @@ export const fieldValidationsLogin = [
   ruleRunner("password", "Password", required)
 ];
 
+export const fieldValidationsResetPassword = [
+  ruleRunner("password", "Password", required),
+  ruleRunner(
+    "confirmPwd",
+    "Password Confirmation",
+    mustMatch("password", "Password")
+  )
+];
+
 export const fieldValidationsRegister = [
   ruleRunner("firstName", "First Name", required),
   ruleRunner("lastName", "Last Name", required),

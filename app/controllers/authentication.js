@@ -381,7 +381,6 @@ exports.sendReset = (req, res) => {
 //   Secured: no
 //   Expects:
 //     1) request body params : {
-//          username : String
 //          password : String
 //          key      : String
 //        }
