@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
+import update from "immutability-helper";
 
 import Spinner from "./Spinner";
 import ModalSm from "./ModalSm";
@@ -82,11 +83,9 @@ class Register extends React.Component {
         .registration(body)
         .then(result => {
           if (result.type === "REGISTRATION_FAILURE") {
-            console.log("registration failure");
             this.props.actions.showErrors(true);
           }
           if (result.type === "REGISTRATION_SUCCESS") {
-            console.log("registration success");
             // clear form
             this.props.actions.setFormField({
               firstName: "",
@@ -100,11 +99,7 @@ class Register extends React.Component {
           }
         })
         .catch(err => {
-          console.log("neither success nor failure???");
-          // console.log(err.response.data.message);
           let error;
-          console.log(err);
-          console.dir(err);
           typeof err === "string"
             ? (error = err)
             : typeof err.error === "string"
@@ -112,7 +107,6 @@ class Register extends React.Component {
               : typeof err.message === "string"
                 ? (error = err.message)
                 : (error = undefined);
-          console.log(error);
           this.props.actions.setRegError(error);
           this.props.actions.setFormField({
             error: err
@@ -120,17 +114,13 @@ class Register extends React.Component {
           this.props.actions.showErrors(true);
         });
     } else if (!email) {
-      console.log("Email cannot be blank");
       this.props.actions.setRegError("Email cannot be blank");
     } else if (password !== confirmPwd) {
-      console.log("Passwords do not match");
       this.props.actions.setRegError("Passwords do not match");
     } else if (!firstName || !lastName) {
-      console.log("Full name is required");
       this.props.actions.setRegError("Full name is required");
     } else {
       this.props.actions.setRegError("Please complete the form");
-      console.log("Please complete the form");
     }
   }
 
@@ -148,46 +138,44 @@ class Register extends React.Component {
   }
 
   handleBlur(e) {
-    // set current field as 'touched'
     const field = e.target.name;
-    console.log(`${field} blur`);
-    const touched = { ...this.state.touched };
-    const showFieldErrors = { ...this.state.showFieldErrors };
-    touched[field] = true;
-    showFieldErrors[field] = true;
-    // this.props.actions.setTouched(field);
-    const newState = { ...this.state };
-    newState.touched[field] = true;
-    newState.showFieldErrors[field] = true;
-    // run fieldValidations on fields in form object and save to redux store
+
+    // run fieldValidations on fields in form object and save to state
     const validationErrors = run(
       this.props.login.form,
       fieldValidationsRegister
     );
-    newState.validationErrors = { ...validationErrors };
-    console.log("validationErrors:");
-    console.log(newState.validationErrors);
-    // console.dir(validationErrors);
-    // // this.props.actions.setValidationErrors(validationErrors);
-    // console.log(
-    //   `testing showErrors: Object.values(validationErrors).length = ${
-    //     Object.values(validationErrors).length
-    //   }`
-    // );
+
+    // use html5 input validation to check validitiy of email adress
+    if (field === "email") {
+      const validity = this.emailInput.validity;
+      if (!validity.valid && validity.typeMismatch) {
+        validationErrors.email = `Please enter a valid email address`;
+      }
+    }
+
     const showFormErrors = !!Object.values(validationErrors).length;
-    console.log(`showFormErrors (from handleBlur): ${showFormErrors}`);
-    newState.showFormErrors = showFormErrors;
-    // this.props.actions.showErrors(showErrors);
+
+    // set current field as 'touched' and display errors onBlur
+    const newState = update(this.state, {
+      touched: {
+        [field]: { $set: true }
+      },
+      showFieldErrors: {
+        [field]: { $set: true }
+      },
+      validationErrors: { $set: { ...validationErrors } },
+      showFormErrors: { $set: showFormErrors }
+    });
+
     this.setState({ ...newState });
   }
 
   handleFocus(e) {
-    console.log(`${e.target.name}: focus`);
     const newState = { ...this.state };
     const field = e.target.name;
     newState.showFormErrors = false;
     newState.showFieldErrors[field] = false;
-    // this.props.actions.showErrors(false);
     // hide validation errors for focused field
     const validationErrors = run(
       this.props.login.form,
@@ -195,31 +183,17 @@ class Register extends React.Component {
     );
     validationErrors[field] = false;
     newState.validationErorrs = { ...validationErrors };
-    // this.props.actions.setValidationErrors(validationErrors);
-
-    this.setState({ ...newState }, () => {
-      console.log("validationErrors:");
-      console.log(this.state.validationErrors);
-    });
+    this.setState({ ...newState });
   }
 
   errorFor(field) {
     // run validation check and return error(s) for this field
-    if (
-      // this.props.login.validationErrors[field] &&
-      // this.props.login.showErrors === true
-      Object.values(this.state.validationErrors).length
-    ) {
-      console.log(this.state.validationErrors);
+    if (Object.values(this.state.validationErrors).length) {
       if (
         this.state.validationErrors[field] &&
         (this.state.showFormErrors === true ||
           this.state.showFieldErrors[field] === true)
       ) {
-        // console.log(
-        //   `${field} error: ${this.props.login.validationErrors[field]}`
-        // );
-        // return this.props.login.validationErrors[field] || "";
         return this.state.validationErrors[field] || "";
       }
     }
@@ -232,7 +206,6 @@ class Register extends React.Component {
         ? "error"
         : "hidden";
     return (
-      // const showErrors = !!(Object.values(this.props.login.validationErrors).length && this.props.login.touched[field]);
       <div>
         <Spinner cssClass={this.props.register.spinnerClass} />
         <ModalSm
@@ -294,6 +267,7 @@ class Register extends React.Component {
                 errorText={this.errorFor("email")}
                 touched={this.state.touched.email}
                 name="email"
+                inputRef={el => (this.emailInput = el)}
                 submit={this.state.submit}
               />
             </div>

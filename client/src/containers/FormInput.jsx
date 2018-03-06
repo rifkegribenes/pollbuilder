@@ -17,15 +17,6 @@ class FormInput extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.showError !== nextProps.showError) {
-      console.log(
-        `props.showError changed to ${nextProps.showError} for ${
-          this.props.name
-        }`
-      );
-    }
-    // console.log(`NEXT PROPS:`);
-    // console.dir(nextProps);
     this.setState({
       showError: nextProps.showError,
       errorText: nextProps.errorText,
@@ -35,18 +26,6 @@ class FormInput extends Component {
   }
 
   shouldDisplayError() {
-    if (this.state.touched) {
-      console.log(`this.state.showError ${this.state.showError}:`);
-      console.log(`this.state.errorText ${this.state.errorText}:`);
-      console.log(`this.state.touched ${this.state.touched}:`);
-      console.log(`this.state.submit ${this.state.submit}:`);
-      console.log("formula equals:");
-      console.log(
-        this.state.showError &&
-          this.state.errorText &&
-          (this.state.touched || this.state.submit)
-      );
-    }
     // determine whether field should display error message
     return (
       this.state.showError &&
@@ -76,6 +55,7 @@ class FormInput extends Component {
           onFocus={this.props.handleFocus}
           name={this.props.name}
           id={this.props.name}
+          ref={this.props.inputRef}
           required={this.props.required}
         />
         <ErrorMessages display={this.shouldDisplayError()}>
