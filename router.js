@@ -34,21 +34,27 @@ const requireLogin = (req, res, next) => {
   console.log('requireLogin');
   passport.authenticate('local', { session: false },
   (err, user) => {
-    if (!user) {
-      return res.status(422).send({ message: 'Login error: No account found.' });
-    }
     if (err) {
-      console.log(err);
-      throw err;
-      return res.status(422).send({ message: err });
+      return res.status(422).send({ success : false, message : err.message });
     }
+
+    if (!user) {
+      return res.status(422).send({ success : false, message : 'Login error: Authentication Failed.' });
+    }
+
     if (user) {
       const userInfo = helpers.setUserInfo(user);
-      return res.status(200).json({
-        token: helpers.generateToken(userInfo),
-        user
-      });
-  }})(req, res, next);
+      req.login(user, loginErr => {
+        if (loginErr) {
+          return next(loginErr);
+        }
+        return res.status(200).send({
+          token: helpers.generateToken(userInfo),
+          user
+        });
+      }); // req.login
+    }
+  })(req, res, next);
 };
 
 module.exports = function (app) {

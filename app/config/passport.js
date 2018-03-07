@@ -22,12 +22,11 @@ module.exports = (passport) => {
     (req, email, password, done) => {
       User.findOne({ 'local.email': email }, (err, user) => {
         if (err) { return done(err); }
-        if (!user) { return done(null, false, { error: 'No user account found with that email. Please try again.' }); }
+        if (!user) { return done({ message: 'No user account found with that email. Please try again.' }, false); }
 
         user.comparePassword(password, (err, isMatch) => {
           if (err) { return done(err); }
-          if (!isMatch) { return done(null, false, { error: 'Your login details could not be verified. Please try again.' }); }
-
+          if (!isMatch) { return done({ message: 'Oops! Please check your password and try again.' }, false); }
           return done(null, user);
         });
       });

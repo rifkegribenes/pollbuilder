@@ -46,8 +46,6 @@ const UserSchema = new Schema({
     exp: String,
   },
   validated: { type: Boolean, default: false }
-  // resetPasswordToken: { type: String },
-  // resetPasswordExpires: { type: Date }
 },
   {
     timestamps: true
@@ -87,6 +85,7 @@ UserSchema.pre('update', function (next) {
 
     bcrypt.hash(user.local.password, salt, null, (err, hash) => {
       if (err) return next(err);
+      console.log('hashing password on pwd reset');
       user.local.password = hash;
       next();
     });

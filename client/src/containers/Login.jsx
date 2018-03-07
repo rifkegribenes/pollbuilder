@@ -123,10 +123,7 @@ class Login extends React.Component {
     const field = e.target.name;
 
     // hide validation errors for focused field
-    const validationErrors = run(
-      this.props.login.form[field],
-      fieldValidationsLogin
-    );
+    const validationErrors = run(this.props.login.form, fieldValidationsLogin);
     validationErrors[field] = false;
 
     const newState = update(this.state, {

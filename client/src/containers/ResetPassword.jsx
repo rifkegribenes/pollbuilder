@@ -91,7 +91,7 @@ class ResetPassword extends React.Component {
 
   handleBlur(e) {
     const field = e.target.name;
-    console.log(`blur: ${field}`);
+    // console.log(`blur: ${field}`);
     // run fieldValidations on fields in form object and save to state
     const validationErrors = run(
       this.props.login.form,
@@ -117,7 +117,7 @@ class ResetPassword extends React.Component {
 
   handleFocus(e) {
     const field = e.target.name;
-    console.log(`focus: ${field}`);
+    // console.log(`focus: ${field}`);
     // hide validation errors for focused field
     const validationErrors = run(
       this.props.login.form,

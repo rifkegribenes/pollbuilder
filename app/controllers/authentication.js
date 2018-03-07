@@ -15,10 +15,12 @@ const SERVER_URL = process.env.NODE_ENV === 'production' ? APP_HOST : '//localho
 exports.login = function (req, res, next) {
   console.log('login controller');
   if (!req.user) {
+    console.log('authentication.js > 18');
+    console.log(res);
       return res.status(422).send({ message: 'Login error: No account found.' });
     }
     const userInfo = helpers.setUserInfo(req.user);
-    res.status(200).json({
+    res.status(200).send({
       token: helpers.generateToken(userInfo),
       user: req.user
     });
@@ -295,7 +297,7 @@ exports.validate = function (req, res) {
  * @ params   [string]    * recUsesrId [user/recipient _id]
 */
 const sendPWResetEmail = (params) => {
-    console.log('pwreset', params);
+    // console.log('pwreset', params);
     const url     = `${CLIENT_URL}/resetpassword/${params.key}`;
     const subject = 'Voting App - Password Reset Request';
     const text = `Please click here to reset your password: ${url}`;
@@ -350,7 +352,7 @@ exports.sendReset = (req, res) => {
             recUserId   : user._id
           };
 
-          console.log(emailParams);
+          // console.log(emailParams);
 
           // send password reset email
           try {

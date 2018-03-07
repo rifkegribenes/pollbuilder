@@ -90,7 +90,6 @@ export function login(body) {
           type: LOGIN_FAILURE,
           payload: (action, state, res) => {
             return res.json().then(data => {
-              console.log(data);
               let message = "Sorry, something went wrong :(";
               if (data) {
                 if (data.message) {
