@@ -42,17 +42,17 @@ exports.register = function (req, res, next) {
 
   // Return error if no email provided
   if (!email) {
-    return res.status(422).send({ error: 'You must enter an email address.' });
+    return res.status(422).send({ message: 'You must enter an email address.' });
   }
 
   // Return error if full name not provided
   if (!firstName || !lastName) {
-    return res.status(422).send({ error: 'You must enter your full name.' });
+    return res.status(422).send({ message: 'You must enter your full name.' });
   }
 
   // Return error if no password provided
   if (!password) {
-    return res.status(422).send({ error: 'You must enter a password.' });
+    return res.status(422).send({ message: 'You must enter a password.' });
   }
 
   User.findOne({ 'profile.email': email })
@@ -65,7 +65,7 @@ exports.register = function (req, res, next) {
         console.log('authentication.js > 63');
         if (existingUser.local && existingUser.local.email === email) {
             console.log('existing user has matching email in local key');
-            return res.status(422).send({ error: 'That email address is already in use.' });
+            return res.status(422).send({ message: 'Oops! Looks like you already have an account with that email address. Please try logging in.' });
         } else {
           console.log('skipped matching email block');
           // if not, email matches an acct created with social login.
@@ -405,7 +405,7 @@ exports.resetPass = (req, res, next) => {
     .then(user => {
       // If query returned no results, token expired or was invalid. Return error.
       if (!user) {
-        return res.status(422).json({ error: 'Your token has expired. Please attempt to reset your password again.' });
+        return res.status(422).json({ message: 'Your token has expired. Please attempt to reset your password again.' });
       }
 
       // Otherwise, save new password and clear passwordResetKey

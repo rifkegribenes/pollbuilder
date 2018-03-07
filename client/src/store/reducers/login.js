@@ -2,13 +2,9 @@ import update from "immutability-helper";
 
 import {
   SET_FORM_FIELD,
-  SET_LOGIN_ERROR,
-  CLEAR_LOGIN_ERROR,
+  SET_FORM_ERROR,
+  CLEAR_FORM_ERROR,
   DISMISS_MODAL,
-  SET_TOUCHED,
-  SET_VALIDATION_ERRORS,
-  SHOW_ERRORS,
-  SET_SUBMIT,
   LOGOUT
 } from "../actions";
 import {
@@ -26,9 +22,6 @@ import {
 const INITIAL_STATE = {
   authToken: "",
   errorMsg: "",
-  showErrors: false,
-  submit: false,
-  validationErrors: {},
   spinnerClass: "spinner__hide",
   modal: {
     class: "modal__hide",
@@ -43,13 +36,6 @@ const INITIAL_STATE = {
     password: "",
     confirmPwd: "",
     error: false
-  },
-  touched: {
-    firstName: false,
-    lastName: false,
-    email: false,
-    password: false,
-    confirmPwd: false
   }
 };
 
@@ -57,7 +43,7 @@ function login(state = INITIAL_STATE, action) {
   let error;
   switch (action.type) {
     /*
-    * Called from: <Login />, <Register />
+    * Called from: <Login />, <Register />, <ResetPassword />
     * Payload: Form field Name and Value
     * Purpose: Update the connected form field.
     */
@@ -67,32 +53,11 @@ function login(state = INITIAL_STATE, action) {
       });
 
     /*
-    * Called from: <Login />, <Register />
-    * Payload: Form field Name
-    * Purpose: Update 'touched' value for form field.
-    */
-    case SET_TOUCHED:
-      console.log(`setTouched: ${action.payload}`);
-      return update(state, {
-        touched: { [action.payload]: { $set: true } }
-      });
-
-    /*
-    * Called from: <Login />, <Register />
-    * Payload: Validation errors object
-    * Purpose: Update validation errors object for form
-    */
-    case SET_VALIDATION_ERRORS:
-      return update(state, {
-        validationErrors: { $set: { ...action.payload } }
-      });
-
-    /*
-    *  Called From: <Login />
+    *  Called From: <Login />, <Register />, <ResetPassword />
     *  Payload: Text - error message
     *  Purpose: Show error message on form
     */
-    case SET_LOGIN_ERROR:
+    case SET_FORM_ERROR:
       if (typeof action.payload === "string") {
         error = action.payload;
       } else if (typeof action.payload.message === "string") {
@@ -114,40 +79,17 @@ function login(state = INITIAL_STATE, action) {
       });
 
     /*
-    *  Called From: <Login />
+    *  Called From: <Login />, <Register />, <ResetPassword />
     *  Payload: none
-    *  Purpose: Clear login errors
+    *  Purpose: Clear form errors
     */
-    case CLEAR_LOGIN_ERROR:
-      console.log("clear login error");
+    case CLEAR_FORM_ERROR:
       return update(state, {
         errorMsg: { $set: null },
         spinnerClass: { $set: "spinner__hide" },
         form: {
           error: { $set: false }
         }
-      });
-
-    /*
-    *  Called From: <Login />, <Register />
-    *  Payload: none
-    *  Purpose: Show or hide client side validation errors on form fields
-    */
-    case SHOW_ERRORS:
-      console.log("show errors");
-      return update(state, {
-        showErrors: { $set: action.payload }
-      });
-
-    /*
-    *  Called From: <Login />, <Register />
-    *  Payload: none
-    *  Purpose: Set submit state to display any client-side validation errors
-    */
-    case SET_SUBMIT:
-      console.log("set submit");
-      return update(state, {
-        submit: { $set: true }
       });
 
     /*

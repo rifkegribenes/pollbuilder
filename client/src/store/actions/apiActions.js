@@ -103,7 +103,6 @@ export function login(body) {
           }
         }
       ],
-      // types: [LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE],
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body)
     }
@@ -166,7 +165,26 @@ export function registration(body) {
     [RSAA]: {
       endpoint: `${BASE_URL}/api/auth/register`,
       method: "POST",
-      types: [REGISTRATION_REQUEST, REGISTRATION_SUCCESS, REGISTRATION_FAILURE],
+      types: [
+        REGISTRATION_REQUEST,
+        REGISTRATION_SUCCESS,
+        {
+          type: REGISTRATION_FAILURE,
+          payload: (action, state, res) => {
+            return res.json().then(data => {
+              let message = "Sorry, something went wrong :(";
+              if (data) {
+                if (data.message) {
+                  message = data.message;
+                }
+                return { message };
+              } else {
+                return { message };
+              }
+            });
+          }
+        }
+      ],
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body)
     }

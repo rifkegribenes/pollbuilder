@@ -44,7 +44,7 @@ class Register extends React.Component {
 
   componentDidMount() {
     // clear previous errors
-    this.props.actions.setRegError("");
+    this.props.actions.clearFormError();
   }
 
   /* Function handleRegister - Perform basic validation:
@@ -105,20 +105,23 @@ class Register extends React.Component {
               : typeof err.message === "string"
                 ? (error = err.message)
                 : (error = undefined);
-          this.props.actions.setRegError(error);
+          this.props.actions.setFormError(error);
           this.props.actions.setFormField({
             error: err
           });
-          this.props.actions.showErrors(true);
+          // show validation errors
+          const newState = { ...this.state };
+          newState.showFormErrors = true;
+          this.setState({ ...newState });
         });
     } else if (!email) {
-      this.props.actions.setRegError("Email cannot be blank");
+      this.props.actions.setFormError("Email cannot be blank");
     } else if (password !== confirmPwd) {
-      this.props.actions.setRegError("Passwords do not match");
+      this.props.actions.setFormError("Passwords do not match");
     } else if (!firstName || !lastName) {
-      this.props.actions.setRegError("Full name is required");
+      this.props.actions.setFormError("Full name is required");
     } else {
-      this.props.actions.setRegError("Please complete the form");
+      this.props.actions.setFormError("Please complete the form");
     }
   }
 
@@ -200,7 +203,7 @@ class Register extends React.Component {
 
   render() {
     const errorClass =
-      this.props.register.regErrorMsg || this.props.login.form.error
+      this.props.register.errorMsg || this.props.login.form.error
         ? "error"
         : "hidden";
     return (
@@ -314,9 +317,7 @@ class Register extends React.Component {
               </div>
             </div>
             <div className="form__input-group">
-              <div className={errorClass}>
-                {this.props.register.regErrorMsg}
-              </div>
+              <div className={errorClass}>{this.props.register.errorMsg}</div>
             </div>
             <div className="form__input-group">
               <Link className="form__login-link" to="/login">
@@ -362,7 +363,7 @@ Register.propTypes = {
     registration: PropTypes.func
   }).isRequired,
   register: PropTypes.shape({
-    regErrorMsg: PropTypes.string,
+    errorMsg: PropTypes.string,
     spinnerClass: PropTypes.string,
     modal: PropTypes.shape({
       class: PropTypes.string,
@@ -371,8 +372,10 @@ Register.propTypes = {
     })
   }).isRequired,
   actions: PropTypes.shape({
-    setRegError: PropTypes.func,
-    dismissModal: PropTypes.func
+    dismissModal: PropTypes.func,
+    setFormField: PropTypes.func,
+    setFormError: PropTypes.func,
+    clearFormError: PropTypes.func
   }).isRequired,
   history: PropTypes.shape({
     push: PropTypes.func

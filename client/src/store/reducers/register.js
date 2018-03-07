@@ -1,6 +1,6 @@
 import update from "immutability-helper";
 
-import { SET_REG_ERROR, DISMISS_MODAL, LOGOUT } from "../actions";
+import { DISMISS_MODAL, LOGOUT } from "../actions";
 import {
   REGISTRATION_REQUEST,
   REGISTRATION_SUCCESS,
@@ -13,19 +13,11 @@ const INITIAL_STATE = {
     class: "modal__hide",
     text: ""
   },
-  regErrorMsg: ""
+  errorMsg: ""
 };
 function register(state = INITIAL_STATE, action) {
   let error;
   switch (action.type) {
-    /*
-    *  Called From: <Registration />
-    *  Payload: Error message
-    *  Purpose: Display error message from registration form validation
-    */
-    case SET_REG_ERROR:
-      return Object.assign({}, state, { regErrorMsg: action.payload });
-
     /*
     *  Called From: <Registration />
     *  Payload: None
@@ -62,26 +54,24 @@ function register(state = INITIAL_STATE, action) {
     /*
     *  Called From: <Registration />
     *  Payload: Error Message
-    *  Purpose: Hide spinner and display error message to user in the form.
+    *  Purpose: Hide spinner and modal,
+    *  display error message in the form.
     */
     case REGISTRATION_FAILURE:
       console.log("registration failure:");
-      console.dir(action.payload);
       if (typeof action.payload === "string") {
         error = action.payload;
-      } else if (typeof action.payload.response.error === "string") {
-        error = action.payload.response.error;
       } else if (typeof action.payload.message === "string") {
         error = action.payload.message;
       } else if (typeof error === "undefined") {
         error = "An unknown error occurred during registration";
       }
-      return Object.assign({}, state, {
-        spinnerClass: "spinner__hide",
+      return update(state, {
+        spinnerClass: { $set: "spinner__hide" },
         modal: {
-          class: "modal__hide"
+          class: { $set: "modal__hide" }
         },
-        regErrorMsg: error
+        errorMsg: { $set: error }
       });
 
     case LOGOUT:

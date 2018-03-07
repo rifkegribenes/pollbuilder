@@ -41,7 +41,7 @@ export const fieldValidationsLogin = [
 ];
 
 export const fieldValidationsResetPassword = [
-  ruleRunner("password", "Password", required),
+  ruleRunner("password", "Password", required, minLength(6)),
   ruleRunner(
     "confirmPwd",
     "Password Confirmation",

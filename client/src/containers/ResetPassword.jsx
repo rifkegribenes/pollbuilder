@@ -35,7 +35,7 @@ class ResetPassword extends React.Component {
     this.errorFor = this.errorFor.bind(this);
   }
   ComponentDidMount() {
-    this.props.actions.clearLoginError();
+    this.props.actions.clearFormError();
   }
 
   handleReset = () => {
@@ -64,12 +64,12 @@ class ResetPassword extends React.Component {
       this.props.api.resetPassword(body);
     } else {
       if (!password) {
-        this.props.actions.setLoginError({
+        this.props.actions.setFormError({
           message: "Password is required"
         });
       }
       if (password !== confirmPwd) {
-        this.props.actions.setLoginError({
+        this.props.actions.setFormError({
           message: "Passwords do not match"
         });
       }
@@ -234,8 +234,8 @@ ResetPassword.propTypes = {
   actions: PropTypes.shape({
     dismissModal: PropTypes.func,
     setFormField: PropTypes.func,
-    setLoginError: PropTypes.func,
-    clearLoginError: PropTypes.func
+    setFormError: PropTypes.func,
+    clearFormError: PropTypes.func
   }).isRequired,
   api: PropTypes.shape({
     resetPassword: PropTypes.func

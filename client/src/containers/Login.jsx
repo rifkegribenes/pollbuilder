@@ -38,7 +38,7 @@ class Login extends React.Component {
   }
   componentDidMount() {
     // clear previous errors
-    this.props.actions.clearLoginError();
+    this.props.actions.clearFormError();
   }
 
   /* Function login - Perform basic validation:
@@ -68,16 +68,16 @@ class Login extends React.Component {
         }
       });
     } else if (!email) {
-      this.props.actions.setLoginError("Email cannot be blank");
+      this.props.actions.setFormError("Email cannot be blank");
     } else if (!password) {
-      this.props.actions.setLoginError("Password cannot be blank");
+      this.props.actions.setFormError("Password cannot be blank");
     }
   }
 
   resetPassword() {
     const email = this.props.login.form.email;
     if (!email) {
-      this.props.actions.setLoginError("Email required to reset password");
+      this.props.actions.setFormError("Email required to reset password");
     } else {
       this.props.api.sendResetEmail({ email });
     }
@@ -217,6 +217,9 @@ class Login extends React.Component {
                 </button>
               </div>
             </div>
+            <div className="form__input-group">
+              <div className={errorClass}>{this.props.login.errorMsg}</div>
+            </div>
             <div className="form__input-group  form__link-group">
               <button
                 className="form__login-link"
@@ -256,9 +259,6 @@ class Login extends React.Component {
                 </a>
               </div>
             </div>
-            <div className="form__input-group">
-              <div className={errorClass}>{this.props.login.errorMsg}</div>
-            </div>
           </div>
         </form>
       </div>
@@ -269,7 +269,8 @@ class Login extends React.Component {
 Login.propTypes = {
   actions: PropTypes.shape({
     setFormField: PropTypes.func,
-    setLoginError: PropTypes.func,
+    setFormError: PropTypes.func,
+    clearFormError: PropTypes.func,
     dismissModal: PropTypes.func
   }).isRequired,
   api: PropTypes.shape({
