@@ -27,34 +27,34 @@ const checkValidated = (req, res, next) => {
 }
 
 const requireAuth = passport.authenticate('jwt', { session: false });
-// const requireLogin = passport.authenticate('local', { session: false });
 
-// TODO: move this function into the auth controller
 const requireLogin = (req, res, next) => {
   console.log('requireLogin');
   passport.authenticate('local', { session: false },
-  (err, user) => {
-    if (err) {
-      return res.status(422).send({ success : false, message : err.message });
-    }
+    (err, user) => {
+      console.log('requireLogin');
+      if (err) {
+        return res.status(422).send({ success : false, message : err.message });
+      }
 
-    if (!user) {
-      return res.status(422).send({ success : false, message : 'Login error: Authentication Failed.' });
-    }
+      if (!user) {
+        return res.status(422).send({ success : false, message : 'Login error: Authentication Failed.' });
+      }
 
-    if (user) {
-      const userInfo = helpers.setUserInfo(user);
-      req.login(user, loginErr => {
-        if (loginErr) {
-          return next(loginErr);
-        }
-        return res.status(200).send({
-          token: helpers.generateToken(userInfo),
-          user
-        });
-      }); // req.login
+      if (user) {
+        const userInfo = helpers.setUserInfo(user);
+        req.login(user, loginErr => {
+          if (loginErr) {
+            return next(loginErr);
+          }
+          return res.status(200).send({
+            token: helpers.generateToken(userInfo),
+            user
+          });
+        }); // req.login
+      }
     }
-  })(req, res, next);
+  )(req, res, next);
 };
 
 module.exports = function (app) {
