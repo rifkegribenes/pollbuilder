@@ -26,6 +26,29 @@ exports.login = function (req, res, next) {
     });
 };
 
+exports.requireLogin = (err, user) => {
+  if (err) {
+    return res.status(422).send({ success : false, message : err.message });
+  }
+
+  if (!user) {
+    return res.status(422).send({ success : false, message : 'Login error: Authentication Failed.' });
+  }
+
+  if (user) {
+    const userInfo = helpers.setUserInfo(user);
+    req.login(user, loginErr => {
+      if (loginErr) {
+        return next(loginErr);
+      }
+      return res.status(200).send({
+        token: helpers.generateToken(userInfo),
+        user
+      });
+    }); // req.login
+  }
+};
+
 
 //= =======================================
 // Local Registration Route
