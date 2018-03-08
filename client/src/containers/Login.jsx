@@ -153,6 +153,9 @@ class Login extends React.Component {
 
   render() {
     const errorClass = this.props.login.errorMsg ? "error" : "hidden";
+    const buttonState = this.state.showFormErrors
+      ? "form__button--disabled"
+      : "";
     return (
       <div>
         <Spinner cssClass={this.props.login.spinnerClass} />
@@ -208,10 +211,11 @@ class Login extends React.Component {
             <div className="form__input-group">
               <div className="form__button-wrap">
                 <button
-                  className="form__button pointer"
+                  className={`form__button ${buttonState}`}
                   id="btn-login"
                   onClick={() => this.login()}
                   type="button"
+                  disabled={this.state.showFormErrors}
                 >
                   Sign In
                 </button>

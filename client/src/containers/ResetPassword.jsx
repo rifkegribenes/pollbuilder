@@ -152,6 +152,9 @@ class ResetPassword extends React.Component {
 
   render() {
     const showError = this.props.login.errorMsg ? "" : "form__hidden";
+    const buttonState = this.state.showFormErrors
+      ? "form__button--disabled"
+      : "";
     return (
       <div className="container form">
         <div className="form__body">
@@ -196,9 +199,10 @@ class ResetPassword extends React.Component {
           <div className="form__input-group">
             <div className="form__button-wrap">
               <button
-                className="form__button pointer"
+                className={`form__button ${buttonState}`}
                 id="btn-reset"
                 onClick={() => this.handleReset()}
+                disabled={this.state.showFormErrors}
               >
                 Reset
               </button>

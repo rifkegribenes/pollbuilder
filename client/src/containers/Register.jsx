@@ -206,6 +206,9 @@ class Register extends React.Component {
       this.props.register.errorMsg || this.props.login.form.error
         ? "error"
         : "hidden";
+    const buttonState = this.state.showFormErrors
+      ? "form__button--disabled"
+      : "";
     return (
       <div>
         <Spinner cssClass={this.props.register.spinnerClass} />
@@ -307,10 +310,11 @@ class Register extends React.Component {
             <div className="form__input-group">
               <div className="form__button-wrap">
                 <button
-                  className="form__button pointer"
+                  className={`form__button ${buttonState}`}
                   id="btn-register"
                   type="button"
                   onClick={() => this.handleRegister()}
+                  disabled={this.state.showFormErrors}
                 >
                   Create account
                 </button>

@@ -221,8 +221,6 @@ input:not([type=checkbox]):not([type=radio]), textarea {
       .form__input-grid {
         padding: 12px !important;
         font-size: 1em !important; } }
-  .form__connection-input {
-    padding: 12px; }
   .form__label {
     font-family: "Titillium Web", sans-serif;
     text-transform: uppercase;
@@ -292,10 +290,14 @@ input:not([type=checkbox]):not([type=radio]), textarea {
         font-size: 20px;
         font-weight: 400; } }
     .form__button:hover, .form__button:active, .form__button:focus {
-      text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
       background-color: #3b5694;
       box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
       transition: all 300ms ease-in-out; }
+    .form__button--disabled {
+      background-color: #878787; }
+      .form__button--disabled:hover, .form__button--disabled:active, .form__button--disabled:focus {
+        background-color: #878787;
+        box-shadow: none; }
   .form__hidden {
     display: none; }
   .form__login-link {
