@@ -1,3 +1,72 @@
 .combo {
+	width: 100%;
+	margin: auto;
+	background: $color_cream_lighter;
+	@include for-phone-portrait-up {
+      max-width: 380px;
+		  border-radius: $btn_border-radius;
+		  box-shadow: 0px 0px 5px 0px $color_box-shadow;
+    }
 
+  &__header {
+  	text-align: center;
+  	padding: 1.25rem;
+  }
+
+  &__title {
+  	font-size: 1.5rem;
+
+  }
+
+  &__logo {
+  	width: 80px;
+  	height: auto;
+  }
+
+  &__nav {
+  	background: rgba(255,255,255,.6);
+  	display: flex;
+  }
+
+  &__nav-button {
+  	appearance: none;
+  	-webkit-appearance: none;
+  	-moz-appearance: none;
+  	width: 50%;
+  	font-size: .85em;
+  	padding: 15px 0;
+  	border: 1px solid transparent;
+  	border-bottom: 1px solid $color_gray_lightest;
+  	color: $color_gray_lightest;
+  	cursor: pointer;
+
+  	&:hover {
+  		border: 1px solid $color_box-shadow;
+  		border-bottom: 1px solid $color_gray_lightest;
+			box-shadow: 0px 0px 5px 0px $color_box-shadow;
+  	}
+
+  	&--active {
+			color: $color_gray_text;
+			border-bottom: 1px solid $color_gray_text;
+			cursor: default;
+
+			&:hover {
+	  		border: 1px solid transparent;
+  			border-bottom: 1px solid $color_gray_text;
+				box-shadow: none;
+	  	}
+  	}
+
+  }
+
+  &__social-wrap {
+  	padding: 1.25rem;
+  	background: rgba(255,255,255,.6);
+  }
+
+  &__form {
+  	padding: 1.25rem;
+  	background: rgba(255,255,255,.6);
+  }
 }

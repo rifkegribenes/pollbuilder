@@ -265,7 +265,11 @@ class ComboBox extends React.Component {
       <div className="container combo">
         <div className="combo__header">
           <div className="combo__logo-wrap">
-            <img className="combo__logo" src="" alt="" />
+            <img
+              className="combo__logo"
+              src="https://raw.githubusercontent.com/rifkegribenes/voting-app/master/public/rainbow_icon_512.png"
+              alt="rainbow"
+            />
           </div>
           <div className="combo__title">
             {reset ? "Reset your password" : "Voting App"}
@@ -274,13 +278,21 @@ class ComboBox extends React.Component {
         {this.state.form !== "reset" && (
           <div className="combo__nav">
             <button
-              className="combo__nav-button"
+              className={
+                login
+                  ? "combo__nav-button combo__nav-button--active"
+                  : "combo__nav-button"
+              }
               onClick={() => this.toggleForm("login")}
             >
               Log in
             </button>
             <button
-              className="combo__nav-button"
+              className={
+                signup
+                  ? "combo__nav-button combo__nav-button--active"
+                  : "combo__nav-button"
+              }
               onClick={() => this.toggleForm("signup")}
             >
               Sign Up
