@@ -307,6 +307,14 @@ input:not([type=checkbox]):not([type=radio]), textarea {
       .form__button--disabled:hover, .form__button--disabled:active, .form__button--disabled:focus {
         background-color: #878787;
         box-shadow: none; }
+    .form__button--github:before {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 40px;
+      height: 41px;
+      content: '';
+      background: url("/github-white.svg"); }
   .form__hidden {
     display: none; }
   .form__login-link {

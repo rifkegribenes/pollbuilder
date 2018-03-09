@@ -423,6 +423,15 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     }
 
     &--github {
+      &:before {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 40px;
+        height: 41px;
+        content: '';
+        background: url('/github-white.svg');
+      }
 
     }
 
