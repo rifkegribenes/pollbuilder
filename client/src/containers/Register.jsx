@@ -54,7 +54,7 @@ class Register extends React.Component {
   * If valid, call the register route; store token in redux, clear password
   * from state, return to Home
   */
-  handleRegister() {
+  register() {
     const {
       firstName,
       lastName,
@@ -313,7 +313,7 @@ class Register extends React.Component {
                   className={`form__button ${buttonState}`}
                   id="btn-register"
                   type="button"
-                  onClick={() => this.handleRegister()}
+                  onClick={() => this.register()}
                   disabled={this.state.showFormErrors}
                 >
                   Create account

@@ -7,8 +7,7 @@ import PropTypes from "prop-types";
 
 import Header from "./containers/Header";
 import Home from "./containers/Home";
-import Login from "./containers/Login";
-import Register from "./containers/Register";
+import ComboBox from "./containers/ComboBox";
 import Profile from "./containers/Profile";
 import Footer from "./containers/Footer";
 import NotFound from "./containers/NotFound";
@@ -52,12 +51,12 @@ class App extends Component {
               <Route
                 exact
                 path="/login"
-                render={routeProps => <Login {...routeProps} />}
+                render={routeProps => <ComboBox initialForm="login" />}
               />
               <Route
                 exact
                 path="/register"
-                render={routeProps => <Register {...routeProps} />}
+                render={routeProps => <ComboBox initialForm="register" />}
               />
               <Route path="/validate" component={Validate} />
               <Route path="/resetpassword/:key" component={ResetPassword} />

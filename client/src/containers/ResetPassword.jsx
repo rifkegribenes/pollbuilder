@@ -7,7 +7,7 @@ import update from "immutability-helper";
 import Spinner from "./Spinner";
 import ModalSm from "./ModalSm";
 import FormInput from "./FormInput";
-import { fieldValidationsResetPassword, run } from "../utils/";
+import { fieldValidations, run } from "../utils/";
 import * as Actions from "../store/actions";
 import * as apiActions from "../store/actions/apiActions";
 
@@ -38,7 +38,7 @@ class ResetPassword extends React.Component {
     this.props.actions.clearFormError();
   }
 
-  handleReset = () => {
+  reset = () => {
     const key = this.props.match.params.key;
     const { password, confirmPwd } = this.props.login.form;
 
@@ -47,10 +47,7 @@ class ResetPassword extends React.Component {
     newState.submit = true;
     newState.showFormErrors = true;
 
-    const validationErrors = run(
-      this.props.login.form,
-      fieldValidationsResetPassword
-    );
+    const validationErrors = run(this.props.login.form, fieldValidations.reset);
 
     newState.validationErrors = { ...validationErrors };
     this.setState({ ...newState });
@@ -93,10 +90,7 @@ class ResetPassword extends React.Component {
     const field = e.target.name;
     // console.log(`blur: ${field}`);
     // run fieldValidations on fields in form object and save to state
-    const validationErrors = run(
-      this.props.login.form,
-      fieldValidationsResetPassword
-    );
+    const validationErrors = run(this.props.login.form, fieldValidations.reset);
 
     const showFormErrors = !!Object.values(validationErrors).length;
 
@@ -119,10 +113,7 @@ class ResetPassword extends React.Component {
     const field = e.target.name;
     // console.log(`focus: ${field}`);
     // hide validation errors for focused field
-    const validationErrors = run(
-      this.props.login.form,
-      fieldValidationsResetPassword
-    );
+    const validationErrors = run(this.props.login.form, fieldValidations.reset);
     validationErrors[field] = false;
 
     const newState = update(this.state, {
@@ -201,7 +192,7 @@ class ResetPassword extends React.Component {
               <button
                 className={`form__button ${buttonState}`}
                 id="btn-reset"
-                onClick={() => this.handleReset()}
+                onClick={() => this.reset()}
                 disabled={this.state.showFormErrors}
               >
                 Reset
