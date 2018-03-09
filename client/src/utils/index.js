@@ -35,28 +35,28 @@ export const ruleRunner = (field, name, ...validations) => state => {
 export const run = (state, runners) =>
   runners.reduce((memo, runner) => Object.assign(memo, runner(state)), {});
 
-export const fieldValidationsLogin = [
-  ruleRunner("email", "Email", required),
-  ruleRunner("password", "Password", required)
-];
-
-export const fieldValidationsResetPassword = [
-  ruleRunner("password", "Password", required, minLength(6)),
-  ruleRunner(
-    "confirmPwd",
-    "Password Confirmation",
-    mustMatch("password", "Password")
-  )
-];
-
-export const fieldValidationsRegister = [
-  ruleRunner("firstName", "First Name", required),
-  ruleRunner("lastName", "Last Name", required),
-  ruleRunner("email", "Email", required),
-  ruleRunner("password", "Password", required, minLength(6)),
-  ruleRunner(
-    "confirmPwd",
-    "Password Confirmation",
-    mustMatch("password", "Password")
-  )
-];
+export const fieldValidations = {
+  login: [
+    ruleRunner("email", "Email", required),
+    ruleRunner("password", "Password", required)
+  ],
+  resetPassword: [
+    ruleRunner("password", "Password", required, minLength(6)),
+    ruleRunner(
+      "confirmPwd",
+      "Password Confirmation",
+      mustMatch("password", "Password")
+    )
+  ],
+  register: [
+    ruleRunner("firstName", "First Name", required),
+    ruleRunner("lastName", "Last Name", required),
+    ruleRunner("email", "Email", required),
+    ruleRunner("password", "Password", required, minLength(6)),
+    ruleRunner(
+      "confirmPwd",
+      "Password Confirmation",
+      mustMatch("password", "Password")
+    )
+  ]
+};
