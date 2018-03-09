@@ -392,6 +392,27 @@ input:not([type=checkbox]):not([type=radio]), textarea {
       transition: all 300ms ease-in-out;
     }
 
+    &--sm {
+      margin-right: 0;
+      font-size: 12px;
+      padding: 11px 14px 11px 54px;
+      margin-bottom: .75em;
+      color: $color_cream_lighter;
+      position: relative;
+
+      &:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 40px;
+        height: 41px;
+        background: red;
+        border-top-left-radius: $btn_border-radius;
+        border-bottom-left-radius: $btn_border-radius;
+      }
+    }
+
     &--disabled {
       background-color: $color_gray_lighter;
 
@@ -399,6 +420,18 @@ input:not([type=checkbox]):not([type=radio]), textarea {
         background-color: $color_gray_lighter;
         box-shadow: none;
       }
+    }
+
+    &--github {
+
+    }
+
+    &--facebook {
+
+    }
+
+    &--google {
+
     }
   }
 

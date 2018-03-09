@@ -285,6 +285,23 @@ input:not([type=checkbox]):not([type=radio]), textarea {
       background-color: #3b5694;
       box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
       transition: all 300ms ease-in-out; }
+    .form__button--sm {
+      margin-right: 0;
+      font-size: 12px;
+      padding: 11px 14px 11px 54px;
+      margin-bottom: .75em;
+      color: #fffed1;
+      position: relative; }
+      .form__button--sm:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 40px;
+        height: 41px;
+        background: red;
+        border-top-left-radius: 4px;
+        border-bottom-left-radius: 4px; }
     .form__button--disabled {
       background-color: #878787; }
       .form__button--disabled:hover, .form__button--disabled:active, .form__button--disabled:focus {

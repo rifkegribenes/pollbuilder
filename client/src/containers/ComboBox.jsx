@@ -301,21 +301,21 @@ class ComboBox extends React.Component {
         )}
         <div className="combo__social-wrap">
           <a
-            className="form__button form__button--github"
+            className="form__button form__button--sm form__button--github"
             href="http://localhost:8080/api/auth/github/"
             id="btn-github"
           >
             <span>{`${buttonText} with Github`}</span>
           </a>
           <a
-            className="form__button form__button--facebook"
+            className="form__button form__button--sm form__button--facebook"
             id="btn-facebook"
             href="http://localhost:8080/api/auth/facebook"
           >
             <span>{`${buttonText} with Facebook`}</span>
           </a>
           <a
-            className="form__button form__button--google"
+            className="form__button form__button--sm form__button--google"
             id="btn-google"
             href="http://localhost:8080/api/auth/google"
           >
