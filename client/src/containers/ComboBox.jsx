@@ -11,6 +11,10 @@ import { fieldValidations, run } from "../utils/";
 import * as Actions from "../store/actions";
 import * as apiActions from "../store/actions/apiActions";
 
+import ghIcon from "../img/github-white.svg";
+import fbIcon from "../img/facebook-white.svg";
+import ggIcon from "../img/google-white.svg";
+
 class ComboBox extends React.Component {
   constructor(props) {
     super(props);
@@ -41,6 +45,9 @@ class ComboBox extends React.Component {
     this.handleFocus = this.handleFocus.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
     this.errorFor = this.errorFor.bind(this);
+    this.login = this.login.bind(this);
+    this.register = this.register.bind(this);
+    this.reset = this.reset.bind(this);
   }
 
   componentDidMount() {
@@ -190,11 +197,17 @@ class ComboBox extends React.Component {
   handleBlur(e) {
     const field = e.target.name;
 
+    const runners = state => fieldValidations[state];
+
     // run fieldValidations on fields in form object and save to state
     const validationErrors = run(
       this.props.login.form,
-      fieldValidations[this.state.form]
+      runners(this.state.form)
     );
+
+    if (!document.getElementById("email").validity.valid) {
+      validationErrors.email = "Please enter a valid email address";
+    }
 
     const showFormErrors = !!Object.values(validationErrors).length;
 
@@ -210,18 +223,24 @@ class ComboBox extends React.Component {
       showFormErrors: { $set: showFormErrors }
     });
 
-    this.setState({ ...newState });
+    this.setState({ ...newState }, () => console.log(this.state));
   }
 
   handleFocus(e) {
     const field = e.target.name;
 
+    const runners = state => fieldValidations[state];
+
     // hide validation errors for focused field
     const validationErrors = run(
       this.props.login.form,
-      fieldValidations[this.state.form]
+      runners(this.state.form)
     );
     validationErrors[field] = false;
+
+    if (!document.getElementById("email").validity.valid) {
+      validationErrors.email = "Please enter a valid email address";
+    }
 
     const newState = update(this.state, {
       showFieldErrors: {
@@ -275,7 +294,7 @@ class ComboBox extends React.Component {
             {reset ? "Reset your password" : "Voting App"}
           </div>
         </div>
-        {this.state.form !== "reset" && (
+        {!reset && (
           <div className="combo__nav">
             <button
               className={
@@ -299,33 +318,56 @@ class ComboBox extends React.Component {
             </button>
           </div>
         )}
-        <div className="combo__social-wrap">
-          <a
-            className="form__button form__button--sm form__button--github"
-            href="http://localhost:8080/api/auth/github/"
-            id="btn-github"
-          >
-            <span>{`${buttonText} with Github`}</span>
-          </a>
-          <a
-            className="form__button form__button--sm form__button--facebook"
-            id="btn-facebook"
-            href="http://localhost:8080/api/auth/facebook"
-          >
-            <span>{`${buttonText} with Facebook`}</span>
-          </a>
-          <a
-            className="form__button form__button--sm form__button--google"
-            id="btn-google"
-            href="http://localhost:8080/api/auth/google"
-          >
-            <span>{`${buttonText} with Google`}</span>
-          </a>
-        </div>
+        {!reset && (
+          <div className="combo__social-wrap">
+            <a
+              className="form__button form__button--sm form__button--github"
+              href="http://localhost:8080/api/auth/github/"
+              id="btn-github"
+            >
+              <img
+                className="form__icon form__icon--github"
+                alt="github"
+                src={ghIcon}
+              />
+              <div className="form__icon-wrap">
+                <div className="form__sm-button-text">{`${buttonText} with Github`}</div>
+              </div>
+            </a>
+            <a
+              className="form__button form__button--sm form__button--facebook"
+              id="btn-facebook"
+              href="http://localhost:8080/api/auth/facebook"
+            >
+              <img
+                className="form__icon form__icon--facebook"
+                alt="facebook"
+                src={fbIcon}
+              />
+              <div className="form__icon-wrap">
+                <div className="form__sm-button-text">{`${buttonText} with Facebook`}</div>
+              </div>
+            </a>
+            <a
+              className="form__button form__button--sm form__button--google"
+              id="btn-google"
+              href="http://localhost:8080/api/auth/google"
+            >
+              <img
+                className="form__icon form__icon--google"
+                alt="google"
+                src={ggIcon}
+              />
+              <div className="form__icon-wrap">
+                <div className="form__sm-button-text">{`${buttonText} with Google`}</div>
+              </div>
+            </a>
+          </div>
+        )}
         <div className="combo__form">
           <form className="container form">
             <div className="form__body">
-              {!reset && <div className="form__input-group">or&hellip;</div>}
+              {!reset && <div className="form__input-group center">or</div>}
               {signup && (
                 <div>
                   <div className="form__input-group">
@@ -357,6 +399,14 @@ class ComboBox extends React.Component {
                       name="lastName"
                       submit={this.state.submit}
                     />
+                  </div>
+                </div>
+              )}
+              {reset && (
+                <div className="form__input-group center">
+                  <div className="form__text">
+                    Please enter your email address. <br />We will send a link
+                    to reset your password.
                   </div>
                 </div>
               )}
@@ -411,6 +461,17 @@ class ComboBox extends React.Component {
                     name="confirmPwd"
                     submit={this.state.submit}
                   />
+                </div>
+              )}
+              {login && (
+                <div className="form__input-group center">
+                  <button
+                    className="form__login-link"
+                    type="button"
+                    onClick={() => this.toggleForm("reset")}
+                  >
+                    Forgot your password?
+                  </button>
                 </div>
               )}
               <div className="form__input-group">
@@ -474,11 +535,6 @@ ComboBox.propTypes = {
       action: PropTypes.func
     }).isRequired,
     spinnerClass: PropTypes.string
-  }).isRequired,
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      key: PropTypes.string
-    })
   }).isRequired
 };
 

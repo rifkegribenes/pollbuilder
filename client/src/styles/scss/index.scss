@@ -139,6 +139,10 @@ body.user-is-tabbing *:focus {
   }
 }
 
+.center {
+  text-align: center;
+}
+
 .error {
     font-family: $font-stack;
     color: $color_error_text;
@@ -153,7 +157,7 @@ body.user-is-tabbing *:focus {
     text-align: center;
   }
 
-  input:focus:invalid {
+input:invalid {
     border: 1px solid red;
   }
 

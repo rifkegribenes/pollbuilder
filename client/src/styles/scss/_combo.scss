@@ -40,10 +40,14 @@
   	color: $color_gray_lightest;
   	cursor: pointer;
 
-  	&:hover {
+  	&:hover, &:focus {
   		border: 1px solid $color_box-shadow;
   		border-bottom: 1px solid $color_gray_lightest;
 			box-shadow: 0px 0px 5px 0px $color_box-shadow;
+  	}
+
+  	&:focus {
+  		box-shadow: 0px 0px 5px 0px $color_focus_ring;
   	}
 
   	&--active {
@@ -56,17 +60,23 @@
   			border-bottom: 1px solid $color_gray_text;
 				box-shadow: none;
 	  	}
+
+	  	&:focus {
+	  		box-shadow: 0px 0px 5px 0px $color_focus_ring;
+	  	}
   	}
 
   }
 
   &__social-wrap {
   	padding: 1.25rem;
+  	padding-bottom: 10px;
   	background: rgba(255,255,255,.6);
   }
 
   &__form {
   	padding: 1.25rem;
+  	padding-top: 10px;
   	background: rgba(255,255,255,.6);
   }
 }

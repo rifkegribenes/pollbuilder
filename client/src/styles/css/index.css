@@ -70,7 +70,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     color: #545454;
     background: white !important; }
     .form__input--error {
-      border: 1px solid red; }
+      border: 1px solid red !important; }
     @media (min-width: 1600px) {
       .form__input {
         padding: 15px;
@@ -216,15 +216,12 @@ input:not([type=checkbox]):not([type=radio]), textarea {
   .form__label {
     font-family: "Titillium Web", sans-serif;
     text-transform: uppercase;
-    letter-spacing: 2px;
-    font-size: .8em;
+    letter-spacing: 1px;
+    font-size: .7em;
     width: 100%;
-    margin-top: 10px;
+    margin: 10px 0 0 2px;
     position: relative;
     top: 6px; }
-    @media (min-width: 1600px) {
-      .form__label {
-        font-size: 1em; } }
   .form__label--white {
     font-family: "Titillium Web", sans-serif;
     text-transform: uppercase;
@@ -287,47 +284,59 @@ input:not([type=checkbox]):not([type=radio]), textarea {
       transition: all 300ms ease-in-out; }
     .form__button--sm {
       margin-right: 0;
-      font-size: 12px;
-      padding: 11px 14px 11px 54px;
-      margin-bottom: .75em;
+      padding: 0;
+      margin-bottom: 10px;
       color: #fffed1;
-      position: relative; }
-      .form__button--sm:before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 40px;
-        height: 41px;
-        background: red;
-        border-top-left-radius: 4px;
-        border-bottom-left-radius: 4px; }
+      position: relative;
+      display: flex;
+      height: 44px; }
+    .form__button--github {
+      background: black; }
+      .form__button--github:hover, .form__button--github:active, .form__button--github:focus {
+        background: black; }
+      .form__button--github:focus {
+        box-shadow: 0px 0px 5px 0px #4b6cb7 0 10px 20px rgba(0, 0, 0, 0.4); }
+    .form__button--facebook {
+      background: #4468B0; }
+      .form__button--facebook:hover, .form__button--facebook:active, .form__button--facebook:focus {
+        background: #4468B0; }
+      .form__button--facebook:focus {
+        box-shadow: 0px 0px 5px 0px #4b6cb7 0 10px 20px rgba(0, 0, 0, 0.4); }
+    .form__button--google {
+      background: #dd4b39; }
+      .form__button--google:hover, .form__button--google:active, .form__button--google:focus {
+        background: #dd4b39; }
+      .form__button--google:focus {
+        box-shadow: 0px 0px 5px 0px #4b6cb7 0 10px 20px rgba(0, 0, 0, 0.4); }
     .form__button--disabled {
       background-color: #878787; }
       .form__button--disabled:hover, .form__button--disabled:active, .form__button--disabled:focus {
         background-color: #878787;
         box-shadow: none; }
-    .form__button--github:before {
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 40px;
-      height: 41px;
-      content: '';
-      background: url("/github-white.svg"); }
+  .form__icon {
+    width: 20px;
+    height: 20px;
+    margin: 11px; }
+  .form__icon-wrap {
+    background: rgba(255, 255, 255, 0.2);
+    width: 100%; }
+  .form__sm-button-text {
+    font-size: 12px;
+    padding: 11px; }
   .form__hidden {
     display: none; }
+  .form__text {
+    color: #878787;
+    line-height: 1.5em;
+    font-weight: 100; }
   .form__login-link {
     cursor: pointer;
     color: #545454;
     text-decoration: none;
     background-color: transparent;
     font-family: "Titillium Web", sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    font-weight: 700;
     font-size: .8em;
-    margin: 5px 0;
+    margin: 15px 0 5px 0;
     border: 1px solid transparent;
     border-bottom: 1px dotted transparent;
     appearance: none;
@@ -335,9 +344,6 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     text-align: left; }
     .form__login-link:last-child {
       text-align: right; }
-    @media (min-width: 600px) {
-      .form__login-link {
-        font-weight: 400; } }
     .form__login-link:hover, .form__login-link:active {
       color: #3b5694;
       border-bottom: 1px dotted #3b5694;
@@ -1021,10 +1027,12 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     border-bottom: 1px solid #bababa;
     color: #bababa;
     cursor: pointer; }
-    .combo__nav-button:hover {
+    .combo__nav-button:hover, .combo__nav-button:focus {
       border: 1px solid rgba(167, 165, 123, 0.6);
       border-bottom: 1px solid #bababa;
       box-shadow: 0px 0px 5px 0px rgba(167, 165, 123, 0.6); }
+    .combo__nav-button:focus {
+      box-shadow: 0px 0px 5px 0px #4b6cb7; }
     .combo__nav-button--active {
       color: #545454;
       border-bottom: 1px solid #545454;
@@ -1033,11 +1041,15 @@ input:not([type=checkbox]):not([type=radio]), textarea {
         border: 1px solid transparent;
         border-bottom: 1px solid #545454;
         box-shadow: none; }
+      .combo__nav-button--active:focus {
+        box-shadow: 0px 0px 5px 0px #4b6cb7; }
   .combo__social-wrap {
     padding: 1.25rem;
+    padding-bottom: 10px;
     background: rgba(255, 255, 255, 0.6); }
   .combo__form {
     padding: 1.25rem;
+    padding-top: 10px;
     background: rgba(255, 255, 255, 0.6); }
 
 * {
@@ -1145,6 +1157,9 @@ body.user-is-tabbing *:focus {
       border-bottom: 1px dotted #545454;
       cursor: pointer; }
 
+.center {
+  text-align: center; }
+
 .error {
   font-family: "Titillium Web", sans-serif;
   color: #a94442;
@@ -1158,7 +1173,7 @@ body.user-is-tabbing *:focus {
   transition: opacity .15s linear;
   text-align: center; }
 
-input:focus:invalid {
+input:invalid {
   border: 1px solid red; }
 
 .success {
