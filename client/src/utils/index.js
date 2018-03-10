@@ -48,7 +48,8 @@ export const fieldValidations = {
       mustMatch("password", "Password")
     )
   ],
-  register: [
+  reset: [ruleRunner("email", "Email", required)],
+  signup: [
     ruleRunner("firstName", "First Name", required),
     ruleRunner("lastName", "Last Name", required),
     ruleRunner("email", "Email", required),

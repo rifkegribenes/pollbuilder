@@ -17,24 +17,12 @@ class FormInput extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.name === "email") {
-      if (nextProps.errorText !== this.state.errorText) {
-        console.log(nextProps.errorText);
-      }
-    }
-    this.setState(
-      {
-        showError: nextProps.showError,
-        errorText: nextProps.errorText,
-        touched: nextProps.touched,
-        submit: nextProps.submit
-      },
-      () => {
-        if (this.props.name === "email") {
-          console.log(this.state.errorText);
-        }
-      }
-    );
+    this.setState({
+      showError: nextProps.showError,
+      errorText: nextProps.errorText,
+      touched: nextProps.touched,
+      submit: nextProps.submit
+    });
   }
 
   shouldDisplayError() {

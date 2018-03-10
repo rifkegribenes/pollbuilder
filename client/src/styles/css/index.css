@@ -270,8 +270,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     border-radius: 4px;
     padding: 10px 20px;
     border: 1px solid white;
-    background-color: #182848;
-    display: flex; }
+    background-color: #182848; }
     .form__button:last-child {
       margin-right: 0; }
     @media (min-width: 600px) {
@@ -282,6 +281,15 @@ input:not([type=checkbox]):not([type=radio]), textarea {
       background-color: #3b5694;
       box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
       transition: all 300ms ease-in-out; }
+    .form__button--bottom {
+      width: 100%;
+      text-align: center;
+      margin-right: 0;
+      border-radius: 0;
+      padding: 20px;
+      font-size: 20px;
+      border-bottom-left-radius: 4px;
+      border-bottom-right-radius: 4px; }
     .form__button--sm {
       margin-right: 0;
       padding: 0;
@@ -1007,7 +1015,22 @@ input:not([type=checkbox]):not([type=radio]), textarea {
       box-shadow: 0px 0px 5px 0px rgba(167, 165, 123, 0.6); } }
   .combo__header {
     text-align: center;
-    padding: 1.25rem; }
+    padding: 20px;
+    position: relative; }
+  .combo__back-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    appearance: none;
+    -webkit-appearnce: none;
+    -moz-appearance: none;
+    border-radius: 20px;
+    font-size: 20px;
+    font-weight: 100;
+    color: #878787;
+    padding: 0 11px 4px 9px; }
+    .combo__back-btn:hover, .combo__back-btn:focus {
+      box-shadow: 0px 0px 5px 0px #4b6cb7; }
   .combo__title {
     font-size: 1.5rem; }
   .combo__logo {
@@ -1044,12 +1067,13 @@ input:not([type=checkbox]):not([type=radio]), textarea {
       .combo__nav-button--active:focus {
         box-shadow: 0px 0px 5px 0px #4b6cb7; }
   .combo__social-wrap {
-    padding: 1.25rem;
+    padding: 20px;
     padding-bottom: 10px;
     background: rgba(255, 255, 255, 0.6); }
   .combo__form {
-    padding: 1.25rem;
+    padding: 20px;
     padding-top: 10px;
+    padding-bottom: 0;
     background: rgba(255, 255, 255, 0.6); }
 
 * {

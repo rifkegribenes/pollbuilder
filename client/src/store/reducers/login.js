@@ -16,7 +16,10 @@ import {
   RESET_PW_FAILURE,
   SEND_RESET_EMAIL_REQUEST,
   SEND_RESET_EMAIL_SUCCESS,
-  SEND_RESET_EMAIL_FAILURE
+  SEND_RESET_EMAIL_FAILURE,
+  REGISTRATION_REQUEST,
+  REGISTRATION_SUCCESS,
+  REGISTRATION_FAILURE
 } from "../actions/apiActions";
 
 const INITIAL_STATE = {
@@ -235,6 +238,62 @@ function login(state = INITIAL_STATE, action) {
       return Object.assign({}, state, {
         spinnerClass: "spinner__hide",
         errorMsg: error
+      });
+
+    /*
+    *  Called From: <Registration />
+    *  Payload: None
+    *  Purpose: Display spinner so user knows API action is in progress.
+    */
+    case REGISTRATION_REQUEST:
+      console.log("registration request");
+      return Object.assign({}, state, {
+        spinnerClass: "spinner__show",
+        modal: {
+          class: "modal__hide",
+          text: ""
+        }
+      });
+
+    /*
+    *  Called From: <Registration />
+    *  Payload: N/A
+    *  Purpose: Hide spinner so user knows API action is complete.
+    *  Note: this action is also handled in appState reducer.
+    */
+    case REGISTRATION_SUCCESS:
+      console.log("registration success register.js > 49");
+      return Object.assign({}, state, {
+        spinnerClass: "spinner__hide",
+        modal: {
+          class: "modal__show",
+          text:
+            "Your registration was successful. Please check your email for a validation link. You must validate your account to continue using this app.",
+          title: "Success"
+        }
+      });
+
+    /*
+    *  Called From: <Registration />
+    *  Payload: Error Message
+    *  Purpose: Hide spinner and modal,
+    *  display error message in the form.
+    */
+    case REGISTRATION_FAILURE:
+      console.log("registration failure:");
+      if (typeof action.payload === "string") {
+        error = action.payload;
+      } else if (typeof action.payload.message === "string") {
+        error = action.payload.message;
+      } else if (typeof error === "undefined") {
+        error = "An unknown error occurred during registration";
+      }
+      return update(state, {
+        spinnerClass: { $set: "spinner__hide" },
+        modal: {
+          class: { $set: "modal__hide" }
+        },
+        errorMsg: { $set: error }
       });
 
     default:

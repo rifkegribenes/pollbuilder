@@ -128,7 +128,10 @@ class ComboBox extends React.Component {
         .registration(body)
         .then(result => {
           if (result.type === "REGISTRATION_FAILURE") {
-            this.props.actions.showErrors(true);
+            const newState = { ...this.state };
+            newState.submit = true;
+            newState.showFormErrors = true;
+            this.setState({ ...newState });
           }
           if (result.type === "REGISTRATION_SUCCESS") {
             // clear form
@@ -223,12 +226,11 @@ class ComboBox extends React.Component {
       showFormErrors: { $set: showFormErrors }
     });
 
-    this.setState({ ...newState }, () => console.log(this.state));
+    this.setState({ ...newState });
   }
 
   handleFocus(e) {
     const field = e.target.name;
-
     const runners = state => fieldValidations[state];
 
     // hide validation errors for focused field
@@ -283,6 +285,15 @@ class ComboBox extends React.Component {
     return (
       <div className="container combo">
         <div className="combo__header">
+          {reset && (
+            <button
+              className="combo__back-btn"
+              onClick={() => this.toggleForm("login")}
+            >
+              <span className="sr-only">Back to Login</span>
+              &lsaquo;
+            </button>
+          )}
           <div className="combo__logo-wrap">
             <img
               className="combo__logo"
@@ -475,23 +486,25 @@ class ComboBox extends React.Component {
                 </div>
               )}
               <div className="form__input-group">
-                <div className="form__button-wrap">
-                  <button
-                    className={`form__button ${buttonState}`}
-                    id={`btn-${this.state.form}`}
-                    type="button"
-                    onClick={method}
-                    disabled={this.state.showFormErrors}
-                  >
-                    {buttonText}
-                  </button>
-                </div>
-              </div>
-              <div className="form__input-group">
                 <div className={errorClass}>{this.props.login.errorMsg}</div>
               </div>
             </div>
           </form>
+        </div>
+        <div className="combo__footer">
+          <div className="form__input-group">
+            <div className="form__button-wrap">
+              <button
+                className={`form__button form__button--bottom ${buttonState}`}
+                id={`btn-${this.state.form}`}
+                type="button"
+                onClick={method}
+                disabled={this.state.showFormErrors}
+              >
+                {buttonText}
+              </button>
+            </div>
+          </div>
         </div>
         <Spinner cssClass={this.props.login.spinnerClass} />
         <ModalSm

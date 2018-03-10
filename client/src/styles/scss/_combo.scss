@@ -10,7 +10,26 @@
 
   &__header {
   	text-align: center;
-  	padding: 1.25rem;
+  	padding: 20px;
+  	position: relative;
+  }
+
+  &__back-btn {
+  	position: absolute;
+  	top: 20px;
+  	left: 20px;
+  	appearance: none;
+  	-webkit-appearnce: none;
+  	-moz-appearance: none;
+  	border-radius: 20px;
+  	font-size: 20px;
+  	font-weight: 100;
+  	color: $color_gray_lighter;
+  	padding: 0 11px 4px 9px;
+
+  	&:hover, &:focus {
+  		box-shadow: 0px 0px 5px 0px $color_focus_ring;
+  	}
   }
 
   &__title {
@@ -69,14 +88,15 @@
   }
 
   &__social-wrap {
-  	padding: 1.25rem;
+  	padding: 20px;
   	padding-bottom: 10px;
   	background: rgba(255,255,255,.6);
   }
 
   &__form {
-  	padding: 1.25rem;
+  	padding: 20px;
   	padding-top: 10px;
+  	padding-bottom: 0;
   	background: rgba(255,255,255,.6);
   }
 }
