@@ -2,7 +2,7 @@ export const LOGOUT = "LOGOUT";
 export const SET_LOGGEDIN = "SET_LOGGEDIN";
 export const SET_FORM_FIELD = "SET_FORM_FIELD";
 export const SET_FORM_ERROR = "SET_FORM_ERROR";
-export const CLEAR_FORM_ERROR = "CLEAR_FORM_ERROR";
+export const RESET_FORM = "RESET_FORM";
 export const SET_PROFILE_VIEW = "SET_PROFILE_VIEW";
 export const SET_REDIRECT_URL = "SET_REDIRECT_URL";
 export const DISMISS_MODAL = "DISMISS_MODAL";
@@ -20,9 +20,9 @@ export function logout() {
   };
 }
 
-export function clearFormError() {
+export function resetForm() {
   return {
-    type: CLEAR_FORM_ERROR
+    type: RESET_FORM
   };
 }
 

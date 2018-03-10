@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 import { bindActionCreators } from "redux";
 import PropTypes from "prop-types";
 import update from "immutability-helper";
@@ -20,7 +21,7 @@ class ComboBox extends React.Component {
     super(props);
 
     this.state = {
-      form: props.initialForm,
+      form: props.initialForm || "login",
       showFormErrors: false,
       showFieldErrors: {
         firstName: false,
@@ -52,7 +53,31 @@ class ComboBox extends React.Component {
 
   componentDidMount() {
     // clear previous errors
-    this.props.actions.clearFormError();
+    this.props.actions.resetForm();
+  }
+
+  resetState() {
+    const newState = {
+      form: "login",
+      showFormErrors: false,
+      showFieldErrors: {
+        firstName: false,
+        lastName: false,
+        email: false,
+        password: false,
+        confirmPwd: false
+      },
+      validationErrors: {},
+      touched: {
+        firstName: false,
+        lastName: false,
+        email: false,
+        password: false,
+        confirmPwd: false
+      },
+      submit: false
+    };
+    this.setState({ ...newState });
   }
 
   toggleForm(form) {
@@ -77,8 +102,12 @@ class ComboBox extends React.Component {
 
     const validationErrors = run(this.props.login.form, fieldValidations.login);
 
+    if (!document.getElementById("email").validity.valid) {
+      validationErrors.email = "Please enter a valid email address";
+    }
+
     newState.validationErrors = { ...validationErrors };
-    this.setState({ ...newState });
+    this.setState({ ...newState }, () => console.log(this.state));
 
     if (email && password) {
       const body = { email, password };
@@ -87,10 +116,15 @@ class ComboBox extends React.Component {
           this.props.history.push("/");
         }
       });
+    } else if (!document.getElementById("email").validity.valid) {
+      console.log("invalid email");
+      this.props.actions.setFormError("Invalid email address");
     } else if (!email) {
       this.props.actions.setFormError("Email cannot be blank");
     } else if (!password) {
       this.props.actions.setFormError("Password cannot be blank");
+    } else {
+      this.props.actions.setFormError("Please complete all required fields");
     }
   }
 
@@ -117,7 +151,7 @@ class ComboBox extends React.Component {
 
     const validationErrors = run(
       this.props.login.form,
-      fieldValidations.register
+      fieldValidations.signup
     );
     newState.validationErrors = { ...validationErrors };
     this.setState({ ...newState });
@@ -277,9 +311,9 @@ class ComboBox extends React.Component {
     const buttonState = this.state.showFormErrors
       ? "form__button--disabled"
       : "";
-    const method = login ? this.login : signup ? this.register : this.reset;
     const errorClass =
-      this.props.register.errorMsg || this.props.login.form.error
+      this.props.login.form.error ||
+      (this.state.showFormErrors && this.state.submit)
         ? "error"
         : "hidden";
     return (
@@ -498,7 +532,15 @@ class ComboBox extends React.Component {
                 className={`form__button form__button--bottom ${buttonState}`}
                 id={`btn-${this.state.form}`}
                 type="button"
-                onClick={method}
+                onClick={() => {
+                  if (login) {
+                    this.login();
+                  } else if (signup) {
+                    this.register();
+                  } else if (reset) {
+                    this.reset();
+                  }
+                }}
                 disabled={this.state.showFormErrors}
               >
                 {buttonText}
@@ -515,8 +557,11 @@ class ComboBox extends React.Component {
           buttonText={this.props.login.modal.buttonText || "Continue"}
           dismiss={() => {
             this.props.actions.dismissModal();
+            this.resetState();
           }}
-          action={this.props.login.modal.action}
+          redirect={this.props.login.modal.redirect}
+          history={this.props.history}
+          resetForm={this.props.actions.resetForm}
         />
       </div>
     );
@@ -534,7 +579,10 @@ ComboBox.propTypes = {
     resetPassword: PropTypes.func
   }).isRequired,
   login: PropTypes.shape({
+    errorMsg: PropTypes.string,
     form: PropTypes.shape({
+      firstName: PropTypes.string,
+      lastName: PropTypes.string,
       email: PropTypes.string,
       password: PropTypes.string,
       confirmPwd: PropTypes.string
@@ -545,15 +593,18 @@ ComboBox.propTypes = {
       title: PropTypes.string,
       type: PropTypes.string,
       buttonText: PropTypes.string,
-      action: PropTypes.func
+      action: PropTypes.func,
+      resetForm: PropTypes.func
     }).isRequired,
     spinnerClass: PropTypes.string
+  }).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func
   }).isRequired
 };
 
 const mapStateToProps = state => ({
-  login: state.login,
-  register: state.register
+  login: state.login
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -561,4 +612,6 @@ const mapDispatchToProps = dispatch => ({
   api: bindActionCreators(apiActions, dispatch)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ComboBox);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(ComboBox)
+);

@@ -3,7 +3,7 @@ import update from "immutability-helper";
 import {
   SET_FORM_FIELD,
   SET_FORM_ERROR,
-  CLEAR_FORM_ERROR,
+  RESET_FORM,
   DISMISS_MODAL,
   LOGOUT
 } from "../actions";
@@ -84,13 +84,24 @@ function login(state = INITIAL_STATE, action) {
     /*
     *  Called From: <Login />, <Register />, <ResetPassword />
     *  Payload: none
-    *  Purpose: Clear form errors
+    *  Purpose: Reset Form
     */
-    case CLEAR_FORM_ERROR:
+    case RESET_FORM:
       return update(state, {
-        errorMsg: { $set: null },
+        errorMsg: { $set: "" },
         spinnerClass: { $set: "spinner__hide" },
+        modal: {
+          class: { $set: "modal__hide" },
+          type: { $set: "" },
+          title: { $set: "" },
+          text: { $set: "" }
+        },
         form: {
+          firstName: { $set: "" },
+          lastName: { $set: "" },
+          email: { $set: "" },
+          password: { $set: "" },
+          confirmPwd: { $set: "" },
           error: { $set: false }
         }
       });
@@ -269,7 +280,8 @@ function login(state = INITIAL_STATE, action) {
           class: "modal__show",
           text:
             "Your registration was successful. Please check your email for a validation link. You must validate your account to continue using this app.",
-          title: "Success"
+          title: "Registration Success",
+          type: "modal__success"
         }
       });
 
@@ -291,9 +303,12 @@ function login(state = INITIAL_STATE, action) {
       return update(state, {
         spinnerClass: { $set: "spinner__hide" },
         modal: {
-          class: { $set: "modal__hide" }
-        },
-        errorMsg: { $set: error }
+          class: { $set: "modal__show" },
+          text: { $set: error },
+          title: { $set: "Registration failure" },
+          type: { $set: "modal__danger" },
+          redirect: { $set: "login" }
+        }
       });
 
     default:

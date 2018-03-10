@@ -1017,6 +1017,8 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     text-align: center;
     padding: 20px;
     position: relative; }
+  .combo__footer {
+    background: rgba(255, 255, 255, 0.6); }
   .combo__back-btn {
     position: absolute;
     top: 20px;

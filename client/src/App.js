@@ -51,12 +51,12 @@ class App extends Component {
               <Route
                 exact
                 path="/login"
-                render={routeProps => <ComboBox initialForm="login" />}
+                render={routeProps => <ComboBox {...routeProps} />}
               />
               <Route
                 exact
                 path="/register"
-                render={routeProps => <ComboBox initialForm="register" />}
+                render={routeProps => <ComboBox initialForm="signup" />}
               />
               <Route path="/validate" component={Validate} />
               <Route path="/resetpassword/:key" component={ResetPassword} />
