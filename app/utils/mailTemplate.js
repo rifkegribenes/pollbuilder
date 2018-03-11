@@ -10,6 +10,7 @@ const shortEmail = (title, appName, url, preheader, headline, heroUrl, body, but
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web:200,400,700" rel="stylesheet">
     <style type="text/css">
         /* CLIENT-SPECIFIC STYLES */
         body, table, td, a{-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;} /* Prevent WebKit and Windows mobile changing default text sizes */
@@ -106,7 +107,7 @@ const shortEmail = (title, appName, url, preheader, headline, heroUrl, body, but
     <body style="margin: 0 !important; padding: 0 !important;">
 
     <!-- HIDDEN PREHEADER TEXT -->
-    <div style="display: none; font-size: 1px; color: #fefefe; line-height: 1px; font-family: Helvetica, Arial, sans-serif; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;">
+    <div style="display: none; font-size: 1px; color: #fefefe; line-height: 1px; font-family: 'Titillium Web', Helvetica, Arial, sans-serif; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;">
         ${preheader}
     </div>
 
@@ -121,11 +122,11 @@ const shortEmail = (title, appName, url, preheader, headline, heroUrl, body, but
                 <![endif]-->
                 <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 500px;" class="wrapper">
                     <tr>
-                        <td align="center" valign="top" style="padding: 15px 0;" class="logo">
-                            <a href=${CLIENT_URL} target="_blank" style="display: inline-block">
-                                <img alt="Logo" src="https://raw.githubusercontent.com/rifkegribenes/voting-app/master/public/rainbow_icon_120.png" width="60" height="60" style="display: block; font-family: Helvetica, Arial, sans-serif; color: #ffffff; font-size: 16px;" border="0">
+                        <td align="center" valign="top" style="padding: 15px 0; display: flex; justify-content: center;" class="logo">
+                            <a href=${CLIENT_URL} target="_blank" style="padding: 15px;">
+                                <img alt="Logo" src="https://raw.githubusercontent.com/rifkegribenes/voting-app/master/public/rainbow_icon_120.png" width="60" height="60" style="display: block; font-family: 'Titillium Web', Helvetica, Arial, sans-serif; color: #ffffff; font-size: 16px;" border="0">
                             </a> &nbsp;
-                            <span style="display: inline-block; font-size: 40px; font-family: Helvetica, Arial, sans-serif; color: #333333; padding-top: 30px;" class="padding"">${appName}</span>
+                            <span style="display: inline-block; font-size: 28px; font-family: 'Titillium Web', Helvetica, Arial, sans-serif; color: #333333; padding-top: 30px;" class="padding"">${title}</span>
                         </td>
                     </tr>
                 </table>
@@ -137,7 +138,7 @@ const shortEmail = (title, appName, url, preheader, headline, heroUrl, body, but
             </td>
         </tr>
         <tr>
-            <td align="center" style="padding: 70px 15px 70px 15px;" class="section-padding">
+            <td align="center" style="padding: 0 15px;" class="section-padding">
                 <!--[if (gte mso 9)|(IE)]>
                 <table align="center" border="0" cellspacing="0" cellpadding="0" width="500">
                 <tr>
@@ -150,7 +151,7 @@ const shortEmail = (title, appName, url, preheader, headline, heroUrl, body, but
                             <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                 <tr>
                                       <td class="padding" align="center">
-                                        <a href={CLIENT_URL} target="_blank"><img src=${heroUrl} width="500" height="180" border="0" alt=${headline} style="display: block; padding: 0; color: #666666; text-decoration: none; font-family: Helvetica, arial, sans-serif; font-size: 16px;" class="img-max"></a>
+                                        <a href={CLIENT_URL} target="_blank"><img src=${heroUrl} width="500" height="180" border="0" alt=${headline} style="display: block; padding: 0; color: #666666; text-decoration: none; font-family: 'Titillium Web', Helvetica, Arial, sans-serif; font-size: 16px;" class="img-max"></a>
                                     </td>
                                 </tr>
                                 <tr>
@@ -158,10 +159,10 @@ const shortEmail = (title, appName, url, preheader, headline, heroUrl, body, but
                                         <!-- COPY -->
                                         <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                             <tr>
-                                                <td align="center" style="font-size: 25px; font-family: Helvetica, Arial, sans-serif; color: #333333; padding-top: 30px;" class="padding">${headline}</td>
+                                                <td align="center" style="font-size: 25px; font-family: 'Titillium Web', Helvetica, Arial, sans-serif; color: #333333; padding-top: 30px;" class="padding">${headline}</td>
                                             </tr>
                                             <tr>
-                                                <td align="center" style="padding: 20px 0 0 0; font-size: 16px; line-height: 25px; font-family: Helvetica, Arial, sans-serif; color: #666666;" class="padding">${body}</td>
+                                                <td align="center" style="padding: 20px 0 0 0; font-size: 16px; line-height: 25px; font-family: 'Titillium Web', Helvetica, Arial, sans-serif; color: #666666;" class="padding">${body}</td>
                                             </tr>
                                         </table>
                                     </td>
@@ -174,7 +175,7 @@ const shortEmail = (title, appName, url, preheader, headline, heroUrl, body, but
                                                 <td align="center" style="padding-top: 25px;" class="padding">
                                                     <table border="0" cellspacing="0" cellpadding="0" class="mobile-button-container">
                                                         <tr>
-                                                            <td align="center" style="border-radius: 3px;" bgcolor="#256F9C"><a href=${url} target="_blank" style="font-size: 16px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; color: #ffffff; text-decoration: none; border-radius: 3px; padding: 15px 25px; border: 1px solid #256F9C; display: inline-block;" class="mobile-button">${buttonText} &rarr;</a></td>
+                                                            <td align="center" style="border-radius: 3px;" bgcolor="#256F9C"><a href=${url} target="_blank" style="font-size: 16px; font-family: 'Titillium Web', Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; color: #ffffff; text-decoration: none; border-radius: 3px; padding: 15px 25px; border: 1px solid #256F9C; display: inline-block;" class="mobile-button">${buttonText} &rarr;</a></td>
                                                         </tr>
                                                     </table>
                                                 </td>
@@ -203,7 +204,7 @@ const shortEmail = (title, appName, url, preheader, headline, heroUrl, body, but
                 <!-- UNSUBSCRIBE COPY -->
                 <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center" style="max-width: 500px;" class="responsive-table">
                     <tr>
-                        <td align="center" style="font-size: 12px; line-height: 18px; font-family: Helvetica, Arial, sans-serif; color:#666666;">
+                        <td align="center" style="font-size: 12px; line-height: 18px; font-family: 'Titillium Web', Helvetica, Arial, sans-serif; color:#666666;">
                             ${footerText}
                         </td>
                     </tr>
@@ -223,7 +224,7 @@ const shortEmail = (title, appName, url, preheader, headline, heroUrl, body, but
 
 exports.pwResetTemplate = (url) => {
      return shortEmail(
-      'Rifkegribenes Voting App Password Reset Email', // title
+      'Voting App: Reset Password', // title
       'Rifkegribenes Voting App', // appName
       url, // url
       'Click here to reset your password', // preheader
@@ -231,13 +232,13 @@ exports.pwResetTemplate = (url) => {
       'https://raw.githubusercontent.com/rifkegribenes/voting-app/master/public/img/email-banner.png', // heroUrl
       'No problem! Click below to reset it!', // body
       'Reset Password', // buttonText
-      'yeah still no return address, just a fake app, not official or anything...' // footerText
+      'voting app | rifkegribenes.io' // footerText
       );
  };
 
 exports.pwResetConfirmation = () => {
      return shortEmail(
-      'Rifkegribenes Voting App: Your password was reset', // title
+      'Voting App: Your password was reset', // title
       'Rifkegribenes Voting App', // appName
       CLIENT_URL, // url
       'Your password was reset successfully', // preheader
@@ -245,13 +246,13 @@ exports.pwResetConfirmation = () => {
       'https://raw.githubusercontent.com/rifkegribenes/voting-app/master/public/img/success-checkbox-500x180.gif', // heroUrl
       'Or somebody did. If it wasn\'t you, please contact us right away and get that fixed!', // body
       'My Account', // buttonText
-      'nothin\' to see here folks...' // footerText
+      'voting app | rifkegribenes.io' // footerText
       );
  };
 
 exports.validationTemplate = (url) => {
   return shortEmail(
-    'Rifkegribenes Voting App Account Validation Email', // title
+    'Voting App: Validate Account', // title
     'Rifkegribenes Voting App', // appName
     url, // url
     'Click here to validate your account', // preheader
@@ -259,6 +260,6 @@ exports.validationTemplate = (url) => {
     'https://raw.githubusercontent.com/rifkegribenes/voting-app/master/public/img/email-banner.png', // heroUrl
     'Click below to validate your account:', // body
     'Validate Email', // buttonText
-    'uh... guys this is just a fake app i made for freeCodeCamp there is no return address sorry' // footerText
+    'voting app | rifkegribenes.io' // footerText
     );
 };

@@ -18,7 +18,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
   -webkit-appearance: none; }
 
 .form {
-  font-family: "Titillium Web", sans-serif;
+  font-family: "Titillium Web", Helvetica, Arial, sans-serif;
   flex-direction: column; }
   .form__link-group {
     display: flex;
@@ -31,7 +31,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
   .form__header {
     color: #182848;
     font-weight: 100;
-    font-family: "Titillium Web", sans-serif;
+    font-family: "Titillium Web", Helvetica, Arial, sans-serif;
     text-transform: uppercase;
     letter-spacing: 2px;
     line-height: .95em;
@@ -43,7 +43,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
   .form__connection-header {
     color: #182848;
     font-weight: 100;
-    font-family: "Titillium Web", sans-serif;
+    font-family: "Titillium Web", Helvetica, Arial, sans-serif;
     text-transform: uppercase;
     letter-spacing: 2px;
     font-size: 28px;
@@ -58,7 +58,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     color: #182848;
     padding-top: 40px; }
   .form__label--checkbox {
-    font-family: "Titillium Web", sans-serif;
+    font-family: "Titillium Web", Helvetica, Arial, sans-serif;
     color: #2B2B2B; }
   .form__icon--search {
     color: #182848;
@@ -201,7 +201,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
         border-radius: 50%;
         box-shadow: 0 0 10px #4b6cb7 !important; }
     .form__input--radio-label {
-      font-family: "Titillium Web", sans-serif;
+      font-family: "Titillium Web", Helvetica, Arial, sans-serif;
       color: #545454;
       padding: 0 15px 0 0; }
       @media (min-width: 1600px) {
@@ -209,7 +209,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
           font-size: 1.2em; } }
     .form__input--radio-wrap {
       display: inline-block;
-      font-family: "Titillium Web", sans-serif; }
+      font-family: "Titillium Web", Helvetica, Arial, sans-serif; }
     .form__input--textarea {
       overflow-y: visible; }
   .form__input-grid {
@@ -226,7 +226,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
         padding: 12px !important;
         font-size: 1em !important; } }
   .form__label {
-    font-family: "Titillium Web", sans-serif;
+    font-family: "Titillium Web", Helvetica, Arial, sans-serif;
     text-transform: uppercase;
     letter-spacing: 1px;
     font-size: .7em;
@@ -235,7 +235,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     position: relative;
     top: 6px; }
   .form__label--white {
-    font-family: "Titillium Web", sans-serif;
+    font-family: "Titillium Web", Helvetica, Arial, sans-serif;
     text-transform: uppercase;
     width: 100%;
     margin-top: 10px;
@@ -248,7 +248,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
       .form__label--white {
         font-size: 1.2em; } }
   .form__error {
-    font-family: "Titillium Web", sans-serif;
+    font-family: "Titillium Web", Helvetica, Arial, sans-serif;
     color: #a94442;
     background-color: #f2dede;
     font-size: 1.2em;
@@ -272,7 +272,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
         flex-wrap: nowrap; } }
   .form__button {
     color: #fffdb7;
-    font-family: "Titillium Web", sans-serif;
+    font-family: "Titillium Web", Helvetica, Arial, sans-serif;
     text-transform: uppercase;
     letter-spacing: 2px;
     font-size: 16px;
@@ -354,7 +354,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     color: #545454;
     text-decoration: none;
     background-color: transparent;
-    font-family: "Titillium Web", sans-serif;
+    font-family: "Titillium Web", Helvetica, Arial, sans-serif;
     font-size: .8em;
     margin: 15px 0 5px 0;
     border: 1px solid transparent;
@@ -511,7 +511,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     .h-nav__inbox--icon {
       position: relative; }
     .h-nav__inbox--badge {
-      font-family: "Titillium Web", sans-serif;
+      font-family: "Titillium Web", Helvetica, Arial, sans-serif;
       font-weight: 700;
       background-color: #a94442;
       border-radius: 100%;
@@ -576,7 +576,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
       width: 56px; }
   .h-nav__item-link {
     color: #fffdb7;
-    font-family: "Titillium Web", sans-serif;
+    font-family: "Titillium Web", Helvetica, Arial, sans-serif;
     text-transform: uppercase;
     letter-spacing: 3px;
     padding: 5px;
@@ -603,7 +603,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
         display: none; } }
     .h-nav__item-link--menu {
       color: #fffdb7;
-      font-family: "Titillium Web", sans-serif;
+      font-family: "Titillium Web", Helvetica, Arial, sans-serif;
       text-transform: uppercase;
       letter-spacing: 2px;
       font-size: 20px;
@@ -612,7 +612,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
       padding: 0 0 0 30px; }
       .h-nav__item-link--menu-open {
         color: #fffdb7;
-        font-family: "Titillium Web", sans-serif;
+        font-family: "Titillium Web", Helvetica, Arial, sans-serif;
         text-transform: uppercase;
         letter-spacing: 2px;
         font-size: 20px;
@@ -677,7 +677,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
           box-shadow: none; }
       .h-nav__item-link {
         color: #fffdb7;
-        font-family: "Titillium Web", sans-serif;
+        font-family: "Titillium Web", Helvetica, Arial, sans-serif;
         text-transform: uppercase;
         letter-spacing: 2px;
         padding: 5px;
@@ -708,7 +708,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
       transition: box-shadow 300ms ease-in-out; }
   .a-nav__item-link {
     color: #fffdb7;
-    font-family: "Titillium Web", sans-serif;
+    font-family: "Titillium Web", Helvetica, Arial, sans-serif;
     text-transform: uppercase;
     letter-spacing: 3px;
     padding: 5px;
@@ -779,7 +779,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
         border: 1px solid transparent;
         box-shadow: none; }
     .a-nav__item-link {
-      font-family: "Titillium Web", sans-serif;
+      font-family: "Titillium Web", Helvetica, Arial, sans-serif;
       font-weight: 400;
       text-transform: uppercase;
       letter-spacing: 2px;
@@ -886,7 +886,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
   width: 100%;
   padding: 40px 20px 20px 20px;
   background-color: white;
-  font-family: "Titillium Web", sans-serif; }
+  font-family: "Titillium Web", Helvetica, Arial, sans-serif; }
   @media (min-width: 480px) {
     .modal {
       top: 50%;
@@ -906,7 +906,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
   .modal__header {
     color: #182848;
     line-height: 2em;
-    font-family: "Titillium Web", sans-serif;
+    font-family: "Titillium Web", Helvetica, Arial, sans-serif;
     font-weight: 300;
     font-size: 1.3em;
     font-weight: 700;
@@ -937,7 +937,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     appearance: none;
     background: transparent;
     color: #182848;
-    font-family: "Titillium Web", sans-serif;
+    font-family: "Titillium Web", Helvetica, Arial, sans-serif;
     text-transform: uppercase;
     letter-spacing: 2px;
     padding: 10px;
@@ -1002,6 +1002,42 @@ input:not([type=checkbox]):not([type=radio]), textarea {
       right: 40px;
       bottom: 40px; } }
 
+.modal__checkbox {
+  width: 100px;
+  display: block;
+  margin: 40px auto 0; }
+
+.path {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 0; }
+  .path.circle {
+    -webkit-animation: dash .9s ease-in-out;
+    animation: dash .9s ease-in-out; }
+  .path.check {
+    stroke-dashoffset: -100;
+    -webkit-animation: dash-check .9s .35s ease-in-out forwards;
+    animation: dash-check .9s .35s ease-in-out forwards; }
+
+@-webkit-keyframes dash {
+  0% {
+    stroke-dashoffset: 1000; }
+  100% {
+    stroke-dashoffset: 0; } }
+@keyframes dash {
+  0% {
+    stroke-dashoffset: 1000; }
+  100% {
+    stroke-dashoffset: 0; } }
+@-webkit-keyframes dash-check {
+  0% {
+    stroke-dashoffset: -100; }
+  100% {
+    stroke-dashoffset: 900; } }
+@keyframes dash-check {
+  0% {
+    stroke-dashoffset: -100; }
+  100% {
+    stroke-dashoffset: 900; } }
 .profile__row {
   width: 100%;
   display: flex;
@@ -1126,7 +1162,7 @@ body.user-is-tabbing *:focus {
   background-size: cover;
   min-height: 100vh;
   height: 100%;
-  font-family: "Titillium Web", sans-serif;
+  font-family: "Titillium Web", Helvetica, Arial, sans-serif;
   color: #545454; }
 
 .container {
@@ -1146,7 +1182,7 @@ body.user-is-tabbing *:focus {
   text-align: center;
   width: 100%;
   margin: auto;
-  font-family: "Titillium Web", sans-serif;
+  font-family: "Titillium Web", Helvetica, Arial, sans-serif;
   text-transform: uppercase; }
 
 .sr-only {
@@ -1199,7 +1235,7 @@ body.user-is-tabbing *:focus {
   text-align: center; }
 
 .error {
-  font-family: "Titillium Web", sans-serif;
+  font-family: "Titillium Web", Helvetica, Arial, sans-serif;
   color: #a94442;
   background-color: #f2dede;
   font-size: 1.2em;
@@ -1215,7 +1251,7 @@ input:invalid {
   border: 1px solid red; }
 
 .success {
-  font-family: "Titillium Web", sans-serif;
+  font-family: "Titillium Web", Helvetica, Arial, sans-serif;
   color: #3c763d;
   background-color: #dff0d8;
   font-size: 1.2em;
@@ -1240,7 +1276,7 @@ input:invalid {
 
 .character-count {
   text-align: right;
-  font-family: "Titillium Web", sans-serif;
+  font-family: "Titillium Web", Helvetica, Arial, sans-serif;
   color: #545454; }
 
 .skip {
@@ -1265,7 +1301,7 @@ input:invalid {
     z-index: 100;
     border: 1px solid white;
     color: #fffdb7;
-    font-family: "Titillium Web", sans-serif;
+    font-family: "Titillium Web", Helvetica, Arial, sans-serif;
     text-transform: uppercase;
     letter-spacing: 2px;
     font-size: 1.2em; }
