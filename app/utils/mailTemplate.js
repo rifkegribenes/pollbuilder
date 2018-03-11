@@ -220,19 +220,41 @@ const shortEmail = (title, url, preheader, headline, heroUrl, body, buttonText, 
     </html>`
   };
 
-export const pwResetTemplate = (url, recUserId) => {
+export const pwResetTemplate = (url) => {
      return shortEmail(
       'Rifkegribenes Voting App Password Reset Email', // title
       url, // url
       'Click here to reset your password' // preheader
       'Forgot your password?', // headline
-      '' // heroUrl
+      'https://raw.githubusercontent.com/rifkegribenes/voting-app/master/public/img/email-banner.png' // heroUrl
       'No problem! Click below to reset it!', // body
       'Reset Password', // buttonText
-      'uh... guys this is just a fake app i made for freeCodeCamp there is no return address sorry' // footerText
+      'yeah still no return address, just a fake app, not official or anything...' // footerText
       );
  };
 
-export const validationTemplate = (url, recUserId) => {
-  return shortEmail('co/ment Account Validation Email', url, 'Welcome!', 'Click below to validate your account:', 'Validate Email', recUserId);
+export const pwResetConfirmation = () => {
+     return shortEmail(
+      'Rifkegribenes Voting App: Your password was reset', // title
+      CLIENT_URL, // url
+      'Your password was reset successfully' // preheader
+      'You changed your password', // headline
+      'https://raw.githubusercontent.com/rifkegribenes/voting-app/master/public/img/email-banner.png' // heroUrl
+      'Or somebody did. If it wasn\'t you, please contact us right away and get that fixed!' // body
+      'My Account', // buttonText
+      'nothin\' to see here folks...' // footerText
+      );
+ };
+
+export const validationTemplate = (url) => {
+  return shortEmail(
+    'Rifkegribenes Voting App Account Validation Email', // title
+    url, // url
+    'Click here to validate your account' // preheader
+    'Welcome!', // headline
+    'https://raw.githubusercontent.com/rifkegribenes/voting-app/master/public/img/email-banner.png' // heroUrl
+    'Click below to validate your account:', // body
+    'Validate Email', // buttonText
+    'uh... guys this is just a fake app i made for freeCodeCamp there is no return address sorry' // footerText
+    );
 };
