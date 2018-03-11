@@ -1,4 +1,16 @@
 /* MEDIA QUERIES */
+.example {
+  background: #00c4cc;
+  /* Old browsers */
+  background: -moz-linear-gradient(-45deg, #00c4cc 0%, #7d1ae8 100%);
+  /* FF3.6-15 */
+  background: -webkit-linear-gradient(-45deg, #00c4cc 0%, #7d1ae8 100%);
+  /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(135deg, #00c4cc 0%, #7d1ae8 100%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00c4cc', endColorstr='#7d1ae8',GradientType=1 );
+  /* IE6-9 */ }
+
 .pointer {
   cursor: pointer; }
 
@@ -1024,7 +1036,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     top: 20px;
     left: 20px;
     appearance: none;
-    -webkit-appearnce: none;
+    -webkit-appearance: none;
     -moz-appearance: none;
     border-radius: 20px;
     font-size: 20px;

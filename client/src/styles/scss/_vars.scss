@@ -37,6 +37,22 @@ $transition_button: all 300ms linear;
 $font-stack: 'Titillium Web', sans-serif;
 $btn_border-radius: 4px;
 
+// IE 6-9 colors are hard-coded, change if app colors change
+
+@mixin linearGradient($left, $right){
+    background: $left; /* Old browsers */
+    background: -moz-linear-gradient(-45deg, $left 0%, $right 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(-45deg, $left 0%, $right 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(135deg,  $left 0%, $right 100%);  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00c4cc', endColorstr='#7d1ae8',GradientType=1 ); /* IE6-9 */
+}
+
+// usage
+
+.example {
+    @include linearGradient(#00c4cc, #7d1ae8);
+}
+
 
 
 

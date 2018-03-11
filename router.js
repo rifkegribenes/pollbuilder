@@ -1,5 +1,5 @@
 const APP_HOST = process.env.APP_HOST;
-const CLIENT_URL = process.env.NODE_ENV === 'production' ? APP_HOST : '//localhost:3000';
+const CLIENT_URL = process.env.NODE_ENV === 'production' ? APP_HOST : 'localhost:3000';
 
 const AuthenticationController = require('./app/controllers/authentication');
 const UserController = require('./app/controllers/user');
