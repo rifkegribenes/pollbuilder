@@ -3,7 +3,8 @@ const User = require('../models/user');
 const passport = require('passport');
 const helpers = require('../utils/index');
 const userController = require('./user');
-const mailUtils = require('../utils/mailUtils')
+const mailUtils = require('../utils/mailUtils');
+const mailTemplate = require('../utils/mailTemplate');
 
 const APP_HOST = process.env.APP_HOST;
 const CLIENT_URL = process.env.NODE_ENV === 'production' ? APP_HOST : '//localhost:3000';
@@ -300,8 +301,9 @@ const sendPWResetEmail = (params) => {
     // console.log('pwreset', params);
     const url     = `${CLIENT_URL}/resetpassword/${params.key}`;
     const subject = 'Voting App - Password Reset Request';
-    const text = `Please click here to reset your password: ${url}`;
-    mailUtils.sendMail(params.to_email, subject, text)
+    const html = mailTemplate.pwResetTemplate(url);
+    const text = `Click here to reset your password: ${url}`;
+    mailUtils.sendMail(params.to_email, subject, html, text)
       .then(() => {
         console.log('password reset email sent');
       })

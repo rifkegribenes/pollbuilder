@@ -56,15 +56,18 @@ function makeValidationUrl(user_id, key) {
  *
  * @params    [string]   to        [email address of recipient]
  * @params    [string]   subject   [subject line]
+ * @params    [string]   html      [html version of message]
  * @params    [string]   text      [text of message]
+ *
 */
-function sendMail(to, subject, text) {
+function sendMail(to, subject, html, text) {
   console.log('sendMail');
   return new Promise((resolve, reject) => {
     emailClient.sendMail({
       from: 'rifkegribenes <hello@rifkegribenes.io>',
       to,
       subject,
+      html,
       text,
     }, (err, info) => {
       if (err) {

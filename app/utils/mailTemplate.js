@@ -1,12 +1,12 @@
 const APP_HOST = process.env.APP_HOST;
-const CLIENT_URL = process.env.NODE_ENV === 'production' ? APP_HOST : 'localhost:3000';
+const CLIENT_URL = process.env.NODE_ENV === 'production' ? APP_HOST : 'http://localhost:3000';
 
 // Modified from a template by Litmus (@litmusapp)
-const shortEmail = (title, url, preheader, headline, heroUrl, body, buttonText, footerText) => {
+const shortEmail = (title, appName, url, preheader, headline, heroUrl, body, buttonText, footerText) => {
   return `<!DOCTYPE html>
     <html>
     <head>
-    <title></title>
+    <title>${title}</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -72,7 +72,7 @@ const shortEmail = (title, url, preheader, headline, heroUrl, body, buttonText, 
             }
 
             .padding-copy {
-                 padding: 10px 5% 10px 5% !important;
+              padding: 10px 5% 10px 5% !important;
               text-align: center;
             }
 
@@ -122,9 +122,10 @@ const shortEmail = (title, url, preheader, headline, heroUrl, body, buttonText, 
                 <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 500px;" class="wrapper">
                     <tr>
                         <td align="center" valign="top" style="padding: 15px 0;" class="logo">
-                            <a href=${CLIENT_URL} target="_blank">
+                            <a href=${CLIENT_URL} target="_blank" style="display: inline-block">
                                 <img alt="Logo" src="https://raw.githubusercontent.com/rifkegribenes/voting-app/master/public/rainbow_icon_120.png" width="60" height="60" style="display: block; font-family: Helvetica, Arial, sans-serif; color: #ffffff; font-size: 16px;" border="0">
-                            </a>
+                            </a> &nbsp;
+                            <span style="display: inline-block; font-size: 40px; font-family: Helvetica, Arial, sans-serif; color: #333333; padding-top: 30px;" class="padding"">${appName}</span>
                         </td>
                     </tr>
                 </table>
@@ -136,7 +137,7 @@ const shortEmail = (title, url, preheader, headline, heroUrl, body, buttonText, 
             </td>
         </tr>
         <tr>
-            <td bgcolor="#D8F1FF" align="center" style="padding: 70px 15px 70px 15px;" class="section-padding">
+            <td align="center" style="padding: 70px 15px 70px 15px;" class="section-padding">
                 <!--[if (gte mso 9)|(IE)]>
                 <table align="center" border="0" cellspacing="0" cellpadding="0" width="500">
                 <tr>
@@ -220,39 +221,42 @@ const shortEmail = (title, url, preheader, headline, heroUrl, body, buttonText, 
     </html>`
   };
 
-export const pwResetTemplate = (url) => {
+exports.pwResetTemplate = (url) => {
      return shortEmail(
       'Rifkegribenes Voting App Password Reset Email', // title
+      'Rifkegribenes Voting App', // appName
       url, // url
-      'Click here to reset your password' // preheader
+      'Click here to reset your password', // preheader
       'Forgot your password?', // headline
-      'https://raw.githubusercontent.com/rifkegribenes/voting-app/master/public/img/email-banner.png' // heroUrl
+      'https://raw.githubusercontent.com/rifkegribenes/voting-app/master/public/img/email-banner.png', // heroUrl
       'No problem! Click below to reset it!', // body
       'Reset Password', // buttonText
       'yeah still no return address, just a fake app, not official or anything...' // footerText
       );
  };
 
-export const pwResetConfirmation = () => {
+exports.pwResetConfirmation = () => {
      return shortEmail(
       'Rifkegribenes Voting App: Your password was reset', // title
+      'Rifkegribenes Voting App', // appName
       CLIENT_URL, // url
-      'Your password was reset successfully' // preheader
+      'Your password was reset successfully', // preheader
       'You changed your password', // headline
-      'https://raw.githubusercontent.com/rifkegribenes/voting-app/master/public/img/email-banner.png' // heroUrl
-      'Or somebody did. If it wasn\'t you, please contact us right away and get that fixed!' // body
+      'https://raw.githubusercontent.com/rifkegribenes/voting-app/master/public/img/success-checkbox-500x180.gif', // heroUrl
+      'Or somebody did. If it wasn\'t you, please contact us right away and get that fixed!', // body
       'My Account', // buttonText
       'nothin\' to see here folks...' // footerText
       );
  };
 
-export const validationTemplate = (url) => {
+exports.validationTemplate = (url) => {
   return shortEmail(
     'Rifkegribenes Voting App Account Validation Email', // title
+    'Rifkegribenes Voting App', // appName
     url, // url
-    'Click here to validate your account' // preheader
+    'Click here to validate your account', // preheader
     'Welcome!', // headline
-    'https://raw.githubusercontent.com/rifkegribenes/voting-app/master/public/img/email-banner.png' // heroUrl
+    'https://raw.githubusercontent.com/rifkegribenes/voting-app/master/public/img/email-banner.png', // heroUrl
     'Click below to validate your account:', // body
     'Validate Email', // buttonText
     'uh... guys this is just a fake app i made for freeCodeCamp there is no return address sorry' // footerText
