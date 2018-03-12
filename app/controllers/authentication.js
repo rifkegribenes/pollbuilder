@@ -407,7 +407,7 @@ exports.resetPass = (req, res, next) => {
     .then(user => {
       // If query returned no results, token expired or was invalid. Return error.
       if (!user) {
-        return res.status(422).json({ message: 'Your token has expired. Please attempt to reset your password again.' });
+        return res.status(422).json({ message: 'Your token has expired.\nPlease attempt to reset your password again.' });
       }
 
       // Otherwise, save new password and clear passwordResetKey

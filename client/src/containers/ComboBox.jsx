@@ -38,7 +38,8 @@ class ComboBox extends React.Component {
         password: false,
         confirmPwd: false
       },
-      submit: false
+      submit: false,
+      success: null
     };
 
     this.toggleForm = this.toggleForm.bind(this);
@@ -55,8 +56,13 @@ class ComboBox extends React.Component {
   componentDidMount() {
     // clear previous errors
     this.props.actions.resetForm();
-    if (this.props.match === "resetpassword" && !this.props.match.params.key) {
-      this.toggleForm("reset");
+    if (this.props.match === "reset") {
+      console.log("cDM toggling to reset");
+      const newState = { ...this.state };
+      newState.form = "reset";
+      this.setState({ ...newState }, () => {
+        console.log(this.state);
+      });
     }
   }
 
@@ -87,7 +93,13 @@ class ComboBox extends React.Component {
   toggleForm(form) {
     const newState = { ...this.state };
     newState.form = form;
-    this.setState({ ...newState });
+    console.log(newState.form);
+    this.forceUpdate(
+      this.setState({ ...newState }, () => {
+        console.log(`form toggled to ${form}`);
+        console.log(this.state.form);
+      })
+    );
   }
 
   /* Function login - Perform basic validation:
@@ -246,7 +258,15 @@ class ComboBox extends React.Component {
         password,
         key
       };
-      this.props.api.resetPassword(body);
+      this.props.api.resetPassword(body).then(result => {
+        if (result === "RESET_PW_SUCCESS") {
+          const newState = { ...this.state };
+          newState.success = true;
+          this.setState({ ...newState }, () => {
+            console.log(`success: ${this.state.success}`);
+          });
+        }
+      });
     } else {
       if (!password) {
         this.props.actions.setFormError({
@@ -621,9 +641,17 @@ class ComboBox extends React.Component {
           dismiss={() => {
             this.props.actions.dismissModal();
             if (resetPwd) {
-              this.props.history.push("/resetpassword");
+              if (!this.state.success) {
+                this.props.history.push("/reset");
+              } else {
+                this.props.history.push("/login");
+              }
             }
-            this.resetState();
+            // can't figure out how to get #$%^% react-router
+            // to reload the component here
+            // i have tried everything and i'm MOVIN ON
+            window.location.reload();
+            // so dirty!! ¯\_(ツ)_/¯
           }}
           redirect={this.props.login.modal.redirect}
           history={this.props.history}

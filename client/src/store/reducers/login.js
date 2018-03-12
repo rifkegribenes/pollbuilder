@@ -132,10 +132,20 @@ function login(state = INITIAL_STATE, action) {
     *  Purpose: Display API login error to user
     */
     case LOGIN_FAILURE:
-      error = action.payload.message || "Unknown login error";
-      return Object.assign({}, state, {
-        spinnerClass: "spinner__hide",
-        errorMsg: error
+      if (typeof action.payload.message === "string") {
+        error = action.payload.message;
+      } else {
+        error = "Sorry, something went wrong :(\nPlease try again.";
+      }
+      return update(state, {
+        spinnerClass: { $set: "spinner__hide" },
+        modal: {
+          class: { $set: "modal__show" },
+          text: { $set: error },
+          title: { $set: "Login Failure" },
+          type: { $set: "modal__error" },
+          buttonText: "Try again"
+        }
       });
 
     /*
@@ -178,7 +188,9 @@ function login(state = INITIAL_STATE, action) {
         modal: {
           class: "modal__show",
           type: "modal__success",
-          text: "Your password has been reset. Click Sign In to continue"
+          text: "Your password has been reset.\nClick Sign In to continue",
+          buttonText: "Sign in",
+          redirect: "login"
         }
       });
 
@@ -188,12 +200,10 @@ function login(state = INITIAL_STATE, action) {
     *  Purpose: Display an error message to the user.
     */
     case RESET_PW_FAILURE:
-      if (typeof action.payload === "string") {
-        error = action.payload;
-      } else if (typeof action.payload.message === "string") {
+      if (typeof action.payload.message === "string") {
         error = action.payload.message;
       } else {
-        error = "Sorry, something went wrong :( \n Please try again.";
+        error = "Sorry, something went wrong :(\nPlease try again.";
       }
       return Object.assign({}, state, {
         spinnerClass: "spinner__hide",
@@ -201,8 +211,9 @@ function login(state = INITIAL_STATE, action) {
           class: "modal__show",
           type: "modal__error",
           text: error,
-          title: "Failure: Password not reset"
-          // redirect: "login"
+          title: "Failure: Password not reset",
+          buttonText: "Try again",
+          redirect: "reset"
         }
       });
 
@@ -235,7 +246,8 @@ function login(state = INITIAL_STATE, action) {
             action.meta.email
           }. Follow the instructions to reset your password.`,
           title: "Check your Email",
-          type: "modal__success"
+          type: "modal__success",
+          redirect: "login"
         }
       });
 
@@ -245,12 +257,20 @@ function login(state = INITIAL_STATE, action) {
     *  Purpose: Display a spinner to indicate API call in progress
     */
     case SEND_RESET_EMAIL_FAILURE:
-      error =
-        action.payload.message ||
-        "An unknown error occurred while sending reset email";
+      if (typeof action.payload.message === "string") {
+        error = action.payload.message;
+      } else {
+        error = "Sorry, something went wrong :(\nPlease try again.";
+      }
       return Object.assign({}, state, {
         spinnerClass: "spinner__hide",
-        errorMsg: error
+        modal: {
+          class: "modal__show",
+          type: "modal__error",
+          text: error,
+          title: "Failure: Password reset email not sent",
+          buttonText: "Try again"
+        }
       });
 
     /*
@@ -275,7 +295,6 @@ function login(state = INITIAL_STATE, action) {
     *  Note: this action is also handled in appState reducer.
     */
     case REGISTRATION_SUCCESS:
-      console.log("registration success register.js > 49");
       return Object.assign({}, state, {
         spinnerClass: "spinner__hide",
         modal: {
@@ -283,7 +302,8 @@ function login(state = INITIAL_STATE, action) {
           text:
             "Your registration was successful. Please check your email for a validation link. You must validate your account to continue using this app.",
           title: "Registration Success",
-          type: "modal__success"
+          type: "modal__success",
+          redirect: "login"
         }
       });
 
@@ -294,22 +314,20 @@ function login(state = INITIAL_STATE, action) {
     *  display error message in the form.
     */
     case REGISTRATION_FAILURE:
-      console.log("registration failure:");
-      if (typeof action.payload === "string") {
-        error = action.payload;
-      } else if (typeof action.payload.message === "string") {
+      if (typeof action.payload.message === "string") {
         error = action.payload.message;
-      } else if (typeof error === "undefined") {
-        error = "An unknown error occurred during registration";
+      } else {
+        error = "Sorry, something went wrong :(\nPlease try again.";
       }
       return update(state, {
         spinnerClass: { $set: "spinner__hide" },
         modal: {
           class: { $set: "modal__show" },
           text: { $set: error },
-          title: { $set: "Registration failure" },
-          type: { $set: "modal__danger" },
-          redirect: { $set: "login" }
+          title: { $set: "Registration Failure" },
+          type: { $set: "modal__error" },
+          redirect: { $set: "login" },
+          buttonText: { $set: "Try again" }
         }
       });
 

@@ -50,7 +50,14 @@ class App extends Component {
               <Route
                 exact
                 path="/login"
-                render={routeProps => <ComboBox {...routeProps} />}
+                render={routeProps => (
+                  <ComboBox
+                    initialForm="login"
+                    location={routeProps.location}
+                    history={routeProps.history}
+                    match={routeProps.match}
+                  />
+                )}
               />
               <Route
                 exact
@@ -59,17 +66,21 @@ class App extends Component {
                   <ComboBox
                     initialForm="signup"
                     location={routeProps.location}
+                    history={routeProps.history}
+                    match={routeProps.match}
                   />
                 )}
               />
               <Route path="/validate" component={Validate} />
               <Route
                 exact
-                path="/resetpassword"
+                path="/reset"
                 render={routeProps => (
                   <ComboBox
                     initialForm="reset"
                     location={routeProps.location}
+                    history={routeProps.history}
+                    match={routeProps.match}
                   />
                 )}
               />
@@ -79,6 +90,8 @@ class App extends Component {
                   <ComboBox
                     initialForm="resetPwd"
                     location={routeProps.location}
+                    history={routeProps.history}
+                    match={routeProps.match}
                   />
                 )}
               />
