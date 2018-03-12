@@ -200,7 +200,9 @@ function login(state = INITIAL_STATE, action) {
         modal: {
           class: "modal__show",
           type: "modal__error",
-          text: error
+          text: error,
+          title: "Failure: Password not reset"
+          // redirect: "login"
         }
       });
 

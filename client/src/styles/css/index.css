@@ -302,6 +302,10 @@ input:not([type=checkbox]):not([type=radio]), textarea {
       font-size: 20px;
       border-bottom-left-radius: 4px;
       border-bottom-right-radius: 4px; }
+      .form__button--bottom:hover, .form__button--bottom:active, .form__button--bottom:focus {
+        background-color: #3b5694;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        transition: all 300ms ease-in-out; }
     .form__button--sm {
       margin-right: 0;
       padding: 0;
@@ -1074,6 +1078,8 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
+    background: transparent;
+    border: 1px solid #878787;
     border-radius: 20px;
     font-size: 20px;
     font-weight: 100;
@@ -1093,6 +1099,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
+    background: transparent;
     width: 50%;
     font-size: .85em;
     padding: 15px 0;

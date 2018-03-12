@@ -40,7 +40,7 @@ export const fieldValidations = {
     ruleRunner("email", "Email", required),
     ruleRunner("password", "Password", required)
   ],
-  resetPassword: [
+  resetPwd: [
     ruleRunner("password", "Password", required, minLength(6)),
     ruleRunner(
       "confirmPwd",

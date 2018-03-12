@@ -14,7 +14,6 @@ import NotFound from "./containers/NotFound";
 import Spinner from "./containers/Spinner";
 import ModalSm from "./containers/ModalSm";
 import Validate from "./containers/Validate";
-import ResetPassword from "./containers/ResetPassword";
 
 import * as apiActions from "./store/actions/apiActions";
 import * as Actions from "./store/actions";
@@ -56,10 +55,33 @@ class App extends Component {
               <Route
                 exact
                 path="/register"
-                render={routeProps => <ComboBox initialForm="signup" />}
+                render={routeProps => (
+                  <ComboBox
+                    initialForm="signup"
+                    location={routeProps.location}
+                  />
+                )}
               />
               <Route path="/validate" component={Validate} />
-              <Route path="/resetpassword/:key" component={ResetPassword} />
+              <Route
+                exact
+                path="/resetpassword"
+                render={routeProps => (
+                  <ComboBox
+                    initialForm="reset"
+                    location={routeProps.location}
+                  />
+                )}
+              />
+              <Route
+                path="/resetpassword/:key"
+                render={routeProps => (
+                  <ComboBox
+                    initialForm="resetPwd"
+                    location={routeProps.location}
+                  />
+                )}
+              />
               <Route path="*" component={NotFound} />
             </Switch>
           </main>

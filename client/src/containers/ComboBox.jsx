@@ -49,16 +49,20 @@ class ComboBox extends React.Component {
     this.login = this.login.bind(this);
     this.register = this.register.bind(this);
     this.reset = this.reset.bind(this);
+    this.resetPwd = this.resetPwd.bind(this);
   }
 
   componentDidMount() {
     // clear previous errors
     this.props.actions.resetForm();
+    if (this.props.match === "resetpassword" && !this.props.match.params.key) {
+      this.toggleForm("reset");
+    }
   }
 
   resetState() {
     const newState = {
-      form: "login",
+      form: this.props.initialForm || "login",
       showFormErrors: false,
       showFieldErrors: {
         firstName: false,
@@ -89,8 +93,8 @@ class ComboBox extends React.Component {
   /* Function login - Perform basic validation:
   * - username is at least 1 char
   * - password is at least 1 char
-  * If valid, call the login route; store token in redux, clear password from state
-  * , return to Home
+  * If valid, call the login route; store token in redux,
+  * clear password from state, return to Home
   */
   login() {
     const { email, password } = this.props.login.form;
@@ -128,7 +132,7 @@ class ComboBox extends React.Component {
     }
   }
 
-  /* Function handleRegister - Perform basic validation:
+  /* Function register - Perform basic validation:
   * - username is at least 1 char
   * - password is at least 1 char
   * - password confirmation matches
@@ -218,6 +222,45 @@ class ComboBox extends React.Component {
     }
   }
 
+  resetPwd() {
+    this.props.actions.setFormError({ message: "" });
+    const key = this.props.match.params.key;
+    const { password, confirmPwd } = this.props.login.form;
+
+    // show validation errors
+    const newState = { ...this.state };
+    newState.submit = true;
+    // newState.showFormErrors = true;
+
+    const validationErrors = run(
+      this.props.login.form,
+      fieldValidations.resetPwd
+    );
+
+    newState.validationErrors = { ...validationErrors };
+    this.setState({ ...newState });
+
+    // validate form data
+    if (password && password === confirmPwd) {
+      const body = {
+        password,
+        key
+      };
+      this.props.api.resetPassword(body);
+    } else {
+      if (!password) {
+        this.props.actions.setFormError({
+          message: "Password is required"
+        });
+      }
+      if (password !== confirmPwd) {
+        this.props.actions.setFormError({
+          message: "Passwords do not match"
+        });
+      }
+    }
+  }
+
   /*
   * Function: handleInput - On Change, send updated value to redux
   * @param {object} event - the change event triggered by the input.
@@ -242,8 +285,11 @@ class ComboBox extends React.Component {
       runners(this.state.form)
     );
 
-    if (!document.getElementById("email").validity.valid) {
-      validationErrors.email = "Please enter a valid email address";
+    if (!this.props.match.params.key) {
+      // no email field required if resetting pwd
+      if (!document.getElementById("email").validity.valid) {
+        validationErrors.email = "Please enter a valid email address";
+      }
     }
 
     const showFormErrors = !!Object.values(validationErrors).length;
@@ -274,8 +320,11 @@ class ComboBox extends React.Component {
     );
     validationErrors[field] = false;
 
-    if (!document.getElementById("email").validity.valid) {
-      validationErrors.email = "Please enter a valid email address";
+    if (!this.props.match.params.key) {
+      // no email field required if resetting pwd
+      if (!document.getElementById("email").validity.valid) {
+        validationErrors.email = "Please enter a valid email address";
+      }
     }
 
     const newState = update(this.state, {
@@ -307,7 +356,10 @@ class ComboBox extends React.Component {
     const login = this.state.form === "login";
     const signup = this.state.form === "signup";
     const reset = this.state.form === "reset";
-    const buttonText = login ? "Log In" : signup ? "Sign Up" : "Send Email";
+    const resetPwd = this.state.form === "resetPwd";
+    const buttonText = login
+      ? "Log In"
+      : signup ? "Sign Up" : resetPwd ? "Reset Password" : "Send Email";
     const buttonState = this.state.showFormErrors
       ? "form__button--disabled"
       : "";
@@ -319,7 +371,7 @@ class ComboBox extends React.Component {
     return (
       <div className="container combo">
         <div className="combo__header">
-          {reset && (
+          {(reset || resetPwd) && (
             <button
               className="combo__back-btn"
               onClick={() => this.toggleForm("login")}
@@ -336,10 +388,10 @@ class ComboBox extends React.Component {
             />
           </div>
           <div className="combo__title">
-            {reset ? "Reset your password" : "Voting App"}
+            {reset || resetPwd ? "Reset your password" : "Voting App"}
           </div>
         </div>
-        {!reset && (
+        {!(reset || resetPwd) && (
           <div className="combo__nav">
             <button
               className={
@@ -363,7 +415,7 @@ class ComboBox extends React.Component {
             </button>
           </div>
         )}
-        {!reset && (
+        {!(reset || resetPwd) && (
           <div className="combo__social-wrap">
             <a
               className="form__button form__button--sm form__button--github"
@@ -412,7 +464,9 @@ class ComboBox extends React.Component {
         <div className="combo__form">
           <form className="container form">
             <div className="form__body">
-              {!reset && <div className="form__input-group center">or</div>}
+              {!(reset || resetPwd) && (
+                <div className="form__input-group center">or</div>
+              )}
               {signup && (
                 <div>
                   <div className="form__input-group">
@@ -447,38 +501,46 @@ class ComboBox extends React.Component {
                   </div>
                 </div>
               )}
-              {reset && (
+              {(reset || resetPwd) && (
                 <div className="form__input-group center">
-                  <div className="form__text">
-                    Please enter your email address. <br />We will send a link
-                    to reset your password.
-                  </div>
+                  {resetPwd ? (
+                    <div className="form__text">
+                      Enter a new password.<br />Make it a good one :)
+                    </div>
+                  ) : (
+                    <div className="form__text">
+                      Please enter your email address.<br />We will send a link
+                      to reset your password.
+                    </div>
+                  )}
                 </div>
               )}
-              <div className="form__input-group">
-                <FormInput
-                  handleChange={this.handleInput}
-                  handleBlur={this.handleBlur}
-                  handleFocus={this.handleFocus}
-                  placeholder="Email"
-                  autoComplete="email"
-                  type="email"
-                  showError={this.state.showFieldErrors.email}
-                  value={this.props.login.form.email}
-                  errorText={this.errorFor("email")}
-                  touched={this.state.touched.email}
-                  name="email"
-                  inputRef={el => (this.emailInput = el)}
-                  submit={this.state.submit}
-                />
-              </div>
-              {!reset && (
+              {!resetPwd && (
                 <div className="form__input-group">
                   <FormInput
                     handleChange={this.handleInput}
                     handleBlur={this.handleBlur}
                     handleFocus={this.handleFocus}
-                    placeholder="Password"
+                    placeholder="Email"
+                    autoComplete="email"
+                    type="email"
+                    showError={this.state.showFieldErrors.email}
+                    value={this.props.login.form.email}
+                    errorText={this.errorFor("email")}
+                    touched={this.state.touched.email}
+                    name="email"
+                    inputRef={el => (this.emailInput = el)}
+                    submit={this.state.submit}
+                  />
+                </div>
+              )}
+              {(!reset || resetPwd) && (
+                <div className="form__input-group">
+                  <FormInput
+                    handleChange={this.handleInput}
+                    handleBlur={this.handleBlur}
+                    handleFocus={this.handleFocus}
+                    placeholder={resetPwd ? "New Password" : "Password"}
                     autoComplete="new-password"
                     type="password"
                     showError={this.state.showFieldErrors.password}
@@ -490,7 +552,7 @@ class ComboBox extends React.Component {
                   />
                 </div>
               )}
-              {signup && (
+              {(signup || resetPwd) && (
                 <div className="form__input-group">
                   <FormInput
                     handleChange={this.handleInput}
@@ -537,11 +599,12 @@ class ComboBox extends React.Component {
                     this.login();
                   } else if (signup) {
                     this.register();
+                  } else if (resetPwd) {
+                    this.resetPwd();
                   } else if (reset) {
                     this.reset();
                   }
                 }}
-                disabled={this.state.showFormErrors}
               >
                 {buttonText}
               </button>
@@ -557,10 +620,14 @@ class ComboBox extends React.Component {
           buttonText={this.props.login.modal.buttonText || "Continue"}
           dismiss={() => {
             this.props.actions.dismissModal();
+            if (resetPwd) {
+              this.props.history.push("/resetpassword");
+            }
             this.resetState();
           }}
           redirect={this.props.login.modal.redirect}
           history={this.props.history}
+          location={this.props.location}
           resetForm={this.props.actions.resetForm}
         />
       </div>
@@ -600,6 +667,11 @@ ComboBox.propTypes = {
   }).isRequired,
   history: PropTypes.shape({
     push: PropTypes.func
+  }).isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      key: PropTypes.string
+    })
   }).isRequired
 };
 
