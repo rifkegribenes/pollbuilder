@@ -15,6 +15,7 @@ class Validate extends React.Component {
   * If localStorage fails, force login with a specific message
   */
   componentDidMount() {
+    console.log(this.props.match.params.key);
     const body = {
       key: this.props.match.params.key
     };
@@ -61,6 +62,11 @@ class Validate extends React.Component {
               type: "",
               title: ""
             });
+            if (this.props.appState.modal.type === "modal__error") {
+              this.props.history.push("/login");
+            } else {
+              this.props.history.push("/user");
+            }
           }}
         />
       </div>
@@ -98,6 +104,11 @@ Validate.propTypes = {
     setModalError: PropTypes.func,
     setRedirectUrl: PropTypes.func,
     dismissModal: PropTypes.func
+  }).isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      key: PropTypes.string
+    })
   }).isRequired
 };
 

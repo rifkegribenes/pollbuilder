@@ -126,6 +126,7 @@ export const VALIDATE_FAILURE = "VALIDATE_FAILURE";
 *     Displays error to user, prompt to try again.
 */
 export function validate(body) {
+  console.log(body);
   return {
     [RSAA]: {
       endpoint: `${BASE_URL}/api/auth/validate/`,

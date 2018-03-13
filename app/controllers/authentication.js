@@ -140,6 +140,7 @@ exports.register = function (req, res, next) {
             })
             .catch((err) => {
               console.log(err);
+              return next(err);
             });
 
           // Respond with JWT if user was created
@@ -157,7 +158,7 @@ exports.register = function (req, res, next) {
     .catch( (err) => {
       console.log('catch block line 143');
       console.log(err);
-      throw err;
+      return next(err);
     }); // catch (User.findOne)
 } // register
 
@@ -246,6 +247,7 @@ exports.googleCallback = (req, res) => {
 exports.validate = (req, res) => {
   console.log('validate route hit');
   const key = req.body.key;
+  console.log(`key: ${key}`);
   const target = {
     'signupKey.key': key,
     'signupKey.exp': { $gt: Date.now() }
@@ -336,7 +338,10 @@ exports.sendReset = (req, res) => {
 
         user.save((err, user) => {
 
-          if (err) { throw err; }
+          if (err) {
+            console.log(err);
+            return next(err);
+          }
           console.log('saving user');
           console.log(user);
           // build email parameter map

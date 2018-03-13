@@ -71,7 +71,10 @@ class App extends Component {
                   />
                 )}
               />
-              <Route path="/validate" component={Validate} />
+              <Route
+                path="/validate/:key?"
+                render={routeProps => <Validate {...routeProps} />}
+              />
               <Route
                 exact
                 path="/reset"
