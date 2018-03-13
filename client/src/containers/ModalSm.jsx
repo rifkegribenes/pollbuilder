@@ -78,7 +78,9 @@ const ModalSm = props => (
                 className="modal__button"
                 onClick={() => {
                   props.dismiss();
-                  props.resetForm();
+                  if (props.resetForm) {
+                    props.resetForm();
+                  }
                   if (props.redirect) {
                     props.history.push(`/${props.redirect}`);
                   }

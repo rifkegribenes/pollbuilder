@@ -57,7 +57,6 @@ class ComboBox extends React.Component {
     // clear previous errors
     this.props.actions.resetForm();
     if (this.props.match === "reset") {
-      console.log("cDM toggling to reset");
       const newState = { ...this.state };
       newState.form = "reset";
       this.setState({ ...newState }, () => {
@@ -96,7 +95,6 @@ class ComboBox extends React.Component {
     console.log(newState.form);
     this.forceUpdate(
       this.setState({ ...newState }, () => {
-        console.log(`form toggled to ${form}`);
         console.log(this.state.form);
       })
     );

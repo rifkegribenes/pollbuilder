@@ -5,6 +5,7 @@ import {
   GET_PROFILE_SUCCESS,
   GET_PROFILE_FAILURE,
   VALIDATE_TOKEN_SUCCESS,
+  VALIDATE_SUCCESS,
   LOGIN_SUCCESS,
   REGISTRATION_SUCCESS
 } from "../actions/apiActions";
@@ -18,7 +19,8 @@ const EMPTY_USER = {
     avatarUrl: "",
     firstName: "",
     lastName: "",
-    email: ""
+    email: "",
+    validated: false
   },
   facebook: {
     token: "",
@@ -61,6 +63,20 @@ function profile(state = INITIAL_STATE, action) {
       console.log(action.payload);
       return update(state, {
         user: { $merge: action.payload }
+      });
+
+    case VALIDATE_SUCCESS:
+      return update(state, {
+        user: {
+          _id: { $set: action.payload.user._id },
+          profile: {
+            avatarUrl: { $set: action.payload.user.avatarUrl || "" },
+            firstName: { $set: action.payload.user.firstName || "" },
+            lastName: { $set: action.payload.user.lastName || "" },
+            email: { $set: action.payload.user.email },
+            validated: { $set: true }
+          }
+        }
       });
 
     /*

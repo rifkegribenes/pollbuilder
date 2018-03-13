@@ -109,6 +109,56 @@ export function login(body) {
   };
 }
 
+export const VALIDATE_REQUEST = "VALIDATE_REQUEST";
+export const VALIDATE_SUCCESS = "VALIDATE_SUCCESS";
+export const VALIDATE_FAILURE = "VALIDATE_FAILURE";
+
+/*
+* Function: validate - Attempts to validate with uid & key.
+*   returns a JWT if successful.
+* @param {string} uid - userID
+* @param {string} key – signup key generated at registration
+* This action dispatches additional actions as it executes:
+*   VALIDATE_REQUEST: Initiates a spinner on the login page.
+*   VALIDATE_SUCCESS: Dispatched if credentials valid and profile returned.
+*     Logs user in, stores token, sets current user profile in app state.
+*   VALIDATE_FAILURE: Dispatched if credentials invalid.
+*     Displays error to user, prompt to try again.
+*/
+export function validate(body) {
+  return {
+    [RSAA]: {
+      endpoint: `${BASE_URL}/api/auth/validate/`,
+      method: "POST",
+      types: [
+        VALIDATE_REQUEST,
+        VALIDATE_SUCCESS,
+        {
+          type: VALIDATE_FAILURE,
+          payload: (action, state, res) => {
+            console.log(res);
+            return res.json().then(data => {
+              let message = "Sorry, something went wrong :(";
+              if (data) {
+                console.log(data);
+                if (data.message) {
+                  console.log(data.message);
+                  message = data.message;
+                }
+                return { message };
+              } else {
+                return { message };
+              }
+            });
+          }
+        }
+      ],
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body)
+    }
+  };
+}
+
 export const CALLBACK_FACEBOOK_REQUEST = "CALLBACK_FACEBOOK_REQUEST";
 export const CALLBACK_FACEBOOK_SUCCESS = "CALLBACK_FACEBOOK_SUCCESS";
 export const CALLBACK_FACEBOOK_FAILURE = "CALLBACK_FACEBOOK_FAILURE";

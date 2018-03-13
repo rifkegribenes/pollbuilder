@@ -90,19 +90,11 @@ exports.register = function (req, res, next) {
           User.findOneAndUpdate(target, updates, options)
           .exec()
           .then( (user) => {
-            console.log('authentication.js > 100');
-            console.log(user.profile.email);
-            console.log('found and updated user with no local acct');
-            console.log(user);
-
             // Respond with JWT if user was updated
             // don't need to validate email bc it has already been validated
             // by passport (matched the email used with another social account)
             const userInfo = helpers.setUserInfo(user);
-            console.log(userInfo);
-            console.log('authentication.js > 104');
             const token = `JWT ${helpers.generateToken(userInfo)}`;
-            console.log(token);
             res.status(201).json({
               token,
               user
@@ -139,9 +131,10 @@ exports.register = function (req, res, next) {
           // Send validation email
           const subject = "Voting App: Email Confirmation Required";
           console.log(user.id);
-          const url = mailUtils.makeValidationUrl(user.id, key.key);
+          const url = mailUtils.makeValidationUrl(key.key);
+          const html = mailTemplate.validationTemplate(url);
           const text = `Please click here to validate your email: ${url}`;
-          mailUtils.sendMail(email, subject, text)
+          mailUtils.sendMail(email, subject, html, text)
             .then(() => {
               console.log('email sent');
             })
@@ -240,23 +233,23 @@ exports.googleCallback = (req, res) => {
 // Validate Email Route
 //= =======================================
 
-// HANDLE EMAIL VALIDATION LINKS
+/* HANDLE EMAIL VALIDATION LINKS
 // Toggles user's `validated` property to `true`
 //   Example: GET >> /api/auth/validate
 //   Secured: no
 //   Expects:
-//     1) request query params
-//        * uid : String
-//        * key : String
-//   Returns: redirect to client-side validation landing page
-//
-exports.validate = function (req, res) {
-  const user_id  = req.query.uid;
-  const test_key = req.query.key;
-  console.log(`testkey: ${test_key}`);
+// @ params   [object]   params
+// @ params   [string]    * key      [randomly generated key]
+//   Returns: updated user profile & JWT or error message
+*/
+
+exports.validate = (req, res) => {
+  console.log('validate route hit');
+  const key = req.body.key;
   const target = {
-    _id : user_id
-  };
+    'signupKey.key': key,
+    'signupKey.exp': { $gt: Date.now() }
+    };
   const updates = {
     validated: true
   };
@@ -266,29 +259,29 @@ exports.validate = function (req, res) {
     .then( user => {
     if (!user) {
       return res
-        .status(404)
-        .json({ message: 'No user with that ID found.' });
-    } else if (user.signupKey.key !== test_key) {
-      console.log(`user signupKey: ${user.signupKey.key}`);
+        .status(400)
+        .json({ message: 'Sorry, your token has expired, please try again.' });
+    } else {
+      // Respond with updated JWT if user was validated
+      const userInfo = helpers.setUserInfo(user);
+      const token = `JWT ${helpers.generateToken(userInfo)}`;
+      res.status(201).json({
+        token,
+        user
+      });
+    }
+    }) // then
+    .catch( err => {
+      console.log('Error!!!', err);
         return res
           .status(400)
-          .json({ message: 'Registration key mismatch.' });
-    } else {
-        // build hash fragment for client-side routing
-        const hash = '#/redirect=validate';
-        console.log(`redirecting to: ${CLIENT_URL}/${hash}`);
-        return res
-          // redirect to client-side validation landing page
-          .redirect(302, `${CLIENT_URL}/${hash}`);
-    }
-  })
-  .catch( err => {
-    console.log('Error!!!', err);
-      return res
-        .status(400)
-        .json({ message: err});
-  });
-}
+          .json({ message: err});
+    });
+  }
+
+
+
+
 
 /* Dispatch new password reset email (called from sendReset())
  *
@@ -323,7 +316,6 @@ const sendPWResetEmail = (params) => {
 //   Returns: success status & message on success
 //
 exports.sendReset = (req, res) => {
-  console.log(`preparing to send email to ${req.body.email}`);
 
   // generate reset key
   const resetKey = mailUtils.makeSignupKey();
@@ -421,7 +413,8 @@ exports.resetPass = (req, res, next) => {
         const subject = "Voting App: Password Changed";
         const text = 'You are receiving this email because you changed your password. \n\n' +
         'If you did not request this change, please contact us immediately.';
-        mailUtils.sendMail(user.profile.email, subject, text)
+        const html = mailTemplate.pwResetConfirmation();
+        mailUtils.sendMail(user.profile.email, subject, html, text)
           .then(() => {
             console.log('password reset confirmation email sent');
           })

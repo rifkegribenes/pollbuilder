@@ -1,7 +1,16 @@
 import update from "immutability-helper";
 
-import { LOGOUT, SET_LOGGEDIN, SET_REDIRECT_URL } from "../actions";
 import {
+  LOGOUT,
+  SET_LOGGEDIN,
+  SET_REDIRECT_URL,
+  DISMISS_MODAL,
+  SET_MODAL_ERROR
+} from "../actions";
+import {
+  VALIDATE_REQUEST,
+  VALIDATE_SUCCESS,
+  VALIDATE_FAILURE,
   VALIDATE_TOKEN_REQUEST,
   VALIDATE_TOKEN_SUCCESS,
   VALIDATE_TOKEN_FAILURE,
@@ -44,7 +53,8 @@ const INITIAL_STATE = {
   modal: {
     class: "modal__hide",
     text: "",
-    title: ""
+    title: "",
+    type: ""
   }
 };
 
@@ -57,6 +67,7 @@ const INITIAL_STATE = {
 *  Client will attempt to load the expected page for the user.
 */
 function appState(state = INITIAL_STATE, action) {
+  let error;
   switch (action.type) {
     /*
     * This action is issued only from the <Logout/> component.
@@ -80,6 +91,7 @@ function appState(state = INITIAL_STATE, action) {
     * On VALIDATE_TOKEN_REQUEST action, set the spinner class to show.
     * This activates the spinner component on the home page so user knows the action is running
     */
+    case VALIDATE_REQUEST:
     case VALIDATE_TOKEN_REQUEST:
       return Object.assign({}, state, { spinnerClass: "spinner__show" });
 
@@ -91,17 +103,20 @@ function appState(state = INITIAL_STATE, action) {
     * the action is complete.
     * Save the userId and token in the redux store...set loggedIn to TRUE.
     */
+    case VALIDATE_SUCCESS:
     case VALIDATE_TOKEN_SUCCESS:
       return update(state, {
         spinnerClass: { $set: "spinner__hide" },
         loggedIn: { $set: true },
+
         user: {
           _id: { $set: action.payload.user._id },
           profile: {
             avatarUrl: { $set: action.payload.user.avatarUrl || "" },
             firstName: { $set: action.payload.user.firstName || "" },
             lastName: { $set: action.payload.user.lastName || "" },
-            email: { $set: action.payload.user.email }
+            email: { $set: action.payload.user.email },
+            validated: { $set: true }
           }
         },
         authToken: { $set: action.payload.token }
@@ -114,12 +129,27 @@ function appState(state = INITIAL_STATE, action) {
      * Remove the invalid values from localStorage
      * Set loggedIn to false.
      */
+    case VALIDATE_FAILURE:
     case VALIDATE_TOKEN_FAILURE:
       window.localStorage.removeItem("authToken");
       window.localStorage.removeItem("userId");
-      return Object.assign({}, state, {
-        spinnerClass: "spinner__hide",
-        loggedIn: false
+      console.log(action.type);
+      console.log(action.payload);
+      if (typeof action.payload.message === "string") {
+        error = action.payload.message;
+      } else {
+        error = "Sorry, something went wrong :(\nPlease try again.";
+      }
+      return update(state, {
+        spinnerClass: { $set: "spinner__hide" },
+        modal: {
+          class: { $set: "modal__show" },
+          text: { $set: error },
+          title: { $set: "Validation Failure" },
+          type: { $set: "modal__error" },
+          buttonText: { $set: "Try again" }
+        },
+        loggedIn: { $set: false }
       });
 
     /*
@@ -233,6 +263,43 @@ function appState(state = INITIAL_STATE, action) {
           }
         },
         authToken: { $set: action.payload.token }
+      });
+
+    /*
+    *  Called From: <Validate />
+    *  Payload: Error Message
+    *  Purpose: Hide spinner,
+    *  Display error message in modal. Generic, called from various components
+    */
+    case SET_MODAL_ERROR:
+      if (typeof action.payload.message === "string") {
+        error = action.payload.message;
+      } else {
+        error = "Sorry, something went wrong :(\nPlease try again.";
+      }
+      return update(state, {
+        spinnerClass: { $set: "spinner__hide" },
+        modal: {
+          class: { $set: "modal__show" },
+          text: { $set: error },
+          title: { $set: "Something went wrong" },
+          type: { $set: "modal__error" }
+        }
+      });
+
+    /*
+    *  Called from: <Validate />
+    *  Payload: None
+    *  Purpose: dismiss modal
+    */
+    case DISMISS_MODAL:
+      return Object.assign({}, state, {
+        modal: {
+          text: "",
+          class: "modal__hide",
+          type: "",
+          title: ""
+        }
       });
 
     default:

@@ -41,15 +41,14 @@ function makeSignupKey() {
 /* Generate registration email validation url w/custom key
  * Makes sure key is unique & saves to DB
  *
- * @params    [string]   user_id   [id of user to validate]
  * @params    [string]   key       [custom validation key]
  * @returns   [string]             [custom validation URL]
 */
-function makeValidationUrl(user_id, key) {
+function makeValidationUrl(key) {
   console.log('makeValidationUrl');
-    const baseUrl = `${SERVER_URL}/api/auth/validate`;
+    const baseUrl = `${CLIENT_URL}/validate`;
 
-    return `${baseUrl}?uid=${user_id}&key=${key}`;
+    return `${baseUrl}/${key}`;
 }
 
 /* Send transactional email using mailgunTransport (nodemailer)

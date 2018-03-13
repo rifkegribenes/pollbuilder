@@ -15,52 +15,30 @@ class Validate extends React.Component {
   * If localStorage fails, force login with a specific message
   */
   componentDidMount() {
+    const body = {
+      key: this.props.match.params.key
+    };
     console.log("Validate component");
-    if (this.props.appState.loggedIn) {
-      console.log("Validate component: Logged in");
-      this.props.api.refreshToken(this.props.appState.authToken);
-      this.props.actions.setRedirectUrl("");
-    } else {
-      console.log("Validate component: JWT authenticating");
-      let token = window.localStorage.getItem("authToken");
-      if (token && token !== "undefined") {
-        token = JSON.parse(token);
-        const user = JSON.parse(window.localStorage.getItem("userId"));
-        // If we validate successfully, look for redirect_url and follow it
-        this.props.api.refreshToken(token, user).then(result => {
-          if (result.type === "REFRESH_TOKEN_SUCCESS") {
-            this.props.actions.setRedirectUrl("");
-          }
-          if (result.type === "REFRESH_TOKEN_FAILURE") {
-            this.props.actions.setLoginError(
-              "You must log in to validate your account"
-            );
-            this.props.history.push("/login");
-          }
-        });
-      } else {
-        console.log("Validate component: Not logged in");
-        this.props.actions.setLoginError(
-          "You must log in to validate your account"
-        );
-        this.props.history.push("/login");
+    this.props.api.validate(body).then(result => {
+      if (result === "VALIDATE_SUCCESS") {
+        console.log("validate success");
       }
-    }
+    });
   }
 
   render() {
     let valStatus;
     if (this.props.login.tokenRefreshComplete === undefined) {
       valStatus = "Validating...";
-    } else if (!this.props.login.tokenRefreshComplete) {
+    } else if (!this.props.profile.user.profile.validated) {
       valStatus = "Validation Failed";
     } else {
       valStatus = "Welcome!";
     }
     return (
       <div className="container validate">
-        <h2 className="title">{valStatus}</h2>
-        {this.props.login.tokenRefreshComplete && (
+        <h2 className="validate__title">{valStatus}</h2>
+        {this.props.profile.user.profile.validated && (
           <div className="validate__text-wrap">
             <div className="validate__text-header">
               {`Congratulations ${this.props.profile.user.profile.firstName}!`}
@@ -70,12 +48,12 @@ class Validate extends React.Component {
             </div>
           </div>
         )}
-        <Spinner cssClass={this.props.login.spinnerClass} />
+        <Spinner cssClass={this.props.appState.spinnerClass} />
         <ModalSm
-          modalClass={this.props.login.modal.class}
-          modalTitle={this.props.login.modal.title}
-          modalText={this.props.login.modal.text}
-          modalType={this.props.login.modal.type}
+          modalClass={this.props.appState.modal.class}
+          modalTitle={this.props.appState.modal.title}
+          modalText={this.props.appState.modal.text}
+          modalType={this.props.appState.modal.type}
           dismiss={() => {
             this.props.actions.dismissModal({
               class: "modal__hide",
@@ -98,13 +76,13 @@ Validate.propTypes = {
   profile: PropTypes.shape({
     user: PropTypes.shape({
       profile: PropTypes.shape({
-        firstName: PropTypes.string
+        firstName: PropTypes.string,
+        validated: PropTypes.boolean
       }).isRequired
     }).isRequired
   }).isRequired,
   login: PropTypes.shape({
     spinnerClass: PropTypes.string,
-    tokenRefreshComplete: PropTypes.boolean,
     modal: PropTypes.shape({
       class: PropTypes.string,
       type: PropTypes.string,
@@ -117,7 +95,7 @@ Validate.propTypes = {
     validateToken: PropTypes.func
   }).isRequired,
   actions: PropTypes.shape({
-    setLoginError: PropTypes.func,
+    setModalError: PropTypes.func,
     setRedirectUrl: PropTypes.func,
     dismissModal: PropTypes.func
   }).isRequired

@@ -71,7 +71,7 @@ module.exports = function (app) {
   app.get('/:client_route/:uid?', StaticController.redirectHash);
 
 // ============================================================================
-// AUTHENTICATE (FIRST LOGIN) =================================================
+// AUTHENTICATE ===============================================================
 // ============================================================================
 
   // Set auth routes as subgroup/middleware to apiRoutes
@@ -93,8 +93,8 @@ module.exports = function (app) {
 
   // Handle email validation links
   // Toggle user's `validated` property to `true`.
-  // Redirects to /#/redirect=validate
-  authRoutes.get('/validate', AuthenticationController.validate);
+  // Returns fail status + message -or- user object & JWT
+  authRoutes.post('/validate', AuthenticationController.validate);
 
   // Facebook authentication with passport
   authRoutes.get('/facebook',

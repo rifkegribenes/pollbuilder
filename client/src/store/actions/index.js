@@ -6,6 +6,7 @@ export const RESET_FORM = "RESET_FORM";
 export const SET_PROFILE_VIEW = "SET_PROFILE_VIEW";
 export const SET_REDIRECT_URL = "SET_REDIRECT_URL";
 export const DISMISS_MODAL = "DISMISS_MODAL";
+export const SET_MODAL_ERROR = "SET_MODAL_ERROR";
 
 export function setRedirectUrl(url) {
   return {
@@ -46,6 +47,13 @@ export function setFormField(id, value) {
 export function setFormError(msg) {
   return {
     type: SET_FORM_ERROR,
+    payload: msg
+  };
+}
+
+export function setModalError(msg) {
+  return {
+    type: SET_MODAL_ERROR,
     payload: msg
   };
 }

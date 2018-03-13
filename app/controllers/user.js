@@ -79,30 +79,30 @@ exports.updateProfile = (req, res, next, userObj) => {
 //   Returns: user profile and new JWT on success
 //
 exports.refreshToken = (req, res) => {
-    console.log('refreshToken');
-    const userId = req.token._id;
+  console.log('refreshToken');
+  const userId = req.token._id;
 
-    User.findById(userId)
-        .exec()
-        .then( user => {
+  User.findById(userId)
+    .exec()
+    .then( user => {
 
-            // generate a token
-            const token = helpers.generateToken(user);
+      // generate a token
+      const token = helpers.generateToken(user);
 
-            // return the user profile & JWT
-            return res
-                .status(200)
-                .json({
-                    profile : user,
-                    token   : token
-                });
-
-        })
-        .catch( err => {
-            console.log('Error!!!', err);
-                return res
-                    .status(400)
-                    .json({ message: err});
+      // return the user profile & JWT
+      return res
+        .status(200)
+        .json({
+            profile : user,
+            token   : token
         });
+
+      })
+    .catch( err => {
+      console.log('Error!!!', err);
+        return res
+          .status(400)
+          .json({ message: err});
+    });
 
 }
