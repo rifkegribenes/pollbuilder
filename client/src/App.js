@@ -28,10 +28,10 @@ class App extends Component {
         token = JSON.parse(token);
         const user = JSON.parse(window.localStorage.getItem("userId"));
         this.props.api.validateToken(token, user);
-      } else {
-        console.log("logged in:");
-        console.log(this.props.profile.user.profile.email);
       }
+    } else {
+      console.log("logged in:");
+      console.log(this.props.profile.user.profile.email);
     }
   }
 

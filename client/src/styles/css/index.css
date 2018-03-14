@@ -349,9 +349,11 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     right: 5px; }
     .form__password-toggle svg {
       height: 40px;
-      width: auto; }
-      .form__password-toggle svg path {
-        stroke: #878787 !important; }
+      width: auto;
+      stroke: #bababa;
+      fill: #bababa; }
+      .form__password-toggle svg:hover, .form__password-toggle svg:focus {
+        stroke: #2B2B2B; }
   .form__icon-wrap {
     background: rgba(255, 255, 255, 0.2);
     width: 100%; }

@@ -2,9 +2,6 @@ import React, { Component } from "react";
 import ErrorMessages from "./ErrorMessages";
 import PropTypes from "prop-types";
 
-// import show from "../img/show.svg";
-// import hide from "../img/hide.svg";
-
 const show = () => {
   return (
     <svg version="1.1" x="0px" y="0px" viewBox="0 0 100 125">
@@ -67,6 +64,7 @@ class FormInput extends Component {
   togglePasswordViz() {
     const newState = { ...this.state };
     newState.passwordViz = !this.state.passwordViz;
+    this.setState({ ...newState });
   }
 
   render() {
@@ -107,6 +105,7 @@ class FormInput extends Component {
             className="aria-button form__password-toggle"
             onClick={() => this.togglePasswordViz()}
             type="button"
+            title={this.state.passwordViz ? "hide password" : "show password"}
           >
             {this.state.passwordViz ? hide() : show()}
             <span className="sr-only">

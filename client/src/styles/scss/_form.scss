@@ -478,11 +478,14 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     & svg {
       height: 40px;
       width: auto;
+      stroke: $color_gray_lightest;
+      fill: $color_gray_lightest;
 
-      & path {
-      stroke: $color_gray_lighter !important;
+      &:hover, &:focus {
+        stroke: $color_gray_darker;
+      }
+
     }
-  }
 
   }
 
