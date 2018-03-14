@@ -13,7 +13,7 @@ import Footer from "./containers/Footer";
 import NotFound from "./containers/NotFound";
 import Spinner from "./containers/Spinner";
 import ModalSm from "./containers/ModalSm";
-import Validate from "./containers/Validate";
+import VerifyEmail from "./containers/VerifyEmail";
 
 import * as apiActions from "./store/actions/apiActions";
 import * as Actions from "./store/actions";
@@ -72,8 +72,8 @@ class App extends Component {
                 )}
               />
               <Route
-                path="/validate/:key?"
-                render={routeProps => <Validate {...routeProps} />}
+                path="/verify/:key?"
+                render={routeProps => <VerifyEmail {...routeProps} />}
               />
               <Route
                 exact

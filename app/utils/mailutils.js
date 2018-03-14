@@ -46,7 +46,7 @@ function makeSignupKey() {
 */
 function makeValidationUrl(key) {
   console.log('makeValidationUrl');
-    const baseUrl = `${CLIENT_URL}/validate`;
+    const baseUrl = `${CLIENT_URL}/verify`;
 
     return `${baseUrl}/${key}`;
 }

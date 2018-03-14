@@ -136,13 +136,10 @@ export function verifyEmail(body) {
         {
           type: VERIFY_EMAIL_FAILURE,
           payload: (action, state, res) => {
-            console.log(res);
             return res.json().then(data => {
               let message = "Sorry, something went wrong :(";
               if (data) {
-                console.log(data);
                 if (data.message) {
-                  console.log(data.message);
                   message = data.message;
                 }
                 return { message };
@@ -175,7 +172,6 @@ export const CALLBACK_FACEBOOK_FAILURE = "CALLBACK_FACEBOOK_FAILURE";
 *     Displays error to user, prompt to try again or register.
 */
 export function callbackFacebook() {
-  console.log(`apiActions > callbackFacebook`);
   return {
     [RSAA]: {
       endpoint: `${BASE_URL}/auth/facebook/callback`,
@@ -246,8 +242,6 @@ export const GET_PROFILE_SUCCESS = "GET_PROFILE_SUCCESS";
 export const GET_PROFILE_FAILURE = "GET_PROFILE_FAILURE";
 
 export function getProfile(token, userId) {
-  // console.log(token);
-  // console.log(userId);
   return {
     [RSAA]: {
       endpoint: `${BASE_URL}/api/user/${userId}`,
@@ -258,13 +252,10 @@ export function getProfile(token, userId) {
         {
           type: GET_PROFILE_FAILURE,
           payload: (action, state, res) => {
-            console.log(res);
             return res.json().then(data => {
               let message = "Sorry, something went wrong :(";
               if (data) {
-                console.log(data);
                 if (data.message) {
-                  console.log(data.message);
                   message = data.message;
                 }
                 return { message };
@@ -299,7 +290,6 @@ export function resetPassword(body) {
           type: RESET_PW_FAILURE,
           payload: (action, state, res) => {
             return res.json().then(data => {
-              console.log(data);
               let message = "Sorry, something went wrong :(";
               if (data) {
                 if (data.message) {
@@ -345,7 +335,6 @@ export function sendResetEmail(email) {
           type: SEND_RESET_EMAIL_FAILURE,
           payload: (action, state, res) => {
             return res.json().then(data => {
-              console.log(data);
               let message = "Sorry, something went wrong :(";
               if (data) {
                 if (data.message) {

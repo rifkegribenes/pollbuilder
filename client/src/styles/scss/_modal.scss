@@ -31,7 +31,6 @@
     display: block;
   }
   &__header {
-    color: $color_sky;
     line-height: 1.2em;
     font-family: $font-stack;
     font-weight: 300;
@@ -42,8 +41,6 @@
     text-align: center;
     text-transform: uppercase;
     letter-spacing: 2px;
-    // border-top-left-radius: 6px;
-    // border-top-right-radius: 6px;
   }
   &__info {
     color: $color_sky;

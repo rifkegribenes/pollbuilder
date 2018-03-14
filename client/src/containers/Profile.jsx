@@ -74,9 +74,15 @@ class Profile extends React.Component {
           modalTitle={this.props.profile.modal.title}
           dismiss={() => {
             this.props.actions.dismissModal();
+            if (this.props.profile.modal.type === "modal__error") {
+              this.props.history.push("/login");
+            }
           }}
           action={() => {
             this.props.actions.dismissModal();
+            if (this.props.profile.modal.type === "modal__error") {
+              this.props.history.push("/login");
+            }
           }}
         />
         <div className="profile">
@@ -97,6 +103,9 @@ class Profile extends React.Component {
                     this.props.profile.user.profile.lastName
                   }`}
                 />
+              </div>
+              <div className="profile__email">
+                Validated: {this.props.appState.validated}
               </div>
             </div>
             <div className="profile__card">

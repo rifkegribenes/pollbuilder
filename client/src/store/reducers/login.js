@@ -267,7 +267,7 @@ function login(state = INITIAL_STATE, action) {
         modal: {
           class: "modal__show",
           text:
-            "Your registration was successful. Please check your email for a validation link. You must validate your account to continue using this app.",
+            "Your registration was successful. Please check your email for a message, and click thelink to verify your email address.",
           title: "Registration Success",
           type: "modal__success",
           redirect: "login"

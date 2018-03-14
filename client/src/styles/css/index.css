@@ -908,7 +908,6 @@ input:not([type=checkbox]):not([type=radio]), textarea {
   .modal__show {
     display: block; }
   .modal__header {
-    color: #182848;
     line-height: 1.2em;
     font-family: "Titillium Web", Helvetica, Arial, sans-serif;
     font-weight: 300;

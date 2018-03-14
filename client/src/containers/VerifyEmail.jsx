@@ -8,7 +8,7 @@ import * as apiActions from "../store/actions/apiActions";
 import Spinner from "./Spinner";
 import ModalSm from "./ModalSm";
 
-class Validate extends React.Component {
+class VerifyEmail extends React.Component {
   /*
   * If already logged in, refresh the token, then display the success message
   * If not logged in, try to validate the localStorage token
@@ -18,7 +18,7 @@ class Validate extends React.Component {
     const body = {
       key: this.props.match.params.key
     };
-    console.log("Validate component");
+    console.log("VerifyEmail component");
     this.props.api.verifyEmail(body).then(result => {
       if (result === "VERIFY_EMAIL_SUCCESS") {
         console.log("verify email success");
@@ -27,27 +27,8 @@ class Validate extends React.Component {
   }
 
   render() {
-    let valStatus;
-    if (this.props.login.tokenRefreshComplete === undefined) {
-      valStatus = "Validating...";
-    } else if (!this.props.profile.user.profile.validated) {
-      valStatus = "Validation Failed";
-    } else {
-      valStatus = "Welcome!";
-    }
     return (
       <div className="container validate">
-        <h2 className="validate__title">{valStatus}</h2>
-        {this.props.profile.user.profile.validated && (
-          <div className="validate__text-wrap">
-            <div className="validate__text-header">
-              {`Congratulations ${this.props.profile.user.profile.firstName}!`}
-            </div>
-            <div className="validate__text">
-              <p>Your account is now validated.</p>
-            </div>
-          </div>
-        )}
         <Spinner cssClass={this.props.appState.spinnerClass} />
         <ModalSm
           modalClass={this.props.appState.modal.class}
@@ -58,7 +39,6 @@ class Validate extends React.Component {
             this.props.actions.dismissModal({
               class: "modal__hide",
               text: "",
-              type: "",
               title: ""
             });
             if (this.props.appState.modal.type === "modal__error") {
@@ -73,7 +53,7 @@ class Validate extends React.Component {
   }
 }
 
-Validate.propTypes = {
+VerifyEmail.propTypes = {
   appState: PropTypes.shape({
     authToken: PropTypes.string,
     loggedIn: PropTypes.boolean
@@ -122,4 +102,4 @@ const mapDispatchToProps = dispatch => ({
   api: bindActionCreators(apiActions, dispatch)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Validate);
+export default connect(mapStateToProps, mapDispatchToProps)(VerifyEmail);

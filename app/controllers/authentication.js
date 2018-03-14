@@ -14,10 +14,7 @@ const SERVER_URL = process.env.NODE_ENV === 'production' ? APP_HOST : '//localho
 // Local Login Route
 //= =======================================
 exports.login = function (req, res, next) {
-  console.log('login controller');
   if (!req.user) {
-    console.log('authentication.js > 18');
-    console.log(res);
       return res.status(422).send({ message: 'Login error: No account found.' });
     }
     const userInfo = helpers.setUserInfo(req.user);
@@ -32,8 +29,6 @@ exports.login = function (req, res, next) {
 // Local Registration Route
 //= =======================================
 exports.register = function (req, res, next) {
-
-  console.log(req.body);
 
   // Check for registration errors
   const email = req.body.email;
@@ -58,22 +53,17 @@ exports.register = function (req, res, next) {
 
   User.findOne({ 'profile.email': email })
     .then( (existingUser) => {
-      console.log('authentication.js > 57');
-      // console.log(existingUser.profile.email);
       // If email is not unique
       if (existingUser) {
         // check if local account already exists.
-        console.log('authentication.js > 63');
         if (existingUser.local && existingUser.local.email === email) {
             console.log('existing user has matching email in local key');
             return res.status(422).send({ message: 'Oops! Looks like you already have an account with that email address. Please try logging in.' });
         } else {
-          console.log('skipped matching email block');
           // if not, email matches an acct created with social login.
           // allow user to create new local acct & merge w social login details
           // update existing and return updated user
           const target = { 'profile.email': email }
-          console.log(target);
           const updates = {
             local: { email, password },
             profile: {
@@ -83,7 +73,7 @@ exports.register = function (req, res, next) {
               avatarUrl: existingUser.profile.avatarUrl
             }
           };
-          console.log(updates);
+
           // return updated document rather than the original
           const options = { new: true };
 
@@ -101,14 +91,12 @@ exports.register = function (req, res, next) {
             });
           }) // then
           .catch( (err) => {
-            console.log('authentication.js > 100');
             console.log(err);
             return next(err);
           }); // catch
         }
       } else {
         // If email is unique and password was provided, create account
-        console.log('creating new account');
         const key = mailUtils.makeSignupKey();
 
         // assign generic avatar URL, will be overwritten if user later links
@@ -122,15 +110,12 @@ exports.register = function (req, res, next) {
 
         user.save((err, user) => {
           if (err) {
-            console.log('authentication.js > 87');
             console.log(err);
             return next(err);
           }
 
-          console.log(`saved new user with id ${user.id}`);
           // Send validation email
           const subject = "Voting App: Email Verification Required";
-          console.log(user.id);
           const url = mailUtils.makeValidationUrl(key.key);
           const html = mailTemplate.verificationTemplate(url);
           const text = `Please click here to verify your email: ${url}`;
@@ -146,7 +131,6 @@ exports.register = function (req, res, next) {
           // Respond with JWT if user was created
 
           const userInfo = helpers.setUserInfo(user);
-          console.log('authentication.js > 135');
           const token = `Bearer ${helpers.generateToken(userInfo)}`;
           res.status(201).json({
             token,
@@ -156,7 +140,6 @@ exports.register = function (req, res, next) {
       }
   }) // then (User.findOne)
     .catch( (err) => {
-      console.log('catch block line 143');
       console.log(err);
       return next(err);
     }); // catch (User.findOne)
@@ -172,7 +155,6 @@ exports.fbCallback = (req, res) => {
       undefined;
     if (userObj) {
       // successful authentication from facebook
-      console.log('Facebook Auth Succeeded');
 
       // generate token and return user ID & token to client as URL parameters
       const userInfo = helpers.setUserInfo(userObj._doc);
@@ -188,14 +170,11 @@ exports.fbCallback = (req, res) => {
 //= =======================================
 
 exports.ghCallback = (req, res) => {
-  console.log('ghCallback');
-  console.log(req.user);
     const userObj = req.user ? { ...req.user } :
       req.session.user ? { ...req.session.user } :
       undefined;
     if (userObj) {
       // successful authentication from github
-      console.log('Github Auth Succeeded');
 
       // generate token and return user ID & token to client as URL parameters
       const userInfo = helpers.setUserInfo(userObj._doc);
@@ -245,7 +224,6 @@ exports.googleCallback = (req, res) => {
 */
 
 exports.verifyEmail = (req, res) => {
-  console.log('verifyEmail route hit');
   const key = req.body.key;
   console.log(`key: ${key}`);
   const target = {
@@ -267,9 +245,6 @@ exports.verifyEmail = (req, res) => {
       // Respond with updated JWT if user was validated
       const userInfo = helpers.setUserInfo(user);
       const token = helpers.generateToken(userInfo);
-      // const token = `Bearer ${helpers.generateToken(userInfo)}`;
-      console.log('test this at jwt.io:');
-      console.log(token);
       res.status(201).json({
         token,
         user
@@ -296,7 +271,6 @@ exports.verifyEmail = (req, res) => {
  * @ params   [string]    * recUsesrId [user/recipient _id]
 */
 const sendPWResetEmail = (params) => {
-    // console.log('pwreset', params);
     const url     = `${CLIENT_URL}/resetpassword/${params.key}`;
     const subject = 'Voting App - Password Reset Request';
     const html = mailTemplate.pwResetTemplate(url);
@@ -330,12 +304,10 @@ exports.sendReset = (req, res) => {
     .exec()
     .then(user => {
       if (!user) {
-        console.log('no user found');
         return res
           .status(400)
           .json({ message: 'No user found with that email' });
       } else {
-        console.log('found user');
         //store key on user
         user.passwordResetKey = resetKey;
 
@@ -345,16 +317,12 @@ exports.sendReset = (req, res) => {
             console.log(err);
             return next(err);
           }
-          console.log('saving user');
-          console.log(user);
           // build email parameter map
           const emailParams = {
             key         : user.passwordResetKey.key,
             to_email    : user.profile.email,
             recUserId   : user._id
           };
-
-          // console.log(emailParams);
 
           // send password reset email
           try {
@@ -396,8 +364,6 @@ exports.sendReset = (req, res) => {
 //= =======================================
 
 exports.resetPass = (req, res, next) => {
-  console.log('resetPass');
-  console.log(req.body.key);
   const target = {
     'passwordResetKey.key': req.body.key,
     'passwordResetKey.exp': { $gt: Date.now() }

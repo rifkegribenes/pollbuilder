@@ -104,9 +104,6 @@ function appState(state = INITIAL_STATE, action) {
     * Save the userId and token in the redux store...set loggedIn to TRUE.
     */
     case VERIFY_EMAIL_SUCCESS:
-      console.log("VERIFY_EMAIL_SUCCESS");
-      console.log(action.payload);
-      console.log(action.payload.token);
       window.localStorage.setItem(
         "authToken",
         JSON.stringify(action.payload.token)
@@ -141,9 +138,6 @@ function appState(state = INITIAL_STATE, action) {
       });
 
     case VALIDATE_TOKEN_SUCCESS:
-      console.log("VALIDATE_TOKEN_SUCCESS");
-      console.log(action.payload);
-      console.log(action.payload.token);
       return update(state, {
         spinnerClass: { $set: "spinner__hide" },
         loggedIn: { $set: true },
@@ -180,8 +174,6 @@ function appState(state = INITIAL_STATE, action) {
     case VALIDATE_TOKEN_FAILURE:
       window.localStorage.removeItem("authToken");
       window.localStorage.removeItem("userId");
-      console.log(action.type);
-      console.log(action.payload);
       if (typeof action.payload.message === "string") {
         error = action.payload.message;
       } else {
@@ -217,7 +209,6 @@ function appState(state = INITIAL_STATE, action) {
     * Set loggedIn to true.
     */
     case LOGIN_SUCCESS:
-      console.log(action.payload);
       window.localStorage.setItem(
         "authToken",
         JSON.stringify(action.payload.token)
@@ -248,7 +239,6 @@ function appState(state = INITIAL_STATE, action) {
     * Hide the spinner, Set loggedIn to true.
     */
     case SET_LOGGEDIN:
-      console.log("SET_LOGGEDIN");
       return update(state, {
         spinnerClass: { $set: "spinner__hide" },
         loggedIn: { $set: true }
@@ -263,8 +253,6 @@ function appState(state = INITIAL_STATE, action) {
     * Save the userId and fb token in the redux store...set loggedIn to TRUE.
     */
     case CALLBACK_FACEBOOK_SUCCESS:
-      console.log("callback facebook success");
-      console.log(action.payload);
       return update(state, {
         spinnerClass: { $set: "spinner__hide" },
         loggedIn: { $set: true },
@@ -287,8 +275,6 @@ function appState(state = INITIAL_STATE, action) {
     * (also handled in register.js reducer)
     */
     case REGISTRATION_SUCCESS:
-      console.log("registration success appstate.js");
-      console.log(action.payload.user);
       window.localStorage.setItem(
         "authToken",
         JSON.stringify(action.payload.token)
