@@ -35,7 +35,7 @@ const requireAuth = (req, res, next) => {
         return res.status(422).send({ success : false, message : err.message });
       }
       if (!user) {
-        return res.status(422).send({ success : false, message : 'Login error: Authentication Failed.' });
+        return res.status(422).send({ success : false, message : 'Sorry, you must log in to view this page.' });
       }
       if (user) {
         const userInfo = helpers.setUserInfo(user);

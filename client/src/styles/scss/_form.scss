@@ -68,6 +68,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
 
     }
 
+
   &__input-group {
     width: 100%;
     text-align: left;
@@ -466,6 +467,24 @@ input:not([type=checkbox]):not([type=radio]), textarea {
       height: 20px;
       margin: 11px;
     }
+
+  &__password-toggle  {
+    height: 40px;
+    width: auto;
+    position: absolute;
+    top: 34px;
+    right: 5px;
+
+    & svg {
+      height: 40px;
+      width: auto;
+
+      & path {
+      stroke: $color_gray_lighter !important;
+    }
+  }
+
+  }
 
   &__icon-wrap {
     background: rgba(255,255,255,.2);

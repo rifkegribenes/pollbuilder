@@ -93,14 +93,6 @@ function appState(state = INITIAL_STATE, action) {
       return update(state, {
         spinnerClass: { $set: "spinner__hide" },
         loggedIn: { $set: true },
-        modal: {
-          class: { $set: "modal__show" },
-          text: { $set: "Welcome to the voting app!" },
-          title: { $set: "Thanks for verifying your email" },
-          type: { $set: "modal__success" },
-          buttonText: { $set: "Continue" },
-          redirect: { $set: "/" }
-        },
         authToken: { $set: action.payload.token }
       });
 

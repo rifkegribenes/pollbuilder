@@ -341,6 +341,17 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     width: 20px;
     height: 20px;
     margin: 11px; }
+  .form__password-toggle {
+    height: 40px;
+    width: auto;
+    position: absolute;
+    top: 34px;
+    right: 5px; }
+    .form__password-toggle svg {
+      height: 40px;
+      width: auto; }
+      .form__password-toggle svg path {
+        stroke: #878787 !important; }
   .form__icon-wrap {
     background: rgba(255, 255, 255, 0.2);
     width: 100%; }
@@ -1267,9 +1278,19 @@ body.user-is-tabbing *:focus {
     width: 100%;
     padding-bottom: 5px;
     margin-bottom: 10px; }
-    .aria-button__link:hover, .aria-button__link:active {
+    .aria-button__link:hover, .aria-button__link:active, .aria-button__link:focus {
       border-bottom: 1px dotted #545454;
       cursor: pointer; }
+
+.link {
+  color: #182848;
+  border-bottom: 1px dotted #182848;
+  cursor: pointer;
+  text-decoration: none; }
+  .link:hover, .link:active, .link:focus {
+    color: #4e76c4;
+    border-bottom: 1px dotted #4e76c4;
+    cursor: pointer; }
 
 .center {
   text-align: center; }

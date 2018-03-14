@@ -149,6 +149,59 @@ exports.register = function (req, res, next) {
     }); // catch (User.findOne)
 } // register
 
+
+//= =======================================
+// Resend verification email
+//= =======================================
+
+exports.resendVerification = (req, res, next) => {
+  const email = req.body.email;
+  const key = mailUtils.makeSignupKey();
+
+  const target = { 'local.email': email }
+  const updates = {
+    signupKey: key
+  };
+  const options = { new: true };
+
+  User.findOneAndUpdate(target, updates, options)
+  .exec()
+  .then( (user) => {
+    if (!user) {
+      return res
+        .status(400)
+        .json({
+          message: 'Sorry, no user account found with that email, please try again.'
+        });
+      } else {
+          // Send validation email
+          const subject = "Voting App: Email Verification Required";
+          const url = mailUtils.makeValidationUrl(key.key);
+          const html = mailTemplate.verificationTemplate(url);
+          const text = `Please click here to verify your email: ${url}`;
+          mailUtils.sendMail(email, subject, html, text)
+            .then(() => {
+              console.log('email sent');
+            })
+            .catch((err) => {
+              console.log(err);
+              return next(err);
+            });
+
+          // Respond with success message if email sent sucessfully
+          res.status(201).json({
+            message: `Verification email sent to ${email}`
+          });
+        }
+      })
+    .catch( err => {
+      console.log('Error!!!', err);
+        return res
+          .status(400)
+          .json({ message: err});
+    });
+}
+
 //= =======================================
 // Facebook Callbacks
 //= =======================================

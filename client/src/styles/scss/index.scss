@@ -131,11 +131,25 @@ body.user-is-tabbing *:focus {
     padding-bottom: 5px;
     margin-bottom: 10px;
 
-    &:hover, &:active {
+    &:hover, &:active, &:focus {
       border-bottom: 1px dotted $color_gray_text;
       cursor: pointer;
 
     }
+
+  }
+}
+
+.link {
+  color: $color_sky;
+  border-bottom: 1px dotted $color_sky;
+  cursor: pointer;
+  text-decoration: none;
+
+    &:hover, &:active, &:focus {
+    color: $color_sky_lightest;
+    border-bottom: 1px dotted $color_sky_lightest;
+    cursor: pointer;
 
   }
 }

@@ -488,6 +488,7 @@ class ComboBox extends React.Component {
                       handleChange={this.handleInput}
                       handleBlur={this.handleBlur}
                       handleFocus={this.handleFocus}
+                      label="First name"
                       placeholder="First name"
                       autoComplete="given-name"
                       showError={this.state.showFieldErrors.firstName}
@@ -503,6 +504,7 @@ class ComboBox extends React.Component {
                       handleChange={this.handleInput}
                       handleBlur={this.handleBlur}
                       handleFocus={this.handleFocus}
+                      label="Last name"
                       placeholder="Last name"
                       autoComplete="family-name"
                       showError={this.state.showFieldErrors.lastName}
@@ -535,7 +537,8 @@ class ComboBox extends React.Component {
                     handleChange={this.handleInput}
                     handleBlur={this.handleBlur}
                     handleFocus={this.handleFocus}
-                    placeholder="Email"
+                    label="Email"
+                    placeholder={login ? "Email" : "xyz@gmail.com"}
                     autoComplete="email"
                     type="email"
                     showError={this.state.showFieldErrors.email}
@@ -554,7 +557,8 @@ class ComboBox extends React.Component {
                     handleChange={this.handleInput}
                     handleBlur={this.handleBlur}
                     handleFocus={this.handleFocus}
-                    placeholder={resetPwd ? "New Password" : "Password"}
+                    label={resetPwd ? "New Password" : "Password"}
+                    placeholder={login ? "Password" : "At least 6 characters"}
                     autoComplete="new-password"
                     type="password"
                     showError={this.state.showFieldErrors.password}
@@ -573,6 +577,7 @@ class ComboBox extends React.Component {
                     handleBlur={this.handleBlur}
                     handleFocus={this.handleFocus}
                     placeholder="Confirm Password"
+                    label="Confirm Password"
                     autoComplete="new-password"
                     type="password"
                     showError={this.state.showFieldErrors.confirmPwd}

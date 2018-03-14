@@ -113,13 +113,14 @@ function profile(state = INITIAL_STATE, action) {
       } else {
         error = "Sorry, something went wrong :(\nPlease try again.";
       }
-      return Object.assign({}, state, {
-        spinnerClass: "spinner__hide",
+      return update(state, {
+        spinnerClass: { $set: "spinner__hide" },
         modal: {
-          class: "modal__show",
-          text: error,
-          type: "modal__error",
-          title: "Error fetching profile"
+          class: { $set: "modal__show" },
+          text: { $set: error },
+          title: { $set: "Error fetching profile" },
+          type: { $set: "modal__error" },
+          buttonText: { $set: "Try again" }
         }
       });
 
