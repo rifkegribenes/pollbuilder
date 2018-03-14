@@ -19,8 +19,7 @@ const EMPTY_USER = {
     avatarUrl: "",
     firstName: "",
     lastName: "",
-    email: "",
-    validated: false
+    email: ""
   },
   facebook: {
     token: "",
@@ -36,7 +35,8 @@ const EMPTY_USER = {
     token: "",
     id: "",
     email: ""
-  }
+  },
+  validated: false
 };
 
 const INITIAL_STATE = {
@@ -65,52 +65,27 @@ function profile(state = INITIAL_STATE, action) {
         user: { $merge: action.payload }
       });
 
-    case VERIFY_EMAIL_SUCCESS:
-      return update(state, {
-        user: {
-          _id: { $set: action.payload.user._id },
-          profile: {
-            avatarUrl: { $set: action.payload.user.avatarUrl || "" },
-            firstName: { $set: action.payload.user.firstName || "" },
-            lastName: { $set: action.payload.user.lastName || "" },
-            email: { $set: action.payload.user.email },
-            validated: { $set: true }
-          }
-        }
-      });
-
     /*
-    * Called from: <Login />
-    * Payload: User Profile (and more!)
-    * Purpose: Set current user data when user successfully logs in
+    * Called from: <ComboBox />, <VerifyEmail />, <Profile />
+    * Payload: User Profile
+    * Purpose: Update user data in redux store with user object
+    * returned from server when user successfully logs in,
+    * registers, or verifies email
     */
+    case VERIFY_EMAIL_SUCCESS:
     case LOGIN_SUCCESS:
+    case REGISTRATION_SUCCESS:
+    case GET_PROFILE_SUCCESS:
       user = { ...action.payload.user };
       return update(state, {
-        $merge: { user }
+        $merge: {
+          user,
+          spinnerClass: "spinner__hide"
+        }
       });
 
     case LOGOUT:
-      return update(state, {
-        spinnerClass: { $set: "spinner__hide" },
-        modal: {
-          class: { $set: "modal__hide" },
-          type: { $set: "" },
-          title: { $set: "" },
-          text: { $set: "" }
-        }
-      });
-
-    /*
-    * Called from: <Registration />
-    * Payload: User Profile (and more!)
-    * Purpose: Set current user data when user successfully registers
-    */
-    case REGISTRATION_SUCCESS:
-      user = { ...action.payload.user };
-      return update(state, {
-        $merge: { user }
-      });
+      return INITIAL_STATE;
 
     /*
     * Called from: <Profile />
@@ -122,33 +97,6 @@ function profile(state = INITIAL_STATE, action) {
         $merge: {
           user: { ...EMPTY_USER },
           spinnerClass: "spinner__show"
-        }
-      });
-
-    /*
-    * Called from: <Profile />
-    * Payload: User object
-    * Purpose: Populate the ViewProfile object
-    */
-    case GET_PROFILE_SUCCESS:
-      if (action.payload.user.local) {
-        user.local = { ...action.payload.user.local };
-      }
-      if (action.payload.user.facebook) {
-        user.facebook = { ...action.payload.user.facebook };
-      }
-      if (action.payload.user.github) {
-        user.github = { ...action.payload.user.github };
-      }
-      if (action.payload.user.google) {
-        user.google = { ...action.payload.user.google };
-      }
-      user.id = action.payload.user._id;
-      user.profile = { ...action.payload.user.profile };
-      return update(state, {
-        $merge: {
-          user,
-          spinnerClass: "spinner__hide"
         }
       });
 

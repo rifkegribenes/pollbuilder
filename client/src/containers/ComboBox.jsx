@@ -92,12 +92,7 @@ class ComboBox extends React.Component {
   toggleForm(form) {
     const newState = { ...this.state };
     newState.form = form;
-    console.log(newState.form);
-    this.forceUpdate(
-      this.setState({ ...newState }, () => {
-        console.log(this.state.form);
-      })
-    );
+    this.forceUpdate(this.setState({ ...newState }, () => {}));
   }
 
   /* Function login - Perform basic validation:
@@ -198,11 +193,10 @@ class ComboBox extends React.Component {
           let error;
           typeof err === "string"
             ? (error = err)
-            : typeof err.error === "string"
-              ? (error = err.error)
-              : typeof err.message === "string"
-                ? (error = err.message)
-                : (error = undefined);
+            : typeof err.message === "string"
+              ? (error = err.message)
+              : (error = undefined);
+          console.log(error);
           this.props.actions.setFormError(error);
           this.props.actions.setFormField({
             error: err

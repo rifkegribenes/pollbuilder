@@ -35,8 +35,7 @@ class Header extends React.Component {
         )}
         {this.props.appState.loggedIn && (
           <div className="header__email">
-            {this.props.appState.user.profile.email ||
-              this.props.profile.user.profile.email}
+            {this.props.profile.user.profile.email}
           </div>
         )}
       </header>

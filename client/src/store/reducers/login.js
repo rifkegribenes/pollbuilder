@@ -23,7 +23,6 @@ import {
 } from "../actions/apiActions";
 
 const INITIAL_STATE = {
-  authToken: "",
   errorMsg: "",
   spinnerClass: "spinner__hide",
   modal: {
@@ -71,15 +70,7 @@ function login(state = INITIAL_STATE, action) {
       return Object.assign({}, state, { errorMsg: error });
 
     case LOGOUT:
-      return update(state, {
-        spinnerClass: { $set: "spinner__hide" },
-        modal: {
-          class: { $set: "modal__hide" },
-          type: { $set: "" },
-          title: { $set: "" },
-          text: { $set: "" }
-        }
-      });
+      return INITIAL_STATE;
 
     /*
     *  Called From: <Login />, <Register />, <ResetPassword />
@@ -262,12 +253,13 @@ function login(state = INITIAL_STATE, action) {
     *  Note: this action is also handled in appState reducer.
     */
     case REGISTRATION_SUCCESS:
+      console.log("reg success");
       return Object.assign({}, state, {
         spinnerClass: "spinner__hide",
         modal: {
           class: "modal__show",
           text:
-            "Your registration was successful. Please check your email for a message, and click thelink to verify your email address.",
+            "Your registration was successful. Please check your email for a message, and click the link to verify your email address.",
           title: "Registration Success",
           type: "modal__success",
           redirect: "login"
@@ -281,6 +273,7 @@ function login(state = INITIAL_STATE, action) {
     *  display error message in the form.
     */
     case REGISTRATION_FAILURE:
+      console.log("reg failure");
       if (typeof action.payload.message === "string") {
         error = action.payload.message;
       } else {

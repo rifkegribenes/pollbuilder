@@ -85,12 +85,14 @@ exports.register = function (req, res, next) {
             // by passport (matched the email used with another social account)
             const userInfo = helpers.setUserInfo(user);
             const token = `Bearer ${helpers.generateToken(userInfo)}`;
+            console.log('found and returning user');
             res.status(201).json({
               token,
               user
             });
           }) // then
           .catch( (err) => {
+            console.log('authentication.js > register > catch block 95');
             console.log(err);
             return next(err);
           }); // catch
@@ -129,9 +131,10 @@ exports.register = function (req, res, next) {
             });
 
           // Respond with JWT if user was created
-
+          console.log('new user created');
           const userInfo = helpers.setUserInfo(user);
           const token = `Bearer ${helpers.generateToken(userInfo)}`;
+          console.log(userInfo, token);
           res.status(201).json({
             token,
             user
@@ -140,6 +143,7 @@ exports.register = function (req, res, next) {
       }
   }) // then (User.findOne)
     .catch( (err) => {
+      console.log('authentication.js > register > catch 146');
       console.log(err);
       return next(err);
     }); // catch (User.findOne)
@@ -233,8 +237,9 @@ exports.verifyEmail = (req, res) => {
   const updates = {
     validated: true
   };
+  const options = { new: true };
 
-  User.findOneAndUpdate(target, updates)
+  User.findOneAndUpdate(target, updates, options)
     .exec()
     .then( user => {
     if (!user) {

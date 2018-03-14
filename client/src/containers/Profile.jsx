@@ -30,17 +30,17 @@ class Profile extends React.Component {
     // the userid and token will be in the route params.
     // extract them to use in the api call, then strip them from
     // the URL. there is probably a better way to do this but idk what it is...
+    // also set Validated to true since email has been validated by social auth
     if (this.props.match && this.props.match.params.id) {
       userId = this.props.match.params.id;
       token = this.props.match.params.token;
-      this.props.actions.setLoggedIn();
+      this.props.actions.setLoggedIn(true);
       window.history.replaceState(null, null, `${window.location.origin}/user`);
     } else {
       // if they're not in the route params
       // then they've already been saved to redux store or local storage;
       // look for them there
       userId =
-        this.props.appState.user._id ||
         this.props.profile.user._id ||
         JSON.parse(window.localStorage.getItem("userId"));
       console.log(`userId: ${userId}`);
@@ -48,7 +48,6 @@ class Profile extends React.Component {
         this.props.appState.authToken ||
         this.props.profile.token ||
         JSON.parse(window.localStorage.getItem("authToken"));
-      console.log(`token: ${token}`);
     }
 
     // if logged in through social auth, need to save them to local storage
@@ -58,7 +57,7 @@ class Profile extends React.Component {
     // retrieve profile & save to app state
     this.props.api.getProfile(token, userId).then(result => {
       if (result.type === "GET_PROFILE_SUCCESS") {
-        console.log(this.props.profile.user);
+        console.log(`validated: ${this.props.profile.user.validated}`);
       }
     });
   }
@@ -105,7 +104,7 @@ class Profile extends React.Component {
                 />
               </div>
               <div className="profile__email">
-                Validated: {this.props.appState.validated}
+                {this.props.profile.user.validated && "Validated"}
               </div>
             </div>
             <div className="profile__card">

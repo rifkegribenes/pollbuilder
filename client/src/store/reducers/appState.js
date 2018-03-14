@@ -22,33 +22,6 @@ import {
 const INITIAL_STATE = {
   loggedIn: false,
   authToken: "",
-  user: {
-    _id: "",
-    local: {
-      email: ""
-    },
-    profile: {
-      avatarUrl: "",
-      firstName: "",
-      lastName: "",
-      email: ""
-    },
-    facebook: {
-      token: "",
-      id: "",
-      email: ""
-    },
-    github: {
-      token: "",
-      id: "",
-      email: ""
-    },
-    google: {
-      token: "",
-      id: "",
-      email: ""
-    }
-  },
   spinnerClass: "spinner__hide",
   modal: {
     class: "modal__hide",
@@ -79,29 +52,19 @@ function appState(state = INITIAL_STATE, action) {
     case LOGOUT:
       window.localStorage.removeItem("authToken");
       window.localStorage.removeItem("userId");
-      return update(state, {
-        loggedIn: { $set: false },
-        spinnerClass: { $set: "spinner__hide" },
-        modal: {
-          class: { $set: "modal__hide" }
-        }
-      });
+      return INITIAL_STATE;
+
     /*
-    * This action is issued only from the <Home/> component.
-    * On VALIDATE_TOKEN_REQUEST action, set the spinner class to show.
-    * This activates the spinner component on the home page so user knows the action is running
+    * Set spinner class to show to indicate API call in progress
     */
     case VERIFY_EMAIL_REQUEST:
     case VALIDATE_TOKEN_REQUEST:
       return Object.assign({}, state, { spinnerClass: "spinner__show" });
 
     /*
-    * This action is issued only from the <Home/> component,
-    * when the localStorage token is successfully validated by the server.
-    * On VALIDATE_TOKEN_SUCCESS action, set the spinner class to hide.
-    * This hides the spinner component on the home page so user knows
-    * the action is complete.
-    * Save the userId and token in the redux store...set loggedIn to TRUE.
+    * This action is issued only from the <VerifyEmail/> component.
+    * On VERIFY_EMAIL_SUCCESS action, hide spinner, set loggedIn and
+    * validated to true, save updated user profile to redux store
     */
     case VERIFY_EMAIL_SUCCESS:
       window.localStorage.setItem(
@@ -115,17 +78,6 @@ function appState(state = INITIAL_STATE, action) {
       return update(state, {
         spinnerClass: { $set: "spinner__hide" },
         loggedIn: { $set: true },
-
-        user: {
-          _id: { $set: action.payload.user._id },
-          profile: {
-            avatarUrl: { $set: action.payload.user.avatarUrl || "" },
-            firstName: { $set: action.payload.user.firstName || "" },
-            lastName: { $set: action.payload.user.lastName || "" },
-            email: { $set: action.payload.user.email },
-            validated: { $set: true }
-          }
-        },
         modal: {
           class: { $set: "modal__show" },
           text: { $set: "Welcome to the voting app!" },
@@ -141,17 +93,6 @@ function appState(state = INITIAL_STATE, action) {
       return update(state, {
         spinnerClass: { $set: "spinner__hide" },
         loggedIn: { $set: true },
-
-        user: {
-          _id: { $set: action.payload.user._id },
-          profile: {
-            avatarUrl: { $set: action.payload.user.avatarUrl || "" },
-            firstName: { $set: action.payload.user.firstName || "" },
-            lastName: { $set: action.payload.user.lastName || "" },
-            email: { $set: action.payload.user.email },
-            validated: { $set: true }
-          }
-        },
         modal: {
           class: { $set: "modal__show" },
           text: { $set: "Welcome to the voting app!" },
@@ -220,22 +161,13 @@ function appState(state = INITIAL_STATE, action) {
       return update(state, {
         spinnerClass: { $set: "spinner__hide" },
         loggedIn: { $set: true },
-        user: {
-          _id: { $set: action.payload.user._id },
-          profile: {
-            avatarUrl: { $set: action.payload.user.avatarUrl || "" },
-            firstName: { $set: action.payload.user.firstName || "" },
-            lastName: { $set: action.payload.user.lastName || "" },
-            email: { $set: action.payload.user.email }
-          }
-        },
         authToken: { $set: action.payload.token }
       });
 
     /*
-    * This action is issued from the <App/> component if it finds a
-    * Facebook redirect hash in the URL, indicating that Facebook auth
-    * was successful.
+    * This action is issued from the <Profile /> component if it finds a
+    * Facebook redirect hash in the URL OR route params indicating successful
+    * social auth.
     * Hide the spinner, Set loggedIn to true.
     */
     case SET_LOGGEDIN:
@@ -256,15 +188,6 @@ function appState(state = INITIAL_STATE, action) {
       return update(state, {
         spinnerClass: { $set: "spinner__hide" },
         loggedIn: { $set: true },
-        user: {
-          _id: { $set: action.payload.user._id },
-          profile: {
-            avatarUrl: { $set: action.payload.user.avatarUrl || "" },
-            firstName: { $set: action.payload.user.firstName || "" },
-            lastName: { $set: action.payload.user.lastName || "" },
-            email: { $set: action.payload.user.email }
-          }
-        },
         authToken: { $set: action.payload.token }
       });
 
@@ -286,15 +209,6 @@ function appState(state = INITIAL_STATE, action) {
       return update(state, {
         spinnerClass: { $set: "spinner__hide" },
         loggedIn: { $set: true },
-        user: {
-          _id: { $set: action.payload.user._id },
-          profile: {
-            avatarUrl: { $set: action.payload.user.avatarUrl || "" },
-            firstName: { $set: action.payload.user.firstName || "" },
-            lastName: { $set: action.payload.user.lastName || "" },
-            email: { $set: action.payload.user.email }
-          }
-        },
         authToken: { $set: action.payload.token }
       });
 
