@@ -26,7 +26,31 @@ const checkValidated = (req, res, next) => {
   }
 }
 
-const requireAuth = passport.authenticate('jwt', { session: false });
+const requireAuth = (req, res, next) => {
+  console.log('requireAuth');
+  passport.authenticate('jwt', { session: false },
+    (err, user, info) => {
+      console.log(`info: ${info}`);
+      if (err) {
+        return res.status(422).send({ success : false, message : err.message });
+      }
+      if (!user) {
+        return res.status(422).send({ success : false, message : 'Login error: Authentication Failed.' });
+      }
+      if (user) {
+        const userInfo = helpers.setUserInfo(user);
+        req.login(user, loginErr => {
+          if (loginErr) {
+            return next(loginErr);
+          }
+          return res.status(200).send({
+            token: helpers.generateToken(userInfo),
+            user
+          });
+        }); // req.login
+      }
+    })(req, res, next);
+  };
 
 const requireLogin = (req, res, next) => {
   console.log('requireLogin');
@@ -94,7 +118,7 @@ module.exports = function (app) {
   // Handle email validation links
   // Toggle user's `validated` property to `true`.
   // Returns fail status + message -or- user object & JWT
-  authRoutes.post('/validate', AuthenticationController.validate);
+  authRoutes.post('/verify', AuthenticationController.verifyEmail);
 
   // Facebook authentication with passport
   authRoutes.get('/facebook',

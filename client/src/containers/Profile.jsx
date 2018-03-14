@@ -43,10 +43,12 @@ class Profile extends React.Component {
         this.props.appState.user._id ||
         this.props.profile.user._id ||
         JSON.parse(window.localStorage.getItem("userId"));
+      console.log(`userId: ${userId}`);
       token =
         this.props.appState.authToken ||
         this.props.profile.token ||
         JSON.parse(window.localStorage.getItem("authToken"));
+      console.log(`token: ${token}`);
     }
 
     // if logged in through social auth, need to save them to local storage

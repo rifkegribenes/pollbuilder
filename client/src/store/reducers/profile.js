@@ -5,7 +5,7 @@ import {
   GET_PROFILE_SUCCESS,
   GET_PROFILE_FAILURE,
   VALIDATE_TOKEN_SUCCESS,
-  VALIDATE_SUCCESS,
+  VERIFY_EMAIL_SUCCESS,
   LOGIN_SUCCESS,
   REGISTRATION_SUCCESS
 } from "../actions/apiActions";
@@ -65,7 +65,7 @@ function profile(state = INITIAL_STATE, action) {
         user: { $merge: action.payload }
       });
 
-    case VALIDATE_SUCCESS:
+    case VERIFY_EMAIL_SUCCESS:
       return update(state, {
         user: {
           _id: { $set: action.payload.user._id },
@@ -160,13 +160,18 @@ function profile(state = INITIAL_STATE, action) {
     case GET_PROFILE_FAILURE:
       console.log("GET_PROFILE_FAILURE");
       console.log(action.payload);
-      error = "An error occurred while getting the profile.";
+      if (typeof action.payload.message === "string") {
+        error = action.payload.message;
+      } else {
+        error = "Sorry, something went wrong :(\nPlease try again.";
+      }
       return Object.assign({}, state, {
         spinnerClass: "spinner__hide",
         modal: {
           class: "modal__show",
           text: error,
-          type: "modal__error"
+          type: "modal__error",
+          title: "Error fetching profile"
         }
       });
 

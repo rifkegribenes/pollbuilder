@@ -6,7 +6,8 @@ exports.setUserInfo = (request) => {
     firstName: request.profile.firstName,
     lastName: request.profile.lastName,
     email: request.profile.email,
-    avatarUrl: request.profile.avatarUrl
+    avatarUrl: request.profile.avatarUrl,
+    validated: request.validated
   };
 
   return getUserInfo;

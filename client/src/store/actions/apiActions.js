@@ -109,9 +109,9 @@ export function login(body) {
   };
 }
 
-export const VALIDATE_REQUEST = "VALIDATE_REQUEST";
-export const VALIDATE_SUCCESS = "VALIDATE_SUCCESS";
-export const VALIDATE_FAILURE = "VALIDATE_FAILURE";
+export const VERIFY_EMAIL_REQUEST = "VERIFY_EMAIL_REQUEST";
+export const VERIFY_EMAIL_SUCCESS = "VERIFY_EMAIL_SUCCESS";
+export const VERIFY_EMAIL_FAILURE = "VERIFY_EMAIL_FAILURE";
 
 /*
 * Function: validate - Attempts to validate with uid & key.
@@ -125,17 +125,16 @@ export const VALIDATE_FAILURE = "VALIDATE_FAILURE";
 *   VALIDATE_FAILURE: Dispatched if credentials invalid.
 *     Displays error to user, prompt to try again.
 */
-export function validate(body) {
-  console.log(body);
+export function verifyEmail(body) {
   return {
     [RSAA]: {
-      endpoint: `${BASE_URL}/api/auth/validate/`,
+      endpoint: `${BASE_URL}/api/auth/verify/`,
       method: "POST",
       types: [
-        VALIDATE_REQUEST,
-        VALIDATE_SUCCESS,
+        VERIFY_EMAIL_REQUEST,
+        VERIFY_EMAIL_SUCCESS,
         {
-          type: VALIDATE_FAILURE,
+          type: VERIFY_EMAIL_FAILURE,
           payload: (action, state, res) => {
             console.log(res);
             return res.json().then(data => {
@@ -253,7 +252,29 @@ export function getProfile(token, userId) {
     [RSAA]: {
       endpoint: `${BASE_URL}/api/user/${userId}`,
       method: "GET",
-      types: [GET_PROFILE_REQUEST, GET_PROFILE_SUCCESS, GET_PROFILE_FAILURE],
+      types: [
+        GET_PROFILE_REQUEST,
+        GET_PROFILE_SUCCESS,
+        {
+          type: GET_PROFILE_FAILURE,
+          payload: (action, state, res) => {
+            console.log(res);
+            return res.json().then(data => {
+              let message = "Sorry, something went wrong :(";
+              if (data) {
+                console.log(data);
+                if (data.message) {
+                  console.log(data.message);
+                  message = data.message;
+                }
+                return { message };
+              } else {
+                return { message };
+              }
+            });
+          }
+        }
+      ],
       headers: { Authorization: `Bearer ${token}` }
     }
   };

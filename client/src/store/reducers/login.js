@@ -107,12 +107,22 @@ function login(state = INITIAL_STATE, action) {
       });
 
     /*
-    *  Called From: <Login />
+    *  Called From: <ComboBox />
     *  Payload: None
-    *  Purpose: Activate spinner so user knows API request is in progress
+    *  Purpose: Activate spinner to indicates API request is in progress
     */
     case LOGIN_REQUEST:
-      return Object.assign({}, state, { spinnerClass: "spinner__show" });
+    case RESET_PW_REQUEST:
+    case SEND_RESET_EMAIL_REQUEST:
+    case REGISTRATION_REQUEST:
+      return Object.assign({}, state, {
+        spinnerClass: "spinner__show",
+        modal: {
+          class: "modal__hide",
+          text: ""
+        },
+        errorMsg: ""
+      });
 
     /*
     *  Called From: <Login />
@@ -168,20 +178,6 @@ function login(state = INITIAL_STATE, action) {
     *  Payload: None
     *  Purpose: Display a spinner to indicate API call in progress
     */
-    case RESET_PW_REQUEST:
-      return Object.assign({}, state, {
-        spinnerClass: "spinner__show",
-        modal: {
-          class: "modal__hide",
-          text: ""
-        }
-      });
-
-    /*
-    *  Called from: <ResetPassword />
-    *  Payload: None
-    *  Purpose: Display a spinner to indicate API call in progress
-    */
     case RESET_PW_SUCCESS:
       return Object.assign({}, state, {
         spinnerClass: "spinner__hide",
@@ -215,20 +211,6 @@ function login(state = INITIAL_STATE, action) {
           buttonText: "Try again",
           redirect: "reset"
         }
-      });
-
-    /*
-    *  Called from: <Login />
-    *  Payload: None
-    *  Purpose: Display a spinner to indicate API call in progress
-    */
-    case SEND_RESET_EMAIL_REQUEST:
-      return Object.assign({}, state, {
-        spinnerClass: "spinner__show",
-        modal: {
-          class: "modal__hide"
-        },
-        errorMsg: ""
       });
 
     /*
@@ -270,21 +252,6 @@ function login(state = INITIAL_STATE, action) {
           text: error,
           title: "Failure: Password reset email not sent",
           buttonText: "Try again"
-        }
-      });
-
-    /*
-    *  Called From: <Registration />
-    *  Payload: None
-    *  Purpose: Display spinner so user knows API action is in progress.
-    */
-    case REGISTRATION_REQUEST:
-      console.log("registration request");
-      return Object.assign({}, state, {
-        spinnerClass: "spinner__show",
-        modal: {
-          class: "modal__hide",
-          text: ""
         }
       });
 

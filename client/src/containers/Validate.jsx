@@ -15,14 +15,13 @@ class Validate extends React.Component {
   * If localStorage fails, force login with a specific message
   */
   componentDidMount() {
-    console.log(this.props.match.params.key);
     const body = {
       key: this.props.match.params.key
     };
     console.log("Validate component");
-    this.props.api.validate(body).then(result => {
-      if (result === "VALIDATE_SUCCESS") {
-        console.log("validate success");
+    this.props.api.verifyEmail(body).then(result => {
+      if (result === "VERIFY_EMAIL_SUCCESS") {
+        console.log("verify email success");
       }
     });
   }

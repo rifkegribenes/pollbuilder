@@ -8,9 +8,9 @@ import {
   SET_MODAL_ERROR
 } from "../actions";
 import {
-  VALIDATE_REQUEST,
-  VALIDATE_SUCCESS,
-  VALIDATE_FAILURE,
+  VERIFY_EMAIL_REQUEST,
+  VERIFY_EMAIL_SUCCESS,
+  VERIFY_EMAIL_FAILURE,
   VALIDATE_TOKEN_REQUEST,
   VALIDATE_TOKEN_SUCCESS,
   VALIDATE_TOKEN_FAILURE,
@@ -91,7 +91,7 @@ function appState(state = INITIAL_STATE, action) {
     * On VALIDATE_TOKEN_REQUEST action, set the spinner class to show.
     * This activates the spinner component on the home page so user knows the action is running
     */
-    case VALIDATE_REQUEST:
+    case VERIFY_EMAIL_REQUEST:
     case VALIDATE_TOKEN_REQUEST:
       return Object.assign({}, state, { spinnerClass: "spinner__show" });
 
@@ -103,8 +103,18 @@ function appState(state = INITIAL_STATE, action) {
     * the action is complete.
     * Save the userId and token in the redux store...set loggedIn to TRUE.
     */
-    case VALIDATE_SUCCESS:
-    case VALIDATE_TOKEN_SUCCESS:
+    case VERIFY_EMAIL_SUCCESS:
+      console.log("VERIFY_EMAIL_SUCCESS");
+      console.log(action.payload);
+      console.log(action.payload.token);
+      window.localStorage.setItem(
+        "authToken",
+        JSON.stringify(action.payload.token)
+      );
+      window.localStorage.setItem(
+        "userId",
+        JSON.stringify(action.payload.user._id)
+      );
       return update(state, {
         spinnerClass: { $set: "spinner__hide" },
         loggedIn: { $set: true },
@@ -119,6 +129,43 @@ function appState(state = INITIAL_STATE, action) {
             validated: { $set: true }
           }
         },
+        modal: {
+          class: { $set: "modal__show" },
+          text: { $set: "Welcome to the voting app!" },
+          title: { $set: "Thanks for verifying your email" },
+          type: { $set: "modal__success" },
+          buttonText: { $set: "Continue" },
+          redirect: { $set: "/" }
+        },
+        authToken: { $set: action.payload.token }
+      });
+
+    case VALIDATE_TOKEN_SUCCESS:
+      console.log("VALIDATE_TOKEN_SUCCESS");
+      console.log(action.payload);
+      console.log(action.payload.token);
+      return update(state, {
+        spinnerClass: { $set: "spinner__hide" },
+        loggedIn: { $set: true },
+
+        user: {
+          _id: { $set: action.payload.user._id },
+          profile: {
+            avatarUrl: { $set: action.payload.user.avatarUrl || "" },
+            firstName: { $set: action.payload.user.firstName || "" },
+            lastName: { $set: action.payload.user.lastName || "" },
+            email: { $set: action.payload.user.email },
+            validated: { $set: true }
+          }
+        },
+        modal: {
+          class: { $set: "modal__show" },
+          text: { $set: "Welcome to the voting app!" },
+          title: { $set: "Thanks for verifying your email" },
+          type: { $set: "modal__success" },
+          buttonText: { $set: "Continue" },
+          redirect: { $set: "/" }
+        },
         authToken: { $set: action.payload.token }
       });
 
@@ -129,7 +176,7 @@ function appState(state = INITIAL_STATE, action) {
      * Remove the invalid values from localStorage
      * Set loggedIn to false.
      */
-    case VALIDATE_FAILURE:
+    case VERIFY_EMAIL_FAILURE:
     case VALIDATE_TOKEN_FAILURE:
       window.localStorage.removeItem("authToken");
       window.localStorage.removeItem("userId");

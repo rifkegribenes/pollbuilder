@@ -383,7 +383,9 @@ class ComboBox extends React.Component {
       : "";
     const errorClass =
       this.props.login.form.error ||
-      (this.state.showFormErrors && this.state.submit)
+      (this.state.showFormErrors &&
+        this.state.submit &&
+        Object.values(this.state.validationErrors).length)
         ? "error"
         : "hidden";
     return (

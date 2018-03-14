@@ -250,16 +250,16 @@ exports.pwResetConfirmation = () => {
       );
  };
 
-exports.validationTemplate = (url) => {
+exports.verificationTemplate = (url) => {
   return shortEmail(
-    'Voting App: Validate Account', // title
+    'Voting App: Verify Email', // title
     'Rifkegribenes Voting App', // appName
     url, // url
-    'Click here to validate your account', // preheader
+    'Click here to verify your email', // preheader
     'Welcome!', // headline
     'https://raw.githubusercontent.com/rifkegribenes/voting-app/master/public/img/email-banner.png', // heroUrl
-    'Click below to validate your account:', // body
-    'Validate Email', // buttonText
+    'Click below to verify your email:', // body
+    'Verify Email', // buttonText
     'voting app | rifkegribenes.io' // footerText
     );
 };

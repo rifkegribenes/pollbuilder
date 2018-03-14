@@ -94,7 +94,7 @@ exports.register = function (req, res, next) {
             // don't need to validate email bc it has already been validated
             // by passport (matched the email used with another social account)
             const userInfo = helpers.setUserInfo(user);
-            const token = `JWT ${helpers.generateToken(userInfo)}`;
+            const token = `Bearer ${helpers.generateToken(userInfo)}`;
             res.status(201).json({
               token,
               user
@@ -129,11 +129,11 @@ exports.register = function (req, res, next) {
 
           console.log(`saved new user with id ${user.id}`);
           // Send validation email
-          const subject = "Voting App: Email Confirmation Required";
+          const subject = "Voting App: Email Verification Required";
           console.log(user.id);
           const url = mailUtils.makeValidationUrl(key.key);
-          const html = mailTemplate.validationTemplate(url);
-          const text = `Please click here to validate your email: ${url}`;
+          const html = mailTemplate.verificationTemplate(url);
+          const text = `Please click here to verify your email: ${url}`;
           mailUtils.sendMail(email, subject, html, text)
             .then(() => {
               console.log('email sent');
@@ -147,7 +147,7 @@ exports.register = function (req, res, next) {
 
           const userInfo = helpers.setUserInfo(user);
           console.log('authentication.js > 135');
-          const token = `JWT ${helpers.generateToken(userInfo)}`;
+          const token = `Bearer ${helpers.generateToken(userInfo)}`;
           res.status(201).json({
             token,
             user
@@ -244,8 +244,8 @@ exports.googleCallback = (req, res) => {
 //   Returns: updated user profile & JWT or error message
 */
 
-exports.validate = (req, res) => {
-  console.log('validate route hit');
+exports.verifyEmail = (req, res) => {
+  console.log('verifyEmail route hit');
   const key = req.body.key;
   console.log(`key: ${key}`);
   const target = {
@@ -266,7 +266,10 @@ exports.validate = (req, res) => {
     } else {
       // Respond with updated JWT if user was validated
       const userInfo = helpers.setUserInfo(user);
-      const token = `JWT ${helpers.generateToken(userInfo)}`;
+      const token = helpers.generateToken(userInfo);
+      // const token = `Bearer ${helpers.generateToken(userInfo)}`;
+      console.log('test this at jwt.io:');
+      console.log(token);
       res.status(201).json({
         token,
         user
