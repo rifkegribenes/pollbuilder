@@ -82,7 +82,7 @@ const ModalSm = props => (
                     props.resetForm();
                   }
                   if (props.redirect) {
-                    props.history.push(`/${props.redirect}`);
+                    props.history.push(`${props.redirect}`);
                   }
                 }}
               >

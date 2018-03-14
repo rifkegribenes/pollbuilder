@@ -31,7 +31,22 @@ export function validateToken(token, userId) {
           type: VALIDATE_TOKEN_SUCCESS,
           meta: { token }
         },
-        VALIDATE_TOKEN_FAILURE
+        {
+          type: VALIDATE_TOKEN_FAILURE,
+          payload: (action, state, res) => {
+            return res.json().then(data => {
+              let message = "Sorry, something went wrong :(";
+              if (data) {
+                if (data.message) {
+                  message = data.message;
+                }
+                return { message };
+              } else {
+                return { message };
+              }
+            });
+          }
+        }
       ],
       headers: { Authorization: `Bearer ${token}` }
     }

@@ -358,13 +358,13 @@ exports.sendReset = (req, res) => {
   const resetKey = mailUtils.makeSignupKey();
 
   // find user by email
-  User.findOne({ 'profile.email': req.body.email })
+  User.findOne({ 'local.email': req.body.email })
     .exec()
     .then(user => {
       if (!user) {
         return res
           .status(400)
-          .json({ message: 'No user found with that email' });
+          .json({ message: 'No user found with that email.\nIf you have an account, did you create it by logging in with Facebook, Google, or Github? If so, you don\'t need a password, just log in using one of those services.' });
       } else {
         //store key on user
         user.passwordResetKey = resetKey;

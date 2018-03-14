@@ -59,8 +59,6 @@ function profile(state = INITIAL_STATE, action) {
     * Purpose: Set current user data when token is successfully loaded from localStorage
     */
     case VALIDATE_TOKEN_SUCCESS:
-      console.log("validate token");
-      console.log(action.payload);
       return update(state, {
         user: { $merge: action.payload }
       });

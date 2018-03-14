@@ -187,7 +187,7 @@ function login(state = INITIAL_STATE, action) {
           type: "modal__success",
           text: "Your password has been reset.\nClick Sign In to continue",
           buttonText: "Sign in",
-          redirect: "login"
+          redirect: "/login"
         }
       });
 
@@ -210,7 +210,7 @@ function login(state = INITIAL_STATE, action) {
           text: error,
           title: "Failure: Password not reset",
           buttonText: "Try again",
-          redirect: "reset"
+          redirect: "/reset"
         }
       });
 
@@ -230,7 +230,7 @@ function login(state = INITIAL_STATE, action) {
           }. Follow the instructions to reset your password.`,
           title: "Check your Email",
           type: "modal__success",
-          redirect: "login"
+          redirect: "/login"
         }
       });
 
@@ -259,7 +259,7 @@ function login(state = INITIAL_STATE, action) {
     /*
     *  Called From: <Registration />
     *  Payload: N/A
-    *  Purpose: Hide spinner so user knows API action is complete.
+    *  Purpose: Hide spinner, show success modal about email verification.
     *  Note: this action is also handled in appState reducer.
     */
     case REGISTRATION_SUCCESS:
@@ -272,7 +272,7 @@ function login(state = INITIAL_STATE, action) {
             "Your registration was successful. Please check your email for a message, and click the link to verify your email address.",
           title: "Registration Success",
           type: "modal__success",
-          redirect: "login"
+          redirect: "/"
         }
       });
 
@@ -296,7 +296,7 @@ function login(state = INITIAL_STATE, action) {
           text: { $set: error },
           title: { $set: "Registration Failure" },
           type: { $set: "modal__error" },
-          redirect: { $set: "login" },
+          redirect: { $set: "/login" },
           buttonText: { $set: "Try again" }
         }
       });

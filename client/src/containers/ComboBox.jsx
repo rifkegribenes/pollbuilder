@@ -652,8 +652,10 @@ class ComboBox extends React.Component {
             // can't figure out how to get #$%^% react-router
             // to reload the component here
             // i have tried everything and i'm MOVIN ON
-            window.location.reload();
-            // so dirty!! ¯\_(ツ)_/¯
+            if (!this.props.login.modal.redirect) {
+              window.location.reload();
+              // so dirty!! ¯\_(ツ)_/¯
+            }
           }}
           redirect={this.props.login.modal.redirect}
           history={this.props.history}
@@ -674,6 +676,9 @@ ComboBox.propTypes = {
   }).isRequired,
   api: PropTypes.shape({
     resetPassword: PropTypes.func
+  }).isRequired,
+  appState: PropTypes.shape({
+    loggedIn: PropTypes.boolean
   }).isRequired,
   login: PropTypes.shape({
     errorMsg: PropTypes.string,
@@ -706,7 +711,8 @@ ComboBox.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  login: state.login
+  login: state.login,
+  appState: state.appState
 });
 
 const mapDispatchToProps = dispatch => ({

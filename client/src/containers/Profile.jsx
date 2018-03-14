@@ -45,7 +45,6 @@ class Profile extends React.Component {
       userId =
         this.props.profile.user._id ||
         JSON.parse(window.localStorage.getItem("userId"));
-      console.log(`userId: ${userId}`);
       token =
         this.props.appState.authToken ||
         this.props.profile.token ||
@@ -59,7 +58,6 @@ class Profile extends React.Component {
     // retrieve profile & save to app state
     this.props.api.getProfile(token, userId).then(result => {
       if (result.type === "GET_PROFILE_SUCCESS") {
-        console.log(`validated: ${this.props.profile.user.validated}`);
       }
     });
   }

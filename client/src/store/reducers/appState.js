@@ -114,9 +114,6 @@ function appState(state = INITIAL_STATE, action) {
      * Set loggedIn to false.
      */
     case VERIFY_EMAIL_FAILURE:
-    case VALIDATE_TOKEN_FAILURE:
-      window.localStorage.removeItem("authToken");
-      window.localStorage.removeItem("userId");
       if (typeof action.payload.message === "string") {
         error = action.payload.message;
       } else {
@@ -127,10 +124,30 @@ function appState(state = INITIAL_STATE, action) {
         modal: {
           class: { $set: "modal__show" },
           text: { $set: error },
-          title: { $set: "Validation Failure" },
+          title: { $set: "Email Verification Failure" },
           type: { $set: "modal__error" },
           buttonText: { $set: "Try again" }
         },
+        loggedIn: { $set: false }
+      });
+
+    case VALIDATE_TOKEN_FAILURE:
+      window.localStorage.removeItem("authToken");
+      window.localStorage.removeItem("userId");
+      if (typeof action.payload.message === "string") {
+        error = action.payload.message;
+      } else {
+        error = "Sorry, something went wrong :(\nPlease try again.";
+      }
+      return update(state, {
+        spinnerClass: { $set: "spinner__hide" },
+        // modal: {
+        //   class: { $set: "modal__show" },
+        //   text: { $set: error },
+        //   title: { $set: "Validation Failure" },
+        //   type: { $set: "modal__error" },
+        //   buttonText: { $set: "Try again" }
+        // },
         loggedIn: { $set: false }
       });
 
@@ -194,7 +211,7 @@ function appState(state = INITIAL_STATE, action) {
       });
 
     /*
-    * This action is issued only from the <Registration/> component.
+    * This action is issued only from the <ComboBox /> component.
     * On REGSTRATION_SUCCESS action, save the userId and token to localStorage.
     * Populate the store with userId and token, set logged in to true.
     * (also handled in register.js reducer)
