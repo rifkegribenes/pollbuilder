@@ -469,11 +469,12 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     }
 
   &__password-toggle  {
-    height: 40px;
+    height: 30px;
     width: auto;
     position: absolute;
     top: 34px;
     right: 5px;
+    border-radius: 100%;
 
     & svg {
       height: 40px;
@@ -527,11 +528,15 @@ input:not([type=checkbox]):not([type=radio]), textarea {
       text-align: right;
     }
 
-    &:hover, &:active{
+    &:hover, &:active, &:focus {
       color: $color_aqua_darker;
       border-bottom: 1px dotted $color_aqua_darker;
       transition: all 300ms ease-in-out;
     }
+
+    &:focus {
+      box-shadow: inset 0 0 .2em $color_aqua, 0 0 1em $color_focus_ring !important;
+      }
   }
 
 }

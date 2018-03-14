@@ -342,11 +342,12 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     height: 20px;
     margin: 11px; }
   .form__password-toggle {
-    height: 40px;
+    height: 30px;
     width: auto;
     position: absolute;
     top: 34px;
-    right: 5px; }
+    right: 5px;
+    border-radius: 100%; }
     .form__password-toggle svg {
       height: 40px;
       width: auto;
@@ -381,10 +382,12 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     text-align: left; }
     .form__login-link:last-child {
       text-align: right; }
-    .form__login-link:hover, .form__login-link:active {
+    .form__login-link:hover, .form__login-link:active, .form__login-link:focus {
       color: #3b5694;
       border-bottom: 1px dotted #3b5694;
       transition: all 300ms ease-in-out; }
+    .form__login-link:focus {
+      box-shadow: inset 0 0 0.2em #4b6cb7, 0 0 1em #4b6cb7 !important; }
 
 ::-webkit-input-placeholder {
   color: #545454;

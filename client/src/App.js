@@ -33,6 +33,24 @@ class App extends Component {
       console.log("logged in:");
       console.log(this.props.profile.user.profile.email);
     }
+
+    // check whether user is tabbing or using mouse,
+    // set focus classes conditionally
+    const handleFirstTab = e => {
+      if (e.keyCode === 9) {
+        document.body.classList.add("user-is-tabbing");
+        window.removeEventListener("keydown", handleFirstTab);
+        window.addEventListener("mousedown", handleMouseDownOnce);
+      }
+    };
+
+    const handleMouseDownOnce = () => {
+      document.body.classList.remove("user-is-tabbing");
+      window.removeEventListener("mousedown", handleMouseDownOnce);
+      window.addEventListener("keydown", handleFirstTab);
+    };
+
+    window.addEventListener("keydown", handleFirstTab);
   }
 
   render() {
