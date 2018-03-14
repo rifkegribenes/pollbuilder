@@ -7,11 +7,19 @@ export const SET_PROFILE_VIEW = "SET_PROFILE_VIEW";
 export const SET_REDIRECT_URL = "SET_REDIRECT_URL";
 export const DISMISS_MODAL = "DISMISS_MODAL";
 export const SET_MODAL_ERROR = "SET_MODAL_ERROR";
+export const SET_SPINNER = "SET_SPINNER";
 
 export function setRedirectUrl(url) {
   return {
     type: SET_REDIRECT_URL,
     payload: url
+  };
+}
+
+export function setSpinner(spinnerClass) {
+  return {
+    type: SET_SPINNER,
+    payload: spinnerClass
   };
 }
 

@@ -435,6 +435,7 @@ class ComboBox extends React.Component {
               className="form__button form__button--sm form__button--github"
               href="http://localhost:8080/api/auth/github/"
               id="btn-github"
+              onClick={() => this.props.actions.setSpinner("show")}
             >
               <img
                 className="form__icon form__icon--github"
@@ -449,6 +450,7 @@ class ComboBox extends React.Component {
               className="form__button form__button--sm form__button--facebook"
               id="btn-facebook"
               href="http://localhost:8080/api/auth/facebook"
+              onClick={() => this.props.actions.setSpinner("show")}
             >
               <img
                 className="form__icon form__icon--facebook"
@@ -463,6 +465,7 @@ class ComboBox extends React.Component {
               className="form__button form__button--sm form__button--google"
               id="btn-google"
               href="http://localhost:8080/api/auth/google"
+              onClick={() => this.props.actions.setSpinner("show")}
             >
               <img
                 className="form__icon form__icon--google"

@@ -29,13 +29,15 @@ class Profile extends React.Component {
     // if landing on this page from a callback from social login,
     // the userid and token will be in the route params.
     // extract them to use in the api call, then strip them from
-    // the URL. there is probably a better way to do this but idk what it is...
+    // the URL, and hide the spinner.
+    // there is probably a better way to do this but idk what it is...
     // also set Validated to true since email has been validated by social auth
     if (this.props.match && this.props.match.params.id) {
       userId = this.props.match.params.id;
       token = this.props.match.params.token;
       this.props.actions.setLoggedIn(true);
       window.history.replaceState(null, null, `${window.location.origin}/user`);
+      this.props.actions.setSpinner("hide");
     } else {
       // if they're not in the route params
       // then they've already been saved to redux store or local storage;

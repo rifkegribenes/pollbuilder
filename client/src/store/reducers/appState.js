@@ -5,7 +5,8 @@ import {
   SET_LOGGEDIN,
   SET_REDIRECT_URL,
   DISMISS_MODAL,
-  SET_MODAL_ERROR
+  SET_MODAL_ERROR,
+  SET_SPINNER
 } from "../actions";
 import {
   VERIFY_EMAIL_REQUEST,
@@ -60,6 +61,15 @@ function appState(state = INITIAL_STATE, action) {
     case VERIFY_EMAIL_REQUEST:
     case VALIDATE_TOKEN_REQUEST:
       return Object.assign({}, state, { spinnerClass: "spinner__show" });
+
+    /*
+    * Toggle spinner class (for social auth done with href
+    * rather than API call)
+    */
+    case SET_SPINNER:
+      return Object.assign({}, state, {
+        spinnerClass: `spinner__${action.payload}`
+      });
 
     /*
     * This action is issued only from the <VerifyEmail/> component.

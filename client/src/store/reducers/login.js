@@ -5,7 +5,8 @@ import {
   SET_FORM_ERROR,
   RESET_FORM,
   DISMISS_MODAL,
-  LOGOUT
+  LOGOUT,
+  SET_SPINNER
 } from "../actions";
 import {
   LOGIN_REQUEST,
@@ -113,6 +114,15 @@ function login(state = INITIAL_STATE, action) {
           text: ""
         },
         errorMsg: ""
+      });
+
+    /*
+    * Toggle spinner class (for social auth done with href
+    * rather than API call)
+    */
+    case SET_SPINNER:
+      return Object.assign({}, state, {
+        spinnerClass: `spinner__${action.payload}`
       });
 
     /*
