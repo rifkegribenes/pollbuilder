@@ -9,7 +9,48 @@ import Spinner from "./Spinner";
 import ModalSm from "./ModalSm";
 
 class CreatePoll extends React.Component {
-  componentDidMount() {}
+  componentDidMount() {
+    // user is validated if local account email is verified
+    // OR if they logged in with social auth
+    if (!this.props.appState.loggedIn) {
+      this.props.actions.setModalError({
+        message: `Please log in to create a poll.`,
+        buttonText: "Log in",
+        redirect: "/login"
+      });
+    }
+    if (!this.props.profile.user.profile.email) {
+      // retrieve profile & save to app state
+      // if user profile isn't saved in app state, retrieve it
+      // to use email to resend verification if necessary
+      console.log("fetching profile");
+      const userId =
+        this.props.profile.user._id ||
+        JSON.parse(window.localStorage.getItem("userId"));
+      const token =
+        this.props.appState.authToken ||
+        JSON.parse(window.localStorage.getItem("authToken"));
+      this.props.api.getProfile(token, userId).then(result => {
+        if (result.type === "GET_PROFILE_SUCCESS") {
+          console.log(`got profile: ${this.props.profile.user.profile.email}`);
+        }
+      });
+    }
+    const validated =
+      this.props.appState.loggedIn &&
+      (this.props.profile.user.validated ||
+        this.props.profile.facebook.email ||
+        this.props.profile.google.email ||
+        this.props.profile.github.email);
+    if (!validated) {
+      this.props.actions.setModalError({
+        message: `You must verify your email before you can create a poll.\nClick below to send a new verification link to ${
+          this.props.profile.user.profile.email
+        }`,
+        buttonText: "Send verification link"
+      });
+    }
+  }
 
   render() {
     return (
@@ -21,6 +62,7 @@ class CreatePoll extends React.Component {
           modalTitle={this.props.poll.modal.title}
           modalText={this.props.poll.modal.text}
           modalType={this.props.poll.modal.type}
+          buttonText={this.props.poll.modal.buttonText}
           dismiss={() => {
             this.props.actions.dismissModal({
               class: "modal__hide",
@@ -43,8 +85,9 @@ CreatePoll.propTypes = {
     user: PropTypes.shape({
       profile: PropTypes.shape({
         firstName: PropTypes.string,
-        validated: PropTypes.boolean
-      }).isRequired
+        email: PropTypes.string
+      }).isRequired,
+      validated: PropTypes.boolean
     }).isRequired
   }).isRequired,
   poll: PropTypes.shape({

@@ -5,6 +5,7 @@ import {
   SET_FORM_ERROR,
   RESET_FORM,
   DISMISS_MODAL,
+  SET_MODAL_ERROR,
   SET_SPINNER
 } from "../actions";
 import {
@@ -114,6 +115,29 @@ function poll(state = INITIAL_STATE, action) {
     case SET_SPINNER:
       return Object.assign({}, state, {
         spinnerClass: `spinner__${action.payload}`
+      });
+
+    /*
+    *  Called From: <CreatePoll />
+    *  Payload: Error Message
+    *  Purpose: Hide spinner,
+    *  Display error message in modal. Generic, called from various components
+    */
+    case SET_MODAL_ERROR:
+      if (typeof action.payload.message === "string") {
+        error = action.payload.message;
+      } else {
+        error = "Sorry, something went wrong :(\nPlease try again.";
+      }
+      return update(state, {
+        spinnerClass: { $set: "spinner__hide" },
+        modal: {
+          class: { $set: "modal__show" },
+          text: { $set: error },
+          title: { $set: "Something went wrong" },
+          type: { $set: "modal__error" },
+          buttonText: { $set: action.payload.buttonText }
+        }
       });
 
     /*

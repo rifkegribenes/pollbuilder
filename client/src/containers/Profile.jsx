@@ -47,7 +47,6 @@ class Profile extends React.Component {
         JSON.parse(window.localStorage.getItem("userId"));
       token =
         this.props.appState.authToken ||
-        this.props.profile.token ||
         JSON.parse(window.localStorage.getItem("authToken"));
     }
 
