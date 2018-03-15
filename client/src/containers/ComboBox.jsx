@@ -440,7 +440,7 @@ class ComboBox extends React.Component {
             </button>
           </div>
         )}
-        {!(reset || resetPwd || localForm) && (
+        {!(reset || resetPwd) && (
           <div className="combo__social-wrap">
             <a
               className="form__button form__button--sm form__button--github"
