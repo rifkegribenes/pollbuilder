@@ -16,38 +16,36 @@ class CreatePoll extends React.Component {
       this.props.actions.setModalError({
         message: `Please log in to create a poll.`,
         buttonText: "Log in",
+        title: "Login required",
         action: () => this.props.history.push("/login")
-      });
-    }
-    if (!this.props.profile.user.profile.email) {
-      // retrieve profile & save to app state
-      // if user profile isn't saved in app state, retrieve it
-      // to use email to resend verification if necessary
-      console.log("fetching profile");
-      const userId =
-        this.props.profile.user._id ||
-        JSON.parse(window.localStorage.getItem("userId"));
-      const token =
-        this.props.appState.authToken ||
-        JSON.parse(window.localStorage.getItem("authToken"));
-      this.props.api.getProfile(token, userId).then(result => {
-        if (result.type === "GET_PROFILE_SUCCESS") {
-          console.log(`got profile: ${this.props.profile.user.profile.email}`);
-        }
       });
     }
     const verified =
       this.props.appState.loggedIn && this.props.profile.user.verified;
+    if (!verified) {
+      if (!this.props.profile.user.profile.email) {
+        // if user profile isn't already saved in app state, retrieve it
+        // to use email to resend verification link
+        const userId =
+          this.props.profile.user._id ||
+          JSON.parse(window.localStorage.getItem("userId"));
+        const token =
+          this.props.appState.authToken ||
+          JSON.parse(window.localStorage.getItem("authToken"));
+        this.props.api.getProfile(token, userId).then(result => {});
+      }
+    }
     if (!verified && this.props.profile.user.profile.email) {
+      const email = this.props.profile.user.profile.email;
+      const body = { email };
       this.props.actions.setModalError({
         message: `You must verify your email before you can create a poll.\nClick below to send a new verification link to ${
           this.props.profile.user.profile.email
         }`,
         buttonText: "Send verification link",
+        title: "Email verification required",
         action: () => {
-          this.props.api.resendVerificationLink(
-            this.props.profile.user.profile.email
-          );
+          this.props.api.resendVerificationLink(body);
         }
       });
     }
@@ -71,7 +69,12 @@ class CreatePoll extends React.Component {
               text: "",
               title: ""
             });
+            this.props.actions.setSpinner("hide");
+            if (this.props.poll.modal.redirect) {
+              this.props.history.push(this.props.poll.modal.redirect);
+            }
           }}
+          redirect={this.props.poll.modal.redirect}
         />
       </div>
     );

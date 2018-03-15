@@ -15,7 +15,6 @@ import {
   VALIDATE_TOKEN_REQUEST,
   VALIDATE_TOKEN_SUCCESS,
   VALIDATE_TOKEN_FAILURE,
-  CALLBACK_FACEBOOK_SUCCESS,
   LOGIN_SUCCESS,
   REGISTRATION_SUCCESS
 } from "../actions/apiActions";
@@ -193,21 +192,6 @@ function appState(state = INITIAL_STATE, action) {
       return update(state, {
         spinnerClass: { $set: "spinner__hide" },
         loggedIn: { $set: true }
-      });
-
-    /*
-    * This action is issued from the <FBCallback/> component,
-    * when the FB token is successfully validated by the server.
-    * On CALLBACK_FACEBOOK_SUCCESS action, set the spinner class to hide.
-    * This hides the spinner component on the home page so user knows
-    * the action is complete.
-    * Save the userId and fb token in the redux store...set loggedIn to TRUE.
-    */
-    case CALLBACK_FACEBOOK_SUCCESS:
-      return update(state, {
-        spinnerClass: { $set: "spinner__hide" },
-        loggedIn: { $set: true },
-        authToken: { $set: action.payload.token }
       });
 
     /*

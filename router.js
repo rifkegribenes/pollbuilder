@@ -115,6 +115,10 @@ module.exports = function (app) {
   // Returns fail status + message -or- success status + message
   apiRoutes.post('/resetpassword', AuthenticationController.resetPass);
 
+  // Handle requests for new verification email (generate/send token)
+  // Returns fail status + message -or- success status + message
+  apiRoutes.post('/sendverifyemail', AuthenticationController.sendVerify);
+
   // Handle email validation links
   // Toggle user's `validated` property to `true`.
   // Returns fail status + message -or- user object & JWT

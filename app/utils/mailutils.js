@@ -26,7 +26,6 @@ const SERVER_URL = process.env.NODE_ENV === 'production' ? APP_HOST : '//localho
  * @returns   [object]    [signup key]
 */
 function makeSignupKey() {
-  console.log('makeSignupKey');
     const buf     = crypto.randomBytes(24);
     const created = Date.now();
 
@@ -45,7 +44,6 @@ function makeSignupKey() {
  * @returns   [string]             [custom validation URL]
 */
 function makeVerificationUrl(key) {
-  console.log('makeVerificationUrl');
     const baseUrl = `${CLIENT_URL}/verify`;
 
     return `${baseUrl}/${key}`;
@@ -60,7 +58,6 @@ function makeVerificationUrl(key) {
  *
 */
 function sendMail(to, subject, html, text) {
-  console.log('sendMail');
   return new Promise((resolve, reject) => {
     emailClient.sendMail({
       from: 'rifkegribenes <hello@rifkegribenes.io>',

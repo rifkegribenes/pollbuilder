@@ -21,6 +21,8 @@ export const VALIDATE_TOKEN_FAILURE = "VALIDATE_TOKEN_FAILURE";
 *     Logs the user out and deletes the values saved in localStorage.
 */
 export function validateToken(token, userId) {
+  console.log(`apiActions > 24: userId: ${userId}`);
+  console.log(token);
   return {
     [RSAA]: {
       endpoint: `${BASE_URL}/api/user/${userId}`,
@@ -130,15 +132,15 @@ export const VERIFY_EMAIL_SUCCESS = "VERIFY_EMAIL_SUCCESS";
 export const VERIFY_EMAIL_FAILURE = "VERIFY_EMAIL_FAILURE";
 
 /*
-* Function: validate - Attempts to validate with uid & key.
+* Function: verifyEmail - Attempts to verify email with uid & key.
 *   returns a JWT if successful.
 * @param {string} uid - userID
 * @param {string} key – signup key generated at registration
 * This action dispatches additional actions as it executes:
-*   VALIDATE_REQUEST: Initiates a spinner on the login page.
-*   VALIDATE_SUCCESS: Dispatched if credentials valid and profile returned.
+*   VERIFY_EMAIL_REQUEST: Initiates a spinner on the login page.
+*   VERIFY_EMAIL_SUCCESS: Dispatched if credentials valid and profile returned.
 *     Logs user in, stores token, sets current user profile in app state.
-*   VALIDATE_FAILURE: Dispatched if credentials invalid.
+*   VERIFY_EMAIL_FAILURE: Dispatched if credentials invalid.
 *     Displays error to user, prompt to try again.
 */
 export function verifyEmail(body) {
@@ -172,36 +174,51 @@ export function verifyEmail(body) {
   };
 }
 
-export const CALLBACK_FACEBOOK_REQUEST = "CALLBACK_FACEBOOK_REQUEST";
-export const CALLBACK_FACEBOOK_SUCCESS = "CALLBACK_FACEBOOK_SUCCESS";
-export const CALLBACK_FACEBOOK_FAILURE = "CALLBACK_FACEBOOK_FAILURE";
+export const RESEND_VLINK_REQUEST = "RESEND_VLINK_REQUEST";
+export const RESEND_VLINK_SUCCESS = "RESEND_VLINK_SUCCESS";
+export const RESEND_VLINK_FAILURE = "RESEND_VLINK_FAILURE";
 
 /*
-* Function: FB Callback - Attempts to log in by authenticating with facebook.
-*   returns a JWT if successful.
-* @param {string} body - the userID/password entered by user
+* Function: resendVerificationLink - Generates a new email verification
+* link and dispatches an email to user.
+* @param {string} email - the email of the logged-in user
 * This action dispatches additional actions as it executes:
-*   CALLBACK_FACEBOOK_REQUEST: Initiates a spinner on the login page.
-*   CALLBACK_FACEBOOK_SUCCESS: Dispatched if credentials valid and profile returned.
+*   RESEND_VLINK_REQUEST: Initiates a spinner on the login page.
+*   RESEND_VLINK_SUCCESS: Dispatched if credentials valid and profile returned.
 *     Logs user in, stores fb token, sets current user profile in app state.
-*   CALLBACK_FACEBOOK_FAILURE: Dispatched if credentials invalid.
+*   RESEND_VLINK_FAILURE: Dispatched if credentials invalid.
 *     Displays error to user, prompt to try again or register.
 */
-export function callbackFacebook() {
+export function resendVerificationLink(body) {
+  console.log("apiActions > 193");
+  console.log(body);
+  console.log(JSON.stringify(body));
   return {
     [RSAA]: {
-      endpoint: `${BASE_URL}/auth/facebook/callback`,
-      method: "GET",
-      mode: "no-cors",
+      endpoint: `${BASE_URL}/api/sendverifyemail`,
+      method: "POST",
       types: [
-        CALLBACK_FACEBOOK_REQUEST,
-        CALLBACK_FACEBOOK_SUCCESS,
-        CALLBACK_FACEBOOK_FAILURE
+        RESEND_VLINK_REQUEST,
+        RESEND_VLINK_SUCCESS,
+        {
+          type: RESEND_VLINK_FAILURE,
+          payload: (action, state, res) => {
+            return res.json().then(data => {
+              let message = "Sorry, something went wrong :(";
+              if (data) {
+                if (data.message) {
+                  message = data.message;
+                }
+                return { message };
+              } else {
+                return { message };
+              }
+            });
+          }
+        }
       ],
-      headers: {
-        "Content-Type": "application/jsonp",
-        "Access-Control-Allow-Origin": "*"
-      }
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body)
     }
   };
 }

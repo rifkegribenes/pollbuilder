@@ -22,6 +22,11 @@ import {
   // VIEW_POLL_SUCCESS,
   // VIEW_POLL_FAILURE
 } from "../actions/apiPollActions";
+import {
+  RESEND_VLINK_REQUEST,
+  RESEND_VLINK_SUCCESS,
+  RESEND_VLINK_FAILURE
+} from "../actions/apiActions";
 
 const INITIAL_STATE = {
   errorMsg: "",
@@ -94,10 +99,11 @@ function poll(state = INITIAL_STATE, action) {
       });
 
     /*
-    *  Called From: <ComboBox />
+    *  Called From: <CreatePoll />
     *  Payload: None
     *  Purpose: Activate spinner to indicates API request is in progress
     */
+    case RESEND_VLINK_REQUEST:
     case CREATE_POLL_REQUEST:
       return Object.assign({}, state, {
         spinnerClass: "spinner__show",
@@ -134,7 +140,7 @@ function poll(state = INITIAL_STATE, action) {
         modal: {
           class: { $set: "modal__show" },
           text: { $set: error },
-          title: { $set: "Something went wrong" },
+          title: { $set: action.payload.title },
           type: { $set: "modal__error" },
           buttonText: { $set: action.payload.buttonText },
           action: { $set: action.payload.action }
@@ -192,6 +198,46 @@ function poll(state = INITIAL_STATE, action) {
           type: "modal__error",
           text: error,
           title: "Failure: Poll not saved",
+          buttonText: "Try again"
+        }
+      });
+
+    /*
+    *  Called From: <CreatePoll />
+    *  Payload: N/A
+    *  Purpose: Hide spinner, show success modal about email verification.
+    */
+    case RESEND_VLINK_SUCCESS:
+      return Object.assign({}, state, {
+        spinnerClass: "spinner__hide",
+        modal: {
+          class: "modal__show",
+          text:
+            "Please check your email for a message, and click the link to verify your email address.",
+          title: "Verification Link Sent",
+          type: "modal__success",
+          redirect: "/"
+        }
+      });
+
+    /*
+    *  Called from: <CreatePoll />
+    *  Payload: Error message
+    *  Purpose: Display an error message to the user.
+    */
+    case RESEND_VLINK_FAILURE:
+      if (typeof action.payload.message === "string") {
+        error = action.payload.message;
+      } else {
+        error = "Sorry, something went wrong :(\nPlease try again.";
+      }
+      return Object.assign({}, state, {
+        spinnerClass: "spinner__hide",
+        modal: {
+          class: "modal__show",
+          type: "modal__error",
+          text: error,
+          title: "Failure: Message not sent",
           buttonText: "Try again"
         }
       });

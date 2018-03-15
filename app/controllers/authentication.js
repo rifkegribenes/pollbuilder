@@ -57,7 +57,6 @@ exports.register = function (req, res, next) {
       if (existingUser) {
         // check if local account already exists.
         if (existingUser.local && existingUser.local.email === email) {
-            console.log('existing user has matching email in local key');
             return res.status(422).send({ message: 'Oops! Looks like you already have an account with that email address. Please try logging in.' });
         } else {
           // if not, email matches an acct created with social login.
@@ -85,7 +84,6 @@ exports.register = function (req, res, next) {
             // by passport (matched the email used with another social account)
             const userInfo = helpers.setUserInfo(user);
             const token = `Bearer ${helpers.generateToken(userInfo)}`;
-            console.log('found and returning user');
             res.status(201).json({
               token,
               user
@@ -123,7 +121,7 @@ exports.register = function (req, res, next) {
           const text = `Please click here to verify your email: ${url}`;
           mailUtils.sendMail(email, subject, html, text)
             .then(() => {
-              console.log('email sent');
+              console.log('email sent (authentication.js > 124)');
             })
             .catch((err) => {
               console.log(err);
@@ -131,10 +129,8 @@ exports.register = function (req, res, next) {
             });
 
           // Respond with JWT if user was created
-          console.log('new user created');
           const userInfo = helpers.setUserInfo(user);
           const token = helpers.generateToken(userInfo);
-          console.log(userInfo, token);
           res.status(201).json({
             token,
             user
@@ -149,58 +145,6 @@ exports.register = function (req, res, next) {
     }); // catch (User.findOne)
 } // register
 
-
-//= =======================================
-// Resend verification email
-//= =======================================
-
-exports.resendVerification = (req, res, next) => {
-  const email = req.body.email;
-  const key = mailUtils.makeSignupKey();
-
-  const target = { 'local.email': email }
-  const updates = {
-    signupKey: key
-  };
-  const options = { new: true };
-
-  User.findOneAndUpdate(target, updates, options)
-  .exec()
-  .then( (user) => {
-    if (!user) {
-      return res
-        .status(400)
-        .json({
-          message: 'Sorry, no user account found with that email, please try again.'
-        });
-      } else {
-          // Send verification email
-          const subject = "Voting App: Email Verification Required";
-          const url = mailUtils.makeVerificationUrl(key.key);
-          const html = mailTemplate.verificationTemplate(url);
-          const text = `Please click here to verify your email: ${url}`;
-          mailUtils.sendMail(email, subject, html, text)
-            .then(() => {
-              console.log('email sent');
-            })
-            .catch((err) => {
-              console.log(err);
-              return next(err);
-            });
-
-          // Respond with success message if email sent sucessfully
-          res.status(201).json({
-            message: `Verification email sent to ${email}`
-          });
-        }
-      })
-    .catch( err => {
-      console.log('Error!!!', err);
-        return res
-          .status(400)
-          .json({ message: err});
-    });
-}
 
 //= =======================================
 // Facebook Callbacks
@@ -247,8 +191,6 @@ exports.ghCallback = (req, res) => {
 //= =======================================
 
 exports.googleCallback = (req, res) => {
-  console.log('googleCallback');
-  console.log(req.user);
     const userObj = req.user ? { ...req.user } :
       req.session.user ? { ...req.session.user } :
       undefined;
@@ -282,7 +224,6 @@ exports.googleCallback = (req, res) => {
 
 exports.verifyEmail = (req, res) => {
   const key = req.body.key;
-  console.log(`key: ${key}`);
   const target = {
     'signupKey.key': key,
     'signupKey.exp': { $gt: Date.now() }
@@ -316,9 +257,6 @@ exports.verifyEmail = (req, res) => {
           .json({ message: err});
     });
   }
-
-
-
 
 
 /* Dispatch new password reset email (called from sendReset())
@@ -405,6 +343,65 @@ exports.sendReset = (req, res) => {
     });
 }
 
+// SEND VERIFICATION EMAIL
+// Finds user, generates key, sends verification link in email msg
+//   Example: POST >> /api/sendverifyemail
+//   Secured: no
+//   Expects:
+//     1) request body params : {
+//          email : String
+//        }
+//   Returns: success status & message on success
+//
+exports.sendVerify = (req, res, next) => {
+
+  const email = req.body.email;
+  const key = mailUtils.makeSignupKey();
+
+  const target = { 'local.email': email }
+  const updates = {
+    signupKey: key
+  };
+  const options = { new: true };
+
+  User.findOneAndUpdate(target, updates, options)
+  .exec()
+  .then( (user) => {
+    if (!user) {
+      return res
+        .status(400)
+        .json({
+          message: 'Sorry, no user account found with that email, please log in and then try again to resend the verification email.'
+        });
+      } else {
+          // Send verification email
+          const subject = "Voting App: Email Verification Required";
+          const url = mailUtils.makeVerificationUrl(key.key);
+          const html = mailTemplate.verificationTemplate(url);
+          const text = `Please click here to verify your email: ${url}`;
+          mailUtils.sendMail(email, subject, html, text)
+            .then(() => {
+              // console.log('email sent (authentication.js > 396)');
+            })
+            .catch((err) => {
+              console.log(err);
+              return next(err);
+            });
+
+          // Respond with success message if email sent sucessfully
+          res.status(201).json({
+            message: `Verification email sent to ${email}`
+          });
+        }
+      })
+    .catch( err => {
+      console.log('Error!!!', err);
+        return res
+          .status(400)
+          .json({ message: err});
+    });
+}
+
 
 // RESET PASSWORD
 //   Example: POST >> /api/resetpassword
@@ -448,7 +445,7 @@ exports.resetPass = (req, res, next) => {
         const html = mailTemplate.pwResetConfirmation();
         mailUtils.sendMail(user.profile.email, subject, html, text)
           .then(() => {
-            console.log('password reset confirmation email sent');
+            // console.log('password reset confirmation email sent');
           })
           .catch((err) => {
             console.log(err);

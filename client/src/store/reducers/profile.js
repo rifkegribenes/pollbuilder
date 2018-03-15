@@ -109,13 +109,11 @@ function profile(state = INITIAL_STATE, action) {
       });
 
     /*
-    * Called from: <ViewProfile />
+    * Called from: <Profile />
     * Payload: String - error msg
-    * Purpose: Populate the ViewProfile modal with an error message
+    * Purpose: Populate the Profile modal with an error message
     */
     case GET_PROFILE_FAILURE:
-      console.log("GET_PROFILE_FAILURE");
-      console.log(action.payload);
       if (typeof action.payload.message === "string") {
         error = action.payload.message;
       } else {
@@ -133,7 +131,7 @@ function profile(state = INITIAL_STATE, action) {
       });
 
     /*
-    * Called from: <ViewProfile />
+    * Called from: <Profile />
     * Payload: N/A
     * Purpose: Change settings to hide the modal object
     */

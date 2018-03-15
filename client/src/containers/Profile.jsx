@@ -16,7 +16,6 @@ class Profile extends React.Component {
     let token;
     // check for facebook redirect hash
     if (window.location.hash === "#_=_") {
-      console.log("found facebook callback hash");
       this.props.actions.setLoggedIn();
       window.history.replaceState
         ? window.history.replaceState(

@@ -77,16 +77,16 @@ const ModalSm = props => (
               <button
                 className="modal__button"
                 onClick={() => {
-                  props.dismiss();
+                  if (props.redirect) {
+                    props.history.push(`${props.redirect}`);
+                  }
                   if (props.action) {
                     props.action();
                   }
                   if (props.resetForm) {
                     props.resetForm();
                   }
-                  if (props.redirect) {
-                    props.history.push(`${props.redirect}`);
-                  }
+                  props.dismiss();
                 }}
               >
                 {props.buttonText || "Continue"}

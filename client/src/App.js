@@ -27,12 +27,17 @@ class App extends Component {
       let token = window.localStorage.getItem("authToken");
       if (token && token !== "undefined") {
         token = JSON.parse(token);
-        const user = JSON.parse(window.localStorage.getItem("userId"));
-        this.props.api.validateToken(token, user);
+        const userId = JSON.parse(window.localStorage.getItem("userId"));
+        this.props.api.validateToken(token, userId).then(result => {
+          if (result === "VALIDATE_TOKEN_FAILURE") {
+            console.log("token failed to validate");
+          }
+        });
+      } else {
+        console.log("no token found in local storage");
       }
     } else {
-      console.log("logged in:");
-      console.log(this.props.profile.user.profile.email);
+      console.log("logged in");
     }
 
     // check whether user is tabbing or using mouse,

@@ -96,6 +96,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     @include for-big-desktop-up {
       padding: 15px;
       font-size: 1.2em;
+      margin-bottom: 20px;
     }
 
     &__search-container {
@@ -344,6 +345,12 @@ input:not([type=checkbox]):not([type=radio]), textarea {
 
   }
 
+  &__error-wrap {
+    @include for-big-desktop-up {
+      margin-top: -20px;
+    }
+  }
+
   &__error-content {
     color: red;
   }
@@ -352,6 +359,10 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     max-height: 150px;
     overflow: visible;
     transition: $transition_button;
+
+    @include for-big-desktop-up {
+      max-height: 202px;
+    }
   }
 
   &__local--hidden {

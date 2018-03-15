@@ -219,7 +219,6 @@ function login(state = INITIAL_STATE, action) {
     *  Purpose: Display success message to user
     */
     case SEND_RESET_EMAIL_SUCCESS:
-      console.log("SEND_RESET_EMAIL_SUCCESS");
       return Object.assign({}, state, {
         spinnerClass: "spinner__hide",
         modal: {
@@ -261,7 +260,6 @@ function login(state = INITIAL_STATE, action) {
     *  Note: this action is also handled in appState reducer.
     */
     case REGISTRATION_SUCCESS:
-      console.log("reg success");
       return Object.assign({}, state, {
         spinnerClass: "spinner__hide",
         modal: {
@@ -281,7 +279,6 @@ function login(state = INITIAL_STATE, action) {
     *  display error message in the form.
     */
     case REGISTRATION_FAILURE:
-      console.log("reg failure");
       if (typeof action.payload.message === "string") {
         error = action.payload.message;
       } else {
