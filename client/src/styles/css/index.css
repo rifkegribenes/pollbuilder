@@ -289,7 +289,6 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     font-weight: 400;
     border-radius: 4px;
     padding: 10px 20px;
-    border: 1px solid white;
     background-color: #182848; }
     .form__button:last-child {
       margin-right: 0; }
@@ -383,7 +382,8 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     width: 100%; }
     .form__icon-wrap--dark {
       background: rgba(0, 0, 0, 0.2);
-      width: 100%; }
+      width: 100%;
+      height: 42px; }
   .form__sm-button-text {
     font-size: 12px;
     padding: 11px; }

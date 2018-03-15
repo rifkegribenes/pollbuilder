@@ -383,7 +383,6 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     font-weight: 400;
     border-radius: $btn_border-radius;
     padding: 10px 20px;
-    border: 1px solid white;
     background-color: $color_sky;
 
     &:last-child {
@@ -526,6 +525,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     &--dark {
       background: rgba(0,0,0,.2);
       width: 100%;
+      height: 42px;
     }
   }
 

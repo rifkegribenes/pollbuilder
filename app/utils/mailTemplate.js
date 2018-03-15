@@ -244,7 +244,7 @@ exports.pwResetConfirmation = () => {
       'Your password was reset successfully', // preheader
       'You changed your password', // headline
       'https://raw.githubusercontent.com/rifkegribenes/voting-app/master/public/img/success-checkbox-500x180_f.gif', // heroUrl
-      'Or somebody did. If it wasn\'t you, please contact us right away and get that fixed!', // body
+      'Or somebody did...\nIf it wasn\'t you, please contact us right away and get that fixed!', // body
       'My Account', // buttonText
       'voting app | rifkegribenes.io' // footerText
       );
