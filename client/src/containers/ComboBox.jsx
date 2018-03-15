@@ -15,6 +15,7 @@ import * as apiActions from "../store/actions/apiActions";
 import ghIcon from "../img/github-white.svg";
 import fbIcon from "../img/facebook-white.svg";
 import ggIcon from "../img/google-white.svg";
+import vaIcon from "../img/rainbow_icon_120.png";
 
 class ComboBox extends React.Component {
   constructor(props) {
@@ -23,6 +24,7 @@ class ComboBox extends React.Component {
     this.state = {
       form: props.initialForm || "login",
       showFormErrors: false,
+      showLocalForm: false,
       showFieldErrors: {
         firstName: false,
         lastName: false,
@@ -60,7 +62,7 @@ class ComboBox extends React.Component {
       const newState = { ...this.state };
       newState.form = "reset";
       this.setState({ ...newState }, () => {
-        console.log(this.state);
+        // console.log(this.state);
       });
     }
   }
@@ -69,6 +71,7 @@ class ComboBox extends React.Component {
     const newState = {
       form: this.props.initialForm || "login",
       showFormErrors: false,
+      showLocalForm: false,
       showFieldErrors: {
         firstName: false,
         lastName: false,
@@ -92,7 +95,14 @@ class ComboBox extends React.Component {
   toggleForm(form) {
     const newState = { ...this.state };
     newState.form = form;
-    this.forceUpdate(this.setState({ ...newState }, () => {}));
+    newState.localForm = false;
+    this.setState({ ...newState }, () => {});
+  }
+
+  toggleLocalForm() {
+    const newState = { ...this.state };
+    newState.localForm = !this.state.localForm;
+    this.setState({ ...newState }, () => {});
   }
 
   /* Function login - Perform basic validation:
@@ -369,6 +379,7 @@ class ComboBox extends React.Component {
     const signup = this.state.form === "signup";
     const reset = this.state.form === "reset";
     const resetPwd = this.state.form === "resetPwd";
+    const { localForm } = this.state;
     const buttonText = login
       ? "Log In"
       : signup ? "Sign Up" : resetPwd ? "Reset Password" : "Send Email";
@@ -385,7 +396,7 @@ class ComboBox extends React.Component {
     return (
       <div className="container combo">
         <div className="combo__header">
-          {(reset || resetPwd) && (
+          {reset && (
             <button
               className="combo__back-btn"
               onClick={() => this.toggleForm("login")}
@@ -429,7 +440,7 @@ class ComboBox extends React.Component {
             </button>
           </div>
         )}
-        {!(reset || resetPwd) && (
+        {!(reset || resetPwd || localForm) && (
           <div className="combo__social-wrap">
             <a
               className="form__button form__button--sm form__button--github"
@@ -481,11 +492,32 @@ class ComboBox extends React.Component {
         <div className="combo__form">
           <form className="container form">
             <div className="form__body">
-              {!(reset || resetPwd) && (
-                <div className="form__input-group center">or</div>
+              {!(reset || resetPwd || localForm) && (
+                <div>
+                  <div className="form__input-group center">or</div>
+                  <button
+                    className="form__button form__button--sm form__button--local"
+                    id="btn-local"
+                    onClick={() => this.toggleLocalForm()}
+                    type="button"
+                  >
+                    <img
+                      className="form__icon form__icon--local"
+                      alt="voting app"
+                      src={vaIcon}
+                    />
+                    <div className="form__icon-wrap--dark">
+                      <div className="form__sm-button-text">{`${buttonText} with Email`}</div>
+                    </div>
+                  </button>
+                </div>
               )}
               {signup && (
-                <div>
+                <div
+                  className={
+                    localForm ? "form__local--visible" : "form__local--hidden"
+                  }
+                >
                   <div className="form__input-group">
                     <FormInput
                       handleChange={this.handleInput}
@@ -535,104 +567,132 @@ class ComboBox extends React.Component {
                 </div>
               )}
               {!resetPwd && (
-                <div className="form__input-group">
-                  <FormInput
-                    handleChange={this.handleInput}
-                    handleBlur={this.handleBlur}
-                    handleFocus={this.handleFocus}
-                    label="Email"
-                    placeholder={login ? "Email" : "xyz@gmail.com"}
-                    autoComplete="email"
-                    type="email"
-                    showError={this.state.showFieldErrors.email}
-                    value={this.props.login.form.email}
-                    errorText={this.errorFor("email")}
-                    touched={this.state.touched.email}
-                    name="email"
-                    inputRef={el => (this.emailInput = el)}
-                    submit={this.state.submit}
-                  />
+                <div
+                  className={
+                    localForm || reset
+                      ? "form__local--visible"
+                      : "form__local--hidden"
+                  }
+                >
+                  <div className="form__input-group">
+                    <FormInput
+                      handleChange={this.handleInput}
+                      handleBlur={this.handleBlur}
+                      handleFocus={this.handleFocus}
+                      label="Email"
+                      placeholder={login ? "Email" : "xyz@gmail.com"}
+                      autoComplete="email"
+                      type="email"
+                      showError={this.state.showFieldErrors.email}
+                      value={this.props.login.form.email}
+                      errorText={this.errorFor("email")}
+                      touched={this.state.touched.email}
+                      name="email"
+                      inputRef={el => (this.emailInput = el)}
+                      submit={this.state.submit}
+                    />
+                  </div>
                 </div>
               )}
-              {(!reset || resetPwd) && (
-                <div className="form__input-group">
-                  <FormInput
-                    handleChange={this.handleInput}
-                    handleBlur={this.handleBlur}
-                    handleFocus={this.handleFocus}
-                    label={resetPwd ? "New Password" : "Password"}
-                    placeholder={login ? "Password" : "At least 6 characters"}
-                    autoComplete="new-password"
-                    type="password"
-                    showError={this.state.showFieldErrors.password}
-                    value={this.props.login.form.password}
-                    errorText={this.errorFor("password")}
-                    touched={this.state.touched.password}
-                    name="password"
-                    submit={this.state.submit}
-                  />
+              {!reset && (
+                <div
+                  className={
+                    localForm || resetPwd
+                      ? "form__local--visible"
+                      : "form__local--hidden"
+                  }
+                >
+                  <div className="form__input-group">
+                    <FormInput
+                      handleChange={this.handleInput}
+                      handleBlur={this.handleBlur}
+                      handleFocus={this.handleFocus}
+                      label={resetPwd ? "New Password" : "Password"}
+                      placeholder={login ? "Password" : "At least 6 characters"}
+                      autoComplete="new-password"
+                      type="password"
+                      showError={this.state.showFieldErrors.password}
+                      value={this.props.login.form.password}
+                      errorText={this.errorFor("password")}
+                      touched={this.state.touched.password}
+                      name="password"
+                      submit={this.state.submit}
+                    />
+                  </div>
                 </div>
               )}
               {(signup || resetPwd) && (
-                <div className="form__input-group">
-                  <FormInput
-                    handleChange={this.handleInput}
-                    handleBlur={this.handleBlur}
-                    handleFocus={this.handleFocus}
-                    placeholder="Confirm Password"
-                    label="Confirm Password"
-                    autoComplete="new-password"
-                    type="password"
-                    showError={this.state.showFieldErrors.confirmPwd}
-                    value={this.props.login.form.confirmPwd}
-                    errorText={this.errorFor("confirmPwd")}
-                    touched={this.state.touched.confirmPwd}
-                    name="confirmPwd"
-                    submit={this.state.submit}
-                  />
+                <div
+                  className={
+                    localForm || resetPwd
+                      ? "form__local--visible"
+                      : "form__local--hidden"
+                  }
+                >
+                  <div className="form__input-group">
+                    <FormInput
+                      handleChange={this.handleInput}
+                      handleBlur={this.handleBlur}
+                      handleFocus={this.handleFocus}
+                      placeholder="Confirm Password"
+                      label="Confirm Password"
+                      autoComplete="new-password"
+                      type="password"
+                      showError={this.state.showFieldErrors.confirmPwd}
+                      value={this.props.login.form.confirmPwd}
+                      errorText={this.errorFor("confirmPwd")}
+                      touched={this.state.touched.confirmPwd}
+                      name="confirmPwd"
+                      submit={this.state.submit}
+                    />
+                  </div>
                 </div>
               )}
-              {login && (
-                <div className="form__input-group center">
-                  <button
-                    className="form__login-link"
-                    type="button"
-                    onClick={() => this.toggleForm("reset")}
-                  >
-                    Forgot your password?
-                  </button>
-                </div>
-              )}
+              {login &&
+                localForm && (
+                  <div className="form__input-group center">
+                    <button
+                      className="form__login-link"
+                      type="button"
+                      onClick={() => this.toggleForm("reset")}
+                    >
+                      Forgot your password?
+                    </button>
+                  </div>
+                )}
               <div className="form__input-group">
                 <div className={errorClass}>{this.props.login.errorMsg}</div>
               </div>
             </div>
           </form>
         </div>
-        <div className="combo__footer">
-          <div className="form__input-group">
-            <div className="form__button-wrap">
-              <button
-                className={`form__button form__button--bottom ${buttonState}`}
-                id={`btn-${this.state.form}`}
-                type="button"
-                onClick={() => {
-                  if (login) {
-                    this.login();
-                  } else if (signup) {
-                    this.register();
-                  } else if (resetPwd) {
-                    this.resetPwd();
-                  } else if (reset) {
-                    this.reset();
-                  }
-                }}
-              >
-                {buttonText}
-              </button>
+        {!(signup && !localForm) &&
+          !(login && !localForm) && (
+            <div className="combo__footer">
+              <div className="form__input-group">
+                <div className="form__button-wrap">
+                  <button
+                    className={`form__button form__button--bottom ${buttonState}`}
+                    id={`btn-${this.state.form}`}
+                    type="button"
+                    onClick={() => {
+                      if (login) {
+                        this.login();
+                      } else if (signup) {
+                        this.register();
+                      } else if (resetPwd) {
+                        this.resetPwd();
+                      } else if (reset) {
+                        this.reset();
+                      }
+                    }}
+                  >
+                    {buttonText}
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+          )}
         <Spinner cssClass={this.props.login.spinnerClass} />
         <ModalSm
           modalClass={this.props.login.modal.class}

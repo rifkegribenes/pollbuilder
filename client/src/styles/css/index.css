@@ -261,6 +261,14 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     text-align: center; }
   .form__error-content {
     color: red; }
+  .form__local--visible {
+    max-height: 150px;
+    overflow: visible;
+    transition: all 300ms linear; }
+  .form__local--hidden {
+    max-height: 0px;
+    overflow: hidden;
+    transition: all 300ms linear; }
   .form__button-wrap {
     width: 100%;
     margin: 20px auto 0 auto;
@@ -318,20 +326,35 @@ input:not([type=checkbox]):not([type=radio]), textarea {
       background: black; }
       .form__button--github:hover, .form__button--github:active, .form__button--github:focus {
         background: black; }
-      .form__button--github:focus {
-        box-shadow: 0px 0px 5px 0px #4b6cb7 0 10px 20px rgba(0, 0, 0, 0.4); }
     .form__button--facebook {
       background: #4468B0; }
       .form__button--facebook:hover, .form__button--facebook:active, .form__button--facebook:focus {
         background: #4468B0; }
-      .form__button--facebook:focus {
-        box-shadow: 0px 0px 5px 0px #4b6cb7 0 10px 20px rgba(0, 0, 0, 0.4); }
     .form__button--google {
       background: #dd4b39; }
       .form__button--google:hover, .form__button--google:active, .form__button--google:focus {
         background: #dd4b39; }
-      .form__button--google:focus {
-        box-shadow: 0px 0px 5px 0px #4b6cb7 0 10px 20px rgba(0, 0, 0, 0.4); }
+    .form__button--local {
+      width: 100%;
+      text-align: left;
+      color: white;
+      margin-top: 10px;
+      text-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
+      background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzPjxsaW5lYXJHcmFkaWVudCBpZD0iZ3JhZGllbnQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojRTYwNUMxOyIgLz48c3RvcCBvZmZzZXQ9IjE1JSIgc3R5bGU9InN0b3AtY29sb3I6I0FENzlGQzsiIC8+PHN0b3Agb2Zmc2V0PSIzMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM4MDZCRjc7IiAvPjxzdG9wIG9mZnNldD0iNDUlIiBzdHlsZT0ic3RvcC1jb2xvcjojMDlFNkU2OyIgLz48c3RvcCBvZmZzZXQ9IjYwJSIgc3R5bGU9InN0b3AtY29sb3I6IzE0RTYwOTsiIC8+PHN0b3Agb2Zmc2V0PSI3NCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNGRkZGMDA7IiAvPjxzdG9wIG9mZnNldD0iODglIiBzdHlsZT0ic3RvcC1jb2xvcjojRkY4QzAwOyIgLz48c3RvcCBvZmZzZXQ9Ijk5JSIgc3R5bGU9InN0b3AtY29sb3I6I0ZGMDAwMDsiIC8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgZmlsbD0idXJsKCNncmFkaWVudCkiIGhlaWdodD0iMTAwJSIgd2lkdGg9IjEwMCUiIC8+PC9zdmc+);
+      background-image: -webkit-gradient(linear, left top, -45deg, color-stop(0%, #E605C1), color-stop(15%, #AD79FC), color-stop(30%, #806BF7), color-stop(45%, #09E6E6), color-stop(60%, #14E609), color-stop(74%, #FFFF00), color-stop(88%, #FF8C00), color-stop(99%, #FF0000));
+      background-image: -moz-linear-gradient(-45deg, #E605C1 0%, #AD79FC 15%, #806BF7 30%, #09E6E6 45%, #14E609 60%, #FFFF00 74%, #FF8C00 88%, #FF0000 99%);
+      background-image: -webkit-linear-gradient(-45deg, #E605C1 0%, #AD79FC 15%, #806BF7 30%, #09E6E6 45%, #14E609 60%, #FFFF00 74%, #FF8C00 88%, #FF0000 99%);
+      background-image: -o-linear-gradient(-45deg, #E605C1 0%, #AD79FC 15%, #806BF7 30%, #09E6E6 45%, #14E609 60%, #FFFF00 74%, #FF8C00 88%, #FF0000 99%);
+      background-image: -ms-linear-gradient(-45deg, #E605C1 0%, #AD79FC 15%, #806BF7 30%, #09E6E6 45%, #14E609 60%, #FFFF00 74%, #FF8C00 88%, #FF0000 99%);
+      background-image: linear-gradient(-45deg, #E605C1 0%, #AD79FC 15%, #806BF7 30%, #09E6E6 45%, #14E609 60%, #FFFF00 74%, #FF8C00 88%, #FF0000 99%); }
+      .form__button--local:hover, .form__button--local:active, .form__button--local:focus {
+        background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzPjxsaW5lYXJHcmFkaWVudCBpZD0iZ3JhZGllbnQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojRTYwNUMxOyIgLz48c3RvcCBvZmZzZXQ9IjE1JSIgc3R5bGU9InN0b3AtY29sb3I6I0FENzlGQzsiIC8+PHN0b3Agb2Zmc2V0PSIzMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM4MDZCRjc7IiAvPjxzdG9wIG9mZnNldD0iNDUlIiBzdHlsZT0ic3RvcC1jb2xvcjojMDlFNkU2OyIgLz48c3RvcCBvZmZzZXQ9IjYwJSIgc3R5bGU9InN0b3AtY29sb3I6IzE0RTYwOTsiIC8+PHN0b3Agb2Zmc2V0PSI3NCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNGRkZGMDA7IiAvPjxzdG9wIG9mZnNldD0iODglIiBzdHlsZT0ic3RvcC1jb2xvcjojRkY4QzAwOyIgLz48c3RvcCBvZmZzZXQ9Ijk5JSIgc3R5bGU9InN0b3AtY29sb3I6I0ZGMDAwMDsiIC8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgZmlsbD0idXJsKCNncmFkaWVudCkiIGhlaWdodD0iMTAwJSIgd2lkdGg9IjEwMCUiIC8+PC9zdmc+);
+        background-image: -webkit-gradient(linear, left top, -45deg, color-stop(0%, #E605C1), color-stop(15%, #AD79FC), color-stop(30%, #806BF7), color-stop(45%, #09E6E6), color-stop(60%, #14E609), color-stop(74%, #FFFF00), color-stop(88%, #FF8C00), color-stop(99%, #FF0000));
+        background-image: -moz-linear-gradient(-45deg, #E605C1 0%, #AD79FC 15%, #806BF7 30%, #09E6E6 45%, #14E609 60%, #FFFF00 74%, #FF8C00 88%, #FF0000 99%);
+        background-image: -webkit-linear-gradient(-45deg, #E605C1 0%, #AD79FC 15%, #806BF7 30%, #09E6E6 45%, #14E609 60%, #FFFF00 74%, #FF8C00 88%, #FF0000 99%);
+        background-image: -o-linear-gradient(-45deg, #E605C1 0%, #AD79FC 15%, #806BF7 30%, #09E6E6 45%, #14E609 60%, #FFFF00 74%, #FF8C00 88%, #FF0000 99%);
+        background-image: -ms-linear-gradient(-45deg, #E605C1 0%, #AD79FC 15%, #806BF7 30%, #09E6E6 45%, #14E609 60%, #FFFF00 74%, #FF8C00 88%, #FF0000 99%);
+        background-image: linear-gradient(-45deg, #E605C1 0%, #AD79FC 15%, #806BF7 30%, #09E6E6 45%, #14E609 60%, #FFFF00 74%, #FF8C00 88%, #FF0000 99%); }
     .form__button--disabled {
       background-color: #878787; }
       .form__button--disabled:hover, .form__button--disabled:active, .form__button--disabled:focus {
@@ -358,6 +381,9 @@ input:not([type=checkbox]):not([type=radio]), textarea {
   .form__icon-wrap {
     background: rgba(255, 255, 255, 0.2);
     width: 100%; }
+    .form__icon-wrap--dark {
+      background: rgba(0, 0, 0, 0.2);
+      width: 100%; }
   .form__sm-button-text {
     font-size: 12px;
     padding: 11px; }
@@ -1141,12 +1167,12 @@ input:not([type=checkbox]):not([type=radio]), textarea {
         box-shadow: 0px 0px 5px 0px #4b6cb7; }
   .combo__social-wrap {
     padding: 20px;
-    padding-bottom: 10px;
+    padding-bottom: 0;
     background: rgba(255, 255, 255, 0.6); }
   .combo__form {
     padding: 20px;
-    padding-top: 10px;
-    padding-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 10px;
     background: rgba(255, 255, 255, 0.6); }
 
 .validate {

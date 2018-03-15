@@ -96,14 +96,14 @@
 
   &__social-wrap {
   	padding: 20px;
-  	padding-bottom: 10px;
+  	padding-bottom: 0;
   	background: rgba(255,255,255,.6);
   }
 
   &__form {
   	padding: 20px;
-  	padding-top: 10px;
-  	padding-bottom: 0;
+  	padding-top: 0;
+  	padding-bottom: 10px;
   	background: rgba(255,255,255,.6);
   }
 }
