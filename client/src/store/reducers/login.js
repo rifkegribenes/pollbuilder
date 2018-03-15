@@ -186,8 +186,7 @@ function login(state = INITIAL_STATE, action) {
           class: "modal__show",
           type: "modal__success",
           text: "Your password has been reset.\nClick Sign In to continue",
-          buttonText: "Sign in",
-          redirect: "/login"
+          buttonText: "Sign in"
         }
       });
 
@@ -229,8 +228,7 @@ function login(state = INITIAL_STATE, action) {
             action.meta.email
           }. Follow the instructions to reset your password.`,
           title: "Check your Email",
-          type: "modal__success",
-          redirect: "/login"
+          type: "modal__success"
         }
       });
 

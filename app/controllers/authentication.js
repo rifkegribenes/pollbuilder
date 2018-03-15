@@ -7,7 +7,7 @@ const mailUtils = require('../utils/mailUtils');
 const mailTemplate = require('../utils/mailTemplate');
 
 const APP_HOST = process.env.APP_HOST;
-const CLIENT_URL = process.env.NODE_ENV === 'production' ? APP_HOST : '//localhost:3000';
+const CLIENT_URL = process.env.NODE_ENV === 'production' ? APP_HOST : 'http://localhost:3000';
 const SERVER_URL = process.env.NODE_ENV === 'production' ? APP_HOST : '//localhost:8080';
 
 //= =======================================
@@ -133,7 +133,7 @@ exports.register = function (req, res, next) {
           // Respond with JWT if user was created
           console.log('new user created');
           const userInfo = helpers.setUserInfo(user);
-          const token = `Bearer ${helpers.generateToken(userInfo)}`;
+          const token = helpers.generateToken(userInfo);
           console.log(userInfo, token);
           res.status(201).json({
             token,

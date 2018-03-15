@@ -645,14 +645,17 @@ class ComboBox extends React.Component {
             if (resetPwd) {
               if (!this.state.success) {
                 this.props.history.push("/reset");
+                window.location.reload();
               } else {
                 this.props.history.push("/login");
+                window.location.reload();
               }
             }
             // can't figure out how to get #$%^% react-router
             // to reload the component here
             // i have tried everything and i'm MOVIN ON
             if (!this.props.login.modal.redirect) {
+              this.props.history.push("/login");
               window.location.reload();
               // so dirty!! ¯\_(ツ)_/¯
             }
