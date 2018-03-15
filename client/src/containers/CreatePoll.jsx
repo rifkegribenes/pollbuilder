@@ -10,13 +10,13 @@ import ModalSm from "./ModalSm";
 
 class CreatePoll extends React.Component {
   componentDidMount() {
-    // user is validated if local account email is verified
+    // user is verified if local account email is verified
     // OR if they logged in with social auth
     if (!this.props.appState.loggedIn) {
       this.props.actions.setModalError({
         message: `Please log in to create a poll.`,
         buttonText: "Log in",
-        redirect: "/login"
+        action: () => this.props.history.push("/login")
       });
     }
     if (!this.props.profile.user.profile.email) {
@@ -36,18 +36,19 @@ class CreatePoll extends React.Component {
         }
       });
     }
-    const validated =
-      this.props.appState.loggedIn &&
-      (this.props.profile.user.validated ||
-        this.props.profile.facebook.email ||
-        this.props.profile.google.email ||
-        this.props.profile.github.email);
-    if (!validated) {
+    const verified =
+      this.props.appState.loggedIn && this.props.profile.user.verified;
+    if (!verified && this.props.profile.user.profile.email) {
       this.props.actions.setModalError({
         message: `You must verify your email before you can create a poll.\nClick below to send a new verification link to ${
           this.props.profile.user.profile.email
         }`,
-        buttonText: "Send verification link"
+        buttonText: "Send verification link",
+        action: () => {
+          this.props.api.resendVerificationLink(
+            this.props.profile.user.profile.email
+          );
+        }
       });
     }
   }
@@ -63,6 +64,7 @@ class CreatePoll extends React.Component {
           modalText={this.props.poll.modal.text}
           modalType={this.props.poll.modal.type}
           buttonText={this.props.poll.modal.buttonText}
+          action={this.props.poll.modal.action}
           dismiss={() => {
             this.props.actions.dismissModal({
               class: "modal__hide",
@@ -87,7 +89,7 @@ CreatePoll.propTypes = {
         firstName: PropTypes.string,
         email: PropTypes.string
       }).isRequired,
-      validated: PropTypes.boolean
+      verified: PropTypes.boolean
     }).isRequired
   }).isRequired,
   poll: PropTypes.shape({

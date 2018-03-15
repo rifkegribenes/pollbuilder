@@ -38,14 +38,14 @@ function makeSignupKey() {
 }
 
 
-/* Generate registration email validation url w/custom key
+/* Generate registration email verification url w/custom key
  * Makes sure key is unique & saves to DB
  *
  * @params    [string]   key       [custom validation key]
  * @returns   [string]             [custom validation URL]
 */
-function makeValidationUrl(key) {
-  console.log('makeValidationUrl');
+function makeVerificationUrl(key) {
+  console.log('makeVerificationUrl');
     const baseUrl = `${CLIENT_URL}/verify`;
 
     return `${baseUrl}/${key}`;
@@ -81,4 +81,4 @@ function sendMail(to, subject, html, text) {
 
 /* ============================== EXPORT API =============================== */
 
-module.exports = { makeSignupKey, makeValidationUrl, sendMail };
+module.exports = { makeSignupKey, makeVerificationUrl, sendMail };

@@ -81,7 +81,7 @@ exports.register = function (req, res, next) {
           .exec()
           .then( (user) => {
             // Respond with JWT if user was updated
-            // don't need to validate email bc it has already been validated
+            // don't need to verify email bc it has already been verified
             // by passport (matched the email used with another social account)
             const userInfo = helpers.setUserInfo(user);
             const token = `Bearer ${helpers.generateToken(userInfo)}`;
@@ -116,9 +116,9 @@ exports.register = function (req, res, next) {
             return next(err);
           }
 
-          // Send validation email
+          // Send verification email
           const subject = "Voting App: Email Verification Required";
-          const url = mailUtils.makeValidationUrl(key.key);
+          const url = mailUtils.makeVerificationUrl(key.key);
           const html = mailTemplate.verificationTemplate(url);
           const text = `Please click here to verify your email: ${url}`;
           mailUtils.sendMail(email, subject, html, text)
@@ -174,9 +174,9 @@ exports.resendVerification = (req, res, next) => {
           message: 'Sorry, no user account found with that email, please try again.'
         });
       } else {
-          // Send validation email
+          // Send verification email
           const subject = "Voting App: Email Verification Required";
-          const url = mailUtils.makeValidationUrl(key.key);
+          const url = mailUtils.makeVerificationUrl(key.key);
           const html = mailTemplate.verificationTemplate(url);
           const text = `Please click here to verify your email: ${url}`;
           mailUtils.sendMail(email, subject, html, text)
@@ -267,12 +267,12 @@ exports.googleCallback = (req, res) => {
 
 
 //= =======================================
-// Validate Email Route
+// Verify Email Route
 //= =======================================
 
-/* HANDLE EMAIL VALIDATION LINKS
-// Toggles user's `validated` property to `true`
-//   Example: GET >> /api/auth/validate
+/* HANDLE EMAIL VERIFICATION LINKS
+// Toggles user's `verified` property to `true`
+//   Example: GET >> /api/auth/verify
 //   Secured: no
 //   Expects:
 // @ params   [object]   params
@@ -288,7 +288,7 @@ exports.verifyEmail = (req, res) => {
     'signupKey.exp': { $gt: Date.now() }
     };
   const updates = {
-    validated: true
+    verified: true
   };
   const options = { new: true };
 
@@ -300,7 +300,7 @@ exports.verifyEmail = (req, res) => {
         .status(400)
         .json({ message: 'Sorry, your token has expired, please try again.' });
     } else {
-      // Respond with updated JWT if user was validated
+      // Respond with updated JWT if user was verified
       const userInfo = helpers.setUserInfo(user);
       const token = helpers.generateToken(userInfo);
       res.status(201).json({

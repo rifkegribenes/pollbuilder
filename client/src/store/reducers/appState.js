@@ -74,7 +74,7 @@ function appState(state = INITIAL_STATE, action) {
     /*
     * This action is issued only from the <VerifyEmail/> component.
     * On VERIFY_EMAIL_SUCCESS action, hide spinner, set loggedIn and
-    * validated to true, save updated user profile to redux store
+    * verified to true, save updated user profile to redux store
     */
     case VERIFY_EMAIL_SUCCESS:
       window.localStorage.setItem(
@@ -107,7 +107,7 @@ function appState(state = INITIAL_STATE, action) {
       });
 
     /*
-     * This action is issued only from the <Home/> component,
+     * This action is issued only from the <VerifyEmail/> component,
      * when the localStorage token is not validated by the server.
      * On VALIDATE_TOKEN_FAILURE action, set the spinner class to hide.
      * Remove the invalid values from localStorage
@@ -232,7 +232,7 @@ function appState(state = INITIAL_STATE, action) {
       });
 
     /*
-    *  Called From: <Validate />
+    *  Called From: <VerifyEmail />
     *  Payload: Error Message
     *  Purpose: Hide spinner,
     *  Display error message in modal. Generic, called from various components
@@ -254,7 +254,7 @@ function appState(state = INITIAL_STATE, action) {
       });
 
     /*
-    *  Called from: <Validate />
+    *  Called from: <VerifyEmail />
     *  Payload: None
     *  Purpose: dismiss modal
     */

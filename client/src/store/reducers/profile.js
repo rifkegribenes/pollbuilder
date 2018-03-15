@@ -1,5 +1,5 @@
 import update from "immutability-helper";
-import { DISMISS_MODAL, LOGOUT } from "../actions/";
+import { DISMISS_MODAL, LOGOUT, SET_VERIFIED } from "../actions/";
 import {
   GET_PROFILE_REQUEST,
   GET_PROFILE_SUCCESS,
@@ -36,7 +36,7 @@ const EMPTY_USER = {
     id: "",
     email: ""
   },
-  validated: false
+  verified: false
 };
 
 const INITIAL_STATE = {
@@ -61,6 +61,16 @@ function profile(state = INITIAL_STATE, action) {
     case VALIDATE_TOKEN_SUCCESS:
       return update(state, {
         user: { $merge: action.payload }
+      });
+    /*
+    * Called from: <Profile />
+    * Payload: None
+    * Purpose: If user logs in with social auth, email has already been
+    * verified by 3d party -- set verified to true
+    */
+    case SET_VERIFIED:
+      return update(state, {
+        verified: { $set: true }
       });
 
     /*

@@ -31,11 +31,12 @@ class Profile extends React.Component {
     // extract them to use in the api call, then strip them from
     // the URL, and hide the spinner.
     // there is probably a better way to do this but idk what it is...
-    // also set Validated to true since email has been validated by social auth
+    // also set Verified to true since email has been verified by social auth
     if (this.props.match && this.props.match.params.id) {
       userId = this.props.match.params.id;
       token = this.props.match.params.token;
-      this.props.actions.setLoggedIn(true);
+      this.props.actions.setLoggedIn();
+      this.props.actions.setVerified();
       window.history.replaceState(null, null, `${window.location.origin}/user`);
       this.props.actions.setSpinner("hide");
     } else {
@@ -105,7 +106,7 @@ class Profile extends React.Component {
                   />
                 </div>
                 <div className="profile__email">
-                  {this.props.profile.user.validated && "Validated"}
+                  {this.props.profile.user.verified && "Verified"}
                 </div>
               </div>
               <div className="profile__card">

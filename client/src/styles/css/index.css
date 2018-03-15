@@ -1175,24 +1175,24 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     padding-bottom: 10px;
     background: rgba(255, 255, 255, 0.6); }
 
-.validate {
+.verify {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   height: 100%;
   padding: 60px 0; }
-  .validate__title {
+  .verify__title {
     margin: 25px auto;
     font-weight: 200; }
-  .validate__text-header {
+  .verify__text-header {
     text-align: center;
     color: white;
     margin: 15px 40px;
     font-size: 36px; }
     @media (min-width: 400px) {
-      .validate__text-header {
+      .verify__text-header {
         margin: 40px; } }
-  .validate__text {
+  .verify__text {
     color: #545454;
     align-self: center;
     margin: 0 auto;
@@ -1200,12 +1200,12 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     width: 100%;
     max-width: 600px;
     text-align: center; }
-    .validate__text p {
+    .verify__text p {
       margin-bottom: .8em; }
-      .validate__text p:last-child {
+      .verify__text p:last-child {
         margin-bottom: 0; }
     @media (min-width: 400px) {
-      .validate__text {
+      .verify__text {
         font-size: 1.2em; } }
 
 * {

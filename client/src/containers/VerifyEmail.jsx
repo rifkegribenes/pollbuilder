@@ -28,7 +28,7 @@ class VerifyEmail extends React.Component {
 
   render() {
     return (
-      <div className="container validate">
+      <div className="container verify">
         <Spinner cssClass={this.props.appState.spinnerClass} />
         <ModalSm
           modalClass={this.props.appState.modal.class}
@@ -62,7 +62,7 @@ VerifyEmail.propTypes = {
     user: PropTypes.shape({
       profile: PropTypes.shape({
         firstName: PropTypes.string,
-        validated: PropTypes.boolean
+        verified: PropTypes.boolean
       }).isRequired
     }).isRequired
   }).isRequired,

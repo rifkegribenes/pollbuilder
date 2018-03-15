@@ -78,6 +78,9 @@ const ModalSm = props => (
                 className="modal__button"
                 onClick={() => {
                   props.dismiss();
+                  if (props.action) {
+                    props.action();
+                  }
                   if (props.resetForm) {
                     props.resetForm();
                   }

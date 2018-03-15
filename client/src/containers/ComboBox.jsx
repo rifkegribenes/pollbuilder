@@ -151,7 +151,7 @@ class ComboBox extends React.Component {
     }
 
     newState.validationErrors = { ...validationErrors };
-    this.setState({ ...newState }, () => console.log(this.state));
+    this.setState({ ...newState });
 
     if (email && password) {
       const body = { email, password };

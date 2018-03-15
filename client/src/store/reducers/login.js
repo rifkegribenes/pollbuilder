@@ -155,7 +155,7 @@ function login(state = INITIAL_STATE, action) {
           text: { $set: error },
           title: { $set: "Login Failure" },
           type: { $set: "modal__error" },
-          buttonText: "Try again"
+          buttonText: { $set: "Try again" }
         }
       });
 

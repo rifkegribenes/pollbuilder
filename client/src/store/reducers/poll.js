@@ -136,7 +136,8 @@ function poll(state = INITIAL_STATE, action) {
           text: { $set: error },
           title: { $set: "Something went wrong" },
           type: { $set: "modal__error" },
-          buttonText: { $set: action.payload.buttonText }
+          buttonText: { $set: action.payload.buttonText },
+          action: { $set: action.payload.action }
         }
       });
 

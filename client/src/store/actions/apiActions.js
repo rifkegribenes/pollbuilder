@@ -58,10 +58,11 @@ export const REFRESH_TOKEN_SUCCESS = "REFRESH_TOKEN_SUCCESS";
 export const REFRESH_TOKEN_FAILURE = "REFRESH_TOKEN_FAILURE";
 /*
 * Function: refreshToken
-* @param {token} - This function gets a new token from the server after Validation
-*  Validation status is coded within the token, and used by the server
-*  We are passing the old token, which is valid, but has user_validated=false
-*  And we will receive a new valid token with user_validated=true
+* @param {token} - This function gets a new token from the server after
+* email verification
+*  Verification status is coded within the token, and used by the server
+*  We are passing the old token, which is valid, but has user_verified=false
+*  And we will receive a new valid token with uer_verified=true
 */
 export function refreshToken(token) {
   return {
