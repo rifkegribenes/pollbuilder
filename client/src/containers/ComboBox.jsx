@@ -67,6 +67,27 @@ class ComboBox extends React.Component {
     }
   }
 
+  // load async, only if local signup or password reset forms are live
+  loadZxcvbn() {
+    let ZXCVBN_SRC = "path/to/zxcvbn.js";
+
+    let async_load = function() {
+      var first, s;
+      s = document.createElement("script");
+      s.src = ZXCVBN_SRC;
+      s.type = "text/javascript";
+      s.async = true;
+      first = document.getElementsByTagName("script")[0];
+      return first.parentNode.insertBefore(s, first);
+    };
+
+    if (window.attachEvent != null) {
+      window.attachEvent("onload", async_load);
+    } else {
+      window.addEventListener("load", async_load, false);
+    }
+  }
+
   resetState() {
     const newState = {
       form: this.props.initialForm || "login",
@@ -99,9 +120,13 @@ class ComboBox extends React.Component {
     this.setState({ ...newState }, () => {});
   }
 
-  toggleLocalForm() {
+  toggleLocalForm(display) {
     const newState = { ...this.state };
-    newState.localForm = !this.state.localForm;
+    if (!display) {
+      newState.localForm = !this.state.localForm;
+    } else {
+      newState.localForm = display;
+    }
     this.setState({ ...newState }, () => {});
   }
 
@@ -446,7 +471,10 @@ class ComboBox extends React.Component {
               className="form__button form__button--sm form__button--github"
               href="http://localhost:8080/api/auth/github/"
               id="btn-github"
-              onClick={() => this.props.actions.setSpinner("show")}
+              onClick={() => {
+                this.props.actions.setSpinner("show");
+                this.toggleLocalForm(false);
+              }}
             >
               <img
                 className="form__icon form__icon--github"
@@ -461,7 +489,10 @@ class ComboBox extends React.Component {
               className="form__button form__button--sm form__button--facebook"
               id="btn-facebook"
               href="http://localhost:8080/api/auth/facebook"
-              onClick={() => this.props.actions.setSpinner("show")}
+              onClick={() => {
+                this.props.actions.setSpinner("show");
+                this.toggleLocalForm(false);
+              }}
             >
               <img
                 className="form__icon form__icon--facebook"
@@ -476,7 +507,10 @@ class ComboBox extends React.Component {
               className="form__button form__button--sm form__button--google"
               id="btn-google"
               href="http://localhost:8080/api/auth/google"
-              onClick={() => this.props.actions.setSpinner("show")}
+              onClick={() => {
+                this.props.actions.setSpinner("show");
+                this.toggleLocalForm(false);
+              }}
             >
               <img
                 className="form__icon form__icon--google"

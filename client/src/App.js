@@ -14,6 +14,7 @@ import NotFound from "./containers/NotFound";
 import Spinner from "./containers/Spinner";
 import ModalSm from "./containers/ModalSm";
 import VerifyEmail from "./containers/VerifyEmail";
+import CreatePoll from "./containers/CreatePoll";
 
 import * as apiActions from "./store/actions/apiActions";
 import * as Actions from "./store/actions";
@@ -129,6 +130,11 @@ class App extends Component {
                     match={routeProps.match}
                   />
                 )}
+              />
+              <Route
+                exact
+                path="/createpoll"
+                render={routeProps => <CreatePoll {...routeProps} />}
               />
               <Route path="*" component={NotFound} />
             </Switch>

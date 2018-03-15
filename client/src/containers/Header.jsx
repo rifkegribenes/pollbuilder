@@ -23,6 +23,11 @@ class Header extends React.Component {
           </Link>
         )}
         {this.props.appState.loggedIn && (
+          <Link className="nav__link" to="/createpoll">
+            Create Poll
+          </Link>
+        )}
+        {this.props.appState.loggedIn && (
           <button
             className="nav__link"
             onClick={() => {
