@@ -1,6 +1,5 @@
 export const LOGOUT = "LOGOUT";
 export const SET_LOGGEDIN = "SET_LOGGEDIN";
-export const SET_VERIFIED = "SET_VERIFIED";
 export const SET_FORM_FIELD = "SET_FORM_FIELD";
 export const SET_FORM_ERROR = "SET_FORM_ERROR";
 export const RESET_FORM = "RESET_FORM";
@@ -27,12 +26,6 @@ export function setSpinner(spinnerClass) {
 export function logout() {
   return {
     type: LOGOUT
-  };
-}
-
-export function setVerified() {
-  return {
-    type: SET_VERIFIED
   };
 }
 

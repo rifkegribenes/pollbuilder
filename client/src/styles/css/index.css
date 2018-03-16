@@ -393,7 +393,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
       height: 42px; }
   .form__sm-button-text {
     font-size: 12px;
-    padding: 11px; }
+    padding: 12px; }
   .form__hidden {
     display: none; }
   .form__text {

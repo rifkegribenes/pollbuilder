@@ -10,7 +10,7 @@ import Spinner from "./Spinner";
 import ModalSm from "./ModalSm";
 
 class Profile extends React.Component {
-  componentDidMount() {
+  componentWillMount() {
     // get user id and token
     let userId;
     let token;
@@ -35,7 +35,6 @@ class Profile extends React.Component {
       userId = this.props.match.params.id;
       token = this.props.match.params.token;
       this.props.actions.setLoggedIn();
-      this.props.actions.setVerified();
       window.history.replaceState(null, null, `${window.location.origin}/user`);
       this.props.actions.setSpinner("hide");
     } else {

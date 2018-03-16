@@ -21,8 +21,6 @@ export const VALIDATE_TOKEN_FAILURE = "VALIDATE_TOKEN_FAILURE";
 *     Logs the user out and deletes the values saved in localStorage.
 */
 export function validateToken(token, userId) {
-  console.log(`apiActions > 24: userId: ${userId}`);
-  console.log(token);
   return {
     [RSAA]: {
       endpoint: `${BASE_URL}/api/user/${userId}`,

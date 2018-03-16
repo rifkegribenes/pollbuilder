@@ -28,11 +28,13 @@ class App extends Component {
       if (token && token !== "undefined") {
         token = JSON.parse(token);
         const userId = JSON.parse(window.localStorage.getItem("userId"));
-        this.props.api.validateToken(token, userId).then(result => {
-          if (result === "VALIDATE_TOKEN_FAILURE") {
-            console.log("token failed to validate");
-          }
-        });
+        if (userId) {
+          this.props.api.validateToken(token, userId).then(result => {
+            if (result === "VALIDATE_TOKEN_FAILURE") {
+              console.log("token failed to validate");
+            }
+          });
+        }
       } else {
         console.log("no token found in local storage");
       }

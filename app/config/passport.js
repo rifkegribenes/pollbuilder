@@ -140,6 +140,7 @@ module.exports = (passport) => {
         newUser.profile.lastName = lastName;
         newUser.profile.email = profile.emails[0].value;
         newUser.profile.avatarUrl = profile.photos[0].value;
+        newUser.verified = true;
 
         // console.log(newUser);
 
