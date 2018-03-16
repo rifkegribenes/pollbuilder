@@ -56,18 +56,6 @@ class ComboBox extends React.Component {
   }
 
   componentDidMount() {
-    // add mouse position event listener for gradient hover effecg
-    const buttons_list = document.querySelectorAll(".form__button"); // returns NodeList
-    const buttons_array = [...buttons_list]; // convert NodeList to Array
-    buttons_array.forEach(button => {
-      button.onmousemove = e => {
-        const x = e.pageX - e.target.offsetLeft;
-        const y = e.pageY - e.target.offsetTop;
-        e.target.style.setProperty("--x", `${x}px`);
-        e.target.style.setProperty("--y", `${y}px`);
-      };
-    });
-
     // clear previous errors
     this.props.actions.resetForm();
     if (this.props.match === "reset") {

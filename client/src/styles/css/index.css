@@ -308,8 +308,11 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     border-radius: 4px;
     padding: 10px 20px;
     background: #833ab4;
-    background: -webkit-linear-gradient(-45deg, #833ab4 0px, #833ab4 50px, #fd1d1d 100%);
-    background: linear-gradient(135deg, #833ab4 0px, #833ab4 50px, #fd1d1d 100%);
+    background-image: -webkit-linear-gradient(-45deg, #833ab4 0px, #833ab4 50px, #fd1d1d, #fcb045 100%);
+    background-image: linear-gradient(135deg, #833ab4 0px, #833ab4 50px, #fd1d1d, #fcb045 100%);
+    background-size: 200% 200%;
+    background-position: 0 0;
+    transition: background-position 500ms ease-in-out;
     position: relative;
     overflow: hidden;
     cursor: pointer; }
@@ -320,22 +323,9 @@ input:not([type=checkbox]):not([type=radio]), textarea {
         font-size: 20px;
         font-weight: 400; } }
     .form__button:hover, .form__button:active, .form__button:focus {
-      background-color: #3b5694;
+      background-position: 100% 100%;
       box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
-      transition: all 300ms ease-in-out; }
-    .form__button::before {
-      --size: 0;
-      content: '';
-      position: absolute;
-      left: var(--x);
-      top: var(--y);
-      width: var(--size);
-      height: var(--size);
-      background: radial-gradient(circle closest-side, #fcb045, transparent);
-      transform: translate(-50%, -50%);
-      transition: width .2s ease, height .2s ease; }
-    .form__button:hover::before {
-      --size: 400px; }
+      transition: all 500ms ease-in-out; }
     .form__button span {
       position: relative; }
     .form__button--bottom {
