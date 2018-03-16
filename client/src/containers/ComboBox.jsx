@@ -122,7 +122,7 @@ class ComboBox extends React.Component {
 
   toggleLocalForm(display) {
     const newState = { ...this.state };
-    if (!display) {
+    if (display !== true && display !== false) {
       newState.localForm = !this.state.localForm;
     } else {
       newState.localForm = display;
