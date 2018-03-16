@@ -9,6 +9,11 @@ $color_gray_medium: #ccc;
 
 $color_light-blue: #c2e0ff;
 $color_lighter-blue: #ebf5ff;
+$color_blue: #0575E6;
+$color_lime: #00f260;
+$color_grape: #833ab4;
+$color_raspberry: #fd1d1d;
+$color_mango: #fcb045;
 $color_aqua: #4b6cb7;
 $color_aqua_darker: darken($color_aqua,10%);
 $color_aqua_lighter: lighten($color_aqua,10%);
@@ -22,6 +27,7 @@ $color_purple_sky: #6B559D;
 $color_purple_sky_dark: #151741;
 $color_cream: #fffdb7;
 $color_cream_lighter: lighten($color_cream,5%);
+$color_pink: #f72359;
 
 $color_error_text: #a94442;
 $color_error_bkg: #f2dede;

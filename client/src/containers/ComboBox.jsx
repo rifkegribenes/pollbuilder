@@ -56,6 +56,18 @@ class ComboBox extends React.Component {
   }
 
   componentDidMount() {
+    // add mouse position event listener for gradient hover effecg
+    const buttons_list = document.querySelectorAll(".form__button"); // returns NodeList
+    const buttons_array = [...buttons_list]; // convert NodeList to Array
+    buttons_array.forEach(button => {
+      button.onmousemove = e => {
+        const x = e.pageX - e.target.offsetLeft;
+        const y = e.pageY - e.target.offsetTop;
+        e.target.style.setProperty("--x", `${x}px`);
+        e.target.style.setProperty("--y", `${y}px`);
+      };
+    });
+
     // clear previous errors
     this.props.actions.resetForm();
     if (this.props.match === "reset") {
@@ -468,7 +480,7 @@ class ComboBox extends React.Component {
         {!(reset || resetPwd) && (
           <div className="combo__social-wrap">
             <a
-              className="form__button form__button--sm form__button--github"
+              className="form__button form__button--sm"
               href="http://localhost:8080/api/auth/github/"
               id="btn-github"
               onClick={() => {
@@ -476,17 +488,17 @@ class ComboBox extends React.Component {
                 this.toggleLocalForm(false);
               }}
             >
-              <img
-                className="form__icon form__icon--github"
-                alt="github"
-                src={ghIcon}
-              />
-              <div className="form__icon-wrap">
-                <div className="form__sm-button-text">{`${buttonText} with Github`}</div>
+              <div className="form__button--github">
+                <img
+                  className="form__icon form__icon--github"
+                  alt="github"
+                  src={ghIcon}
+                />
               </div>
+              <span className="form__sm-button-text">{`${buttonText} with Github`}</span>
             </a>
             <a
-              className="form__button form__button--sm form__button--facebook"
+              className="form__button form__button--sm"
               id="btn-facebook"
               href="http://localhost:8080/api/auth/facebook"
               onClick={() => {
@@ -494,17 +506,17 @@ class ComboBox extends React.Component {
                 this.toggleLocalForm(false);
               }}
             >
-              <img
-                className="form__icon form__icon--facebook"
-                alt="facebook"
-                src={fbIcon}
-              />
-              <div className="form__icon-wrap">
-                <div className="form__sm-button-text">{`${buttonText} with Facebook`}</div>
+              <div className="form__button--facebook">
+                <img
+                  className="form__icon form__icon--facebook"
+                  alt="facebook"
+                  src={fbIcon}
+                />
               </div>
+              <span className="form__sm-button-text">{`${buttonText} with Facebook`}</span>
             </a>
             <a
-              className="form__button form__button--sm form__button--google"
+              className="form__button form__button--sm"
               id="btn-google"
               href="http://localhost:8080/api/auth/google"
               onClick={() => {
@@ -512,14 +524,14 @@ class ComboBox extends React.Component {
                 this.toggleLocalForm(false);
               }}
             >
-              <img
-                className="form__icon form__icon--google"
-                alt="google"
-                src={ggIcon}
-              />
-              <div className="form__icon-wrap">
-                <div className="form__sm-button-text">{`${buttonText} with Google`}</div>
+              <div className="form__button--google">
+                <img
+                  className="form__icon form__icon--google"
+                  alt="google"
+                  src={ggIcon}
+                />
               </div>
+              <span className="form__sm-button-text">{`${buttonText} with Google`}</span>
             </a>
           </div>
         )}
@@ -530,19 +542,19 @@ class ComboBox extends React.Component {
                 <div>
                   <div className="form__input-group center">or</div>
                   <button
-                    className="form__button form__button--sm form__button--local"
+                    className="form__button form__button--sm"
                     id="btn-local"
                     onClick={() => this.toggleLocalForm()}
                     type="button"
                   >
-                    <img
-                      className="form__icon form__icon--local"
-                      alt="voting app"
-                      src={vaIcon}
-                    />
-                    <div className="form__icon-wrap--dark">
-                      <div className="form__sm-button-text">{`${buttonText} with Email`}</div>
+                    <div className="form__button--local">
+                      <img
+                        className="form__icon form__icon--local"
+                        alt="voting app"
+                        src={vaIcon}
+                      />
                     </div>
+                    <span className="form__sm-button-text">{`${buttonText} with Email`}</span>
                   </button>
                 </div>
               )}
@@ -721,7 +733,7 @@ class ComboBox extends React.Component {
                       }
                     }}
                   >
-                    {buttonText}
+                    <span>{buttonText}</span>
                   </button>
                 </div>
               </div>
