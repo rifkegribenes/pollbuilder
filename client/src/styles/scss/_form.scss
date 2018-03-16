@@ -438,6 +438,11 @@ input:not([type=checkbox]):not([type=radio]), textarea {
       position: relative;
     }
 
+    &--big {
+      text-transform: none;
+      letter-spacing: 1px;
+    }
+
     &--bottom {
       width: 100%;
       text-align: center;

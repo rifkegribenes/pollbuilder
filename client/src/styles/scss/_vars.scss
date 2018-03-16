@@ -37,8 +37,8 @@ $color_success_bkg: #dff0d8;
 $color_focus_ring: #4b6cb7;
 $color_box-shadow: rgba(167, 165, 123, .6);
 
-$transition_card: all 800ms linear;
-$transition_button: all 300ms linear;
+$transition_card: all 800ms ease-in-out;
+$transition_button: all 300ms ease-in-out;
 
 $font-stack: 'Titillium Web', Helvetica, Arial, sans-serif;
 $btn_border-radius: 4px;

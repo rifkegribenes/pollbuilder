@@ -268,14 +268,14 @@ input:not([type=checkbox]):not([type=radio]), textarea {
   .form__local--visible {
     max-height: 150px;
     overflow: visible;
-    transition: all 300ms linear; }
+    transition: all 300ms ease-in-out; }
     @media (min-width: 1600px) {
       .form__local--visible {
         max-height: 202px; } }
   .form__local--hidden {
     max-height: 0px;
     overflow: hidden;
-    transition: all 300ms linear; }
+    transition: all 300ms ease-in-out; }
   .form__button-wrap {
     width: 100%;
     margin: 20px auto 0 auto;
@@ -328,6 +328,9 @@ input:not([type=checkbox]):not([type=radio]), textarea {
       transition: all 500ms ease-in-out; }
     .form__button span {
       position: relative; }
+    .form__button--big {
+      text-transform: none;
+      letter-spacing: 1px; }
     .form__button--bottom {
       width: 100%;
       text-align: center;
@@ -454,6 +457,10 @@ input:not([type=checkbox]):not([type=radio]), textarea {
   display: flex;
   width: 100%;
   justify-content: space-between; }
+  @media (min-width: 901px) {
+    .header {
+      border-bottom: 1px solid #833ab4;
+      margin-bottom: 40px; } }
 
 .h-nav {
   position: absolute;
@@ -469,6 +476,11 @@ input:not([type=checkbox]):not([type=radio]), textarea {
   justify-content: flex-start;
   height: 30px;
   list-style: none; }
+  .h-nav__logo {
+    width: 40px;
+    height: 40px; }
+    .h-nav__logo--text {
+      display: none; }
   .h-nav__side {
     flex-direction: column;
     padding: 0;
@@ -715,27 +727,29 @@ input:not([type=checkbox]):not([type=radio]), textarea {
         .h-nav__item:hover, .h-nav__item:focus {
           border: 1px solid transparent;
           box-shadow: none; }
-      .h-nav__item-link {
-        color: #fffdb7;
+      .h-nav__logo--text {
+        display: block;
+        font-size: 24px;
+        margin-left: 10px; }
+      .h-nav__link {
+        color: #833ab4;
         font-family: "Titillium Web", Helvetica, Arial, sans-serif;
-        text-transform: uppercase;
-        letter-spacing: 2px;
         padding: 5px;
         font-size: 13px;
         text-decoration: none;
-        border-radius: 25px;
         border: 1px solid transparent;
         padding: 5px 10px;
         font-size: 16px;
         width: auto;
         margin-left: 0; }
-        .h-nav__item-link--login {
+        .h-nav__link--home {
+          display: flex;
+          height: 50px; }
+        .h-nav__link--login {
           border: 1px solid rgba(255, 255, 255, 0.6); }
-        .h-nav__item-link:hover, .h-nav__item-link:focus {
-          border: 1px solid rgba(255, 255, 255, 0.6);
-          text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
-          box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-          transition: box-shadow 300ms ease-in-out; } }
+        .h-nav__link:hover, .h-nav__link:focus {
+          border-bottom: 1px solid #833ab4;
+          transition: all 300ms ease-in-out; } }
 
 .a-nav {
   padding-bottom: 20px; }
@@ -987,13 +1001,13 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     border: 1px solid #182848;
     display: inline-block;
     border-radius: 4px;
-    transition: all 300ms linear; }
+    transition: all 300ms ease-in-out; }
     .modal__button:hover, .modal__button:focus {
       -webkit-appearance: none;
       appearance: none;
       background: #182848;
       color: white;
-      transition: all 300ms linear; }
+      transition: all 300ms ease-in-out; }
   .modal__danger:hover, .modal__danger:active, .modal__danger:focus {
     color: #a94442; }
 

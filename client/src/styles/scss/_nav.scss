@@ -3,6 +3,12 @@
   display: flex;
   width: 100%;
   justify-content: space-between;
+
+  @include for-tablet-landscape-up {
+    border-bottom: 1px solid $color_grape;
+    margin-bottom: 40px;
+  }
+
 }
 
 .h-nav {
@@ -19,6 +25,15 @@
   justify-content: flex-start;
   height: 30px;
   list-style: none;
+
+  &__logo {
+    width: 40px;
+    height: 40px;
+
+    &--text {
+      display: none;
+    }
+  }
 
   &__side {
     flex-direction: column;
@@ -361,30 +376,38 @@
       }
     }
 
-    &__item-link {
-      color: $color_cream;
+    &__logo {
+      &--text {
+        display: block;
+        font-size: 24px;
+        margin-left: 10px;
+      }
+    }
+
+    &__link {
+      color: $color_grape;
       font-family: $font-stack;
-      text-transform: uppercase;
-      letter-spacing: 2px;
       padding: 5px;
       font-size: 13px;
       text-decoration: none;
-      border-radius: 25px;
       border: 1px solid transparent;
       padding: 5px 10px;
       font-size: 16px;
       width: auto;
       margin-left: 0;
 
+        &--home {
+          display: flex;
+          height: 50px;
+        }
+
         &--login {
           border: 1px solid rgba(255, 255, 255, 0.6);
         }
 
         &:hover, &:focus {
-          border: 1px solid rgba(255, 255, 255, 0.6);
-          text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
-          box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-          transition: box-shadow 300ms ease-in-out;
+          border-bottom: 1px solid $color_grape;
+          transition: $transition_button;
         }
       }
     }

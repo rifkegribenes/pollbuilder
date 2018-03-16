@@ -5,31 +5,29 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as Actions from "../store/actions";
 
+import vaIcon from "../img/rainbow_icon_120.png";
+
 class Header extends React.Component {
   render() {
     return (
       <header className="header">
-        <Link className="nav__link" to="/">
-          Home
+        <Link className="h-nav__link h-nav__link--home" to="/">
+          <img src={vaIcon} className="h-nav__logo" alt="logo" />
+          <span className="h-nav__logo--text">Voting App</span>
         </Link>
-        {!this.props.appState.loggedIn && (
-          <Link className="nav__link" to="/login">
-            Login
-          </Link>
-        )}
         {this.props.appState.loggedIn && (
-          <Link className="nav__link" to="/user">
+          <Link className="h-nav__link" to="/user">
             Profile
           </Link>
         )}
         {this.props.appState.loggedIn && (
-          <Link className="nav__link" to="/createpoll">
+          <Link className="h-nav__link" to="/createpoll">
             Create Poll
           </Link>
         )}
-        {this.props.appState.loggedIn && (
+        {this.props.appState.loggedIn ? (
           <button
-            className="nav__link"
+            className="h-nav__link"
             onClick={() => {
               this.props.actions.logout();
               this.props.history.push("/");
@@ -37,6 +35,10 @@ class Header extends React.Component {
           >
             Logout
           </button>
+        ) : (
+          <Link className="form__button form__button--big" to="/login">
+            Login
+          </Link>
         )}
         {this.props.appState.loggedIn && (
           <div className="header__email">
