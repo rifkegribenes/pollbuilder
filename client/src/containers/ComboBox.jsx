@@ -15,7 +15,7 @@ import * as apiActions from "../store/actions/apiActions";
 import ghIcon from "../img/github-white.svg";
 import fbIcon from "../img/facebook-white.svg";
 import ggIcon from "../img/google-white.svg";
-import vaIcon from "../img/rainbow_icon_120.png";
+import envIcon from "../img/envelope.svg";
 
 class ComboBox extends React.Component {
   constructor(props) {
@@ -64,27 +64,6 @@ class ComboBox extends React.Component {
       this.setState({ ...newState }, () => {
         // console.log(this.state);
       });
-    }
-  }
-
-  // load async, only if local signup or password reset forms are live
-  loadZxcvbn() {
-    let ZXCVBN_SRC = "path/to/zxcvbn.js";
-
-    let async_load = function() {
-      var first, s;
-      s = document.createElement("script");
-      s.src = ZXCVBN_SRC;
-      s.type = "text/javascript";
-      s.async = true;
-      first = document.getElementsByTagName("script")[0];
-      return first.parentNode.insertBefore(s, first);
-    };
-
-    if (window.attachEvent != null) {
-      window.attachEvent("onload", async_load);
-    } else {
-      window.addEventListener("load", async_load, false);
     }
   }
 
@@ -539,7 +518,7 @@ class ComboBox extends React.Component {
                       <img
                         className="form__icon form__icon--local"
                         alt="voting app"
-                        src={vaIcon}
+                        src={envIcon}
                       />
                     </div>
                     <span className="form__sm-button-text">{`${buttonText} with Email`}</span>
