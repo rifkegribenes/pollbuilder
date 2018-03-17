@@ -58,8 +58,8 @@
   &__icon {
       height: 14px;
       width: 16px;
-      left: 36px;
-      top: 23px;
+      left: 6px;
+      top: 9px;
       cursor: pointer;
       position: absolute;
       z-index: 2;
@@ -81,7 +81,7 @@
     width: 16px;
     height: 2px;
     border-radius: 1px;
-    background-color: $color_grape;
+    background-color: white;
     transition: all 300ms ease-in-out;
 
     &--top {
@@ -119,7 +119,7 @@
       display: block;
       position: absolute;
       right: 22px;
-      top: 11px;
+      top: 18px;
       z-index: 3;
     }
   }
@@ -171,10 +171,10 @@
   &__item-menu {
     margin: 13px 0 0 20px;
     width: 110px;
-    border-radius: 40px;
     padding: 3px 10px 5px 10px;
     border: 1px solid rgba(255, 255, 255, 0.6) !important;
     cursor: pointer;
+    color: white;
 
         &:hover, &:focus {
         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
@@ -191,8 +191,9 @@
   }
 
   &__menuspan {
-    color: $color_grape;
+    color: rgba(255,255,255,1);
     width: 56px;
+    margin-left: -3px;
 
     &--open {
     color: rgba(255,255,255,0);
@@ -224,7 +225,8 @@
         @include mobile-nav-breakpoint {
           position: absolute;
           right: 30px;
-          top: 20px;
+          top: 14px;
+          padding: 6px 20px 10px 20px;
         }
       }
 
@@ -242,12 +244,12 @@
       &--menu {
         color: $color_grape;
         font-family: $font-stack;
-        text-transform: uppercase;
-        letter-spacing: 2px;
+        // text-transform: uppercase;
+        letter-spacing: 1px;
         font-size: 20px;
-        font-weight: 700;
+        font-weight: 400;
         text-decoration: none;
-        padding: 0 0 0 30px;
+        padding: 0 0 0 36px;
 
         &-open {
           color: $color_grape;
@@ -301,6 +303,7 @@
     justify-content: flex-start;
     list-style: none;
     min-height: 77px;
+    text-transform: capitalize;
 
     &__item-menu {
       display: none;
@@ -365,6 +368,7 @@
       font-size: 16px;
       width: auto;
       margin-left: 0;
+      text-transform: capitalize;
 
         &--home {
           display: flex;
@@ -392,7 +396,6 @@
 
       &:hover, &:focus {
         border: 1px solid rgba(255, 255, 255, 0.6);
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         transition: box-shadow 300ms ease-in-out;
       }
 
@@ -401,8 +404,8 @@
     &__item-link {
     color: $color_grape;
     font-family: $font-stack;
-    text-transform: uppercase;
-    letter-spacing: 3px;
+    text-transform: capitalize;
+    letter-spacing: 1px;
     padding: 5px;
     font-size: 24px;
     font-weight: 400;
@@ -420,20 +423,18 @@
     }
 
     &:hover, &:focus {
-        text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+
       }
 
     @include mobile-nav-breakpoint {
 
-
       &__expanded {
-        background: -webkit-linear-gradient(to bottom, $color_sky, $color_sky_nav);
-        background: linear-gradient(to bottom, $color_sky, $color_sky_nav);
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-        border:1px solid rgba(255,255,255, 0.2);
+        background: white;
+        box-shadow: 0 5px 10px rgba(131,58,180, 0.4);
+        border:1px solid rgba(131,58,180, 0.2);
         list-style-type: none;
         position: relative;
-        top: 30px;
+        top: -13px;
         margin-right: 10px;
 
         &::after {
@@ -441,12 +442,12 @@
           display: block;
           position: absolute;
           top: -6px;
-          right: 35px;
+          right: 21px;
           width: 10px;
           height: 10px;
-          background: $color_sky;
-          border-right:1px solid rgba(255,255,255, 0.2);
-          border-top:1px solid rgba(255,255,255, 0.2);
+          background: white;
+          border-right:1px solid rgba(131,58,180, 0.2);
+          border-top:1px solid rgba(131,58,180, 0.2);
           -moz-transform:rotate(-45deg);
           -webkit-transform:rotate(-45deg);
         }
@@ -487,27 +488,20 @@
             margin-top: 14px;
           }
         }
-
-        &:hover, &:focus {
-          border: 1px solid transparent;
-          box-shadow: none;
-        }
       }
 
       &__item-link {
         font-family: $font-stack;
         font-weight: 400;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        padding: 5px;
+        text-transform: capitalize;
+        letter-spacing: 1px;
         font-size: 13px;
         text-decoration: none;
-        border-radius: 25px;
         border: 1px solid transparent;
-        padding: 5px 10px;
+        padding: 5px 0px 3px 0px;
         font-size: 16px;
-        width: auto;
-        margin-left: 0;
+        width: 100%;
+        margin: 0 10px;
         color: transparent;
         transition: color 400ms ease-out;
 
@@ -515,16 +509,16 @@
         color: $color_grape;
         transition: color 400ms ease-in;
 
+          &:hover, &:focus {
+            // color: rgba(131,58,180, .5);
+            border-bottom: 1px solid $color_grape;
+            transition: all 300ms ease-in-out;
+          }
+
           &--login {
             border: 1px solid rgba(255, 255, 255, 0.6);
           }
 
-          &:hover, &:focus {
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-            transition: box-shadow 300ms ease-in-out;
-          }
       }
     }
   }

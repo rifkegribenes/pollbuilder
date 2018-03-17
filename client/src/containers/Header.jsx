@@ -51,7 +51,7 @@ class Header extends React.Component {
   render() {
     const classObj = {
       closed: {
-        menu: "aria-button h-nav__item-menu",
+        menu: "form__button form__button--big h-nav__item-menu",
         nav: "h-nav__nav",
         ul: "h-nav",
         bar1: "h-nav__bar h-nav__bar--top",
@@ -198,7 +198,9 @@ class Header extends React.Component {
                         className="h-nav__image"
                         style={backgroundStyle}
                         role="img"
-                        aria-label={this.props.appState.user.username}
+                        aria-label={`${
+                          this.props.profile.user.profile.firstName
+                        } ${this.props.profile.user.profile.lastName}`}
                       />
                     </div>
                   </div>

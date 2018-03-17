@@ -428,9 +428,9 @@ input:not([type=checkbox]):not([type=radio]), textarea {
       font-weight: 400;
     }
 
-    &:hover, &:active, &:focus {
+    &:hover, &:focus {
       background-position: 100% 100%;
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 5px 10px rgba(131,58,180, 0.4);
       transition: all 500ms ease-in-out;
     }
 
