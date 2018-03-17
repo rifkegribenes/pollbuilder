@@ -15,6 +15,7 @@ import Spinner from "./containers/Spinner";
 import ModalSm from "./containers/ModalSm";
 import VerifyEmail from "./containers/VerifyEmail";
 import CreatePoll from "./containers/CreatePoll";
+import Logout from "./containers/Logout";
 
 import * as apiActions from "./store/actions/apiActions";
 import * as Actions from "./store/actions";
@@ -169,6 +170,11 @@ class App extends Component {
                 exact
                 path="/createpoll"
                 render={routeProps => <CreatePoll {...routeProps} />}
+              />
+              <Route
+                exact
+                path="/logout"
+                render={routeProps => <Logout {...routeProps} />}
               />
               <Route path="*" component={NotFound} />
             </Switch>

@@ -621,7 +621,8 @@ input:not([type=checkbox]):not([type=radio]), textarea {
         position: absolute;
         right: 30px;
         top: 14px;
-        padding: 6px 20px 10px 20px; } }
+        padding: 6px 20px 10px 20px;
+        text-transform: capitalize; } }
     @media (min-width: 650px) {
       .h-nav__item-link--logout {
         display: none; } }

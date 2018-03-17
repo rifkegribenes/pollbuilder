@@ -7,6 +7,7 @@ import * as Actions from "../store/actions";
 
 import { skip } from "../utils";
 import vaIcon from "../img/rainbow_icon_120.png";
+import gear from "../img/gear.svg";
 
 class Header extends React.Component {
   // close nav & admin menu if open during route change or on logout
@@ -87,7 +88,7 @@ class Header extends React.Component {
       }
     };
 
-    const avatarUrl = this.props.profile.user.profile.avatarUrl;
+    const avatarUrl = this.props.profile.user.profile.avatarUrl || gear;
     const backgroundStyle = {
       backgroundImage: `url(${avatarUrl})`,
       backgroundSize: "cover",
@@ -97,6 +98,14 @@ class Header extends React.Component {
     if (this.props.profile.user.verified) {
       adminLinks = ["profile", "polls", "logout"];
     }
+
+    const linkmap = {
+      profile: "user",
+      polls: "dashboard",
+      logout: "logout",
+      login: "login",
+      about: "about"
+    };
 
     const navItemClass =
       this.props.appState.adminMenuState === "open"
@@ -163,7 +172,7 @@ class Header extends React.Component {
               </li>
               {this.props.links.map(item => {
                 let classes;
-                if (item === "Login") {
+                if (item === "login") {
                   classes =
                     "form__button form__button--big h-nav__item-link--login";
                 } else if (item === "logout") {
@@ -174,7 +183,7 @@ class Header extends React.Component {
                 return (
                   <li className="h-nav__item" key={item}>
                     <NavLink
-                      to={`/${item}`}
+                      to={`/${linkmap[item]}`}
                       className={classes}
                       activeClassName="h-nav__item-link--active"
                     >
@@ -211,7 +220,7 @@ class Header extends React.Component {
                       {adminLinks.map(item => (
                         <li className={navItemClass} key={item}>
                           <NavLink
-                            to={`/${item}`}
+                            to={`/${linkmap[item]}`}
                             data-taborder=""
                             className={navLinkClass}
                             activeClassName="a-nav__item-link--active"
