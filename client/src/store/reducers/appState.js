@@ -6,7 +6,10 @@ import {
   SET_REDIRECT_URL,
   DISMISS_MODAL,
   SET_MODAL_ERROR,
-  SET_SPINNER
+  SET_SPINNER,
+  SET_MENU_STATE,
+  SET_ADMIN_MENU_STATE,
+  SET_WINDOW_SIZE
 } from "../actions";
 import {
   VERIFY_EMAIL_REQUEST,
@@ -28,6 +31,12 @@ const INITIAL_STATE = {
     text: "",
     title: "",
     type: ""
+  },
+  adminMenuState: "closed",
+  menuState: "closed",
+  windowSize: {
+    width: undefined,
+    height: undefined
   }
 };
 
@@ -53,6 +62,28 @@ function appState(state = INITIAL_STATE, action) {
       window.localStorage.removeItem("authToken");
       window.localStorage.removeItem("userId");
       return INITIAL_STATE;
+
+    /*
+    * This action is issued from <App/> component.
+    * When the client window is resized, this action will be dispatched.
+    * The action payload contains the window width and height
+    */
+    case SET_WINDOW_SIZE:
+      return Object.assign({}, state, { windowSize: action.payload });
+
+    /*
+    * This action is issued from <Header/> component.
+    * Toggles the mobile menu between open/closed states
+    */
+    case SET_MENU_STATE:
+      return Object.assign({}, state, { menuState: action.payload });
+
+    /*
+    * This action is issued from <Header/> component.
+    * Toggles the admin menu between open/closed states
+    */
+    case SET_ADMIN_MENU_STATE:
+      return Object.assign({}, state, { adminMenuState: action.payload });
 
     /*
     * Set spinner class to show to indicate API call in progress

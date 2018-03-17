@@ -3,7 +3,7 @@ import { Switch, Route, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import PropTypes from "prop-types";
-// import { parse } from 'query-string';
+import { debounce } from "lodash";
 
 import Header from "./containers/Header";
 import Home from "./containers/Home";
@@ -20,7 +20,31 @@ import * as apiActions from "./store/actions/apiActions";
 import * as Actions from "./store/actions";
 
 class App extends Component {
+  componentWillMount() {
+    this.updateDimensions();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateDimensions);
+  }
+
+  // Set window dimensions in Redux
+  updateDimensions = () => {
+    const size = {
+      width: window.innerWidth,
+      height: window.innerHeight
+    };
+    this.props.actions.setWindowSize(size);
+    if (
+      this.props.appState.windowSize.width > 650 &&
+      this.props.appState.menuState === "open"
+    ) {
+      this.props.actions.setMenuState("closed");
+    }
+  };
+
   componentDidMount() {
+    window.addEventListener("resize", debounce(this.updateDimensions, 100));
     // If not logged in, check local storage for authToken
     // if it doesn't exist, it returns the string "undefined"
     if (!this.props.appState.loggedIn) {
@@ -62,6 +86,7 @@ class App extends Component {
   }
 
   render() {
+    const links = this.props.appState.loggedIn ? ["polls"] : ["login"];
     return (
       <div>
         <Spinner cssClass={this.props.appState.spinnerClass} />
@@ -75,7 +100,7 @@ class App extends Component {
           }}
         />
         <div className="app" id="app">
-          <Header history={this.props.history} />
+          <Header history={this.props.history} links={links} />
           <main className="main" id="main">
             <Switch>
               <Route

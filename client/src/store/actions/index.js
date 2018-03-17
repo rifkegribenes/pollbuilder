@@ -8,6 +8,9 @@ export const SET_REDIRECT_URL = "SET_REDIRECT_URL";
 export const DISMISS_MODAL = "DISMISS_MODAL";
 export const SET_MODAL_ERROR = "SET_MODAL_ERROR";
 export const SET_SPINNER = "SET_SPINNER";
+export const SET_MENU_STATE = "SET_MENU_STATE";
+export const SET_ADMIN_MENU_STATE = "SET_ADMIN_MENU_STATE";
+export const SET_WINDOW_SIZE = "SET_WINDOW_SIZE";
 
 export function setRedirectUrl(url) {
   return {
@@ -69,5 +72,26 @@ export function setModalError(msg) {
 export function dismissModal() {
   return {
     type: DISMISS_MODAL
+  };
+}
+
+export function setMenuState(menu) {
+  return {
+    type: SET_MENU_STATE,
+    payload: menu
+  };
+}
+
+export function setAdminMenuState(menu) {
+  return {
+    type: SET_ADMIN_MENU_STATE,
+    payload: menu
+  };
+}
+
+export function setWindowSize(size) {
+  return {
+    type: SET_WINDOW_SIZE,
+    payload: size
   };
 }

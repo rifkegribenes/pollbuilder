@@ -8,6 +8,7 @@ var mongoose = require('mongoose');
 var cors = require('cors');
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
+var https = require('https');
 var configDB = require('./app/config/database.js');
 const User = require('./app/models/user');
 const session = require('express-session');
