@@ -163,8 +163,9 @@ class Header extends React.Component {
               </li>
               {this.props.links.map(item => {
                 let classes;
-                if (item === "login") {
-                  classes = "h-nav__item-link h-nav__item-link--login";
+                if (item === "Login") {
+                  classes =
+                    "form__button form__button--big h-nav__item-link--login";
                 } else if (item === "logout") {
                   classes = "h-nav__item-link h-nav__item-link--logout";
                 } else {

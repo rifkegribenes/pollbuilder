@@ -61,12 +61,12 @@ body.user-is-tabbing *:focus {
 	display: flex;
   flex-direction: column;
 	justify-content: center;
-  padding: 137px 60px 60px 60px;
 }
 
 .main {
   height: 100%;
   min-height: 100vh;
+  padding-top: 137px;
 }
 
 .title {

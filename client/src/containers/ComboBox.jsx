@@ -503,7 +503,7 @@ class ComboBox extends React.Component {
           </div>
         )}
         <div className="combo__form">
-          <form className="container form">
+          <form className="form">
             <div className="form__body">
               {!(reset || resetPwd || localForm) && (
                 <div>
