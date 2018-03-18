@@ -64,7 +64,7 @@ class Header extends React.Component {
       },
 
       open: {
-        menu: "aria-button h-nav__item-menu--open",
+        menu: "form__button form__button--big h-nav__item-menu--open",
         nav: "h-nav__nav--side",
         ul: "h-nav__side",
         bar1: "h-nav__bar h-nav__bar--top h-nav__bar--top-active",
@@ -76,7 +76,7 @@ class Header extends React.Component {
       },
 
       closing: {
-        menu: "aria-button h-nav__item-menu",
+        menu: "form__button form__button--big h-nav__item-menu",
         nav: "h-nav__nav h-nav__nav--hidden",
         ul: "h-nav",
         bar1: "h-nav__bar h-nav__bar--top",
@@ -135,7 +135,7 @@ class Header extends React.Component {
             onClick={this.navToggle}
           >
             <span className={classObj[this.props.appState.menuState].span}>
-              <button className="h-nav__icon" data-taborder="">
+              <button className="h-nav__icon">
                 <span className="sr-only">Toggle navigation</span>
                 <div className={classObj[this.props.appState.menuState].bar1} />
                 <div className={classObj[this.props.appState.menuState].bar2} />
@@ -148,19 +148,19 @@ class Header extends React.Component {
               </span>
             </span>
           </div>
+          <div className="h-nav__item h-nav__item--home">
+            <NavLink
+              to="/"
+              className="h-nav__logo-wrap"
+              activeClassName="h-nav__logo-wrap--active"
+            >
+              <img src={vaIcon} className="h-nav__logo" alt="logo" />
+              <span className="h-nav__logo--text">Voting App</span>
+            </NavLink>
+          </div>
 
           <nav className={classObj[this.props.appState.menuState].nav}>
             <ul className={classObj[this.props.appState.menuState].ul}>
-              <li className="h-nav__item">
-                <NavLink
-                  to="/"
-                  className="h-nav__item-link"
-                  activeClassName="h-nav__item-link--active"
-                >
-                  <img src={vaIcon} className="h-nav__logo" alt="logo" />
-                  <span className="h-nav__logo--text">Voting App</span>
-                </NavLink>
-              </li>
               <li className="h-nav__item">
                 <NavLink
                   to="/about"
@@ -172,10 +172,7 @@ class Header extends React.Component {
               </li>
               {this.props.links.map(item => {
                 let classes;
-                if (item === "login") {
-                  classes =
-                    "form__button form__button--big h-nav__item-link--login";
-                } else if (item === "logout") {
+                if (item === "logout") {
                   classes = "h-nav__item-link h-nav__item-link--logout";
                 } else {
                   classes = "h-nav__item-link h-nav__item-link";
@@ -193,48 +190,56 @@ class Header extends React.Component {
                 );
               })}
             </ul>
-            {this.props.appState.loggedIn && (
-              <div>
-                <button
-                  className="h-nav__avatar aria-button"
-                  data-taborder=""
-                  onClick={() => this.adminNavToggle()}
-                  aria-expanded={this.props.appState.adminMenuState === "open"}
-                >
-                  <div className="h-nav__image-aspect">
-                    <div className="h-nav__image-crop">
-                      <div
-                        className="h-nav__image"
-                        style={backgroundStyle}
-                        role="img"
-                        aria-label={`${
-                          this.props.profile.user.profile.firstName
-                        } ${this.props.profile.user.profile.lastName}`}
-                      />
-                    </div>
-                  </div>
-                </button>
-                <div className="a-nav__wrap">
-                  <div>
-                    <ul className={adminNavClass}>
-                      {adminLinks.map(item => (
-                        <li className={navItemClass} key={item}>
-                          <NavLink
-                            to={`/${linkmap[item]}`}
-                            data-taborder=""
-                            className={navLinkClass}
-                            activeClassName="a-nav__item-link--active"
-                          >
-                            {item}
-                          </NavLink>
-                        </li>
-                      ))}
-                    </ul>
+          </nav>
+          {this.props.appState.loggedIn ? (
+            <nav className="a-nav__outer-wrap">
+              <button
+                className="h-nav__avatar aria-button"
+                onClick={() => this.adminNavToggle()}
+                aria-expanded={this.props.appState.adminMenuState === "open"}
+              >
+                <div className="h-nav__image-aspect">
+                  <div className="h-nav__image-crop">
+                    <div
+                      className="h-nav__image"
+                      style={backgroundStyle}
+                      role="img"
+                      aria-label={`${
+                        this.props.profile.user.profile.firstName
+                      } ${this.props.profile.user.profile.lastName}`}
+                    />
                   </div>
                 </div>
+              </button>
+              <div className="a-nav__wrap">
+                <div>
+                  <ul className={adminNavClass}>
+                    {adminLinks.map(item => (
+                      <li className={navItemClass} key={item}>
+                        <NavLink
+                          to={`/${linkmap[item]}`}
+                          className={navLinkClass}
+                          activeClassName="a-nav__item-link--active"
+                        >
+                          {item}
+                        </NavLink>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
-            )}
-          </nav>
+            </nav>
+          ) : (
+            <div className="h-nav__item">
+              <NavLink
+                to="/login"
+                className="form__button form__button--big h-nav__item-link--login"
+                activeClassName="h-nav__item-link--active"
+              >
+                Login
+              </NavLink>
+            </div>
+          )}
         </div>
       </header>
     );

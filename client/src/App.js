@@ -87,7 +87,7 @@ class App extends Component {
   }
 
   render() {
-    const links = this.props.appState.loggedIn ? ["polls"] : ["login"];
+    const links = this.props.appState.loggedIn ? ["polls"] : [""];
     return (
       <div>
         <Spinner cssClass={this.props.appState.spinnerClass} />

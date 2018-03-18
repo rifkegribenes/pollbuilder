@@ -37,7 +37,7 @@
 }
 
 @mixin mobile-nav-breakpoint {
-  @media (min-width: 650px) {
+  @media (min-width: 560px) {
     @content;
   }
 }
