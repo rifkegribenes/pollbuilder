@@ -668,7 +668,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
       padding: 10px;
       margin: 0;
       z-index: 3;
-      width: 100vw;
+      width: 100%;
       display: flex;
       justify-content: flex-start;
       list-style: none;
@@ -729,7 +729,10 @@ input:not([type=checkbox]):not([type=radio]), textarea {
           transition: all 300ms ease-in-out; } }
 
 .a-nav {
-  padding-bottom: 20px; }
+  padding-bottom: 20px;
+  max-height: 0px;
+  opacity: 0;
+  transition: all 400ms ease-in-out; }
   .a-nav__item {
     padding: 10px 0;
     width: 100%; }
@@ -761,7 +764,10 @@ input:not([type=checkbox]):not([type=radio]), textarea {
       list-style-type: none;
       position: relative;
       top: -13px;
-      margin-right: 10px; }
+      margin-right: 10px;
+      max-height: 148px;
+      opacity: 1;
+      transition: max-height 400ms ease-in-out, opacity 400ms ease-in-out; }
       .a-nav__expanded::after {
         content: '';
         display: block;
@@ -790,16 +796,15 @@ input:not([type=checkbox]):not([type=radio]), textarea {
       color: transparent !important;
       margin: 0 10px;
       overflow: hidden;
-      transition: all 400ms ease-out; }
+      transition: all 400ms ease-in-out; }
       .a-nav__item--expanded {
-        transition: height 400ms ease-in, opacity 800ms ease-in;
+        transition: all 400ms ease-in-out;
         height: 41px;
         opacity: 1;
         width: auto;
         border: 1px solid transparent;
         margin: 3px 10px;
-        font-weight: 300;
-        letter-spacing: 2px; }
+        font-weight: 300; }
         .a-nav__item--expanded:first-child {
           margin-top: 14px; }
     .a-nav__item-link {
