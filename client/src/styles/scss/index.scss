@@ -47,11 +47,6 @@ body.user-is-tabbing *:focus {
 
 .app {
   background: white;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  min-height: 100vh;
   height: 100%;
   font-family: $font-stack;
   color: $color_gray_text;
@@ -61,12 +56,15 @@ body.user-is-tabbing *:focus {
 	display: flex;
   flex-direction: column;
 	justify-content: center;
+  max-width: 1170px;
+  margin: auto;
 }
 
 .main {
   height: 100%;
-  min-height: 100vh;
   padding: 137px 20px 20px 20px;
+  max-width: 1170px;
+  margin: auto;
 }
 
 .title {

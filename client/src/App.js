@@ -87,7 +87,6 @@ class App extends Component {
   }
 
   render() {
-    const links = this.props.appState.loggedIn ? ["polls"] : [""];
     return (
       <div>
         <Spinner cssClass={this.props.appState.spinnerClass} />
@@ -101,9 +100,7 @@ class App extends Component {
           }}
         />
         <div className="app" id="app">
-          <Route
-            render={routeProps => <Header {...routeProps} links={links} />}
-          />
+          <Route render={routeProps => <Header {...routeProps} />} />
           <main className="main" id="main">
             <Switch>
               <Route

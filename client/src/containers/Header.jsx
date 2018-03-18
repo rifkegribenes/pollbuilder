@@ -96,12 +96,12 @@ class Header extends React.Component {
     };
     let adminLinks = ["profile", "logout"];
     if (this.props.profile.user.verified) {
-      adminLinks = ["profile", "polls", "logout"];
+      adminLinks = ["profile", "my polls", "logout"];
     }
 
     const linkmap = {
       profile: "user",
-      polls: "dashboard",
+      "my polls": "dashboard",
       logout: "logout",
       login: "login",
       about: "about"
@@ -170,25 +170,17 @@ class Header extends React.Component {
                   About
                 </NavLink>
               </li>
-              {this.props.links.map(item => {
-                let classes;
-                if (item === "logout") {
-                  classes = "h-nav__item-link h-nav__item-link--logout";
-                } else {
-                  classes = "h-nav__item-link h-nav__item-link";
-                }
-                return (
-                  <li className="h-nav__item" key={item}>
-                    <NavLink
-                      to={`/${linkmap[item]}`}
-                      className={classes}
-                      activeClassName="h-nav__item-link--active"
-                    >
-                      {item}
-                    </NavLink>
-                  </li>
-                );
-              })}
+              {this.props.appState.loggedIn && (
+                <li className="h-nav__item">
+                  <NavLink
+                    to="/polls"
+                    className="h-nav__item-link h-nav__item-link"
+                    activeClassName="h-nav__item-link--active"
+                  >
+                    All Polls
+                  </NavLink>
+                </li>
+              )}
             </ul>
           </nav>
           {this.props.appState.loggedIn ? (
