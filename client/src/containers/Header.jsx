@@ -222,15 +222,13 @@ class Header extends React.Component {
               </div>
             </nav>
           ) : (
-            <div className="h-nav__item">
-              <NavLink
-                to="/login"
-                className="form__button form__button--big h-nav__item-link--login"
-                activeClassName="h-nav__item-link--active"
-              >
-                Login
-              </NavLink>
-            </div>
+            <NavLink
+              to="/login"
+              className="form__button form__button--big h-nav__item-link--login"
+              activeClassName="h-nav__item-link--active"
+            >
+              Login
+            </NavLink>
           )}
         </div>
       </header>
@@ -239,7 +237,6 @@ class Header extends React.Component {
 }
 
 Header.propTypes = {
-  links: PropTypes.arrayOf(PropTypes.string).isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string
   }).isRequired,
