@@ -1,0 +1,10 @@
+.splash {
+  &__image {
+      height: 125vh;
+      background: url(/img/splash.svg) no-repeat top center;
+      -webkit-background-size: contain;
+      -moz-background-size: contain;
+      -o-background-size: contain;
+      background-size: contain;
+  }
+}

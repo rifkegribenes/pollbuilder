@@ -31,7 +31,11 @@ class Home extends React.Component {
   }
 
   render() {
-    return <div className="container">Home</div>;
+    return (
+      <div className="splash">
+        <div className="splash__image" />
+      </div>
+    );
   }
 }
 

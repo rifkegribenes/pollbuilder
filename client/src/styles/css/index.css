@@ -493,8 +493,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     max-width: 1170px;
     margin: 0 auto;
     z-index: 2;
-    min-height: 60px; }
-  .h-nav__side-bkg-noscroll {
+    min-height: 60px;
     background: white; }
   .h-nav__icon {
     height: 14px;
@@ -830,6 +829,14 @@ input:not([type=checkbox]):not([type=radio]), textarea {
         transition: all 300ms ease-in-out; }
       .a-nav__item-link--expanded--login {
         border: 1px solid rgba(255, 255, 255, 0.6); }
+
+.splash__image {
+  height: 125vh;
+  background: url(/img/splash.svg) no-repeat top center;
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  -o-background-size: contain;
+  background-size: contain; }
 
 .spinner {
   color: rgba(0, 0, 0, 0.6);

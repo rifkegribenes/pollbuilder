@@ -2,11 +2,11 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
+  "homepage": ".",
   "dependencies": {
     "core-js": "^2.5.3",
     "immutability-helper": "^2.6.4",
     "prop-types": "^15.6.0",
-    "query-string": "^5.1.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-modal": "^3.1.11",
