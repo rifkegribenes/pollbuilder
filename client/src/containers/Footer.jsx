@@ -1,7 +1,7 @@
 import React from "react";
 
 const Footer = props => (
-  <footer className="container footer">
+  <footer className="footer">
     &copy; 2018 Sarah Schneider
     <div className="footer__right">
       <a

@@ -1,10 +1,64 @@
 .splash {
+  width: 100%;
+  max-width: 1170px;
+  margin: auto;
+  min-height: 100vh;
   &__image {
-      height: 125vh;
+      width: 100%;
+      max-width: 1170px;
+      height: 100%;
+      margin-top: -2vw;
+      padding-top: 100%;
+      min-height: 100%;
       background: url(/img/splash.svg) no-repeat top center;
       -webkit-background-size: contain;
       -moz-background-size: contain;
       -o-background-size: contain;
       background-size: contain;
+
+    @include for-tablet-landscape-up {
+      margin-top: -60px;
+    }
+  }
+
+  &__headline {
+    text-align: center;
+    width: 100%;
+    max-width: 1170px;
+    margin: auto;
+    font-size: 30px;
+    color: $color_raspberry;
+    font-weight: 200;
+    z-index: 2;
+
+    @include for-phone-landscape-up {
+      font-size: 50px;
+    }
+
+    &--grape {
+      color: $color_grape;
+      font-size: 40px;
+
+      @include for-phone-landscape-up {
+        font-size: 60px;
+      }
+    }
+
+
+  }
+
+  &__caret {
+    margin: 1em 0;
+    border-right: .05em solid $color_mango;
+    animation: caret 1s steps(1) infinite;
+    max-height: 2em;
+   }
+  }
+
+
+
+@keyframes caret {
+  50% {
+    border-color: transparent;
   }
 }

@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as Actions from "../store/actions";
 import * as apiActions from "../store/actions/apiActions";
+import { typewriterAnimation } from "../utils";
 
 class Home extends React.Component {
   componentDidMount() {
@@ -28,11 +29,17 @@ class Home extends React.Component {
     } else {
       console.log("logged in");
     }
+
+    typewriterAnimation();
   }
 
   render() {
     return (
       <div className="splash">
+        <h2 className="splash__headline splash__headline--grape">Voting App</h2>
+        <h2 id="typewriter" className="splash__headline">
+          Create your own polls.
+        </h2>
         <div className="splash__image" />
       </div>
     );
