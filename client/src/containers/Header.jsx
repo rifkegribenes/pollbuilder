@@ -94,13 +94,13 @@ class Header extends React.Component {
       backgroundSize: "cover",
       backgroundPosition: "center center"
     };
-    let adminLinks = ["profile", "logout"];
+    let adminLinks = ["my account", "logout"];
     if (this.props.profile.user.verified) {
-      adminLinks = ["profile", "my polls", "logout"];
+      adminLinks = ["my account", "my polls", "logout"];
     }
 
     const linkmap = {
-      profile: "user",
+      "my account": "user",
       "my polls": "dashboard",
       logout: "logout",
       login: "login",

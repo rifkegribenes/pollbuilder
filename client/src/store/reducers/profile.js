@@ -60,7 +60,7 @@ function profile(state = INITIAL_STATE, action) {
     */
     case VALIDATE_TOKEN_SUCCESS:
       return update(state, {
-        user: { $merge: action.payload }
+        user: { $merge: action.payload.user }
       });
 
     /*

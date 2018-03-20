@@ -133,7 +133,7 @@ function appState(state = INITIAL_STATE, action) {
       return update(state, {
         spinnerClass: { $set: "spinner__hide" },
         loggedIn: { $set: true },
-        authToken: { $set: action.payload.token }
+        authToken: { $set: action.meta.token }
       });
 
     /*
