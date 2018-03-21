@@ -222,13 +222,15 @@ class Header extends React.Component {
               </div>
             </nav>
           ) : (
-            <NavLink
-              to="/login"
-              className="form__button form__button--big h-nav__item-link--login"
-              activeClassName="h-nav__item-link--active"
-            >
-              Login
-            </NavLink>
+            this.props.location.pathname !== "/login" && (
+              <NavLink
+                to="/login"
+                className="form__button form__button--big h-nav__item-link--login"
+                activeClassName="h-nav__item-link--active"
+              >
+                Login
+              </NavLink>
+            )
           )}
         </div>
       </header>
