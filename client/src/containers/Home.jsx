@@ -1,5 +1,5 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
+import { NavLink, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as Actions from "../store/actions";
@@ -34,12 +34,32 @@ class Home extends React.Component {
   }
 
   render() {
+    const voteText =
+      this.props.appState.windowSize.width < 400 ? "Vote" : "Vote in a poll";
+    const createText =
+      this.props.appState.windowSize.width < 400 ? "Create" : "Create a poll";
     return (
       <div className="splash">
         <h2 className="splash__headline splash__headline--grape">Voting App</h2>
         <h2 id="typewriter" className="splash__headline">
           Create your own polls.
         </h2>
+        <div className="splash__button-wrap">
+          <NavLink
+            to="/login"
+            className="form__button form__button--big splash__login"
+            activeClassName="h-nav__item-link--active"
+          >
+            {createText}
+          </NavLink>
+          <NavLink
+            to="/polls"
+            className="form__button form__button--big splash__button splash__button--polls"
+            activeClassName="h-nav__item-link--active"
+          >
+            {voteText}
+          </NavLink>
+        </div>
         <div className="splash__image" />
       </div>
     );

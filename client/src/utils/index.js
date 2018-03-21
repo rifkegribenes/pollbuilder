@@ -106,7 +106,7 @@ export const typewriterAnimation = () => {
         setTimeout(function() {
           typeWriter(text, i + 1, fnCallback);
         }, 100);
-      } else if (typeof fnCallback == "function") {
+      } else if (typeof fnCallback === "function") {
         // text finished, call callback if there is a callback function
         // call callback after timeout
         setTimeout(fnCallback, 700);

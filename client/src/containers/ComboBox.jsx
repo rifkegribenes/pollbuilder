@@ -59,8 +59,8 @@ class ComboBox extends React.Component {
   componentDidMount() {
     // clear previous errors
     this.props.actions.resetForm();
-    if (this.props.match === "reset") {
-      const newState = { ...this.state };
+    const newState = { ...this.state };
+    if (this.props.match.path === "reset") {
       newState.form = "reset";
       this.setState({ ...newState }, () => {
         // console.log(this.state);
