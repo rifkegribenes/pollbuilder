@@ -97,6 +97,7 @@ class ComboBox extends React.Component {
     const newState = { ...this.state };
     newState.form = form;
     newState.localForm = false;
+    newState.validationErrors = {};
     this.setState({ ...newState }, () => {});
   }
 
@@ -525,41 +526,49 @@ class ComboBox extends React.Component {
               {signup && (
                 <div
                   className={
-                    localForm ? "form__local--visible" : "form__local--hidden"
+                    localForm
+                      ? "form__input-group form__local--visible"
+                      : "form__input-group form__local--hidden"
                   }
                 >
-                  <div className="form__input-group">
-                    <FormInput
-                      handleChange={this.handleInput}
-                      handleBlur={this.handleBlur}
-                      handleFocus={this.handleFocus}
-                      label="First name"
-                      placeholder="First name"
-                      autoComplete="given-name"
-                      showError={this.state.showFieldErrors.firstName}
-                      value={this.props.login.form.firstName}
-                      errorText={this.errorFor("firstName")}
-                      touched={this.state.touched.firstName}
-                      name="firstName"
-                      submit={this.state.submit}
-                    />
-                  </div>
-                  <div className="form__input-group">
-                    <FormInput
-                      handleChange={this.handleInput}
-                      handleBlur={this.handleBlur}
-                      handleFocus={this.handleFocus}
-                      label="Last name"
-                      placeholder="Last name"
-                      autoComplete="family-name"
-                      showError={this.state.showFieldErrors.lastName}
-                      value={this.props.login.form.lastName}
-                      errorText={this.errorFor("lastName")}
-                      touched={this.state.touched.lastName}
-                      name="lastName"
-                      submit={this.state.submit}
-                    />
-                  </div>
+                  <FormInput
+                    handleChange={this.handleInput}
+                    handleBlur={this.handleBlur}
+                    handleFocus={this.handleFocus}
+                    label="First name"
+                    placeholder="First name"
+                    autoComplete="given-name"
+                    showError={this.state.showFieldErrors.firstName}
+                    value={this.props.login.form.firstName}
+                    errorText={this.errorFor("firstName")}
+                    touched={this.state.touched.firstName}
+                    name="firstName"
+                    submit={this.state.submit}
+                  />
+                </div>
+              )}
+              {signup && (
+                <div
+                  className={
+                    localForm
+                      ? "form__input-group form__local--visible"
+                      : "form__input-group form__local--hidden"
+                  }
+                >
+                  <FormInput
+                    handleChange={this.handleInput}
+                    handleBlur={this.handleBlur}
+                    handleFocus={this.handleFocus}
+                    label="Last name"
+                    placeholder="Last name"
+                    autoComplete="family-name"
+                    showError={this.state.showFieldErrors.lastName}
+                    value={this.props.login.form.lastName}
+                    errorText={this.errorFor("lastName")}
+                    touched={this.state.touched.lastName}
+                    name="lastName"
+                    submit={this.state.submit}
+                  />
                 </div>
               )}
               {(reset || resetPwd) && (
@@ -579,83 +588,77 @@ class ComboBox extends React.Component {
               {!resetPwd && (
                 <div
                   className={
-                    localForm || reset
-                      ? "form__local--visible"
-                      : "form__local--hidden"
+                    localForm
+                      ? "form__input-group form__local--visible"
+                      : "form__input-group form__local--hidden"
                   }
                 >
-                  <div className="form__input-group">
-                    <FormInput
-                      handleChange={this.handleInput}
-                      handleBlur={this.handleBlur}
-                      handleFocus={this.handleFocus}
-                      label="Email"
-                      placeholder={login ? "Email" : "xyz@gmail.com"}
-                      autoComplete="email"
-                      type="email"
-                      showError={this.state.showFieldErrors.email}
-                      value={this.props.login.form.email}
-                      errorText={this.errorFor("email")}
-                      touched={this.state.touched.email}
-                      name="email"
-                      inputRef={el => (this.emailInput = el)}
-                      submit={this.state.submit}
-                    />
-                  </div>
+                  <FormInput
+                    handleChange={this.handleInput}
+                    handleBlur={this.handleBlur}
+                    handleFocus={this.handleFocus}
+                    label="Email"
+                    placeholder={login ? "Email" : "xyz@gmail.com"}
+                    autoComplete="email"
+                    type="email"
+                    showError={this.state.showFieldErrors.email}
+                    value={this.props.login.form.email}
+                    errorText={this.errorFor("email")}
+                    touched={this.state.touched.email}
+                    name="email"
+                    inputRef={el => (this.emailInput = el)}
+                    submit={this.state.submit}
+                  />
                 </div>
               )}
               {!reset && (
                 <div
                   className={
-                    localForm || resetPwd
-                      ? "form__local--visible"
-                      : "form__local--hidden"
+                    localForm
+                      ? "form__input-group form__local--visible"
+                      : "form__input-group form__local--hidden"
                   }
                 >
-                  <div className="form__input-group">
-                    <FormInput
-                      handleChange={this.handleInput}
-                      handleBlur={this.handleBlur}
-                      handleFocus={this.handleFocus}
-                      label={resetPwd ? "New Password" : "Password"}
-                      placeholder={login ? "Password" : "At least 6 characters"}
-                      autoComplete="new-password"
-                      type="password"
-                      showError={this.state.showFieldErrors.password}
-                      value={this.props.login.form.password}
-                      errorText={this.errorFor("password")}
-                      touched={this.state.touched.password}
-                      name="password"
-                      submit={this.state.submit}
-                    />
-                  </div>
+                  <FormInput
+                    handleChange={this.handleInput}
+                    handleBlur={this.handleBlur}
+                    handleFocus={this.handleFocus}
+                    label={resetPwd ? "New Password" : "Password"}
+                    placeholder={login ? "Password" : "At least 6 characters"}
+                    autoComplete="new-password"
+                    type="password"
+                    showError={this.state.showFieldErrors.password}
+                    value={this.props.login.form.password}
+                    errorText={this.errorFor("password")}
+                    touched={this.state.touched.password}
+                    name="password"
+                    submit={this.state.submit}
+                  />
                 </div>
               )}
               {(signup || resetPwd) && (
                 <div
                   className={
-                    localForm || resetPwd
-                      ? "form__local--visible"
-                      : "form__local--hidden"
+                    localForm
+                      ? "form__input-group form__local--visible"
+                      : "form__input-group form__local--hidden"
                   }
                 >
-                  <div className="form__input-group">
-                    <FormInput
-                      handleChange={this.handleInput}
-                      handleBlur={this.handleBlur}
-                      handleFocus={this.handleFocus}
-                      placeholder="Confirm Password"
-                      label="Confirm Password"
-                      autoComplete="new-password"
-                      type="password"
-                      showError={this.state.showFieldErrors.confirmPwd}
-                      value={this.props.login.form.confirmPwd}
-                      errorText={this.errorFor("confirmPwd")}
-                      touched={this.state.touched.confirmPwd}
-                      name="confirmPwd"
-                      submit={this.state.submit}
-                    />
-                  </div>
+                  <FormInput
+                    handleChange={this.handleInput}
+                    handleBlur={this.handleBlur}
+                    handleFocus={this.handleFocus}
+                    placeholder="Confirm Password"
+                    label="Confirm Password"
+                    autoComplete="new-password"
+                    type="password"
+                    showError={this.state.showFieldErrors.confirmPwd}
+                    value={this.props.login.form.confirmPwd}
+                    errorText={this.errorFor("confirmPwd")}
+                    touched={this.state.touched.confirmPwd}
+                    name="confirmPwd"
+                    submit={this.state.submit}
+                  />
                 </div>
               )}
               {login &&

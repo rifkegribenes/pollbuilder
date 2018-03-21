@@ -94,8 +94,8 @@ export const typewriterAnimation = () => {
     // type one phrase in the typwriter
     // keeps calling itself until the phrase is completed
     function typeWriter(text, i, fnCallback) {
-      // chekc if text is finished
-      if (i < text.length) {
+      // check if text is finished
+      if (i < text.length && document.getElementById("typewriter")) {
         // add next character to h1
         document.getElementById("typewriter").innerHTML = `${text.substring(
           0,

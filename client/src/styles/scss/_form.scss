@@ -93,11 +93,6 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     &--error {
       border: 1px solid red !important;
     }
-    @include for-big-desktop-up {
-      padding: 15px;
-      font-size: 1.2em;
-      margin-bottom: 20px;
-    }
 
     &__search-container {
       position: relative;
@@ -106,17 +101,6 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     &--search {
       padding: 8px;
       font-size: .8em;
-
-
-      @include for-tablet-landscape-up {
-        padding: 12px;
-        font-size: .9em;
-      }
-
-      @include for-big-desktop-up {
-      padding: 12px;
-      font-size: 1em;
-    }
 
     }
 
@@ -146,16 +130,6 @@ input:not([type=checkbox]):not([type=radio]), textarea {
       white-space: nowrap;
       padding: 8px !important;
       font-size: .8em !important;
-
-      // @include for-tablet-landscape-up {
-      //   padding: 12px !important;
-      //   font-size: .9em !important;
-      // }
-
-      @include for-big-desktop-up {
-      padding: 12px !important;
-      font-size: 1em !important;
-    }
     }
 
     &--option {
@@ -172,7 +146,6 @@ input:not([type=checkbox]):not([type=radio]), textarea {
       height: 20px;
       width: 20px;
       transition: all 0.15s ease-out 0s;
-      // background: rgba(255,255,255,.5);
       border: 2px solid rgba(255,255,255,.9);
       color: rgba(255,255,255,.8);
       cursor: pointer;
@@ -289,18 +262,6 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     font-weight: 100;
     color: $color_gray_text;
 
-    // @include for-tablet-landscape-up {
-    //   padding: 12px !important;
-    //   font-size: .9em !important;
-    // }
-
-    @include for-big-desktop-up {
-      padding: 12px !important;
-      font-size: 1em !important;
-    }
-
-
-
   }
 
   &__label {
@@ -325,9 +286,6 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     color: $color_sky;
     font-weight: 300;
     letter-spacing: 2px;
-    @include for-big-desktop-up {
-      font-size: 1.2em;
-    }
   }
 
   &__error {
@@ -609,7 +567,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
 
 ::-webkit-input-placeholder {
   color: $color_gray_text;
-  // opacity: 0.8;
+  opacity: 0.8;
   -webkit-transition: opacity 0.35s ease-in-out;
   transition: opacity 0.35s ease-in-out;
   }
@@ -617,7 +575,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
 
 ::-moz-placeholder {
   color: $color_gray_text;
-  // opacity: 0.8;
+  opacity: 0.8;
   -webkit-transition: opacity 0.35s ease-in-out;
   transition: opacity 0.35s ease-in-out;
   }
@@ -625,7 +583,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
 
 :-ms-input-placeholder {
   color: $color_gray_text;
-  // opacity: 0.8;
+  opacity: 0.8;
   -webkit-transition: opacity 0.35s ease-in-out;
   transition: opacity 0.35s ease-in-out;
   }
@@ -633,7 +591,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
 
 :-moz-placeholder {
   color: $color_gray_text;
-  // opacity: 0.8;
+  opacity: 0.8;
   -webkit-transition: opacity 0.35s ease-in-out;
   transition: opacity 0.35s ease-in-out;
   }
