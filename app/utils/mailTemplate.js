@@ -124,7 +124,7 @@ const shortEmail = (title, appName, url, preheader, headline, heroUrl, body, but
                     <tr>
                         <td align="center" valign="top" style="padding: 15px 0; display: flex; justify-content: center;" class="logo">
                             <a href=${CLIENT_URL} target="_blank" style="padding: 15px;">
-                                <img alt="Logo" src="https://raw.githubusercontent.com/rifkegribenes/voting-app/master/public/rainbow_icon_120.png" width="60" height="60" style="display: block; font-family: 'Titillium Web', Helvetica, Arial, sans-serif; color: #ffffff; font-size: 16px;" border="0">
+                                <img alt="Logo" src="https://raw.githubusercontent.com/rifkegribenes/voting-app/master/client/public/img/rainbow_icon_120.png" width="60" height="60" style="display: block; font-family: 'Titillium Web', Helvetica, Arial, sans-serif; color: #ffffff; font-size: 16px;" border="0">
                             </a> &nbsp;
                             <span style="display: inline-block; font-size: 28px; font-family: 'Titillium Web', Helvetica, Arial, sans-serif; color: #333333; padding-top: 30px;" class="padding"">${title}</span>
                         </td>
@@ -229,7 +229,7 @@ exports.pwResetTemplate = (url) => {
       url, // url
       'Click here to reset your password', // preheader
       'Forgot your password?', // headline
-      'https://raw.githubusercontent.com/rifkegribenes/voting-app/master/public/img/email-banner.png', // heroUrl
+      'https://raw.githubusercontent.com/rifkegribenes/voting-app/master/client/public/img/email-banner.png', // heroUrl
       'No problem! Click below to reset it!', // body
       'Reset Password', // buttonText
       'voting app | rifkegribenes.io' // footerText
@@ -243,7 +243,7 @@ exports.pwResetConfirmation = () => {
       CLIENT_URL, // url
       'Your password was reset successfully', // preheader
       'You changed your password', // headline
-      'https://raw.githubusercontent.com/rifkegribenes/voting-app/master/public/img/success-checkbox-500x180_f.gif', // heroUrl
+      'https://raw.githubusercontent.com/rifkegribenes/voting-app/master/client/public/img/success-checkbox-500x180_f.gif', // heroUrl
       'Or somebody did...\nIf it wasn\'t you, please contact us right away and get that fixed!', // body
       'My Account', // buttonText
       'voting app | rifkegribenes.io' // footerText
@@ -257,7 +257,7 @@ exports.verificationTemplate = (url) => {
     url, // url
     'Click here to verify your email', // preheader
     'Welcome!', // headline
-    'https://raw.githubusercontent.com/rifkegribenes/voting-app/master/public/img/email-banner.png', // heroUrl
+    'https://raw.githubusercontent.com/rifkegribenes/voting-app/master/client/public/img/email-banner.png', // heroUrl
     'Click below to verify your email:', // body
     'Verify Email', // buttonText
     'voting app | rifkegribenes.io' // footerText
