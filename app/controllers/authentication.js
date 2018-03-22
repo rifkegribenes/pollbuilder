@@ -101,7 +101,7 @@ exports.register = function (req, res, next) {
 
         // assign generic avatar URL, will be overwritten if user later links
         // a social media accout
-        const avatarUrl = 'https://raw.githubusercontent.com/rifkegribenes/voting-app/master/public/rainbow_icon_120.png';
+        const avatarUrl = 'https://raw.githubusercontent.com/rifkegribenes/voting-app/master/client/public/img/rainbow_icon_120.png';
         const user = new User({
           local: { email, password },
           profile: { firstName, lastName, email, avatarUrl },

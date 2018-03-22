@@ -49,11 +49,12 @@ class Profile extends React.Component {
         JSON.parse(window.localStorage.getItem("authToken"));
     }
 
-    // if logged in through social auth, need to save them to local storage
+    // if logged in for first time through social auth,
+    // need to save them to local storage
     window.localStorage.setItem("authToken", JSON.stringify(token));
     window.localStorage.setItem("userId", JSON.stringify(userId));
 
-    // retrieve profile & save to app state
+    // retrieve user profile & save to app state
     this.props.api.getProfile(token, userId).then(result => {
       if (result.type === "GET_PROFILE_SUCCESS") {
       }
@@ -61,6 +62,11 @@ class Profile extends React.Component {
   }
 
   render() {
+    const backgroundStyle = {
+      backgroundImage: `url(${this.props.profile.user.profile.avatarUrl})`,
+      backgroundSize: "cover",
+      backgroundPosition: "center center"
+    };
     return (
       <div>
         <Spinner cssClass={this.props.profile.spinnerClass} />
@@ -84,108 +90,29 @@ class Profile extends React.Component {
           }}
         />
         {this.props.appState.loggedIn ? (
-          <div className="profile">
-            <div className="profile__row">
-              <div className="profile__card">
-                <div className="profile__header">Profile</div>
-                <div className="profile__name">
-                  {this.props.profile.user.profile.firstName}{" "}
-                  {this.props.profile.user.profile.lastName}
-                </div>
-                <div className="profile__email">
-                  {this.props.profile.user.profile.email}
-                </div>
-                <div className="profile__pic">
-                  <img
-                    src={this.props.profile.user.profile.avatarUrl}
-                    alt={`${this.props.profile.user.profile.firstName} ${
+          <div className="container profile">
+            <div className="profile__card">
+              <div className="profile__name">
+                {this.props.profile.user.profile.firstName}{" "}
+                {this.props.profile.user.profile.lastName}
+              </div>
+              <div className="profile__email">
+                {this.props.profile.user.profile.email}
+              </div>
+              <div className="profile__image-aspect">
+                <div className="h-nav__image-crop">
+                  <div
+                    className="h-nav__image"
+                    style={backgroundStyle}
+                    role="img"
+                    aria-label={`${this.props.profile.user.profile.firstName} ${
                       this.props.profile.user.profile.lastName
                     }`}
                   />
                 </div>
-                <div className="profile__email">
-                  {this.props.profile.user.verified && "Verified"}
-                </div>
               </div>
-              <div className="profile__card">
-                <div className="profile__header">Local</div>
-                {this.props.profile.user.local && (
-                  <div className="profile__email">
-                    {this.props.profile.user.local.email}
-                  </div>
-                )}
-              </div>
-              <div className="profile__card">
-                <div className="profile__header">Github</div>
-                {this.props.profile.user.github && (
-                  <div className="profile__email">
-                    {this.props.profile.user.github.email}
-                    <br />
-                    {`${this.props.profile.user.github.token.slice(0, 5)}...`}
-                  </div>
-                )}
-              </div>
-              <div className="profile__card">
-                <div className="profile__header">Facebook</div>
-                {this.props.profile.user.facebook && (
-                  <div className="profile__email">
-                    {this.props.profile.user.facebook.email}
-                    <br />
-                    {`${this.props.profile.user.facebook.token.slice(0, 5)}...`}
-                  </div>
-                )}
-              </div>
-              <div className="profile__card">
-                <div className="profile__header">Google+</div>
-                {this.props.profile.user.google && (
-                  <div className="profile__email">
-                    {this.props.profile.user.google.email}
-                    <br />
-                    {`${this.props.profile.user.google.token.slice(0, 5)}...`}
-                  </div>
-                )}
-              </div>
-            </div>
-            <div className="form__input-group">
-              <hr className="form__hr" />
-              <div className="form__text">Connect with&hellip;</div>
-              <div className="form__button-wrap">
-                {!this.props.profile.user.github ||
-                !this.props.profile.user.github.token ? (
-                  <a
-                    className="form__button form__button--github"
-                    href="http://localhost:8080/api/auth/github/"
-                    id="btn-github"
-                  >
-                    <span>Link GH</span>
-                  </a>
-                ) : (
-                  ""
-                )}
-                {!this.props.profile.user.facebook ||
-                !this.props.profile.user.facebook.token ? (
-                  <a
-                    className="form__button form__button--facebook"
-                    id="btn-facebook"
-                    href="http://localhost:8080/api/auth/facebook"
-                  >
-                    <span>Link FB</span>
-                  </a>
-                ) : (
-                  ""
-                )}
-                {!this.props.profile.user.google ||
-                !this.props.profile.user.google.token ? (
-                  <a
-                    className="form__button form__button--google"
-                    id="btn-google"
-                    href="http://localhost:8080/api/auth/google"
-                  >
-                    <span>Link G+</span>
-                  </a>
-                ) : (
-                  ""
-                )}
+              <div className="profile__email">
+                {this.props.profile.user.verified && "Verified"}
               </div>
             </div>
           </div>

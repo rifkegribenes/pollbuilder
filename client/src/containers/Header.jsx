@@ -88,7 +88,13 @@ class Header extends React.Component {
       }
     };
 
-    const avatarUrl = this.props.profile.user.profile.avatarUrl || gear;
+    let avatarUrl = this.props.profile.user.profile.avatarUrl;
+    if (
+      avatarUrl ===
+      "https://raw.githubusercontent.com/rifkegribenes/voting-app/master/client/public/img/rainbow_icon_120.png"
+    ) {
+      avatarUrl = gear;
+    }
     const backgroundStyle = {
       backgroundImage: `url(${avatarUrl})`,
       backgroundSize: "cover",
@@ -186,7 +192,11 @@ class Header extends React.Component {
           {this.props.appState.loggedIn ? (
             <nav className="a-nav__outer-wrap">
               <button
-                className="h-nav__avatar aria-button"
+                className={
+                  avatarUrl === gear
+                    ? "h-nav__avatar aria-button h-nav__gear"
+                    : "h-nav__avatar aria-button"
+                }
                 onClick={() => this.adminNavToggle()}
                 aria-expanded={this.props.appState.adminMenuState === "open"}
               >

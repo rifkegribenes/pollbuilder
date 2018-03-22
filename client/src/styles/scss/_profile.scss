@@ -1,18 +1,29 @@
 .profile {
-	&__row {
-		width: 100%;
-		display: flex;
-		flex-wrap: wrap;
-	}
 	&__card {
 		padding: 20px;
-		margin: 20px;
-		border: 1px solid $color_gray_text;
+		display: flex;
+		flex-direction: column;
+		text-align: center;
+		width: 100%;
+		margin: auto;
+
+		@include for-phone-portrait-up {
+      width: 380px;
+		  border-radius: $btn_border-radius;
+      box-shadow: 0px 0px 3px 0px $color_grape;
+		  // box-shadow: 0px 0px 5px 0px $color_box-shadow;
+    }
 	}
-	&__header {
-		font-weight: 700;
-		text-transform: uppercase;
+	&__name {
+		font-size: 24px;
 		text-align: center;
 		letter-spacing: 2px;
 	}
+
+  &__image-aspect {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    margin: auto;
+}
 }

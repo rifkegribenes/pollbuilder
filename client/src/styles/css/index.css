@@ -519,6 +519,8 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     right: 3px;
     top: 18px;
     z-index: 3; }
+  .h-nav__gear {
+    top: 23px; }
   .h-nav__image-aspect {
     width: 40px;
     height: 40px;
@@ -1104,42 +1106,38 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     stroke-dashoffset: -100; }
   100% {
     stroke-dashoffset: 900; } }
-.profile__row {
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap; }
 .profile__card {
   padding: 20px;
-  margin: 20px;
-  border: 1px solid #545454; }
-.profile__header {
-  font-weight: 700;
-  text-transform: uppercase;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  width: 100%;
+  margin: auto; }
+  @media (min-width: 400px) {
+    .profile__card {
+      width: 380px;
+      border-radius: 4px;
+      box-shadow: 0px 0px 3px 0px #833ab4; } }
+.profile__name {
+  font-size: 24px;
   text-align: center;
   letter-spacing: 2px; }
+.profile__image-aspect {
+  width: 100px;
+  height: 100px;
+  position: relative;
+  margin: auto; }
 
 .combo {
   width: 100%;
   margin: auto;
-  position: relative; }
+  position: relative;
+  margin-bottom: 80px; }
   @media (min-width: 400px) {
     .combo {
       width: 380px;
       border-radius: 4px;
-      box-shadow: 0px 0px 3px 0px #833ab4; }
-      .combo::before {
-        position: absolute;
-        content: '';
-        left: -3px;
-        top: -3px;
-        width: 100%;
-        height: 100%;
-        z-index: -1;
-        border-radius: 4px;
-        padding: 3px;
-        background: #833ab4;
-        background: -webkit-linear-gradient(-45deg, #833ab4, #fd1d1d, #fcb045);
-        background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045); } }
+      box-shadow: 0px 0px 3px 0px #833ab4; } }
   .combo__header {
     text-align: center;
     padding: 20px;
@@ -1291,7 +1289,8 @@ body.user-is-tabbing *:focus {
   flex-direction: column;
   justify-content: center;
   max-width: 1170px;
-  margin: auto; }
+  margin: auto;
+  margin-bottom: 80px; }
 
 .main {
   height: 100%;
