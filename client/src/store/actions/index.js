@@ -7,6 +7,7 @@ export const SET_PROFILE_VIEW = "SET_PROFILE_VIEW";
 export const SET_REDIRECT_URL = "SET_REDIRECT_URL";
 export const DISMISS_MODAL = "DISMISS_MODAL";
 export const SET_MODAL_ERROR = "SET_MODAL_ERROR";
+export const SET_MODAL_INFO = "SET_MODAL_INFO";
 export const SET_SPINNER = "SET_SPINNER";
 export const SET_MENU_STATE = "SET_MENU_STATE";
 export const SET_ADMIN_MENU_STATE = "SET_ADMIN_MENU_STATE";
@@ -66,6 +67,13 @@ export function setModalError(msg) {
   return {
     type: SET_MODAL_ERROR,
     payload: msg
+  };
+}
+
+export function setModalInfo(modalObj) {
+  return {
+    type: SET_MODAL_INFO,
+    payload: modalObj
   };
 }
 

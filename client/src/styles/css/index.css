@@ -984,9 +984,9 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     text-transform: uppercase;
     letter-spacing: 2px; }
   .modal__info {
-    color: #182848; }
+    color: #833ab4; }
   .modal__error {
-    color: #a94442; }
+    color: #fd1d1d; }
   .modal__success {
     color: #3c763d; }
   .modal__body {
@@ -1004,7 +1004,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     -webkit-appearance: none;
     appearance: none;
     background: transparent;
-    color: #182848;
+    color: white;
     font-family: "Titillium Web", Helvetica, Arial, sans-serif;
     text-transform: uppercase;
     letter-spacing: 2px;
@@ -1012,18 +1012,24 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     font-size: 16px;
     font-weight: 300;
     text-decoration: none;
-    border: 1px solid #182848;
     display: inline-block;
     border-radius: 4px;
-    transition: all 300ms ease-in-out; }
+    transition: all 300ms ease-in-out;
+    background: #833ab4;
+    background-image: -webkit-linear-gradient(-45deg, #833ab4 0px, #833ab4 50px, #fd1d1d, #fcb045 100%);
+    background-image: linear-gradient(135deg, #833ab4 0px, #833ab4 50px, #fd1d1d, #fcb045 100%);
+    background-size: 200% 200%;
+    background-position: 0 0;
+    transition: background-position 500ms ease-in-out;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer; }
     .modal__button:hover, .modal__button:focus {
       -webkit-appearance: none;
       appearance: none;
-      background: #182848;
-      color: white;
-      transition: all 300ms ease-in-out; }
-  .modal__danger:hover, .modal__danger:active, .modal__danger:focus {
-    color: #a94442; }
+      background-position: 100% 100%;
+      box-shadow: 0 5px 10px rgba(131, 58, 180, 0.4);
+      transition: all 500ms ease-in-out; }
 
 .modal-close {
   position: absolute;
@@ -1119,14 +1125,24 @@ input:not([type=checkbox]):not([type=radio]), textarea {
       border-radius: 4px;
       box-shadow: 0px 0px 3px 0px #833ab4; } }
 .profile__name {
-  font-size: 24px;
+  font-size: 32px;
+  color: #833ab4;
   text-align: center;
-  letter-spacing: 2px; }
+  letter-spacing: 1px;
+  line-height: 1em;
+  margin: 15px 0; }
 .profile__image-aspect {
   width: 100px;
   height: 100px;
   position: relative;
   margin: auto; }
+.profile__button {
+  text-transform: capitalize;
+  font-weight: 400; }
+.profile__unverified {
+  color: red;
+  font-weight: bold;
+  margin-bottom: 15px; }
 
 .combo {
   width: 100%;

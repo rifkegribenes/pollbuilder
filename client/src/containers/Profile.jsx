@@ -67,6 +67,14 @@ class Profile extends React.Component {
       backgroundSize: "cover",
       backgroundPosition: "center center"
     };
+    const body = { email: this.props.profile.user.profile.email };
+    const modalObj = {
+      text:
+        "Please click below to resend a verification link to your email address",
+      title: "Verify your email",
+      buttonText: "Send message",
+      action: () => this.props.api.resendVerificationLink(body)
+    };
     return (
       <div>
         <Spinner cssClass={this.props.profile.spinnerClass} />
@@ -92,13 +100,6 @@ class Profile extends React.Component {
         {this.props.appState.loggedIn ? (
           <div className="container profile">
             <div className="profile__card">
-              <div className="profile__name">
-                {this.props.profile.user.profile.firstName}{" "}
-                {this.props.profile.user.profile.lastName}
-              </div>
-              <div className="profile__email">
-                {this.props.profile.user.profile.email}
-              </div>
               <div className="profile__image-aspect">
                 <div className="h-nav__image-crop">
                   <div
@@ -111,9 +112,26 @@ class Profile extends React.Component {
                   />
                 </div>
               </div>
-              <div className="profile__email">
-                {this.props.profile.user.verified && "Verified"}
+              <div className="profile__name">
+                {this.props.profile.user.profile.firstName}{" "}
+                {this.props.profile.user.profile.lastName}
               </div>
+              <div className="profile__email">
+                {this.props.profile.user.profile.email}
+              </div>
+              {!this.props.profile.user.verified && (
+                <div>
+                  <div className="profile__unverified">
+                    This email is unverified.
+                  </div>
+                  <button
+                    className="form__button"
+                    onClick={() => this.props.actions.setModalInfo(modalObj)}
+                  >
+                    Verify Email
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         ) : (
@@ -124,7 +142,7 @@ class Profile extends React.Component {
                 <Link className="link" to="/login">
                   log in
                 </Link>{" "}
-                to view user profiles.
+                to access your profile.
               </div>
             </div>
           </div>

@@ -43,10 +43,10 @@
     letter-spacing: 2px;
   }
   &__info {
-    color: $color_sky;
+    color: $color_grape;
   }
   &__error {
-    color: $color_error_text;
+    color: $color_raspberry;
   }
   &__success {
     color: $color_success_text;
@@ -69,7 +69,7 @@
     -webkit-appearance: none;
     appearance: none;
     background: transparent;
-    color: $color_sky;
+    color: white;
     font-family: $font-stack;
     text-transform: uppercase;
     letter-spacing: 2px;
@@ -77,25 +77,27 @@
     font-size: 16px;
     font-weight: 300;
     text-decoration: none;
-    border: 1px solid $color_sky;
     display: inline-block;
     border-radius: 4px;
     transition: $transition_button;
+    background: $color_grape;
+    background-image: -webkit-linear-gradient(-45deg, $color_grape 0px, $color_grape 50px, $color_raspberry, $color_mango 100%);
+    background-image: linear-gradient(135deg, $color_grape 0px, $color_grape 50px, $color_raspberry, $color_mango 100%);
+    background-size: 200% 200%;
+    background-position: 0 0;
+    transition: background-position 500ms ease-in-out;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
 
       &:hover, &:focus {
         -webkit-appearance: none;
         appearance: none;
-        background: $color_sky;
-        color: white;
-        transition: $transition_button;
+        background-position: 100% 100%;
+        box-shadow: 0 5px 10px rgba(131,58,180, 0.4);
+        transition: all 500ms ease-in-out;
       }
     }
-
-    &__danger {
-    &:hover, &:active, &:focus {
-      color: $color_error_text;
-    }
-  }
 }
 .modal-close {
   position: absolute;

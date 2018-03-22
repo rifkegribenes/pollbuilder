@@ -1,5 +1,5 @@
 import update from "immutability-helper";
-import { DISMISS_MODAL, LOGOUT } from "../actions/";
+import { DISMISS_MODAL, LOGOUT, SET_MODAL_INFO } from "../actions/";
 import {
   GET_PROFILE_REQUEST,
   GET_PROFILE_SUCCESS,
@@ -132,6 +132,24 @@ function profile(state = INITIAL_STATE, action) {
           class: "modal__hide",
           type: "",
           title: ""
+        }
+      });
+
+    /*
+    * Called from: <Profile />
+    * Payload: Object with modal options
+    * Purpose: Populate the Profile modal with instructions and action
+    */
+    case SET_MODAL_INFO:
+      return update(state, {
+        spinnerClass: { $set: "spinner__hide" },
+        modal: {
+          class: { $set: "modal__show" },
+          text: { $set: action.payload.text },
+          title: { $set: action.payload.title },
+          type: { $set: "modal__info" },
+          buttonText: { $set: action.payload.buttonText },
+          action: { $set: action.payload.action }
         }
       });
 
