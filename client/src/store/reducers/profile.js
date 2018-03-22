@@ -7,7 +7,10 @@ import {
   VALIDATE_TOKEN_SUCCESS,
   VERIFY_EMAIL_SUCCESS,
   LOGIN_SUCCESS,
-  REGISTRATION_SUCCESS
+  REGISTRATION_SUCCESS,
+  RESEND_VLINK_REQUEST,
+  RESEND_VLINK_SUCCESS,
+  RESEND_VLINK_FAILURE
 } from "../actions/apiActions";
 
 const EMPTY_USER = {
@@ -88,12 +91,25 @@ function profile(state = INITIAL_STATE, action) {
     /*
     * Called from: <Profile />
     * Payload: None
-    * Purpose: Show a spinner to indicate API call in progress.
+    * Purpose: Clear user object from store,
+    * show a spinner to indicate API call in progress.
     */
     case GET_PROFILE_REQUEST:
       return update(state, {
         $merge: {
           user: { ...EMPTY_USER },
+          spinnerClass: "spinner__show"
+        }
+      });
+
+    /*
+    * Called from: <Profile />
+    * Payload: None
+    * Purpose: Show a spinner to indicate API call in progress.
+    */
+    case RESEND_VLINK_REQUEST:
+      return update(state, {
+        $merge: {
           spinnerClass: "spinner__show"
         }
       });
@@ -122,6 +138,28 @@ function profile(state = INITIAL_STATE, action) {
 
     /*
     * Called from: <Profile />
+    * Payload: String - error msg
+    * Purpose: Populate the Profile modal with an error message
+    */
+    case RESEND_VLINK_FAILURE:
+      if (typeof action.payload.message === "string") {
+        error = action.payload.message;
+      } else {
+        error = "Sorry, something went wrong :(\nPlease try again.";
+      }
+      return update(state, {
+        spinnerClass: { $set: "spinner__hide" },
+        modal: {
+          class: { $set: "modal__show" },
+          text: { $set: error },
+          title: { $set: "Error sending message" },
+          type: { $set: "modal__error" },
+          buttonText: { $set: "Try again" }
+        }
+      });
+
+    /*
+    * Called from: <Profile />
     * Payload: N/A
     * Purpose: Change settings to hide the modal object
     */
@@ -141,6 +179,7 @@ function profile(state = INITIAL_STATE, action) {
     * Purpose: Populate the Profile modal with instructions and action
     */
     case SET_MODAL_INFO:
+      console.log(action.payload.action);
       return update(state, {
         spinnerClass: { $set: "spinner__hide" },
         modal: {
@@ -150,6 +189,24 @@ function profile(state = INITIAL_STATE, action) {
           type: { $set: "modal__info" },
           buttonText: { $set: action.payload.buttonText },
           action: { $set: action.payload.action }
+        }
+      });
+
+    /*
+    *  Called From: <Profile />
+    *  Payload: N/A
+    *  Purpose: Hide spinner, show success modal about email verification.
+    */
+    case RESEND_VLINK_SUCCESS:
+      return Object.assign({}, state, {
+        spinnerClass: "spinner__hide",
+        modal: {
+          class: "modal__show",
+          text:
+            "Please check your email for a message, and click the link to verify your email address.",
+          title: "Email sent",
+          type: "modal__success",
+          redirect: "/"
         }
       });
 

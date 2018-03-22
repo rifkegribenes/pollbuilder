@@ -90,10 +90,15 @@ class Profile extends React.Component {
               this.props.history.push("/login");
             }
           }}
+          redirect={this.props.profile.modal.redirect}
           action={() => {
-            this.props.actions.dismissModal();
-            if (this.props.profile.modal.type === "modal__error") {
-              this.props.history.push("/login");
+            if (this.props.profile.modal.action) {
+              this.props.profile.modal.action();
+            } else {
+              this.props.actions.dismissModal();
+              if (this.props.profile.modal.type === "modal__error") {
+                this.props.history.push("/login");
+              }
             }
           }}
         />
@@ -125,7 +130,7 @@ class Profile extends React.Component {
                     This email is unverified.
                   </div>
                   <button
-                    className="form__button"
+                    className="form__button profile__button"
                     onClick={() => this.props.actions.setModalInfo(modalObj)}
                   >
                     Verify Email

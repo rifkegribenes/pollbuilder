@@ -1138,7 +1138,8 @@ input:not([type=checkbox]):not([type=radio]), textarea {
   margin: auto; }
 .profile__button {
   text-transform: capitalize;
-  font-weight: 400; }
+  font-weight: 400;
+  letter-spacing: 1px; }
 .profile__unverified {
   color: red;
   font-weight: bold;
