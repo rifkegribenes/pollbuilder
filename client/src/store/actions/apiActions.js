@@ -384,3 +384,44 @@ export function sendResetEmail(email) {
     }
   };
 }
+
+export const MODIFY_PROFILE_REQUEST = "MODIFY_PROFILE_REQUEST";
+export const MODIFY_PROFILE_SUCCESS = "MODIFY_PROFILE_SUCCESS";
+export const MODIFY_PROFILE_FAILURE = "MODIFY_PROFILE_FAILURE";
+
+export function modifyProfile(token, userId, body) {
+  return {
+    [RSAA]: {
+      endpoint: `${BASE_URL}/api/user/${userId}`,
+      method: "PUT",
+      types: [
+        MODIFY_PROFILE_REQUEST,
+        MODIFY_PROFILE_SUCCESS,
+        {
+          type: MODIFY_PROFILE_FAILURE,
+          payload: (action, state, res) => {
+            return res.json().then(data => {
+              let message = "Sorry, something went wrong :(";
+              if (data) {
+                if (data.message) {
+                  message = data.message;
+                }
+                if (data.error) {
+                  message = data.error;
+                }
+                return { message };
+              } else {
+                return { message };
+              }
+            });
+          }
+        }
+      ],
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(body)
+    }
+  };
+}

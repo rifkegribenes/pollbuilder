@@ -4,6 +4,9 @@ import {
   GET_PROFILE_REQUEST,
   GET_PROFILE_SUCCESS,
   GET_PROFILE_FAILURE,
+  MODIFY_PROFILE_REQUEST,
+  MODIFY_PROFILE_SUCCESS,
+  MODIFY_PROFILE_FAILURE,
   VALIDATE_TOKEN_SUCCESS,
   VERIFY_EMAIL_SUCCESS,
   LOGIN_SUCCESS,
@@ -77,6 +80,7 @@ function profile(state = INITIAL_STATE, action) {
     case LOGIN_SUCCESS:
     case REGISTRATION_SUCCESS:
     case GET_PROFILE_SUCCESS:
+    case MODIFY_PROFILE_SUCCESS:
       user = { ...action.payload.user };
       return update(state, {
         $merge: {
@@ -108,6 +112,7 @@ function profile(state = INITIAL_STATE, action) {
     * Purpose: Show a spinner to indicate API call in progress.
     */
     case RESEND_VLINK_REQUEST:
+    case MODIFY_PROFILE_REQUEST:
       return update(state, {
         $merge: {
           spinnerClass: "spinner__show"
@@ -131,6 +136,28 @@ function profile(state = INITIAL_STATE, action) {
           class: { $set: "modal__show" },
           text: { $set: error },
           title: { $set: "Error fetching profile" },
+          type: { $set: "modal__error" },
+          buttonText: { $set: "Try again" }
+        }
+      });
+
+    /*
+    * Called from: <Profile />
+    * Payload: String - error msg
+    * Purpose: Populate the Profile modal with an error message
+    */
+    case MODIFY_PROFILE_FAILURE:
+      if (typeof action.payload.message === "string") {
+        error = action.payload.message;
+      } else {
+        error = "Sorry, something went wrong :(\nPlease try again.";
+      }
+      return update(state, {
+        spinnerClass: { $set: "spinner__hide" },
+        modal: {
+          class: { $set: "modal__show" },
+          text: { $set: error },
+          title: { $set: "Error updating profile" },
           type: { $set: "modal__error" },
           buttonText: { $set: "Try again" }
         }
@@ -188,7 +215,16 @@ function profile(state = INITIAL_STATE, action) {
           title: { $set: action.payload.title },
           type: { $set: "modal__info" },
           buttonText: { $set: action.payload.buttonText },
-          action: { $set: action.payload.action }
+          action: { $set: action.payload.action },
+          inputName: { $set: action.payload.inputName },
+          inputPlaceholder: { $set: action.payload.inputPlaceholder },
+          inputLabel: { $set: action.payload.inputLabel },
+          handleInput: { $set: action.payload.handleInput },
+          handleFocus: { $set: action.payload.handleFocus },
+          handleBlur: { $set: action.payload.handleBlur },
+          errorFor: { $set: action.payload.errorFor },
+          touched: { $set: action.payload.touched },
+          submit: { $set: action.payload.submit }
         }
       });
 

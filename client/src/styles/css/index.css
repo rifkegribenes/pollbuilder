@@ -1139,8 +1139,12 @@ input:not([type=checkbox]):not([type=radio]), textarea {
   position: relative;
   margin: auto;
   border: 1px solid #833ab4;
-  border-radius: 100%; }
-  .profile__image-aspect:hover .profile__image-span {
+  border-radius: 100%;
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  outline: none; }
+  .profile__image-aspect:hover .profile__image-span, .profile__image-aspect:focus .profile__image-span {
     display: block;
     background: rgba(0, 0, 0, 0.5);
     z-index: 2;

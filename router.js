@@ -168,7 +168,12 @@ module.exports = function (app) {
   apiRoutes.use('/user', userRoutes);
 
   // View user profile route
+  // Returns fail status + message -or- user object
   userRoutes.get('/:userId', requireAuth, UserController.viewProfile);
+
+  // Update a user's profile.
+  // Returns fail status + message -or- updated user object
+  userRoutes.put('/:userId', requireAuth, UserController.updateProfile);
 
   // Test protected route
   apiRoutes.get('/protected', requireAuth, (req, res) => {

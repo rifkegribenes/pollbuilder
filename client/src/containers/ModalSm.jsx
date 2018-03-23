@@ -1,10 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
 import { withRouter, Route } from "react-router-dom";
-
 import PropTypes from "prop-types";
-
 import Modal from "react-modal";
+
+import FormInput from "./FormInput";
 
 const app = document.getElementById("app");
 
@@ -59,6 +59,23 @@ const ModalSm = props => (
               </svg>
             )}
           </div>
+          {props.inputName && (
+            <div className="form__input-group">
+              <FormInput
+                handleChange={props.handleInput}
+                handleBlur={props.handleBlur}
+                handleFocus={props.handleFocus}
+                label={props.inputLabel}
+                placeholder={props.inputPlaceholder}
+                showError={props.showFieldErrors[props.inputName]}
+                value={props.login.form[props.inputName]}
+                errorText={props.errorFor([props.inputName])}
+                touched={props.touched[props.inputName]}
+                name={props.inputName}
+                submit={props.submit}
+              />
+            </div>
+          )}
           <div className="modal__body">{props.modalText}</div>
           {props.modalDanger ? (
             <div className="modal__action">

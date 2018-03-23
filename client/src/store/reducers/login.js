@@ -38,7 +38,8 @@ const INITIAL_STATE = {
     email: "",
     password: "",
     confirmPwd: "",
-    error: false
+    error: false,
+    avatarUrl: ""
   }
 };
 

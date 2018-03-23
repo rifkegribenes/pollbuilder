@@ -52,6 +52,8 @@ exports.updateProfile = (req, res, next, userObj) => {
             .status(404)
             .json({message: 'User not found!'});
         } else {
+          // add logic here to send vnew erification email if email is changed
+          // and return this message to client
           return res
             .status(200)
             .json({
