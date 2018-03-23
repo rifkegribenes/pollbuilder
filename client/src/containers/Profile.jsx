@@ -106,6 +106,7 @@ class Profile extends React.Component {
           <div className="container profile">
             <div className="profile__card">
               <div className="profile__image-aspect">
+                <span className="profile__image-span">New Image</span>
                 <div className="h-nav__image-crop">
                   <div
                     className="h-nav__image"

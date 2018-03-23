@@ -1131,11 +1131,31 @@ input:not([type=checkbox]):not([type=radio]), textarea {
   letter-spacing: 1px;
   line-height: 1em;
   margin: 15px 0; }
+.profile__image-span {
+  display: none; }
 .profile__image-aspect {
   width: 100px;
   height: 100px;
   position: relative;
-  margin: auto; }
+  margin: auto;
+  border: 1px solid #833ab4;
+  border-radius: 100%; }
+  .profile__image-aspect:hover .profile__image-span {
+    display: block;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 2;
+    position: absolute;
+    top: 40px;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    left: 0;
+    line-height: 9px;
+    padding: 7px 0;
+    text-align: center;
+    width: 100px;
+    cursor: pointer;
+    clip-path: circle(50px at center); }
 .profile__button {
   text-transform: capitalize;
   font-weight: 400;
