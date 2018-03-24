@@ -61,10 +61,11 @@ export const fieldValidations = {
     )
   ],
   avatarUrl: [ruleRunner("avatarUrl", "Image URL", required)],
-  name: [
+  firstName: [
     ruleRunner("firstName", "First Name", required),
     ruleRunner("lastName", "Last Name", required)
-  ]
+  ],
+  email: [ruleRunner("email", "Email", required)]
 };
 
 // force focus on #main when using skip navigation link

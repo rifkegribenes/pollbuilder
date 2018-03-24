@@ -9,6 +9,7 @@ import * as apiActions from "../store/actions/apiActions";
 
 import Spinner from "./Spinner";
 import ModalSm from "./ModalSm";
+import editIcon from "../img/edit.svg";
 
 class Profile extends React.Component {
   componentWillMount() {
@@ -79,24 +80,56 @@ class Profile extends React.Component {
     const modalAvatar = {
       text: "Please paste in the URL of a new image",
       title: "Update profile image",
-      inputName: "avatarUrl",
-      inputPlaceholder: "http://www.linktoyourimage/yourpicture.jpg",
-      inputLabel: "Profile image URL",
+      inputName: ["avatarUrl"],
+      inputPlaceholder: ["http://www.linktoyourimage/yourpicture.jpg"],
+      inputLabel: ["Profile image URL"],
       buttonText: "Save profile",
       action: () => {
-        console.log(
-          update(this.props.profile.user, {
-            profile: {
-              avatarUrl: { $set: this.props.login.form.avatarUrl }
-            }
-          })
-        );
         this.props.api.modifyProfile(
           this.props.appState.authToken,
           this.props.profile.user._id,
           update(this.props.profile.user, {
             profile: {
               avatarUrl: { $set: this.props.login.form.avatarUrl }
+            }
+          })
+        );
+      }
+    };
+    const modalName = {
+      text: "Edit your name",
+      title: "Update profile",
+      inputName: ["firstName", "lastName"],
+      inputPlaceholder: ["First Name", "Last Name"],
+      inputLabel: ["First Name", "Last Name"],
+      buttonText: "Save profile",
+      action: () => {
+        this.props.api.modifyProfile(
+          this.props.appState.authToken,
+          this.props.profile.user._id,
+          update(this.props.profile.user, {
+            profile: {
+              firstName: { $set: this.props.login.form.firstName },
+              lastName: { $set: this.props.login.form.lastName }
+            }
+          })
+        );
+      }
+    };
+    const modalEmail = {
+      text: "Edit your email",
+      title: "Update profile",
+      inputName: ["email"],
+      inputPlaceholder: ["Email"],
+      inputLabel: ["Email"],
+      buttonText: "Save profile",
+      action: () => {
+        this.props.api.modifyProfile(
+          this.props.appState.authToken,
+          this.props.profile.user._id,
+          update(this.props.profile.user, {
+            profile: {
+              email: { $set: this.props.login.form.email }
             }
           })
         );
@@ -151,13 +184,27 @@ class Profile extends React.Component {
                   />
                 </div>
               </button>
-              <div className="profile__name">
+              <button
+                className="aria-button profile__name"
+                title="Edit name"
+                onClick={() => this.props.actions.setModalInfo(modalName)}
+              >
                 {this.props.profile.user.profile.firstName}{" "}
                 {this.props.profile.user.profile.lastName}
-              </div>
-              <div className="profile__email">
+                <span className="profile__edit">
+                  <img className="profile__icon" src={editIcon} alt="" />
+                </span>
+              </button>
+              <button
+                className="aria-button profile__email"
+                title="Edit email"
+                onClick={() => this.props.actions.setModalInfo(modalEmail)}
+              >
                 {this.props.profile.user.profile.email}
-              </div>
+                <span className="profile__edit">
+                  <img className="profile__icon" src={editIcon} alt="" />
+                </span>
+              </button>
               {!this.props.profile.user.verified && (
                 <div>
                   <div className="profile__unverified">
