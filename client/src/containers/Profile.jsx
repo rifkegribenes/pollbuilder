@@ -84,6 +84,7 @@ class Profile extends React.Component {
       inputPlaceholder: ["http://www.linktoyourimage/yourpicture.jpg"],
       inputLabel: ["Profile image URL"],
       buttonText: "Save profile",
+      inputType: ["url"],
       action: () => {
         this.props.api.modifyProfile(
           this.props.appState.authToken,
@@ -122,6 +123,7 @@ class Profile extends React.Component {
       inputName: ["email"],
       inputPlaceholder: ["Email"],
       inputLabel: ["Email"],
+      inputType: ["email"],
       buttonText: "Save profile",
       action: () => {
         this.props.api.modifyProfile(
@@ -146,6 +148,7 @@ class Profile extends React.Component {
           inputName={this.props.profile.modal.inputName}
           inputPlaceholder={this.props.profile.modal.inputPlaceholder}
           inputLabel={this.props.profile.modal.inputLabel}
+          inputType={this.props.profile.modal.inputType}
           buttonText={this.props.profile.modal.buttonText}
           dismiss={() => {
             this.props.actions.dismissModal();

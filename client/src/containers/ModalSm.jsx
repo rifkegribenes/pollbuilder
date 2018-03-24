@@ -51,6 +51,7 @@ class ModalSm extends React.Component {
   }
 
   handleBlur(e) {
+    console.log("handleBlur");
     const field = e.target.name;
 
     const runners = state => fieldValidations[state];
@@ -64,6 +65,12 @@ class ModalSm extends React.Component {
     if (document.getElementById("email")) {
       if (!document.getElementById("email").validity.valid) {
         validationErrors.email = "Please enter a valid email address";
+      }
+    }
+
+    if (document.getElementById("avatarUrl")) {
+      if (!document.getElementById("avatarUrl").validity.valid) {
+        validationErrors.avatarUrl = "Please enter a valid URL";
       }
     }
 
@@ -101,6 +108,12 @@ class ModalSm extends React.Component {
       }
     }
 
+    if (document.getElementById("avatarUrl")) {
+      if (!document.getElementById("avatarUrl").validity.valid) {
+        validationErrors.avatarUrl = "Please enter a valid URL";
+      }
+    }
+
     const newState = update(this.state, {
       showFieldErrors: {
         [field]: { $set: false }
@@ -127,6 +140,8 @@ class ModalSm extends React.Component {
   }
 
   render() {
+    const inputType = this.props.inputType ? this.props.inputType[0] : "text";
+    console.log(inputType);
     return (
       <Route
         render={routeProps => (
@@ -195,6 +210,7 @@ class ModalSm extends React.Component {
                       errorText={this.errorFor([this.props.inputName[0]])}
                       touched={this.state.touched[this.props.inputName[0]]}
                       name={this.props.inputName[0]}
+                      type={inputType}
                       submit={this.state.submit}
                     />
                   </div>

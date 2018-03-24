@@ -82,7 +82,6 @@ function profile(state = INITIAL_STATE, action) {
     case GET_PROFILE_SUCCESS:
     case MODIFY_PROFILE_SUCCESS:
       user = { ...action.payload.user };
-      console.log(user);
       return update(state, {
         $merge: {
           user,
@@ -218,7 +217,8 @@ function profile(state = INITIAL_STATE, action) {
           action: { $set: action.payload.action },
           inputName: { $set: action.payload.inputName },
           inputPlaceholder: { $set: action.payload.inputPlaceholder },
-          inputLabel: { $set: action.payload.inputLabel }
+          inputLabel: { $set: action.payload.inputLabel },
+          inputType: { $set: action.payload.inputType }
         }
       });
 
