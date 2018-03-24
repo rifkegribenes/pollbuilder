@@ -9,36 +9,8 @@ import * as apiActions from "../store/actions/apiActions";
 
 import Spinner from "./Spinner";
 import ModalSm from "./ModalSm";
-import { fieldValidations, run } from "../utils/";
 
 class Profile extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      showFormErrors: false,
-      showFieldErrors: {
-        firstName: false,
-        lastName: false,
-        email: false,
-        avatarUrl: false
-      },
-      validationErrors: {},
-      touched: {
-        firstName: false,
-        lastName: false,
-        email: false,
-        avatarUrl: false
-      },
-      submit: false
-    };
-
-    this.handleInput = this.handleInput.bind(this);
-    this.handleFocus = this.handleFocus.bind(this);
-    this.handleBlur = this.handleBlur.bind(this);
-    this.errorFor = this.errorFor.bind(this);
-  }
-
   componentWillMount() {
     // get user id and token
     let userId;
@@ -90,92 +62,6 @@ class Profile extends React.Component {
     });
   }
 
-  /*
-  * Function: handleInput - On Change, send updated value to redux
-  * @param {object} event - the change event triggered by the input.
-  * All form inputs will use this handler; trigger the proper action
-  * based on the input ID
-  */
-  handleInput(e) {
-    this.props.actions.setFormField(e.target.id, e.target.value);
-  }
-
-  handleBlur(e) {
-    const field = e.target.name;
-
-    const runners = state => fieldValidations[state];
-
-    // run fieldValidations on fields in form object and save to state
-    const validationErrors = run(
-      this.props.login.form,
-      runners(this.state.form)
-    );
-
-    if (document.getElementById("email")) {
-      if (!document.getElementById("email").validity.valid) {
-        validationErrors.email = "Please enter a valid email address";
-      }
-    }
-
-    const showFormErrors = !!Object.values(validationErrors).length;
-
-    // set current field as 'touched' and display errors onBlur
-    const newState = update(this.state, {
-      touched: {
-        [field]: { $set: true }
-      },
-      showFieldErrors: {
-        [field]: { $set: true }
-      },
-      validationErrors: { $set: { ...validationErrors } },
-      showFormErrors: { $set: showFormErrors }
-    });
-
-    this.setState({ ...newState });
-  }
-
-  handleFocus(e) {
-    const field = e.target.name;
-    const runners = state => fieldValidations[state];
-
-    // hide validation errors for focused field
-    const validationErrors = run(
-      this.props.login.form,
-      runners(this.state.form)
-    );
-    validationErrors[field] = false;
-
-    if (document.getElementById("email")) {
-      if (!document.getElementById("email").validity.valid) {
-        validationErrors.email = "Please enter a valid email address";
-      }
-    }
-
-    const newState = update(this.state, {
-      showFieldErrors: {
-        [field]: { $set: false }
-      },
-      validationErrors: { $set: { ...validationErrors } },
-      showFormErrors: { $set: false }
-    });
-
-    this.setState({ ...newState });
-  }
-
-  errorFor(field) {
-    // run validation check and return error(s) for this field
-    if (Object.values(this.state.validationErrors).length) {
-      if (
-        this.state.validationErrors[field] &&
-        (this.state.showFormErrors === true ||
-          this.state.showFieldErrors[field] === true)
-      ) {
-        return this.state.validationErrors[field] || "";
-      }
-    }
-    return null;
-  }
-
   render() {
     const backgroundStyle = {
       backgroundImage: `url(${this.props.profile.user.profile.avatarUrl})`,
@@ -190,33 +76,31 @@ class Profile extends React.Component {
       buttonText: "Send message",
       action: () => this.props.api.resendVerificationLink(bodyEmail)
     };
-    const bodyAvatar = {
-      user: {
-        profile: {
-          avatarUrl: this.props.login.form.avatarUrl
-        }
-      }
-    };
     const modalAvatar = {
       text: "Please paste in the URL of a new image",
       title: "Update profile image",
       inputName: "avatarUrl",
       inputPlaceholder: "http://www.linktoyourimage/yourpicture.jpg",
-      inputLabel: "URL of new image",
-      handleInput: this.handleInput,
-      handleBlur: this.handleBlur,
-      handleFocus: this.handleFocus,
-      showFieldErrors: this.showFieldErrors,
-      errorFor: this.errorFor,
-      touched: this.state.touched,
-      submit: this.state.submit,
+      inputLabel: "Profile image URL",
       buttonText: "Save profile",
-      action: () =>
+      action: () => {
+        console.log(
+          update(this.props.profile.user, {
+            profile: {
+              avatarUrl: { $set: this.props.login.form.avatarUrl }
+            }
+          })
+        );
         this.props.api.modifyProfile(
           this.props.appState.authToken,
           this.props.profile.user._id,
-          bodyAvatar
-        )
+          update(this.props.profile.user, {
+            profile: {
+              avatarUrl: { $set: this.props.login.form.avatarUrl }
+            }
+          })
+        );
+      }
     };
     return (
       <div>
@@ -226,6 +110,9 @@ class Profile extends React.Component {
           modalText={this.props.profile.modal.text}
           modalType={this.props.profile.modal.type}
           modalTitle={this.props.profile.modal.title}
+          inputName={this.props.profile.modal.inputName}
+          inputPlaceholder={this.props.profile.modal.inputPlaceholder}
+          inputLabel={this.props.profile.modal.inputLabel}
           buttonText={this.props.profile.modal.buttonText}
           dismiss={() => {
             this.props.actions.dismissModal();

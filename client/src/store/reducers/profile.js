@@ -82,6 +82,7 @@ function profile(state = INITIAL_STATE, action) {
     case GET_PROFILE_SUCCESS:
     case MODIFY_PROFILE_SUCCESS:
       user = { ...action.payload.user };
+      console.log(user);
       return update(state, {
         $merge: {
           user,
@@ -206,7 +207,6 @@ function profile(state = INITIAL_STATE, action) {
     * Purpose: Populate the Profile modal with instructions and action
     */
     case SET_MODAL_INFO:
-      console.log(action.payload.action);
       return update(state, {
         spinnerClass: { $set: "spinner__hide" },
         modal: {
@@ -218,13 +218,7 @@ function profile(state = INITIAL_STATE, action) {
           action: { $set: action.payload.action },
           inputName: { $set: action.payload.inputName },
           inputPlaceholder: { $set: action.payload.inputPlaceholder },
-          inputLabel: { $set: action.payload.inputLabel },
-          handleInput: { $set: action.payload.handleInput },
-          handleFocus: { $set: action.payload.handleFocus },
-          handleBlur: { $set: action.payload.handleBlur },
-          errorFor: { $set: action.payload.errorFor },
-          touched: { $set: action.payload.touched },
-          submit: { $set: action.payload.submit }
+          inputLabel: { $set: action.payload.inputLabel }
         }
       });
 

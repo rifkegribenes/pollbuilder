@@ -43,10 +43,11 @@ const requireAuth = (req, res, next) => {
           if (loginErr) {
             return next(loginErr);
           }
-          return res.status(200).send({
-            token: helpers.generateToken(userInfo),
-            user
-          });
+          return next(user);
+          // return res.status(200).send({
+          //   token: helpers.generateToken(userInfo),
+          //   user
+          // });
         }); // req.login
       }
     })(req, res, next);
@@ -173,7 +174,8 @@ module.exports = function (app) {
 
   // Update a user's profile.
   // Returns fail status + message -or- updated user object
-  userRoutes.put('/:userId', requireAuth, UserController.updateProfile);
+  // userRoutes.put('/:userId', requireAuth, UserController.updateProfile);
+  userRoutes.put('/:userId', UserController.updateProfile);
 
   // Test protected route
   apiRoutes.get('/protected', requireAuth, (req, res) => {

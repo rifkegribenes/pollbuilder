@@ -1,122 +1,244 @@
 import React from "react";
 import { connect } from "react-redux";
 import { withRouter, Route } from "react-router-dom";
+import { bindActionCreators } from "redux";
 import PropTypes from "prop-types";
+import * as Actions from "../store/actions";
 import Modal from "react-modal";
+import update from "immutability-helper";
 
 import FormInput from "./FormInput";
+import { fieldValidations, run } from "../utils/";
 
 const app = document.getElementById("app");
 
-const ModalSm = props => (
-  <Route
-    render={routeProps => (
-      <Modal
-        overlayClassName="overlay"
-        className="react-modal"
-        isOpen={
-          props.modalClass === "modal modal__show" ||
-          props.modalClass === "modal__show"
-        }
-        onRequestClose={props.dismiss}
-        contentLabel={props.modalTitle}
-        appElement={app}
-        history={routeProps.history}
-        location={routeProps.location}
-        match={routeProps.match}
-      >
-        <div className={`modal ${props.modalClass}`}>
-          <div className={`modal__header ${props.modalType}`}>
-            {props.modalTitle}
-            <button
-              className="dismiss aria-button modal-close modal-close-sm"
-              onClick={props.dismiss}
-              tabIndex="0"
-            >
-              &times;
-            </button>
-            {props.modalType === "modal__success" && (
-              <svg className="modal__checkbox" viewBox="0 0 130.2 130.2">
-                <circle
-                  className="path circle"
-                  fill="none"
-                  stroke="#73AF55"
-                  strokeWidth="6"
-                  strokeMiterlimit="10"
-                  cx="65.1"
-                  cy="65.1"
-                  r="62.1"
-                />
-                <polyline
-                  className="path check"
-                  fill="none"
-                  stroke="#73AF55"
-                  strokeWidth="6"
-                  strokeLinecap="round"
-                  strokeMiterlimit="10"
-                  points="100.2,40.2 51.5,88.8 29.8,67.5 "
-                />
-              </svg>
-            )}
-          </div>
-          {props.inputName && (
-            <div className="form__input-group">
-              <FormInput
-                handleChange={props.handleInput}
-                handleBlur={props.handleBlur}
-                handleFocus={props.handleFocus}
-                label={props.inputLabel}
-                placeholder={props.inputPlaceholder}
-                showError={props.showFieldErrors[props.inputName]}
-                value={props.login.form[props.inputName]}
-                errorText={props.errorFor([props.inputName])}
-                touched={props.touched[props.inputName]}
-                name={props.inputName}
-                submit={props.submit}
-              />
+class ModalSm extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      showFormErrors: false,
+      showFieldErrors: {
+        firstName: false,
+        lastName: false,
+        email: false,
+        avatarUrl: false
+      },
+      validationErrors: {},
+      touched: {
+        firstName: false,
+        lastName: false,
+        email: false,
+        avatarUrl: false
+      },
+      submit: false
+    };
+
+    this.handleInput = this.handleInput.bind(this);
+    this.handleFocus = this.handleFocus.bind(this);
+    this.handleBlur = this.handleBlur.bind(this);
+    this.errorFor = this.errorFor.bind(this);
+  }
+
+  /*
+  * Function: handleInput - On Change, send updated value to redux
+  * @param {object} event - the change event triggered by the input.
+  * All form inputs will use this handler; trigger the proper action
+  * based on the input ID
+  */
+  handleInput(e) {
+    this.props.actions.setFormField(e.target.id, e.target.value);
+  }
+
+  handleBlur(e) {
+    const field = e.target.name;
+
+    const runners = state => fieldValidations[state];
+
+    // run fieldValidations on fields in form object and save to state
+    const validationErrors = run(
+      this.props.login.form,
+      runners(this.props.inputName)
+    );
+
+    if (document.getElementById("email")) {
+      if (!document.getElementById("email").validity.valid) {
+        validationErrors.email = "Please enter a valid email address";
+      }
+    }
+
+    const showFormErrors = !!Object.values(validationErrors).length;
+
+    // set current field as 'touched' and display errors onBlur
+    const newState = update(this.state, {
+      touched: {
+        [field]: { $set: true }
+      },
+      showFieldErrors: {
+        [field]: { $set: true }
+      },
+      validationErrors: { $set: { ...validationErrors } },
+      showFormErrors: { $set: showFormErrors }
+    });
+
+    this.setState({ ...newState });
+  }
+
+  handleFocus(e) {
+    const field = e.target.name;
+    const runners = state => fieldValidations[state];
+
+    // hide validation errors for focused field
+    const validationErrors = run(
+      this.props.login.form,
+      runners(this.props.inputName)
+    );
+    validationErrors[field] = false;
+
+    if (document.getElementById("email")) {
+      if (!document.getElementById("email").validity.valid) {
+        validationErrors.email = "Please enter a valid email address";
+      }
+    }
+
+    const newState = update(this.state, {
+      showFieldErrors: {
+        [field]: { $set: false }
+      },
+      validationErrors: { $set: { ...validationErrors } },
+      showFormErrors: { $set: false }
+    });
+
+    this.setState({ ...newState });
+  }
+
+  errorFor(field) {
+    // run validation check and return error(s) for this field
+    if (Object.values(this.state.validationErrors).length) {
+      if (
+        this.state.validationErrors[field] &&
+        (this.state.showFormErrors === true ||
+          this.state.showFieldErrors[field] === true)
+      ) {
+        return this.state.validationErrors[field] || "";
+      }
+    }
+    return null;
+  }
+
+  render() {
+    return (
+      <Route
+        render={routeProps => (
+          <Modal
+            overlayClassName="overlay"
+            className="react-modal"
+            isOpen={
+              this.props.modalClass === "modal modal__show" ||
+              this.props.modalClass === "modal__show"
+            }
+            onRequestClose={this.props.dismiss}
+            contentLabel={this.props.modalTitle}
+            appElement={app}
+            history={routeProps.history}
+            location={routeProps.location}
+            match={routeProps.match}
+          >
+            <div className={`modal ${this.props.modalClass}`}>
+              <div className={`modal__header ${this.props.modalType}`}>
+                {this.props.modalTitle}
+                <button
+                  className="dismiss aria-button modal-close modal-close-sm"
+                  onClick={this.props.dismiss}
+                  tabIndex="0"
+                >
+                  &times;
+                </button>
+                {this.props.modalType === "modal__success" && (
+                  <svg className="modal__checkbox" viewBox="0 0 130.2 130.2">
+                    <circle
+                      className="path circle"
+                      fill="none"
+                      stroke="#73AF55"
+                      strokeWidth="6"
+                      strokeMiterlimit="10"
+                      cx="65.1"
+                      cy="65.1"
+                      r="62.1"
+                    />
+                    <polyline
+                      className="path check"
+                      fill="none"
+                      stroke="#73AF55"
+                      strokeWidth="6"
+                      strokeLinecap="round"
+                      strokeMiterlimit="10"
+                      points="100.2,40.2 51.5,88.8 29.8,67.5 "
+                    />
+                  </svg>
+                )}
+              </div>
+              <div className="modal__body">{this.props.modalText}</div>
+              {this.props.inputName && (
+                <div className="form__input-group">
+                  <FormInput
+                    handleChange={this.handleInput}
+                    handleBlur={this.handleBlur}
+                    handleFocus={this.handleFocus}
+                    label={this.props.inputLabel}
+                    placeholder={this.props.inputPlaceholder}
+                    showError={this.state.showFieldErrors[this.props.inputName]}
+                    value={this.props.login.form[this.props.inputName]}
+                    errorText={this.errorFor([this.props.inputName])}
+                    touched={this.state.touched[this.props.inputName]}
+                    name={this.props.inputName}
+                    submit={this.state.submit}
+                  />
+                </div>
+              )}
+              {this.props.modalDanger ? (
+                <div className="modal__action">
+                  <button
+                    className="modal__button"
+                    onClick={this.props.dismiss}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    className="modal__button modal__danger"
+                    onClick={this.props.action}
+                  >
+                    Delete
+                  </button>
+                </div>
+              ) : (
+                <div className="modal__action">
+                  <button
+                    className="modal__button"
+                    onClick={() => {
+                      if (this.props.redirect) {
+                        this.props.history.push(`${this.props.redirect}`);
+                      }
+                      if (this.props.action) {
+                        this.props.action();
+                      }
+                      if (this.props.resetForm) {
+                        this.props.resetForm();
+                      }
+                      this.props.dismiss();
+                    }}
+                  >
+                    {this.props.buttonText || "Continue"}
+                  </button>
+                </div>
+              )}
             </div>
-          )}
-          <div className="modal__body">{props.modalText}</div>
-          {props.modalDanger ? (
-            <div className="modal__action">
-              <button className="modal__button" onClick={props.dismiss}>
-                Cancel
-              </button>
-              <button
-                className="modal__button modal__danger"
-                onClick={props.action}
-              >
-                Delete
-              </button>
-            </div>
-          ) : (
-            <div className="modal__action">
-              <button
-                className="modal__button"
-                onClick={() => {
-                  if (props.redirect) {
-                    console.log(props.redirect);
-                    props.history.push(`${props.redirect}`);
-                  }
-                  if (props.action) {
-                    console.log(props.action);
-                    props.action();
-                  }
-                  if (props.resetForm) {
-                    props.resetForm();
-                  }
-                  props.dismiss();
-                }}
-              >
-                {props.buttonText || "Continue"}
-              </button>
-            </div>
-          )}
-        </div>
-      </Modal>
-    )}
-  />
-);
+          </Modal>
+        )}
+      />
+    );
+  }
+}
 
 Modal.setAppElement("body");
 
@@ -139,7 +261,15 @@ ModalSm.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-  appState: state.appState
+  appState: state.appState,
+  profile: state.profile,
+  login: state.login
 });
 
-export default withRouter(connect(mapStateToProps)(ModalSm));
+const mapDispatchToProps = dispatch => ({
+  actions: bindActionCreators(Actions, dispatch)
+});
+
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(ModalSm)
+);

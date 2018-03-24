@@ -4,34 +4,52 @@ const helpers = require('../utils/index');
 //= =======================================
 // User Routes
 //= =======================================
-exports.viewProfile = (req, res, next) => {
-  console.log('viewProfile');
-  const userId = req.params.userId;
+exports.viewProfile = (userObj, req, res, next) => {
+  console.log('viewProfile > 8');
+  console.log(`userObj._id: ${userObj._id}`);
+  console.log(req.params.userId); //undefined ???
+  const userId = userObj._id;
   console.log(`userid: ${userId}`);
-  if (req.user._id.toString() !== userId) { return res.status(401).json({ message: 'You are not authorized to view this user profile.' }); }
+  // if (req.params.userId !== userId) { return res.status(401).json({ message: 'You are not authorized to view this user profile.' }); }
   User.findById(userId, (err, user) => {
     if (err) {
-      res.status(400).json({ message: 'No user could be found for this ID.' });
-      return next(err);
+      return res.status(400).json({ message: 'No user found.' });
+      console.log('user.js > 15');
+      console.log(err);
+    } else if (user) {
+      // Respond with JWT and user object
+      const userInfo = helpers.setUserInfo(user);
+      const token = helpers.generateToken(userInfo);
+      return res.status(201).json({
+        token,
+        user
+      });
     } else {
-      return res.status(200).json({ user });
+      console.log('no user found, user.js > 26');
+      return res.status(400).json({ message: 'No user found.' });
     }
 
   });
 };
 
-exports.updateProfile = (req, res, next, userObj) => {
-  console.log('updateProfile');
+exports.updateProfile = (req, res, next) => {
+  console.log('updateProfile > 36');
+  console.log(`req.body._id: ${req.body._id}`);
+  console.log('req.params.userId:');
+  console.log(req.params.userId);
+  // console.log(`req.user._id: ${req.user._id}`);
+  const userId = req._id;
+  console.log(`userid: ${userId}`);
 
   const target = {
-    _id: req.params.userId
+    _id: req.body._id
   };
 
   // kick off promise chain
   new Promise( (resolve, reject) => {
 
     // make sure the requesting user ID and target user ID match
-    if (target._id === req.token._id.toString()) {
+    if (target._id.toString() === req.params.userId.toString()) {
       resolve(target);
     } else {
       reject('Error: user ID mismatch.');
@@ -39,20 +57,27 @@ exports.updateProfile = (req, res, next, userObj) => {
 
   })
   .then( () => {
+    console.log('user.js > 60');
     // map enumerable req body properties to updates object
-    const updates = { ...userObj };
+    const updates = { ...req.body };
+    console.log('updates:');
+    console.log(updates);
     // return updated document rather than the original
     const options = { new: true };
 
     User.findOneAndUpdate(target, updates, options)
       .exec()
       .then( user => {
+        console.log('user.js > 70');
+        console.log(user);
         if (!user) {
           return res
             .status(404)
             .json({message: 'User not found!'});
         } else {
-          // add logic here to send vnew erification email if email is changed
+          console.log('updated user:');
+          console.log(user);
+          // add logic here to send new verification email if email is changed
           // and return this message to client
           return res
             .status(200)

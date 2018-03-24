@@ -19,7 +19,8 @@ import {
   VALIDATE_TOKEN_SUCCESS,
   VALIDATE_TOKEN_FAILURE,
   LOGIN_SUCCESS,
-  REGISTRATION_SUCCESS
+  REGISTRATION_SUCCESS,
+  GET_PROFILE_SUCCESS
 } from "../actions/apiActions";
 
 const INITIAL_STATE = {
@@ -134,6 +135,12 @@ function appState(state = INITIAL_STATE, action) {
         spinnerClass: { $set: "spinner__hide" },
         loggedIn: { $set: true },
         authToken: { $set: action.meta.token }
+      });
+
+    case GET_PROFILE_SUCCESS:
+      return update(state, {
+        spinnerClass: { $set: "spinner__hide" },
+        authToken: { $set: action.payload.token }
       });
 
     /*

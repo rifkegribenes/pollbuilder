@@ -59,6 +59,11 @@ export const fieldValidations = {
       "Password Confirmation",
       mustMatch("password", "Password")
     )
+  ],
+  avatarUrl: [ruleRunner("avatarUrl", "Image URL", required)],
+  name: [
+    ruleRunner("firstName", "First Name", required),
+    ruleRunner("lastName", "Last Name", required)
   ]
 };
 
@@ -81,6 +86,7 @@ export const skip = targetId => {
 
 // animated typewriter effect for homeapge
 export const typewriterAnimation = () => {
+  console.log("typewriter");
   document.addEventListener("DOMContentLoaded", function(event) {
     // array with phrases to type in typewriter
     const dataText = [
