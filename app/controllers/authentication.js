@@ -358,7 +358,7 @@ exports.sendVerify = (req, res, next) => {
   const email = req.body.email;
   const key = mailUtils.makeSignupKey();
 
-  const target = { 'local.email': email }
+  const target = { 'profile.email': email }
   const updates = {
     signupKey: key
   };

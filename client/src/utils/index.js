@@ -87,7 +87,6 @@ export const skip = targetId => {
 
 // animated typewriter effect for homeapge
 export const typewriterAnimation = () => {
-  console.log("typewriter");
   document.addEventListener("DOMContentLoaded", function(event) {
     // array with phrases to type in typewriter
     const dataText = [

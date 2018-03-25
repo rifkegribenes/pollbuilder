@@ -130,9 +130,13 @@ class Profile extends React.Component {
           this.props.appState.authToken,
           this.props.profile.user._id,
           update(this.props.profile.user, {
+            // local: {
+            //   email: { $set: this.props.login.form.email }
+            // },
             profile: {
               email: { $set: this.props.login.form.email }
-            }
+            },
+            verified: { $set: false }
           })
         );
       }

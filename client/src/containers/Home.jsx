@@ -27,7 +27,7 @@ class Home extends React.Component {
         console.log("no token found in local storage");
       }
     } else {
-      console.log("logged in");
+      // console.log("logged in");
     }
 
     typewriterAnimation();

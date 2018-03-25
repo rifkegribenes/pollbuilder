@@ -33,13 +33,7 @@ exports.viewProfile = (userObj, req, res, next) => {
 };
 
 exports.updateProfile = (req, res, next) => {
-  console.log('updateProfile > 36');
-  console.log(`req.body._id: ${req.body._id}`);
-  console.log('req.params.userId:');
-  console.log(req.params.userId);
-  // console.log(`req.user._id: ${req.user._id}`);
   const userId = req._id;
-  console.log(`userid: ${userId}`);
 
   const target = {
     _id: req.body._id
@@ -57,38 +51,57 @@ exports.updateProfile = (req, res, next) => {
 
   })
   .then( () => {
-    console.log('user.js > 60');
-    // map enumerable req body properties to updates object
-    const updates = { ...req.body };
-    console.log('updates:');
-    console.log(updates);
-    // return updated document rather than the original
-    const options = { new: true };
+    console.log('user.js > 54');
+    const email = req.body.profile.email;
+    console.log(`email: ${req.body.profile.email}`);
 
-    User.findOneAndUpdate(target, updates, options)
-      .exec()
-      .then( user => {
-        console.log('user.js > 70');
-        console.log(user);
-        if (!user) {
-          return res
-            .status(404)
-            .json({message: 'User not found!'});
-        } else {
-          console.log('updated user:');
-          console.log(user);
-          // add logic here to send new verification email if email is changed
-          // and return this message to client
-          return res
-            .status(200)
-            .json({
-              message: 'User updated!',
-              user
-          });
+    // if updating email, first check that it is unique
+    User.findOne({ 'profile.email': email, _id: {$ne: target._id} })
+    .then( (existingUser) => {
+      if (existingUser) {
+            return res.status(422).send({ message: 'Oops! Looks like you already have an account with that email address. Please try logging in with that address.' });
+        } else { // email is unique
+          console.log('user.js > 68');
+          // map enumerable req body properties to updates object
+          const updates = { ...req.body };
+
+          // return updated document rather than the original
+          const options = { new: true };
+
+          User.findOneAndUpdate(target, updates, options)
+            .exec()
+            .then( user => {
+              console.log('user.js > 70');
+              console.log(user);
+              if (!user) {
+                return res
+                  .status(404)
+                  .json({message: 'User not found!'});
+              } else {
+                console.log('updated user:');
+                console.log(user);
+                // add logic here to send new verification email if email is changed
+                // and return this message to client
+                return res
+                  .status(200)
+                  .json({
+                    message: 'User updated!',
+                    user
+                });
+              }
+            });
         }
+      })
+    .catch( err => {
+      console.log('catch block for finding existing user with same email, user.js > 101');
+      console.log('Error!!!', err);
+      return res
+        .status(400)
+        .json({ message: err});
       });
   })
   .catch( err => {
+    console.log('catch block for matching userId to req.body.id, user.js > 107');
     console.log('Error!!!', err);
     return res
       .status(400)

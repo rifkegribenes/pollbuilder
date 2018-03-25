@@ -141,7 +141,6 @@ class ModalSm extends React.Component {
 
   render() {
     const inputType = this.props.inputType ? this.props.inputType[0] : "text";
-    console.log(inputType);
     return (
       <Route
         render={routeProps => (
