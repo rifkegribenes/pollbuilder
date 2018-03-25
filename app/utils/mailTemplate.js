@@ -98,6 +98,37 @@ const shortEmail = (title, appName, url, preheader, headline, heroUrl, body, but
                 display: block !important;
             }
 
+            /* BUTTON GRADIENT */
+            .btn-gradient,
+            .hover {
+                color: white;
+                border-radius: 4px;
+                -webkit-transition: all 300ms ease-in-out;
+                -o-transition: all 300ms ease-in-out;
+                transition: all 300ms ease-in-out;
+                background: #833ab4;
+                background-image: -webkit-linear-gradient(-45deg, #833ab4 0px, #833ab4 50px, #fd1d1d, #fcb045 100%);
+                background-image: -webkit-linear-gradient(315deg, #833ab4 0px, #833ab4 50px, #fd1d1d, #fcb045 100%);
+                background-image: -o-linear-gradient(315deg, #833ab4 0px, #833ab4 50px, #fd1d1d, #fcb045 100%);
+                background-image: linear-gradient(135deg, #833ab4 0px, #833ab4 50px, #fd1d1d, #fcb045 100%);
+                background-size: 200% 200%;
+                background-position: 0 0;
+                -webkit-transition: background-position 500ms ease-in-out;
+                -o-transition: background-position 500ms ease-in-out;
+                transition: background-position 500ms ease-in-out;
+                position: relative;
+                overflow: hidden;
+                cursor: pointer;
+              }
+            .btn-gradient:hover,
+            .btn-gradient:focus,
+            .hover:hover,
+            .hover:focus {
+              background-position: 100% 100%;
+              box-shadow: 0 5px 10px rgba(131,58,180, 0.4);
+              transition: all 500ms ease-in-out;
+            }
+
         }
 
         /* ANDROID CENTER FIX */
@@ -175,7 +206,7 @@ const shortEmail = (title, appName, url, preheader, headline, heroUrl, body, but
                                                 <td align="center" style="padding-top: 25px;" class="padding">
                                                     <table border="0" cellspacing="0" cellpadding="0" class="mobile-button-container">
                                                         <tr>
-                                                            <td align="center" style="border-radius: 3px;" bgcolor="#256F9C"><a href=${url} target="_blank" style="font-size: 16px; font-family: 'Titillium Web', Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; color: #ffffff; text-decoration: none; border-radius: 3px; padding: 15px 25px; border: 1px solid #256F9C; display: inline-block;" class="mobile-button">${buttonText} &rarr;</a></td>
+                                                            <td align="center" bgcolor="#833ab4" class="btn-gradient" style="border-radius: 4px; -webkit-transition: all 300ms ease-in-out; -o-transition: all 300ms ease-in-out; transition: all 300ms ease-in-out; background: #833ab4; background-image: -webkit-linear-gradient(-45deg, #833ab4 0px, #833ab4 50px, #fd1d1d, #fcb045 100%); background-image: -webkit-linear-gradient(315deg, #833ab4 0px, #833ab4 50px, #fd1d1d, #fcb045 100%); background-image: -o-linear-gradient(315deg, #833ab4 0px, #833ab4 50px, #fd1d1d, #fcb045 100%); background-image: linear-gradient(135deg, #833ab4 0px, #833ab4 50px, #fd1d1d, #fcb045 100%); background-size: 200% 200%; background-position: 0 0; -webkit-transition: background-position 500ms ease-in-out; -o-transition: background-position 500ms ease-in-out; transition: background-position 500ms ease-in-out; position: relative; overflow: hidden; cursor: pointer;"><a href=${url} target="_blank" style="font-size: 16px; font-family: 'Titillium Web', Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; padding: 15px 25px; border: 1px solid transparent; display: inline-block; border-radius: 4px; -webkit-transition: all 300ms ease-in-out; -o-transition: all 300ms ease-in-out; transition: all 300ms ease-in-out; background: #833ab4; background-image: -webkit-linear-gradient(-45deg, #833ab4 0px, #833ab4 50px, #fd1d1d, #fcb045 100%); background-image: -webkit-linear-gradient(315deg, #833ab4 0px, #833ab4 50px, #fd1d1d, #fcb045 100%); background-image: -o-linear-gradient(315deg, #833ab4 0px, #833ab4 50px, #fd1d1d, #fcb045 100%); background-image: linear-gradient(135deg, #833ab4 0px, #833ab4 50px, #fd1d1d, #fcb045 100%); background-size: 200% 200%; background-position: 0 0; -webkit-transition: background-position 500ms ease-in-out; -o-transition: background-position 500ms ease-in-out; transition: background-position 500ms ease-in-out; position: relative; overflow: hidden; cursor: pointer;" class="mobile-button hover">${buttonText} &rarr;</a></td>
                                                         </tr>
                                                     </table>
                                                 </td>

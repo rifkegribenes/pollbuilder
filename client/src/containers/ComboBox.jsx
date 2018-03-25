@@ -588,7 +588,7 @@ class ComboBox extends React.Component {
               {!resetPwd && (
                 <div
                   className={
-                    localForm
+                    localForm || (!localForm && reset)
                       ? "form__input-group form__local--visible"
                       : "form__input-group form__local--hidden"
                   }
@@ -667,7 +667,11 @@ class ComboBox extends React.Component {
                     <button
                       className="form__login-link"
                       type="button"
-                      onClick={() => this.toggleForm("reset")}
+                      onClick={() => {
+                        console.log("click");
+                        this.toggleForm("reset");
+                        // this.toggleLocalForm(true);
+                      }}
                     >
                       Forgot your password?
                     </button>
