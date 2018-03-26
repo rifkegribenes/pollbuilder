@@ -124,9 +124,9 @@ const shortEmail = (title, appName, url, preheader, headline, heroUrl, body, but
             .btn-gradient:focus,
             .hover:hover,
             .hover:focus {
-              background-position: 100% 100%;
-              box-shadow: 0 5px 10px rgba(131,58,180, 0.4);
-              transition: all 500ms ease-in-out;
+              background-position: 100% 100% !important;
+              box-shadow: 0 5px 10px rgba(131,58,180, 0.4) !important;
+              transition: all 500ms ease-in-out !important;
             }
 
         }
@@ -153,11 +153,15 @@ const shortEmail = (title, appName, url, preheader, headline, heroUrl, body, but
                 <![endif]-->
                 <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 500px;" class="wrapper">
                     <tr>
-                        <td align="center" valign="top" style="padding: 15px 0; display: flex; justify-content: center;" class="logo">
-                            <a href=${CLIENT_URL} target="_blank" style="padding: 15px;">
-                                <img alt="Logo" src="https://raw.githubusercontent.com/rifkegribenes/voting-app/master/client/public/img/rainbow_icon_120.png" width="60" height="60" style="display: block; font-family: 'Titillium Web', Helvetica, Arial, sans-serif; color: #ffffff; font-size: 16px;" border="0">
-                            </a> &nbsp;
-                            <span style="display: inline-block; font-size: 28px; font-family: 'Titillium Web', Helvetica, Arial, sans-serif; color: #333333; padding-top: 30px;" class="padding"">${title}</span>
+                        <td align="center" valign="top" style="padding: 15px 0 0 0; display: flex; justify-content: center;" class="logo">
+                            <a href=${CLIENT_URL} target="_blank" style="padding: 0; width: 100%; text-align: center;">
+                                <img alt="Logo" src="https://raw.githubusercontent.com/rifkegribenes/voting-app/master/client/public/img/rainbow_icon_120.png" width="60" height="60" style="display: block; margin: auto;" border="0">
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                      <td align="center" valign="top" style="padding: 10px 0;">
+                        <div style="font-size: 28px; font-family: 'Titillium Web', Helvetica, Arial, sans-serif; color: #333333; text-align: center; padding: 15px 0;" class="padding"">${title}</div>
                         </td>
                     </tr>
                 </table>
