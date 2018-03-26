@@ -43,7 +43,7 @@ class Home extends React.Component {
     return (
       <div className="splash">
         <h2 className="splash__headline splash__headline--grape">
-          <img className="combo__logo" src={logo} alt="surveybot" />
+          <img className="splash__logo" src={logo} alt="surveybot" />
         </h2>
         <h2 id="typewriter" className="splash__headline">
           Create your own polls.

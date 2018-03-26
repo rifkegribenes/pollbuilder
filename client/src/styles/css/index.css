@@ -832,13 +832,15 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     @media (min-width: 901px) {
       .splash__image {
         margin-top: -80px; } }
+  .splash__logo {
+    width: 100%; }
   .splash__headline {
     text-align: center;
     width: 100%;
     max-width: 1170px;
     margin: auto;
     font-size: 24px;
-    color: #fd1d1d;
+    color: #833ab4;
     font-weight: 200;
     z-index: 2; }
     @media (min-width: 480px) {

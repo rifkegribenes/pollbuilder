@@ -21,13 +21,17 @@
     }
   }
 
+  &__logo {
+    width: 100%;
+  }
+
   &__headline {
     text-align: center;
     width: 100%;
     max-width: 1170px;
     margin: auto;
     font-size: 24px;
-    color: $color_raspberry;
+    color: $color_grape;
     font-weight: 200;
     z-index: 2;
 
