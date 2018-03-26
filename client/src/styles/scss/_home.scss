@@ -21,8 +21,28 @@
     }
   }
 
+  &__logo-wrap {
+    display: flex;
+    flex-direction: column;
+  }
+
   &__logo {
+      display: block;
+      width: 100%;
+      max-width: 600px;
+      margin: -40px auto 20px auto;
+      z-index: -1;
+
+    @include mobile-nav-breakpoint {
+      display: none;
+    }
+  }
+
+  &__icon {
     width: 100%;
+    max-width: 600px;
+    margin: -20px auto 0 auto;
+    z-index: -1;
   }
 
   &__headline {
@@ -33,7 +53,12 @@
     font-size: 24px;
     color: $color_grape;
     font-weight: 200;
-    z-index: 2;
+    z-index: 3;
+    background: white;
+    padding: 10px;
+    // position: relative;
+    margin: -40vw 0 15vw 0;
+
 
     @include for-phone-landscape-up {
       font-size: 42px;
@@ -41,6 +66,7 @@
 
     @include for-tablet-landscape-up {
       font-size: 50px;
+      margin: -250px 0 100px 0;
     }
 
     &--grape {
@@ -66,7 +92,19 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    padding-top: 40px;
+    position: absolute;
+    bottom: 100px;
+    left: 0;
+    @include for-short-viewports-only {
+      bottom: 60px;
+    }
+
+    @include for-tablet-landscape-up {
+      position: relative;
+      bottom: auto;
+      left: auto;
+      margin-top: 7vh;
+    }
    }
   }
 

@@ -7,6 +7,7 @@ import * as apiActions from "../store/actions/apiActions";
 import { typewriterAnimation } from "../utils";
 
 import logo from "../img/surveybot.svg";
+import icon from "../img/surveybot_icon.svg";
 
 class Home extends React.Component {
   componentDidMount() {
@@ -42,29 +43,29 @@ class Home extends React.Component {
       this.props.appState.windowSize.width < 400 ? "Create" : "Create a poll";
     return (
       <div className="splash">
-        <h2 className="splash__headline splash__headline--grape">
+        <div className="splash__logo-wrap">
           <img className="splash__logo" src={logo} alt="surveybot" />
-        </h2>
-        <h2 id="typewriter" className="splash__headline">
-          Create your own polls.
-        </h2>
-        <div className="splash__button-wrap">
-          <NavLink
-            to="/login"
-            className="form__button form__button--big splash__login"
-            activeClassName="h-nav__item-link--active"
-          >
-            {createText}
-          </NavLink>
-          <NavLink
-            to="/polls"
-            className="form__button form__button--big splash__button splash__button--polls"
-            activeClassName="h-nav__item-link--active"
-          >
-            {voteText}
-          </NavLink>
+          <img className="splash__icon" src={icon} alt="surveybot" />
+          <div id="typewriter" className="splash__headline">
+            Create your own polls.
+          </div>
+          <div className="splash__button-wrap">
+            <NavLink
+              to="/login"
+              className="form__button form__button--big splash__login"
+              activeClassName="h-nav__item-link--active"
+            >
+              {createText}
+            </NavLink>
+            <NavLink
+              to="/polls"
+              className="form__button form__button--big splash__button splash__button--polls"
+              activeClassName="h-nav__item-link--active"
+            >
+              {voteText}
+            </NavLink>
+          </div>
         </div>
-        <div className="splash__image" />
       </div>
     );
   }

@@ -7,7 +7,7 @@
 }
 
 @mixin for-short-viewports-only {
-  @media (max-height: 480px) {
+  @media (max-height: 600px) {
     @content;
   }
 }

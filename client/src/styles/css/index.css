@@ -459,8 +459,8 @@ input:not([type=checkbox]):not([type=radio]), textarea {
   height: 30px;
   list-style: none; }
   .h-nav__logo {
-    width: 40px;
-    height: 40px; }
+    width: 200px;
+    height: auto; }
     .h-nav__logo--text {
       display: none; }
   .h-nav__side {
@@ -680,11 +680,10 @@ input:not([type=checkbox]):not([type=radio]), textarea {
           box-shadow: none; }
         .h-nav__item--home {
           display: block;
-          padding-top: 20px;
-          min-width: 185px;
           position: relative;
           top: auto;
-          left: auto; }
+          left: auto;
+          padding: 5px 10px 10px 20px; }
           .h-nav__item--home:hover {
             border-bottom: 1px solid transparent; }
       .h-nav__item-link {
@@ -832,8 +831,23 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     @media (min-width: 901px) {
       .splash__image {
         margin-top: -80px; } }
+  .splash__logo-wrap {
+    display: flex;
+    flex-direction: column; }
   .splash__logo {
-    width: 100%; }
+    display: block;
+    width: 100%;
+    max-width: 600px;
+    margin: -40px auto 20px auto;
+    z-index: -1; }
+    @media (min-width: 560px) {
+      .splash__logo {
+        display: none; } }
+  .splash__icon {
+    width: 100%;
+    max-width: 600px;
+    margin: -20px auto 0 auto;
+    z-index: -1; }
   .splash__headline {
     text-align: center;
     width: 100%;
@@ -842,13 +856,17 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     font-size: 24px;
     color: #833ab4;
     font-weight: 200;
-    z-index: 2; }
+    z-index: 3;
+    background: white;
+    padding: 10px;
+    margin: -40vw 0 15vw 0; }
     @media (min-width: 480px) {
       .splash__headline {
         font-size: 42px; } }
     @media (min-width: 901px) {
       .splash__headline {
-        font-size: 50px; } }
+        font-size: 50px;
+        margin: -250px 0 100px 0; } }
     .splash__headline--grape {
       color: #833ab4;
       font-size: 40px; }
@@ -864,7 +882,18 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     width: 100%;
     display: flex;
     justify-content: center;
-    padding-top: 40px; }
+    position: absolute;
+    bottom: 100px;
+    left: 0; }
+    @media (max-height: 600px) {
+      .splash__button-wrap {
+        bottom: 60px; } }
+    @media (min-width: 901px) {
+      .splash__button-wrap {
+        position: relative;
+        bottom: auto;
+        left: auto;
+        margin-top: 7vh; } }
 
 @keyframes caret {
   50% {
@@ -1230,7 +1259,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
   .combo__title {
     font-size: 1.5rem; }
   .combo__logo {
-    width: 80px;
+    width: 100px;
     height: auto; }
   .combo__nav {
     background: rgba(255, 255, 255, 0.6);
@@ -1346,7 +1375,6 @@ body.user-is-tabbing *:focus {
   box-shadow: 0 0 1em #4b6cb7 !important; }
 
 .app {
-  background: white;
   height: 100%;
   font-family: "Titillium Web", Helvetica, Arial, sans-serif;
   color: #545454; }

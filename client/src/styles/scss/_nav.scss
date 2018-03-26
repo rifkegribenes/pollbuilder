@@ -29,8 +29,8 @@
   list-style: none;
 
   &__logo {
-    width: 40px;
-    height: 40px;
+    width: 200px;
+    height: auto;
 
     &--text {
       display: none;
@@ -348,11 +348,10 @@
 
       &--home {
         display: block;
-        padding-top: 20px;
-        min-width: 185px;
         position: relative;
         top: auto;
         left: auto;
+        padding: 5px 10px 10px 20px;
 
         &:hover {
           border-bottom: 1px solid transparent;
