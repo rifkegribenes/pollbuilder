@@ -6,6 +6,8 @@ import * as Actions from "../store/actions";
 import * as apiActions from "../store/actions/apiActions";
 import { typewriterAnimation } from "../utils";
 
+import logo from "../img/surveybot.svg";
+
 class Home extends React.Component {
   componentDidMount() {
     // If not logged in, check local storage for authToken
@@ -40,7 +42,9 @@ class Home extends React.Component {
       this.props.appState.windowSize.width < 400 ? "Create" : "Create a poll";
     return (
       <div className="splash">
-        <h2 className="splash__headline splash__headline--grape">Voting App</h2>
+        <h2 className="splash__headline splash__headline--grape">
+          <img className="combo__logo" src={logo} alt="surveybot" />
+        </h2>
         <h2 id="typewriter" className="splash__headline">
           Create your own polls.
         </h2>

@@ -121,7 +121,7 @@ function appState(state = INITIAL_STATE, action) {
         loggedIn: { $set: true },
         modal: {
           class: { $set: "modal__show" },
-          text: { $set: "Welcome to the voting app!" },
+          text: { $set: "Welcome to Surveybot!" },
           title: { $set: "Thanks for verifying your email" },
           type: { $set: "modal__success" },
           buttonText: { $set: "Continue" },

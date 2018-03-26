@@ -16,7 +16,7 @@ import ghIcon from "../img/github-white.svg";
 import fbIcon from "../img/facebook-white.svg";
 import ggIcon from "../img/google-white.svg";
 import envIcon from "../img/envelope.svg";
-import logo from "../img/rainbow_icon_120.png";
+import logo from "../img/surveybot.svg";
 
 class ComboBox extends React.Component {
   constructor(props) {
@@ -412,10 +412,10 @@ class ComboBox extends React.Component {
             </button>
           )}
           <div className="combo__logo-wrap">
-            <img className="combo__logo" src={logo} alt="rainbow" />
+            <img className="combo__logo" src={logo} alt="surveybot" />
           </div>
           <div className="combo__title">
-            {reset || resetPwd ? "Reset your password" : "Voting App"}
+            {reset || resetPwd ? "Reset your password" : ""}
           </div>
         </div>
         {!(reset || resetPwd) && (

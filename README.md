@@ -1,4 +1,4 @@
-## Voting App (Freecodecamp Project)
+## Surveybot (Freecodecamp Project)
 
 ### User stories:
 
@@ -20,4 +20,4 @@
 
 #### Screenshot:
 
-![voting app screenshot](#)
+![surveybot screenshot](#)

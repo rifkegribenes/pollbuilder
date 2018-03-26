@@ -1,5 +1,5 @@
 {
-  "name": "voting-app",
+  "name": "surveybot",
   "version": "1.0.0",
   "description": "Build your own polls, share with your friends, vote in polls created by other users, and view results of any poll.",
   "main": "server.js",
@@ -13,10 +13,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rifkegribenes/voting-app.git"
+    "url": "git+https://github.com/rifkegribenes/surveybot.git"
   },
-  "bugs": "https://github.com/rifkegribenes/voting-app/issues",
-  "homepage": "https://github.com/rifkegribenes/voting-app#readme",
+  "bugs": "https://github.com/rifkegribenes/surveybot/issues",
+  "homepage": "https://github.com/rifkegribenes/surveybot#readme",
   "keywords": [
     "MongoDB",
     "Mongoose",

@@ -5,7 +5,7 @@ const Footer = props => (
     &copy; 2018 Sarah Schneider
     <div className="footer__right">
       <a
-        href="https://github.com/rifkegribenes/voting-app"
+        href="https://github.com/rifkegribenes/surveybot"
         data-taborder=""
         rel="noopener noreferrer"
         target="_blank"

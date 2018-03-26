@@ -6,7 +6,7 @@ import { bindActionCreators } from "redux";
 import * as Actions from "../store/actions";
 
 import { skip } from "../utils";
-import vaIcon from "../img/rainbow_icon_120.png";
+import logo from "../img/surveybot.svg";
 import gear from "../img/gear.svg";
 
 class Header extends React.Component {
@@ -91,7 +91,7 @@ class Header extends React.Component {
     let avatarUrl = this.props.profile.user.profile.avatarUrl;
     if (
       avatarUrl ===
-      "https://raw.githubusercontent.com/rifkegribenes/voting-app/master/client/public/img/rainbow_icon_120.png"
+      "https://raw.githubusercontent.com/rifkegribenes/surveybot/master/client/public/img/surveybot_icon.png"
     ) {
       avatarUrl = gear;
     }
@@ -160,8 +160,7 @@ class Header extends React.Component {
               className="h-nav__logo-wrap"
               activeClassName="h-nav__logo-wrap--active"
             >
-              <img src={vaIcon} className="h-nav__logo" alt="logo" />
-              <span className="h-nav__logo--text">Voting App</span>
+              <img src={logo} className="h-nav__logo" alt="surveybot" />
             </NavLink>
           </div>
 

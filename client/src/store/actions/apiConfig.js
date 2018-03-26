@@ -5,7 +5,7 @@
 
 /* ================================= SETUP ================================= */
 
-// const prodUrl = 'https://rifkegribenes-voting-app.glitch.me';
+// const prodUrl = 'https://surveybot.glitch.me';
 const devUrl = "http://127.0.0.1:8080"; // server url for local install
 
 /* ================================ EXPORTS ================================ */
