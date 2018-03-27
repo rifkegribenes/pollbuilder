@@ -152,10 +152,10 @@ const shortEmail = (title, appName, url, preheader, headline, heroUrl, body, but
                 <td align="center" valign="top" width="500">
                 <![endif]-->
                 <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 500px;" class="wrapper">
-                    <tr>
+                    <tr style="max-height: 180px;">
                         <td align="center" valign="top" style="padding: 15px 0 0 0; display: flex; justify-content: center;" class="logo">
                             <a href=${CLIENT_URL} target="_blank" style="padding: 0; width: 100%; text-align: center;">
-                                <img alt="Surveybot" src="https://raw.githubusercontent.com/rifkegribenes/surveybot/master/client/public/img/surveybot.svg" style="display: block; margin: auto; width:100%; height: auto;" border="0">
+                                <img alt="Surveybot" src="https://raw.githubusercontent.com/rifkegribenes/surveybot/master/client/public/img/surveybot.png" style="display: block; margin: auto; width:100%; max-width: 500px; height: auto; max-height: 180px;" border="0">
                             </a>
                         </td>
                     </tr>
