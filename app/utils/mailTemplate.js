@@ -155,7 +155,7 @@ const shortEmail = (title, appName, url, preheader, headline, heroUrl, body, but
                     <tr>
                         <td align="center" valign="top" style="padding: 15px 0 0 0; display: flex; justify-content: center;" class="logo">
                             <a href=${CLIENT_URL} target="_blank" style="padding: 0; width: 100%; text-align: center;">
-                                <img alt="Logo" src="https://raw.githubusercontent.com/rifkegribenes/surveybot/master/client/public/img/rainbow_icon_120.png" width="60" height="60" style="display: block; margin: auto;" border="0">
+                                <img alt="Surveybot" src="https://raw.githubusercontent.com/rifkegribenes/surveybot/master/client/public/img/surveybot.svg" style="display: block; margin: auto; width:100%; height: auto;" border="0">
                             </a>
                         </td>
                     </tr>
@@ -259,8 +259,8 @@ const shortEmail = (title, appName, url, preheader, headline, heroUrl, body, but
 
 exports.pwResetTemplate = (url) => {
      return shortEmail(
-      'surveybot: Reset Password', // title
-      'Rifkegribenes Surveybot', // appName
+      'Reset Password', // title
+      'Surveybot', // appName
       url, // url
       'Click here to reset your password', // preheader
       'Forgot your password?', // headline
@@ -273,8 +273,8 @@ exports.pwResetTemplate = (url) => {
 
 exports.pwResetConfirmation = () => {
      return shortEmail(
-      'surveybot: Your password was reset', // title
-      'Rifkegribenes Surveybot', // appName
+      'Your password was reset', // title
+      'Surveybot', // appName
       CLIENT_URL, // url
       'Your password was reset successfully', // preheader
       'You changed your password', // headline
@@ -287,8 +287,8 @@ exports.pwResetConfirmation = () => {
 
 exports.verificationTemplate = (url) => {
   return shortEmail(
-    'surveybot: Verify Email', // title
-    'Rifkegribenes Surveybot', // appName
+    'Verify Email', // title
+    'Surveybot', // appName
     url, // url
     'Click here to verify your email', // preheader
     'Welcome!', // headline

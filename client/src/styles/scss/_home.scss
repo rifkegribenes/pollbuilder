@@ -3,6 +3,7 @@
   max-width: 1170px;
   margin: auto;
   min-height: 100vh;
+
   &__image {
       width: 100%;
       max-width: 1170px;
@@ -24,6 +25,9 @@
   &__logo-wrap {
     display: flex;
     flex-direction: column;
+    height: 100%;
+    min-height: calc(100vh - 137px);
+    position: relative;
   }
 
   &__logo {
@@ -68,16 +72,6 @@
       font-size: 50px;
       margin: -250px 0 100px 0;
     }
-
-    &--grape {
-      color: $color_grape;
-      font-size: 40px;
-
-      @include for-phone-landscape-up {
-        font-size: 60px;
-      }
-    }
-
 
   }
 
