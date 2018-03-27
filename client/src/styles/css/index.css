@@ -1234,6 +1234,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
   .combo__header {
     text-align: center;
     padding: 20px;
+    padding-bottom: 0;
     position: relative; }
   .combo__footer {
     background: rgba(255, 255, 255, 0.6); }
@@ -1256,7 +1257,8 @@ input:not([type=checkbox]):not([type=radio]), textarea {
   .combo__title {
     font-size: 1.5rem; }
   .combo__logo {
-    width: 100px;
+    max-width: 100%;
+    margin: auto;
     height: auto; }
   .combo__nav {
     background: rgba(255, 255, 255, 0.6);

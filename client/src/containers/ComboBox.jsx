@@ -16,7 +16,7 @@ import ghIcon from "../img/github-white.svg";
 import fbIcon from "../img/facebook-white.svg";
 import ggIcon from "../img/google-white.svg";
 import envIcon from "../img/envelope.svg";
-import logo from "../img/surveybot_icon.svg";
+import logo from "../img/bot-head_340.png";
 
 class ComboBox extends React.Component {
   constructor(props) {
