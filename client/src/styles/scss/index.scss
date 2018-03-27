@@ -244,3 +244,10 @@ input:invalid {
 
     }
 }
+
+.not-found {
+  &__button-wrap {
+    display: flex;
+    justify-content: center;
+  }
+  }

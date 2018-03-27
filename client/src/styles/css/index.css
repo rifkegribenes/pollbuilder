@@ -1558,4 +1558,8 @@ input:invalid {
     .skip:active i, .skip:focus i, .skip:hover i {
       font-size: .8em; }
 
+.not-found__button-wrap {
+  display: flex;
+  justify-content: center; }
+
 /*# sourceMappingURL=index.css.map */
