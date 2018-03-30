@@ -134,9 +134,9 @@ class Form extends React.Component {
       return (
         <div className="form__input-group" key={name}>
           <FormInput
-            handleChange={this.handleInput}
-            handleBlur={this.handleBlur}
-            handleFocus={this.handleFocus}
+            handleChange={e => this.handleInput(e, reducer)}
+            handleBlur={e => this.handleBlur(e, reducer)}
+            handleFocus={e => this.handleFocus(e, reducer)}
             label={label}
             placeholder={placeholder}
             autoComplete={autoComplete}
@@ -177,7 +177,7 @@ class Form extends React.Component {
                   className={`form__button form__button--bottom ${buttonState}`}
                   id={`btn-${reducer}`}
                   type="button"
-                  onClick={() => this.props[reducer].formAction()}
+                  onClick={() => this.props.formAction()}
                 >
                   <span>{this.props.buttonText}</span>
                 </button>

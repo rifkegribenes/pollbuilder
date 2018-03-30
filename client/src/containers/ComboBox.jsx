@@ -227,9 +227,6 @@ class ComboBox extends React.Component {
     const reset = this.state.form === "reset";
     const resetPwd = this.state.form === "resetPwd";
     const { localForm } = this.state;
-    const buttonText = login
-      ? "Log In"
-      : signup ? "Sign Up" : resetPwd ? "Reset Password" : "Send Email";
     return (
       <div className="container combo">
         <div className="combo__header">
@@ -277,10 +274,34 @@ class ComboBox extends React.Component {
           <SocialAuth
             setSpinner={this.props.actions.setSpinner}
             toggleLocalForm={this.toggleLocalForm}
-            buttonText={buttonText}
+            buttonText={login ? "Log in" : "Sign up"}
           />
         )}
-        <div className="combo__form">{login && <LocalLogin />}</div>
+        {!(reset || resetPwd || localForm) && (
+          <div className="combo__form">
+            <div className="form__input-group center">or</div>
+            <button
+              className="form__button form__button--sm"
+              id="btn-local"
+              onClick={() => this.toggleLocalForm()}
+              type="button"
+            >
+              <div className="form__button--local">
+                <img
+                  className="form__icon form__icon--local"
+                  alt="voting app"
+                  src={envIcon}
+                />
+              </div>
+              <span className="form__sm-button-text">{`${
+                login ? "Log in" : "Sign up"
+              } with Email`}</span>
+            </button>
+          </div>
+        )}
+        <div className="combo__form">
+          {login && localForm && <LocalLogin />}
+        </div>
       </div>
     );
   }

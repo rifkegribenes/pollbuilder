@@ -66,7 +66,13 @@ class LocalLogin extends React.Component {
       }
     ];
     return (
-      <Form fields={fields} reducer="auth" form="login" buttonText="Log in" />
+      <Form
+        fields={fields}
+        reducer="auth"
+        form="login"
+        buttonText="Log in"
+        formAction={this.login}
+      />
     );
   }
 }
