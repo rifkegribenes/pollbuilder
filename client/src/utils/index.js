@@ -15,6 +15,15 @@ export const required = text => {
   return _isRequired;
 };
 
+export const validateEmail = validationErrors => {
+  if (!document.getElementById("email").validity.valid) {
+    validationErrors.email = "Please enter a valid email address";
+    return validationErrors;
+  } else {
+    return validationErrors;
+  }
+};
+
 export const conditionalRequired = (text, fieldName) => (text2, state) =>
   state[fieldName] !== "" && text2 === "" ? _isRequired : null;
 

@@ -3,10 +3,13 @@ import update from "immutability-helper";
 import {
   SET_FORM_FIELD,
   SET_FORM_ERROR,
+  SET_VALIDATION_ERRORS,
   RESET_FORM,
   DISMISS_MODAL,
   LOGOUT,
-  SET_SPINNER
+  SET_SPINNER,
+  SHOW_FORM_ERRORS,
+  SET_SUBMIT
 } from "../actions";
 import {
   LOGIN_REQUEST,
@@ -40,10 +43,13 @@ const INITIAL_STATE = {
     confirmPwd: "",
     error: false,
     avatarUrl: ""
-  }
+  },
+  submit: false,
+  showFormErrors: false,
+  validationErrors: {},
 };
 
-function login(state = INITIAL_STATE, action) {
+function auth(state = INITIAL_STATE, action) {
   let error;
   switch (action.type) {
     /*
@@ -62,14 +68,21 @@ function login(state = INITIAL_STATE, action) {
     *  Purpose: Show error message on form
     */
     case SET_FORM_ERROR:
-      if (typeof action.payload === "string") {
-        error = action.payload;
-      } else if (typeof action.payload.message === "string") {
+      if (typeof action.payload.message === "string") {
         error = action.payload.message;
       } else {
         error = "Sorry, something went wrong :( \n Please try again.";
       }
       return Object.assign({}, state, { errorMsg: error });
+
+    case SHOW_FORM_ERRORS:
+      return Object.assign({}, state, { showFormErrors: true });
+
+    case SET_VALIDATION_ERRORS:
+      return Object.assign({}, state, { validationErrors: { ...action.payload }});
+
+    case SET_SUBMIT:
+      return Object.assign({}, state, { submit: true });
 
     case LOGOUT:
       return INITIAL_STATE;
@@ -302,4 +315,4 @@ function login(state = INITIAL_STATE, action) {
   }
 }
 
-export default login;
+export default auth;

@@ -8,8 +8,12 @@ import * as apiActions from "../store/actions/apiActions";
 import Spinner from "./Spinner";
 import ModalSm from "./ModalSm";
 
+import logo from "../img/bot-head_340.png";
+
 class CreatePoll extends React.Component {
   componentDidMount() {
+    // TODO: fix this mess.....
+
     // user is verified if local account email is verified
     // OR if they logged in with social auth
     if (!this.props.appState.loggedIn) {
@@ -53,8 +57,7 @@ class CreatePoll extends React.Component {
 
   render() {
     return (
-      <div className="container poll">
-        <h2 className="poll__title">Create Poll</h2>
+      <div>
         <Spinner cssClass={this.props.poll.spinnerClass} />
         <ModalSm
           modalClass={this.props.poll.modal.class}
@@ -76,6 +79,15 @@ class CreatePoll extends React.Component {
           }}
           redirect={this.props.poll.modal.redirect}
         />
+        <div className="container poll">
+          <div className="poll__header">
+            <div className="poll__logo-wrap">
+              <img className="poll__logo" src={logo} alt="surveybot" />
+            </div>
+            <div className="poll__title">Create Poll</div>
+          </div>
+          <div className="poll__form" />
+        </div>
       </div>
     );
   }

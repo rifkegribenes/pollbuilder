@@ -1,9 +1,10 @@
 const APP_HOST = process.env.APP_HOST;
 const CLIENT_URL = process.env.NODE_ENV === 'production' ? APP_HOST : 'localhost:3000';
 
-const AuthenticationController = require('./app/controllers/authentication');
-const UserController = require('./app/controllers/user');
-const StaticController = require('./app/controllers/static');
+const AuthController = require('./app/controllers/auth.ctrl');
+const UserController = require('./app/controllers/user.ctrl');
+const StaticController = require('./app/controllers/static.ctrl');
+const PollController = require('/app/controllers/poll.ctrl');
 
 const express = require('express');
 const passport = require('passport');
@@ -12,15 +13,15 @@ const helpers = require('./app/utils/index');
 
 /* =========================== ROUTE MIDDLEWARE ============================ */
 
-// Checks wheather user has validated their account.
-// If `validated: false`, bail out early.
-const checkValidated = (req, res, next) => {
-  const validatedErrMsg = 'You need to validate your account before you can access this resource.\nPlease visit your Profile and generate a new validation email.';
+// Checks whether user has verified their email.
+// If `verified: false`, bail out early.
+const checkVerified = (req, res, next) => {
+  const verifiedErrMsg = 'You need to verify your email before you can access this resource.\nPlease visit your Profile and generate a new verification email.';
 
-  if (!req.token.validated) {
+  if (!req.user.verified) {
     return res
       .status(400)  // bad request
-      .json({ message : validatedErrMsg });
+      .json({ message : verifiedErrMsg });
   } else {
     next();
   }
@@ -44,10 +45,6 @@ const requireAuth = (req, res, next) => {
             return next(loginErr);
           }
           return next(user);
-          // return res.status(200).send({
-          //   token: helpers.generateToken(userInfo),
-          //   user
-          // });
         }); // req.login
       }
     })(req, res, next);
@@ -86,7 +83,8 @@ module.exports = function (app) {
   // Initializing route groups
   const apiRoutes = express.Router(),
     authRoutes = express.Router(),
-    userRoutes = express.Router();
+    userRoutes = express.Router(),
+    pollRoutes = express.Router();
 
   app.use(passport.initialize());
   app.use(passport.session());
@@ -103,27 +101,27 @@ module.exports = function (app) {
   apiRoutes.use('/auth', authRoutes);
 
   // Registration route
-  authRoutes.post('/register', AuthenticationController.register);
+  authRoutes.post('/register', AuthController.register);
 
   // Login route
-  authRoutes.post('/login', requireLogin, AuthenticationController.login);
+  authRoutes.post('/login', requireLogin, AuthController.login);
 
   // Handle requests for password reset (generate/send token)
   // Returns fail status + message -or- success status + message
-  apiRoutes.post('/sendresetemail', AuthenticationController.sendReset);
+  apiRoutes.post('/sendresetemail', AuthController.sendReset);
 
   // Handle password resets
   // Returns fail status + message -or- success status + message
-  apiRoutes.post('/resetpassword', AuthenticationController.resetPass);
+  apiRoutes.post('/resetpassword', AuthController.resetPass);
 
   // Handle requests for new verification email (generate/send token)
   // Returns fail status + message -or- success status + message
-  apiRoutes.post('/sendverifyemail', AuthenticationController.sendVerify);
+  apiRoutes.post('/sendverifyemail', AuthController.sendVerify);
 
-  // Handle email validation links
-  // Toggle user's `validated` property to `true`.
+  // Handle email verification links
+  // Toggle user's `verified` property to `true`.
   // Returns fail status + message -or- user object & JWT
-  authRoutes.post('/verify', AuthenticationController.verifyEmail);
+  authRoutes.post('/verify', AuthController.verifyEmail);
 
   // Facebook authentication with passport
   authRoutes.get('/facebook',
@@ -133,7 +131,7 @@ module.exports = function (app) {
   // return user object and fb token to client
   // need to handle login errors client-side here if redirected to login
   authRoutes.get('/facebook/callback',
-    passport.authenticate('facebook'), AuthenticationController.fbCallback
+    passport.authenticate('facebook'), AuthController.fbCallback
     );
 
   // Github authentication with passport
@@ -144,7 +142,7 @@ module.exports = function (app) {
   // return user object and fb token to client
   // need to handle login errors client-side here if redirected to login
   authRoutes.get('/github/callback',
-    passport.authenticate('github'), AuthenticationController.ghCallback
+    passport.authenticate('github'), AuthController.ghCallback
     );
 
   // Google authentication with passport
@@ -156,7 +154,7 @@ module.exports = function (app) {
   // return user object and fb token to client
   // need to handle login errors client-side here if redirected to login
   authRoutes.get('/google/callback',
-    passport.authenticate('google'), AuthenticationController.googleCallback
+    passport.authenticate('google'), AuthController.googleCallback
     );
 
   //= ========================
@@ -177,22 +175,31 @@ module.exports = function (app) {
   // userRoutes.put('/:userId', requireAuth, UserController.updateProfile);
   userRoutes.put('/:userId', UserController.updateProfile);
 
-  // Test protected route
-  apiRoutes.get('/protected', requireAuth, (req, res) => {
-    res.send({ content: 'The protected test route is functional!' });
-  });
-
-  // apiRoutes.get('/admins-only', requireAuth, AuthenticationController.roleAuthorization(ROLE_ADMIN), (req, res) => {
-  //   res.send({ content: 'Admin dashboard is working.' });
-  // });
 
   //= ========================
-  // Communication Routes
+  // Poll Routes
   //= ========================
-  // apiRoutes.use('/communication', communicationRoutes);
 
-  // Send email from contact form
-  // communicationRoutes.post('/contact', CommunicationController.sendContactForm);
+  // Set poll routes as a subgroup/middleware to apiRoutes
+  apiRoutes.use('/poll', pollRoutes);
+
+  // Get all polls
+
+  // View a single poll
+  // Returns fail status + message -or- poll object
+  pollRoutes.get('/:pollId', requireAuth, PollController.viewPoll);
+
+  // Create a poll
+
+  // Update a poll
+
+  // Delete a poll
+
+  // Vote in a poll
+
+  // Reset votes
+
+
 
   // Set url for API group routes
   app.use('/api', apiRoutes);

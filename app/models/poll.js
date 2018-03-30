@@ -7,35 +7,25 @@ const toLower = (str) => {
   return str.toLowerCase();
 };
 
-const AnswerSchema = new Schema({
-  text: {
-    type: String,
-    unique: true
-  },
-  votes: {
-    type: Number,
-    default: 0
-  }
+const OptionSchema = new Schema({
+  text: String,
+  votes: Number,
+  addedBy: Schema.Types.ObjectId
 });
-
-AnswerSchema.method('vote', function voting(vote, cb) {
-  this.votes += 1;
-  this.parent().save(cb);
+const VoteSchema = new Schema({
+  voterID: Schema.Types.ObjectId,
+  option: String,
+  voterIP: String
 });
-
-var PollSchema = new Schema({
-  question: {
-    type: String,
-    unique: true
-  },
-  slug: {
-    type: String,
-    unique: true
-  },
-  answers: [AnswerSchema],
-  created: Date,
-  owner: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
-  active: Boolean,
+const PollSchema = new Schema({
+  question: {type: String, required: true, unique: true},
+  slug: {type: String },
+  options: [optionSchema],
+  votes: [voteSchema],
+  ownerID: {type: Schema.Types.ObjectId, required: false},
+  ownerName: {type: String, required: false}
+},{
+  timestamps: true
 });
 
 // Sanitize HTML from inputs and generate slug on save
@@ -46,13 +36,13 @@ PollSchema.pre('save', function(next) {
   };
 
   this.question = sanitizeHtml(this.question, sanitize);
-  this.answers = this.answers.map((answer) => {
-      answer.text = sanitizeHtml(answer.text, sanitize);
-      return answer;
+  this.options = this.options.map((option) => {
+      option.text = sanitizeHtml(option.text, sanitize);
+      return option;
     });
   this.slug = slugify(this.question, {
     replacement: '-',
-    remove: null,
+    remove: /[$*_+~.()'"!\-:;^%={}<>?|,@]/g,
     lower: true
   });
   next();

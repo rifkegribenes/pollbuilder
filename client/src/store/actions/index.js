@@ -2,7 +2,10 @@ export const LOGOUT = "LOGOUT";
 export const SET_LOGGEDIN = "SET_LOGGEDIN";
 export const SET_FORM_FIELD = "SET_FORM_FIELD";
 export const SET_FORM_ERROR = "SET_FORM_ERROR";
+export const SET_VALIDATION_ERRORS = "SET_VALIDATION_ERRORS";
 export const RESET_FORM = "RESET_FORM";
+export const SHOW_FORM_ERRORS = "SHOW_FORM_ERRORS";
+export const SET_SUBMIT = "SET_SUBMIT";
 export const SET_PROFILE_VIEW = "SET_PROFILE_VIEW";
 export const SET_REDIRECT_URL = "SET_REDIRECT_URL";
 export const DISMISS_MODAL = "DISMISS_MODAL";
@@ -60,6 +63,25 @@ export function setFormError(msg) {
   return {
     type: SET_FORM_ERROR,
     payload: msg
+  };
+}
+
+export function setValidationErrors(errors) {
+  return {
+    type: SET_VALIDATION_ERRORS,
+    payload: { ...errors }
+  };
+}
+
+export function showFormErrors() {
+  return {
+    type: SHOW_FORM_ERRORS
+  };
+}
+
+export function setSubmit() {
+  return {
+    type: SET_SUBMIT
   };
 }
 

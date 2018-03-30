@@ -45,7 +45,8 @@ const UserSchema = new Schema({
     ts: String,
     exp: String,
   },
-  verified: { type: Boolean, default: false }
+  verified: { type: Boolean, default: false },
+  role: { type: String }
 },
   {
     timestamps: true

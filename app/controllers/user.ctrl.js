@@ -5,11 +5,8 @@ const helpers = require('../utils/index');
 // User Routes
 //= =======================================
 exports.viewProfile = (userObj, req, res, next) => {
-  console.log('viewProfile > 8');
-  console.log(`userObj._id: ${userObj._id}`);
-  console.log(req.params.userId); //undefined ???
   const userId = userObj._id;
-  console.log(`userid: ${userId}`);
+
   // if (req.params.userId !== userId) { return res.status(401).json({ message: 'You are not authorized to view this user profile.' }); }
   User.findById(userId, (err, user) => {
     if (err) {
