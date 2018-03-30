@@ -25,7 +25,9 @@ class LocalLogin extends React.Component {
   * clear password from state, return to Home
   */
   login() {
+    console.log("login");
     const { email, password } = this.props.auth.form;
+    console.log(email, password);
 
     // show validation errors
     this.props.actions.showFormErrors();
@@ -33,12 +35,15 @@ class LocalLogin extends React.Component {
 
     const vErrors = run(this.props.auth.form, fieldValidations.login);
     const validationErrors = validateEmail(vErrors);
+    console.log(validationErrors);
 
     this.props.actions.setValidationErrors(validationErrors);
+    console.log(this.props.auth.validationErrors);
 
     if (email && password) {
       const body = { email, password };
       this.props.api.login(body).then(result => {
+        console.log(result);
         if (result.type === "LOGIN_SUCCESS") {
           this.props.history.push("/");
         }

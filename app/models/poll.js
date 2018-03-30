@@ -20,8 +20,8 @@ const VoteSchema = new Schema({
 const PollSchema = new Schema({
   question: {type: String, required: true, unique: true},
   slug: {type: String },
-  options: [optionSchema],
-  votes: [voteSchema],
+  options: [OptionSchema],
+  votes: [VoteSchema],
   ownerID: {type: Schema.Types.ObjectId, required: false},
   ownerName: {type: String, required: false}
 },{

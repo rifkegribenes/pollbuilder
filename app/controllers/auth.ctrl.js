@@ -2,7 +2,7 @@ const crypto = require('crypto');
 const User = require('../models/user');
 const passport = require('passport');
 const helpers = require('../utils/index');
-const userController = require('./user');
+const userController = require('./user.ctrl');
 const mailUtils = require('../utils/mailUtils');
 const mailTemplate = require('../utils/mailTemplate');
 
@@ -14,6 +14,7 @@ const SERVER_URL = process.env.NODE_ENV === 'production' ? APP_HOST : '//localho
 // Local Login Route
 //= =======================================
 exports.login = function (req, res, next) {
+  console.log('auth.ctrl.js > 17: login');
   if (!req.user) {
       return res.status(422).send({ message: 'Login error: No account found.' });
     }
