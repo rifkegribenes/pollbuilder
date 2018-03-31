@@ -5,14 +5,14 @@ import PropTypes from "prop-types";
 
 import * as Actions from "../store/actions";
 import * as apiActions from "../store/actions/apiActions";
-import Spinner from "./Spinner";
-import ModalSm from "./ModalSm";
+import Form from "./Form";
+import { fieldValidations, run } from "../utils/";
 
 import logo from "../img/bot-head_340.png";
 
 class CreatePoll extends React.Component {
   componentDidMount() {
-    // TODO: fix this mess.....
+    // TODO: y i k e s  fix this mess.....
 
     // user is verified if local account email is verified
     // OR if they logged in with social auth
@@ -55,38 +55,53 @@ class CreatePoll extends React.Component {
     }
   }
 
+  createPoll() {
+    console.log("createPoll");
+  }
+
   render() {
+    const fields = [
+      {
+        name: "question",
+        label: "Question",
+        autoComplete: "",
+        type: "text",
+        placeholder: "What's your favorite ice cream flavor?"
+      },
+      {
+        name: "option-0",
+        label: "Option",
+        autoComplete: "",
+        type: "text",
+        placeholder: "Vanilla"
+      },
+      {
+        name: "option",
+        label: "Option",
+        autoComplete: "",
+        type: "text",
+        placeholder: "Chocolate",
+        repeatable: true
+      }
+    ];
     return (
       <div>
-        <Spinner cssClass={this.props.poll.spinnerClass} />
-        <ModalSm
-          modalClass={this.props.poll.modal.class}
-          modalTitle={this.props.poll.modal.title}
-          modalText={this.props.poll.modal.text}
-          modalType={this.props.poll.modal.type}
-          buttonText={this.props.poll.modal.buttonText}
-          action={this.props.poll.modal.action}
-          dismiss={() => {
-            this.props.actions.dismissModal({
-              class: "modal__hide",
-              text: "",
-              title: ""
-            });
-            this.props.actions.setSpinner("hide");
-            if (this.props.poll.modal.redirect) {
-              this.props.history.push(this.props.poll.modal.redirect);
-            }
-          }}
-          redirect={this.props.poll.modal.redirect}
-        />
-        <div className="container poll">
-          <div className="poll__header">
-            <div className="poll__logo-wrap">
-              <img className="poll__logo" src={logo} alt="surveybot" />
+        <div className="container combo">
+          <div className="combo__header">
+            <div className="combo__logo-wrap">
+              <img className="combo__logo" src={logo} alt="surveybot" />
             </div>
-            <div className="poll__title">Create Poll</div>
+            <div className="combo__title">Create Poll</div>
           </div>
-          <div className="poll__form" />
+          <div className="combo__form">
+            <Form
+              fields={fields}
+              reducer="poll"
+              form="create"
+              buttonText="Create Poll"
+              formAction={this.createPoll}
+            />
+          </div>
         </div>
       </div>
     );

@@ -223,13 +223,15 @@ class Form extends React.Component {
           dismiss={() => {
             this.props.actions.dismissModal();
             this.props.actions.resetForm();
-            this.props.toggleForm("login");
+            if (this.props.toggleform) {
+              this.props.toggleForm("login");
+            }
           }}
           redirect={this.props[reducer].modal.redirect}
           history={this.props.history}
           location={this.props.location}
           resetForm={this.props.actions.resetForm}
-          toggleForm={this.props.toggleForm}
+          toggleForm={this.props.toggleForm || null}
         />
       </div>
     );
