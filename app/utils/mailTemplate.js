@@ -278,15 +278,7 @@ exports.pwResetConfirmation = () => {
       CLIENT_URL, // url
       'Your password was reset successfully', // preheader
       'You changed your password', // headline
-      `<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-           viewBox="0 0 130.2 130.2" style="enable-background:new 0 0 130.2 130.2;" xml:space="preserve">
-        <style type="text/css">
-          .st0{fill:none;stroke:#73AF55;stroke-width:6;stroke-miterlimit:10;}
-          .st1{fill:none;stroke:#73AF55;stroke-width:6;stroke-linecap:round;stroke-miterlimit:10;}
-        </style>
-        <circle class="st0" cx="65.1" cy="65.1" r="62.1"/>
-        <polyline class="st1" points="100.2,40.2 51.5,88.8 29.8,67.5 "/>
-        </svg>`, // heroUrl
+      'https://raw.githubusercontent.com/rifkegribenes/surveybot/master/client/src/img/animated_checkbox.png', // heroUrl
       'Or somebody did...\nIf it wasn\'t you, please contact us right away and get that fixed!', // body
       'My Account', // buttonText
       'surveybot | rifkegribenes.io' // footerText
