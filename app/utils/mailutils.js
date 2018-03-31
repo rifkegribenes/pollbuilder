@@ -67,6 +67,7 @@ function sendMail(to, subject, html, text) {
       text,
     }, (err, info) => {
       if (err) {
+        console.log(err);
         reject(err)
       } else {
         resolve(info)

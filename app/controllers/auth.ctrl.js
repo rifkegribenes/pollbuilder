@@ -429,7 +429,7 @@ exports.resetPass = (req, res, next) => {
     .then(user => {
       // If query returned no results, token expired or was invalid. Return error.
       if (!user) {
-        return res.status(422).json({ message: 'Your token has expired.\nPlease attempt to reset your password again.' });
+        return res.status(422).json({ message: 'Your token has expired.\nPlease request a new password reset link.' });
       }
 
       // Otherwise, save new password and clear passwordResetKey
@@ -446,7 +446,7 @@ exports.resetPass = (req, res, next) => {
         const html = mailTemplate.pwResetConfirmation();
         mailUtils.sendMail(user.profile.email, subject, html, text)
           .then(() => {
-            // console.log('password reset confirmation email sent');
+            console.log('password reset confirmation email sent');
           })
           .catch((err) => {
             console.log(err);
