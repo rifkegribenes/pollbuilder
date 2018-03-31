@@ -7,80 +7,93 @@ import PropTypes from "prop-types";
 import Form from "./Form";
 import * as Actions from "../store/actions";
 import * as apiActions from "../store/actions/apiActions";
-import { fieldValidations, run, validateEmail } from "../utils/";
+import { fieldValidations, run } from "../utils/";
 
-class LocalLogin extends React.Component {
+class ResetPassword extends React.Component {
   constructor(props) {
     super(props);
 
-    this.login = this.login.bind(this);
+    this.resetPwd = this.resetPwd.bind(this);
   }
 
   componentDidMount() {}
 
-  /* Function login - Perform basic validation:
-  * - username is at least 1 char
-  * - password is at least 1 char
-  * If valid, call the login route; store token in redux,
-  * clear password from state, return to Home
-  */
-  login() {
-    const { email, password } = this.props.auth.form;
-    console.log(email, password);
+  resetPwd() {
+    this.props.actions.setFormError({ message: "" });
+    const key = this.props.match.params.key;
+    const { password, confirmPwd } = this.props.auth.form;
 
     // show validation errors
     this.props.actions.showFormErrors();
     this.props.actions.setSubmit();
 
-    const vErrors = run(this.props.auth.form, fieldValidations.login);
-    const validationErrors = validateEmail(vErrors);
+    const validationErrors = run(
+      this.props.auth.form,
+      fieldValidations.resetPwd
+    );
 
     this.props.actions.setValidationErrors(validationErrors);
 
-    if (email && password) {
-      const body = { email, password };
-      this.props.api.login(body).then(result => {
-        console.log(result);
-        if (result.type === "LOGIN_SUCCESS") {
-          this.props.history.push("/");
+    // validate form data
+    if (password && password === confirmPwd) {
+      const body = {
+        password,
+        key
+      };
+      this.props.api.resetPassword(body).then(result => {
+        if (result === "RESET_PW_SUCCESS") {
+          const newState = { ...this.state };
+          newState.success = true;
+          this.setState({ ...newState }, () => {
+            console.log(`success: ${this.state.success}`);
+          });
         }
       });
     } else {
-      this.props.actions.setFormError("Please complete all required fields");
+      if (!password) {
+        this.props.actions.setFormError({
+          message: "Password is required"
+        });
+      }
+      if (password !== confirmPwd) {
+        this.props.actions.setFormError({
+          message: "Passwords do not match"
+        });
+      }
     }
   }
 
   render() {
     const fields = [
       {
-        name: "email",
-        label: "Email",
-        autoComplete: "email",
-        type: "email",
-        placeholder: "Email"
-      },
-      {
         name: "password",
         label: "Password",
-        autoComplete: "current-password",
+        autoComplete: "new-password",
         type: "password",
-        placeholder: "Password"
+        placeholder: "New Password"
+      },
+      {
+        name: "confirmPwd",
+        label: "Confirm Password",
+        autoComplete: "new-password",
+        type: "password",
+        placeholder: "Confirm New Password"
       }
     ];
     return (
       <Form
         fields={fields}
         reducer="auth"
-        form="login"
-        buttonText="Log in"
-        formAction={this.login}
+        form="resetPwd"
+        buttonText="Reset Password"
+        formAction={this.resetPwd}
         toggleForm={this.props.toggleForm}
       />
     );
   }
 }
 
-LocalLogin.propTypes = {
+ResetPassword.propTypes = {
   actions: PropTypes.shape({
     showFormErrors: PropTypes.func,
     setSubmit: PropTypes.func,
@@ -98,8 +111,7 @@ LocalLogin.propTypes = {
   }).isRequired,
   history: PropTypes.shape({
     push: PropTypes.func
-  }).isRequired,
-  toggleForm: PropTypes.func.isRequired
+  }).isRequired
 };
 
 const mapStateToProps = state => ({
@@ -112,5 +124,5 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(LocalLogin)
+  connect(mapStateToProps, mapDispatchToProps)(ResetPassword)
 );

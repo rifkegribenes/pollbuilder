@@ -29,7 +29,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     margin: 0 auto;
     text-align: center; }
   .form__header {
-    color: #182848;
+    color: #833ab4;
     font-weight: 100;
     font-family: "Titillium Web", Helvetica, Arial, sans-serif;
     text-transform: uppercase;
@@ -40,6 +40,8 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     @media (min-width: 600px) {
       .form__header {
         font-size: 45px; } }
+  .form__footer {
+    margin: 0 -20px; }
   .form__connection-header {
     color: #182848;
     font-weight: 100;
@@ -1324,9 +1326,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     background: rgba(255, 255, 255, 0.6); }
     @media (min-width: 400px) {
       .combo__form {
-        padding: 20px;
-        padding-top: 0;
-        padding-bottom: 10px; } }
+        padding: 0 20px; } }
 
 .embed {
   position: absolute;

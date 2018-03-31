@@ -22,7 +22,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
   text-align: center;
   }
   &__header {
-    color: $color_sky;;
+    color: $color_grape;;
     font-weight: 100;
     font-family: $font-stack;
     text-transform: uppercase;
@@ -33,6 +33,10 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     @include for-tablet-portrait-up {
       font-size: 45px;
     }
+  }
+
+  &__footer {
+    margin: 0 -20px;
   }
   &__connection-header {
     color: $color_sky;

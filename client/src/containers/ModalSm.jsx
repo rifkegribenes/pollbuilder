@@ -58,7 +58,7 @@ class ModalSm extends React.Component {
 
     // run fieldValidations on fields in form object and save to state
     const validationErrors = run(
-      this.props.login.form,
+      this.props.auth.form,
       runners(this.props.inputName[0])
     );
 
@@ -97,7 +97,7 @@ class ModalSm extends React.Component {
 
     // hide validation errors for focused field
     const validationErrors = run(
-      this.props.login.form,
+      this.props.auth.form,
       runners(this.props.inputName[0])
     );
     validationErrors[field] = false;
@@ -205,7 +205,7 @@ class ModalSm extends React.Component {
                       showError={
                         this.state.showFieldErrors[this.props.inputName[0]]
                       }
-                      value={this.props.login.form[this.props.inputName[0]]}
+                      value={this.props.auth.form[this.props.inputName[0]]}
                       errorText={this.errorFor([this.props.inputName[0]])}
                       touched={this.state.touched[this.props.inputName[0]]}
                       name={this.props.inputName[0]}
@@ -224,7 +224,7 @@ class ModalSm extends React.Component {
                         showError={
                           this.state.showFieldErrors[this.props.inputName[1]]
                         }
-                        value={this.props.login.form[this.props.inputName[1]]}
+                        value={this.props.auth.form[this.props.inputName[1]]}
                         errorText={this.errorFor([this.props.inputName[1]])}
                         touched={this.state.touched[this.props.inputName[1]]}
                         name={this.props.inputName[1]}
@@ -301,7 +301,7 @@ ModalSm.defaultProps = {
 const mapStateToProps = state => ({
   appState: state.appState,
   profile: state.profile,
-  login: state.login
+  auth: state.auth
 });
 
 const mapDispatchToProps = dispatch => ({

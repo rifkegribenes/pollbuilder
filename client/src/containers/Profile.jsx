@@ -91,7 +91,7 @@ class Profile extends React.Component {
           this.props.profile.user._id,
           update(this.props.profile.user, {
             profile: {
-              avatarUrl: { $set: this.props.login.form.avatarUrl }
+              avatarUrl: { $set: this.props.auth.form.avatarUrl }
             }
           })
         );
@@ -110,8 +110,8 @@ class Profile extends React.Component {
           this.props.profile.user._id,
           update(this.props.profile.user, {
             profile: {
-              firstName: { $set: this.props.login.form.firstName },
-              lastName: { $set: this.props.login.form.lastName }
+              firstName: { $set: this.props.auth.form.firstName },
+              lastName: { $set: this.props.auth.form.lastName }
             }
           })
         );
@@ -131,10 +131,10 @@ class Profile extends React.Component {
           this.props.profile.user._id,
           update(this.props.profile.user, {
             // local: {
-            //   email: { $set: this.props.login.form.email }
+            //   email: { $set: this.props.auth.form.email }
             // },
             profile: {
-              email: { $set: this.props.login.form.email }
+              email: { $set: this.props.auth.form.email }
             },
             verified: { $set: false }
           })
@@ -298,7 +298,7 @@ Profile.propTypes = {
 const mapStateToProps = state => ({
   appState: state.appState,
   profile: state.profile,
-  login: state.login
+  auth: state.auth
 });
 
 const mapDispatchToProps = dispatch => ({

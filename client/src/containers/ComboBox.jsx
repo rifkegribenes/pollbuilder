@@ -7,6 +7,8 @@ import PropTypes from "prop-types";
 import SocialAuth from "./SocialAuth";
 import LocalLogin from "./LocalLogin";
 import LocalSignup from "./LocalSignup";
+import RequestReset from "./RequestReset";
+import ResetPassword from "./ResetPassword";
 import * as Actions from "../store/actions";
 
 import envIcon from "../img/envelope.svg";
@@ -25,7 +27,11 @@ class ComboBox extends React.Component {
     this.toggleLocalForm = this.toggleLocalForm.bind(this);
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    if (this.props.match.params.key) {
+      this.toggleForm("resetPwd");
+    }
+  }
 
   toggleForm(form) {
     const newState = { ...this.state };
@@ -43,62 +49,6 @@ class ComboBox extends React.Component {
     }
     this.setState({ ...newState }, () => {});
   }
-
-  // reset() {
-  //   const email = this.props.login.form.email;
-  //   if (!email) {
-  //     this.props.actions.setFormError("Email required to reset password");
-  //   } else {
-  //     this.props.api.sendResetEmail({ email });
-  //   }
-  // }
-
-  // resetPwd() {
-  //   this.props.actions.setFormError({ message: "" });
-  //   const key = this.props.match.params.key;
-  //   const { password, confirmPwd } = this.props.login.form;
-
-  //   // show validation errors
-  //   const newState = { ...this.state };
-  //   newState.submit = true;
-  //   // newState.showFormErrors = true;
-
-  //   const validationErrors = run(
-  //     this.props.login.form,
-  //     fieldValidations.resetPwd
-  //   );
-
-  //   newState.validationErrors = { ...validationErrors };
-  //   this.setState({ ...newState });
-
-  //   // validate form data
-  //   if (password && password === confirmPwd) {
-  //     const body = {
-  //       password,
-  //       key
-  //     };
-  //     this.props.api.resetPassword(body).then(result => {
-  //       if (result === "RESET_PW_SUCCESS") {
-  //         const newState = { ...this.state };
-  //         newState.success = true;
-  //         this.setState({ ...newState }, () => {
-  //           console.log(`success: ${this.state.success}`);
-  //         });
-  //       }
-  //     });
-  //   } else {
-  //     if (!password) {
-  //       this.props.actions.setFormError({
-  //         message: "Password is required"
-  //       });
-  //     }
-  //     if (password !== confirmPwd) {
-  //       this.props.actions.setFormError({
-  //         message: "Passwords do not match"
-  //       });
-  //     }
-  //   }
-  // }
 
   render() {
     const login = this.state.form === "login";
@@ -179,8 +129,10 @@ class ComboBox extends React.Component {
           </div>
         )}
         <div className="combo__form">
-          {login && localForm && <LocalLogin />}
-          {signup && localForm && <LocalSignup />}
+          {login && localForm && <LocalLogin toggleForm={this.toggleForm} />}
+          {signup && localForm && <LocalSignup toggleForm={this.toggleForm} />}
+          {reset && <RequestReset toggleForm={this.toggleForm} />}
+          {resetPwd && <ResetPassword toggleForm={this.toggleForm} />}
         </div>
       </div>
     );

@@ -165,7 +165,35 @@ class Form extends React.Component {
       <div>
         <form className="form">
           <div className="form__body">
+            {(this.props.form === "reset" ||
+              this.props.form === "resetPwd") && (
+              <div className="form__input-group center">
+                {this.props.form === "resetPwd" ? (
+                  <div className="form__text">
+                    Enter a new password.<br />Make it a good one :)
+                  </div>
+                ) : (
+                  <div className="form__text">
+                    Please enter your email address.<br />We will send a link to
+                    reset your password.
+                  </div>
+                )}
+              </div>
+            )}
             {fields}
+            {this.props.form === "login" && (
+              <div className="form__input-group center">
+                <button
+                  className="form__login-link"
+                  type="button"
+                  onClick={() => {
+                    this.props.toggleForm("reset");
+                  }}
+                >
+                  Forgot your password?
+                </button>
+              </div>
+            )}
             <div className="form__input-group">
               <div className={errorClass}>{this.props[reducer].errorMsg}</div>
             </div>
@@ -195,11 +223,13 @@ class Form extends React.Component {
           dismiss={() => {
             this.props.actions.dismissModal();
             this.props.actions.resetForm();
+            this.props.toggleForm("login");
           }}
           redirect={this.props[reducer].modal.redirect}
           history={this.props.history}
           location={this.props.location}
           resetForm={this.props.actions.resetForm}
+          toggleForm={this.props.toggleForm}
         />
       </div>
     );
@@ -267,6 +297,7 @@ Form.propTypes = {
       key: PropTypes.string
     })
   }).isRequired,
+  toggleForm: PropTypes.func,
   form: PropTypes.string.isRequired,
   reducer: PropTypes.string.isRequired,
   fields: PropTypes.arrayOf(

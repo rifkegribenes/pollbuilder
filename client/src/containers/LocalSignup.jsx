@@ -32,7 +32,7 @@ class LocalSignup extends React.Component {
     this.props.actions.showFormErrors();
     this.props.actions.setSubmit();
 
-    const vErrors = run(this.props.auth.form, fieldValidations.login);
+    const vErrors = run(this.props.auth.form, fieldValidations.signup);
     const validationErrors = validateEmail(vErrors);
 
     this.props.actions.setValidationErrors(validationErrors);
@@ -45,11 +45,6 @@ class LocalSignup extends React.Component {
           if (result.type === "REGISTRATION_FAILURE") {
             this.props.actions.showFormErrors();
             this.props.actions.setSubmit();
-          }
-          if (result.type === "REGISTRATION_SUCCESS") {
-            // clear form
-            // this.props.actions.resetForm();
-            // this.props.history.push("/");
           }
         })
         .catch(err => {
@@ -116,6 +111,7 @@ class LocalSignup extends React.Component {
         form="signup"
         buttonText="Sign up"
         formAction={this.register}
+        toggleForm={this.props.toggleForm}
       />
     );
   }

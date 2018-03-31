@@ -161,7 +161,7 @@ const shortEmail = (title, appName, url, preheader, headline, heroUrl, body, but
                     </tr>
                     <tr>
                       <td align="center" valign="top" style="padding: 10px 0;">
-                        <div style="font-size: 28px; font-family: 'Titillium Web', Helvetica, Arial, sans-serif; color: #333333; text-align: center; padding: 15px 0;" class="padding"">${title}</div>
+                        <div style="font-size: 28px; font-family: 'Titillium Web', Helvetica, Arial, sans-serif; color: #833ab4; text-align: center; padding: 15px 0;" class="padding"">${title}</div>
                         </td>
                     </tr>
                 </table>
@@ -194,7 +194,7 @@ const shortEmail = (title, appName, url, preheader, headline, heroUrl, body, but
                                         <!-- COPY -->
                                         <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                             <tr>
-                                                <td align="center" style="font-size: 25px; font-family: 'Titillium Web', Helvetica, Arial, sans-serif; color: #333333; padding-top: 30px;" class="padding">${headline}</td>
+                                                <td align="center" style="font-size: 25px; font-family: 'Titillium Web', Helvetica, Arial, sans-serif; color: #833ab4; padding-top: 30px;" class="padding">${headline}</td>
                                             </tr>
                                             <tr>
                                                 <td align="center" style="padding: 20px 0 0 0; font-size: 16px; line-height: 25px; font-family: 'Titillium Web', Helvetica, Arial, sans-serif; color: #666666;" class="padding">${body}</td>
@@ -287,7 +287,7 @@ exports.pwResetConfirmation = () => {
 
 exports.verificationTemplate = (url) => {
   return shortEmail(
-    'Verify Email', // title
+    'Please verify your email', // title
     'Surveybot', // appName
     url, // url
     'Click here to verify your email', // preheader
