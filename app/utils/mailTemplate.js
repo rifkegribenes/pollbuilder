@@ -278,7 +278,7 @@ exports.pwResetConfirmation = () => {
       CLIENT_URL, // url
       'Your password was reset successfully', // preheader
       'You changed your password', // headline
-      'https://raw.githubusercontent.com/rifkegribenes/surveybot/master/client/src/img/animated_checkbox.png', // heroUrl
+      'https://raw.githubusercontent.com/rifkegribenes/surveybot/master/client/src/img/checkbox_500x180.png', // heroUrl
       'Or somebody did...\nIf it wasn\'t you, please contact us right away and get that fixed!', // body
       'My Account', // buttonText
       'surveybot | rifkegribenes.io' // footerText
