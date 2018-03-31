@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 
 import SocialAuth from "./SocialAuth";
 import LocalLogin from "./LocalLogin";
+import LocalSignup from "./LocalSignup";
 import * as Actions from "../store/actions";
 
 import envIcon from "../img/envelope.svg";
@@ -42,128 +43,6 @@ class ComboBox extends React.Component {
     }
     this.setState({ ...newState }, () => {});
   }
-
-  /* Function login - Perform basic validation:
-  * - username is at least 1 char
-  * - password is at least 1 char
-  * If valid, call the login route; store token in redux,
-  * clear password from state, return to Home
-  */
-  // login() {
-  //   const { email, password } = this.props.login.form;
-
-  //   // show validation errors
-  //   const newState = { ...this.state };
-  //   newState.submit = true;
-  //   newState.showFormErrors = true;
-
-  //   const validationErrors = run(this.props.login.form, fieldValidations.login);
-
-  //   if (!document.getElementById("email").validity.valid) {
-  //     validationErrors.email = "Please enter a valid email address";
-  //   }
-
-  //   newState.validationErrors = { ...validationErrors };
-  //   this.setState({ ...newState });
-
-  //   if (email && password) {
-  //     const body = { email, password };
-  //     this.props.api.login(body).then(result => {
-  //       if (result.type === "LOGIN_SUCCESS") {
-  //         this.props.history.push("/");
-  //       }
-  //     });
-  //   } else if (!document.getElementById("email").validity.valid) {
-  //     console.log("invalid email");
-  //     this.props.actions.setFormError("Invalid email address");
-  //   } else if (!email) {
-  //     this.props.actions.setFormError("Email cannot be blank");
-  //   } else if (!password) {
-  //     this.props.actions.setFormError("Password cannot be blank");
-  //   } else {
-  //     this.props.actions.setFormError("Please complete all required fields");
-  //   }
-  // }
-
-  // /* Function register - Perform basic validation:
-  // * - username is at least 1 char
-  // * - password is at least 1 char
-  // * - password confirmation matches
-  // * If valid, call the register route; store token in redux, clear password
-  // * from state, return to Home
-  // */
-  // register() {
-  //   const {
-  //     firstName,
-  //     lastName,
-  //     email,
-  //     password,
-  //     confirmPwd
-  //   } = this.props.login.form;
-
-  //   // show validation errors
-  //   const newState = { ...this.state };
-  //   newState.submit = true;
-  //   newState.showFormErrors = true;
-
-  //   const validationErrors = run(
-  //     this.props.login.form,
-  //     fieldValidations.signup
-  //   );
-  //   newState.validationErrors = { ...validationErrors };
-  //   this.setState({ ...newState });
-
-  //   if (!Object.values(this.state.validationErrors).length) {
-  //     const body = { firstName, lastName, email, password };
-  //     this.props.api
-  //       .registration(body)
-  //       .then(result => {
-  //         if (result.type === "REGISTRATION_FAILURE") {
-  //           const newState = { ...this.state };
-  //           newState.submit = true;
-  //           newState.showFormErrors = true;
-  //           this.setState({ ...newState });
-  //         }
-  //         if (result.type === "REGISTRATION_SUCCESS") {
-  //           // clear form
-  //           this.props.actions.setFormField({
-  //             firstName: "",
-  //             lastName: "",
-  //             email: "",
-  //             password: "",
-  //             confirmPwd: "",
-  //             error: ""
-  //           });
-  //           // this.props.history.push("/");
-  //         }
-  //       })
-  //       .catch(err => {
-  //         let error;
-  //         typeof err === "string"
-  //           ? (error = err)
-  //           : typeof err.message === "string"
-  //             ? (error = err.message)
-  //             : (error = undefined);
-  //         console.log(error);
-  //         this.props.actions.setFormError(error);
-  //         this.props.actions.setFormField({
-  //           error: err
-  //         });
-  //         // show validation errors
-  //         const newState = { ...this.state };
-  //         newState.showFormErrors = true;
-  //         this.setState({ ...newState });
-  //       });
-  //   } else if (!email) {
-  //     this.props.actions.setFormError("Email cannot be blank");
-  //   } else if (password !== confirmPwd) {
-  //     this.props.actions.setFormError("Passwords do not match");
-  //   } else if (!firstName || !lastName) {
-  //     this.props.actions.setFormError("Full name is required");
-  //   } else {
-  //     this.props.actions.setFormError("Please complete the form");
-  //   }
-  // }
 
   // reset() {
   //   const email = this.props.login.form.email;
@@ -301,6 +180,7 @@ class ComboBox extends React.Component {
         )}
         <div className="combo__form">
           {login && localForm && <LocalLogin />}
+          {signup && localForm && <LocalSignup />}
         </div>
       </div>
     );

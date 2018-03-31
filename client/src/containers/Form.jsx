@@ -194,6 +194,7 @@ class Form extends React.Component {
           buttonText={this.props[reducer].modal.buttonText || "Continue"}
           dismiss={() => {
             this.props.actions.dismissModal();
+            this.props.actions.resetForm();
           }}
           redirect={this.props[reducer].modal.redirect}
           history={this.props.history}
