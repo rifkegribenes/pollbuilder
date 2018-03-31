@@ -159,11 +159,6 @@ const shortEmail = (title, appName, url, preheader, headline, heroUrl, body, but
                             </a>
                         </td>
                     </tr>
-                    <tr>
-                      <td align="center" valign="top" style="padding: 10px 0;">
-                        <div style="font-size: 28px; font-family: 'Titillium Web', Helvetica, Arial, sans-serif; color: #833ab4; text-align: center; padding: 15px 0;" class="padding"">${title}</div>
-                        </td>
-                    </tr>
                 </table>
                 <!--[if (gte mso 9)|(IE)]>
                 </td>
