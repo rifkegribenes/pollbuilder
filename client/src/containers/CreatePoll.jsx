@@ -69,14 +69,14 @@ class CreatePoll extends React.Component {
         placeholder: "What's your favorite ice cream flavor?"
       },
       {
-        name: "option-0",
+        name: "option",
         label: "Option",
         autoComplete: "",
         type: "text",
         placeholder: "Vanilla"
       },
       {
-        name: "option",
+        name: "option-",
         label: "Option",
         autoComplete: "",
         type: "text",

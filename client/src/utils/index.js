@@ -2,6 +2,9 @@
 
 const _isRequired = fieldName => `${fieldName} is required`;
 
+const _atLeastOneRequired = fieldName =>
+  `At least one ${fieldName} is required`;
+
 const _mustMatch = otherFieldName => fieldName =>
   `${fieldName} must match ${otherFieldName}`;
 
@@ -13,6 +16,13 @@ export const required = text => {
     return null;
   }
   return _isRequired;
+};
+
+export const atLeastOneRequired = text => {
+  if (text) {
+    return null;
+  }
+  return _atLeastOneRequired;
 };
 
 export const validateEmail = validationErrors => {
@@ -74,7 +84,11 @@ export const fieldValidations = {
     ruleRunner("firstName", "First Name", required),
     ruleRunner("lastName", "Last Name", required)
   ],
-  email: [ruleRunner("email", "Email", required)]
+  email: [ruleRunner("email", "Email", required)],
+  create: [
+    ruleRunner("question", "Question", required),
+    ruleRunner("option", "Option", atLeastOneRequired)
+  ]
 };
 
 // force focus on #main when using skip navigation link

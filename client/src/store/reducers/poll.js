@@ -38,7 +38,6 @@ const INITIAL_STATE = {
     text: ""
   },
   form: {
-    title: "",
     question: "",
     options: {},
     error: false
