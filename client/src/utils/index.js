@@ -2,8 +2,8 @@
 
 const _isRequired = fieldName => `${fieldName} is required`;
 
-const _atLeastOneRequired = fieldName =>
-  `At least one ${fieldName} is required`;
+const _atLeastTwoRequired = fieldName =>
+  `Polls must have at least two ${fieldName}s`;
 
 const _mustMatch = otherFieldName => fieldName =>
   `${fieldName} must match ${otherFieldName}`;
@@ -18,11 +18,11 @@ export const required = text => {
   return _isRequired;
 };
 
-export const atLeastOneRequired = text => {
+export const atLeastTwoRequired = text => {
   if (text) {
     return null;
   }
-  return _atLeastOneRequired;
+  return _atLeastTwoRequired;
 };
 
 export const validateEmail = validationErrors => {
