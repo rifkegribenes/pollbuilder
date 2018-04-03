@@ -87,7 +87,7 @@ export const fieldValidations = {
   email: [ruleRunner("email", "Email", required)],
   create: [
     ruleRunner("question", "Question", required),
-    ruleRunner("option", "Option", atLeastOneRequired)
+    ruleRunner("option", "Option", atLeastTwoRequired)
   ]
 };
 

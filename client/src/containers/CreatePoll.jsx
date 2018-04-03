@@ -6,7 +6,6 @@ import PropTypes from "prop-types";
 import * as Actions from "../store/actions";
 import * as apiActions from "../store/actions/apiActions";
 import Form from "./Form";
-import { fieldValidations, run } from "../utils/";
 
 import logo from "../img/bot-head_340.png";
 
@@ -21,7 +20,8 @@ class CreatePoll extends React.Component {
         message: `Please log in to create a poll.`,
         buttonText: "Log in",
         title: "Login required",
-        action: () => this.props.history.push("/login")
+        action: () => this.props.history.push("/login"),
+        redirect: "/login"
       });
     }
     const verified =
