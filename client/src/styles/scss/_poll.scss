@@ -1,0 +1,33 @@
+.poll {
+	&__icon-button {
+		appearance: none;
+		-webkit-appearance: none;
+		background: transparent;
+		border: 0;
+		outline: 0;
+		width: 20px;
+		height: 20px;
+		position: absolute;
+		right: -25px;
+		top: 40px;
+	}
+
+	&__icon {
+		width: 20px;
+		height: auto;
+
+		&--plus {
+			right: -10px;
+			top: 41px;
+		}
+
+		&:hover {
+			opacity: .6;
+		}
+	}
+
+	&__option-group {
+		max-width: calc(100% - 40px);
+		position: relative;
+	}
+}

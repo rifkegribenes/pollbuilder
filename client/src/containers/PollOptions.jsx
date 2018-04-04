@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 
 import * as Actions from "../store/actions";
 import * as apiActions from "../store/actions/apiActions";
+import FormInput from "./FormInput";
 
 import plus from "../img/plus.svg";
 import trash from "../img/delete.svg";
@@ -47,15 +48,15 @@ class PollOptions extends React.Component {
   render() {
     const options = this.props.poll.form.options.map((option, index) => {
       return (
-        <div key={index}>
-          <input
-            type="text"
+        <div className="form__input-group poll__option-group" key={index}>
+          <FormInput
+            handleChange={this.editOption}
+            handleFocus={this.onFocus}
+            label={`Option ${index + 1}`}
+            placeholder={`Option ${index + 1}`}
             value={option}
             name={index}
-            placeholder={`Option ${index + 1}`}
-            onChange={this.editOption}
-            onFocus={this.onFocus}
-            className="form-control option-input"
+            type="text"
           />
           <button
             className="poll__icon-button"
@@ -79,7 +80,7 @@ class PollOptions extends React.Component {
         {options}
         {this.state.optionsErr ? deleteOptionError : null}
         <button
-          className="poll__icon-button"
+          className="poll__icon-button poll__icon--plus"
           onClick={this.addAnotherOption}
           title="Add option"
         >
@@ -91,6 +92,24 @@ class PollOptions extends React.Component {
     );
   }
 }
+
+PollOptions.propTypes = {
+  actions: PropTypes.shape({
+    dismissModal: PropTypes.func,
+    setFormField: PropTypes.func,
+    setFormError: PropTypes.func,
+    clearFormError: PropTypes.func,
+    updatePollOptions: PropTypes.func
+  }).isRequired,
+  api: PropTypes.shape({
+    resetPassword: PropTypes.func
+  }).isRequired,
+  poll: PropTypes.shape({
+    form: PropTypes.shape({
+      options: PropTypes.arrayOf(PropTypes.string).isRequired
+    })
+  })
+};
 
 const mapStateToProps = state => ({
   poll: state.poll

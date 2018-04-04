@@ -1367,6 +1367,29 @@ input:not([type=checkbox]):not([type=radio]), textarea {
       .verify__text {
         font-size: 1.2em; } }
 
+.poll__icon-button {
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  right: -25px;
+  top: 40px; }
+.poll__icon {
+  width: 20px;
+  height: auto; }
+  .poll__icon--plus {
+    right: -10px;
+    top: 41px; }
+  .poll__icon:hover {
+    opacity: .6; }
+.poll__option-group {
+  max-width: calc(100% - 40px);
+  position: relative; }
+
 * {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
