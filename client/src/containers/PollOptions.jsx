@@ -6,36 +6,46 @@ import PropTypes from "prop-types";
 import * as Actions from "../store/actions";
 import * as apiActions from "../store/actions/apiActions";
 
+import plus from "../img/plus.svg";
+import trash from "../img/delete.svg";
+
 class PollOptions extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      optionsErr: false
+    };
+  }
+
   componentDidMount() {}
 
   onFocus() {
-    this.setState({ twoOptionsOrMoreError: false });
+    this.setState({ optionsErr: false });
   }
   editOption(event) {
-    this.setState({ twoOptionsOrMoreError: false });
-    let updatedOptions = this.props.poll.newPollOptions;
-    updatedOptions[event.target.name] = event.target.value;
-    this.props.dispatchUpdateOption(updatedOptions);
+    this.setState({ optionsErr: false });
+    const { options } = this.props.poll.form;
+    options[event.target.name] = event.target.value;
+    this.props.actions.updatePollOptions(options);
   }
-  addAnotherOption() {
-    this.setState({ twoOptionsOrMoreError: false });
-    let updatedNewOptions = this.props.poll.newPollOptions;
-    updatedNewOptions.push("");
-    console.log("updatedNewOptions", updatedNewOptions);
-    this.props.dispatchUpdateOption(updatedNewOptions);
+  addOption() {
+    this.setState({ optionsErr: false });
+    const { options } = this.props.poll.form;
+    options.push("");
+    this.props.actions.updatePollOptions(options);
   }
   deleteOption(index) {
-    if (this.props.poll.newPollOptions.length === 2) {
-      this.setState({ twoOptionsOrMoreError: true });
+    if (this.props.poll.form.options.length === 2) {
+      this.setState({ optionsErr: true });
       return;
     }
-    let updatedDeleteOptions = this.props.poll.newPollOptions;
-    updatedDeleteOptions.splice(index, 1);
-    this.props.dispatchUpdateOption(updatedDeleteOptions);
+    const { options } = this.props.poll.form;
+    options.splice(index, 1);
+    this.props.actions.updatePollOptions(options);
   }
   render() {
-    let options = this.props.poll.newPollOptions.map((option, index) => {
+    const options = this.props.poll.form.options.map((option, index) => {
       return (
         <div key={index}>
           <input
@@ -47,38 +57,48 @@ class PollOptions extends React.Component {
             onFocus={this.onFocus}
             className="form-control option-input"
           />
-          <a
-            className="btn btn-danger delete-button"
+          <button
+            className="poll__icon-button"
             onClick={() => this.deleteOption(index)}
-            aria-label="Delete"
+            title="Delete"
           >
-            <i className="fa fa-trash-o" aria-hidden="true" />
-          </a>
+            <span className="poll__icon-wrap">
+              <img className="poll__icon" src={trash} alt="" />
+            </span>
+          </button>
         </div>
       );
     });
     const deleteOptionError = (
-      <div className="row two-or-more-error">
-        <i className="fa fa-exclamation-triangle" aria-hidden="true" /> At least
-        two options are required
+      <div className="poll__options-error">
+        At least two options are required
       </div>
     );
     return (
-      <div className="form-group options-container">
+      <div className="form__input-group options-container">
         {options}
-        {this.state.twoOptionsOrMoreError ? deleteOptionError : null}
-        <a>
-          <p
-            className="add-another-option show-mouse-pointer"
-            onClick={this.addAnotherOption}
-          >
-            <i className="fa fa-plus-circle" aria-hidden="true" /> Add another
-            option
-          </p>
-        </a>
+        {this.state.optionsErr ? deleteOptionError : null}
+        <button
+          className="poll__icon-button"
+          onClick={this.addAnotherOption}
+          title="Add option"
+        >
+          <span className="poll__icon-wrap">
+            <img className="poll__icon" src={plus} alt="" />
+          </span>
+        </button>
       </div>
     );
   }
 }
 
-export default PollOptions;
+const mapStateToProps = state => ({
+  poll: state.poll
+});
+
+const mapDispatchToProps = dispatch => ({
+  actions: bindActionCreators(Actions, dispatch),
+  api: bindActionCreators(apiActions, dispatch)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(PollOptions);

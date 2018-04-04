@@ -8,6 +8,7 @@ import update from "immutability-helper";
 import Spinner from "./Spinner";
 import ModalSm from "./ModalSm";
 import FormInput from "./FormInput";
+import PollOptions from "./PollOptions";
 import { fieldValidations, run, validateEmail } from "../utils/";
 import * as Actions from "../store/actions";
 import * as apiActions from "../store/actions/apiActions";
@@ -194,6 +195,7 @@ class Form extends React.Component {
                 </button>
               </div>
             )}
+            {this.props.form === "create" && <PollOptions />}
             <div className="form__input-group">
               <div className={errorClass}>{this.props[reducer].errorMsg}</div>
             </div>

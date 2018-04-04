@@ -39,7 +39,7 @@ const INITIAL_STATE = {
   },
   form: {
     question: "",
-    options: {},
+    options: ["", ""],
     error: false
   }
 };
