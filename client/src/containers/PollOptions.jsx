@@ -56,6 +56,10 @@ class PollOptions extends React.Component {
     this.props.actions.updatePollOptions(options);
   }
 
+  dismissError() {
+    this.setState({ optionsErr: false });
+  }
+
   render() {
     const options = this.props.poll.form.options.map((option, index) => {
       return (
@@ -73,36 +77,40 @@ class PollOptions extends React.Component {
             className="poll__icon-button"
             onClick={() => this.deleteOption(index)}
             title="Delete"
+            type="button"
           >
-            <span className="poll__icon-wrap">
-              <img className="poll__icon" src={trash} alt="" />
-            </span>
+            <span className="poll__icon-wrap">&times;</span>
           </button>
         </div>
       );
     });
-    const deleteOptionError = (
-      <div className="poll__options-error">
-        At least two options are required
-      </div>
-    );
     return (
       <div className="form__input-group options-container">
         {options}
         {this.state.optionsErr && (
           <div className="form__input-group">
-            <div className="error">{deleteOptionError}</div>
+            <div className="error">
+              <button
+                className="poll__icon-button poll__icon-button--error"
+                onClick={() => this.dismissError()}
+                title="Close"
+                type="button"
+              >
+                <span className="poll__icon-wrap">&times;</span>
+              </button>
+              At least two options are required
+            </div>
           </div>
         )}
-        <button
-          className="poll__icon-button poll__icon--plus"
-          onClick={this.addAnotherOption}
-          title="Add option"
-        >
-          <span className="poll__icon-wrap">
-            <img className="poll__icon" src={plus} alt="" />
-          </span>
-        </button>
+        <div className="poll__button-wrap">
+          <button
+            className="form__button poll__add"
+            onClick={this.addAnotherOption}
+            type="button"
+          >
+            Add option
+          </button>
+        </div>
       </div>
     );
   }

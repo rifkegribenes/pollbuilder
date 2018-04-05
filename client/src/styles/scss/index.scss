@@ -170,6 +170,7 @@ body.user-is-tabbing *:focus {
     border-radius: 3px;
     transition: opacity .15s linear;
     text-align: center;
+    position: relative;
   }
 
 input:invalid {
