@@ -7,9 +7,6 @@ import * as Actions from "../store/actions";
 import * as apiActions from "../store/actions/apiActions";
 import FormInput from "./FormInput";
 
-import plus from "../img/plus.svg";
-import trash from "../img/delete.svg";
-
 class PollOptions extends React.Component {
   constructor(props) {
     super(props);
@@ -17,6 +14,11 @@ class PollOptions extends React.Component {
     this.state = {
       optionsErr: false
     };
+
+    this.onFocus = this.onFocus.bind(this);
+    this.editOption = this.editOption.bind(this);
+    this.addOption = this.addOption.bind(this);
+    this.deleteOption = this.deleteOption.bind(this);
   }
 
   componentDidMount() {}
@@ -29,31 +31,24 @@ class PollOptions extends React.Component {
     this.setState({ optionsErr: false });
     const { options } = this.props.poll.form;
     options[event.target.name] = event.target.value;
-    this.props.actions.updatePollOptions(options);
+    this.props.actions.setPollOptions(options);
   }
 
   addOption() {
     this.setState({ optionsErr: false });
     const { options } = this.props.poll.form;
     options.push("");
-    this.props.actions.updatePollOptions(options);
+    this.props.actions.setPollOptions(options);
   }
 
   deleteOption(index) {
-    console.log("delete");
     if (this.props.poll.form.options.length === 2) {
-      console.log("show error");
-      console.log(
-        `this.props.poll.form.options.length: ${
-          this.props.poll.form.options.length
-        }`
-      );
       this.setState({ optionsErr: true });
       return;
     }
     const { options } = this.props.poll.form;
     options.splice(index, 1);
-    this.props.actions.updatePollOptions(options);
+    this.props.actions.setPollOptions(options);
   }
 
   dismissError() {
@@ -61,32 +56,31 @@ class PollOptions extends React.Component {
   }
 
   render() {
-    const options = this.props.poll.form.options.map((option, index) => {
-      return (
-        <div className="form__input-group poll__option-group" key={index}>
-          <FormInput
-            handleChange={this.editOption}
-            handleFocus={this.onFocus}
-            label={`Option ${index + 1}`}
-            placeholder={`Option ${index + 1}`}
-            value={option}
-            name={index.toString()}
-            type="text"
-          />
-          <button
-            className="poll__icon-button"
-            onClick={() => this.deleteOption(index)}
-            title="Delete"
-            type="button"
-          >
-            <span className="poll__icon-wrap">&times;</span>
-          </button>
-        </div>
-      );
-    });
     return (
       <div className="form__input-group options-container">
-        {options}
+        {this.props.poll.form.options.map((option, index) => {
+          return (
+            <div className="form__input-group poll__option-group" key={index}>
+              <FormInput
+                handleChange={this.editOption}
+                handleFocus={this.onFocus}
+                label={`Option ${index + 1}`}
+                placeholder={`Option ${index + 1}`}
+                value={option}
+                name={index.toString()}
+                type="text"
+              />
+              <button
+                className="poll__icon-button"
+                onClick={() => this.deleteOption(index)}
+                title="Delete"
+                type="button"
+              >
+                <span className="poll__icon-wrap">&times;</span>
+              </button>
+            </div>
+          );
+        })}
         {this.state.optionsErr && (
           <div className="form__input-group">
             <div className="error">
@@ -105,7 +99,7 @@ class PollOptions extends React.Component {
         <div className="poll__button-wrap">
           <button
             className="form__button poll__add"
-            onClick={this.addAnotherOption}
+            onClick={() => this.addOption()}
             type="button"
           >
             Add option
@@ -122,7 +116,7 @@ PollOptions.propTypes = {
     setFormField: PropTypes.func,
     setFormError: PropTypes.func,
     clearFormError: PropTypes.func,
-    updatePollOptions: PropTypes.func
+    setPollOptions: PropTypes.func
   }).isRequired,
   api: PropTypes.shape({
     resetPassword: PropTypes.func

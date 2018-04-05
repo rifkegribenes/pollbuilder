@@ -2,6 +2,7 @@ export const LOGOUT = "LOGOUT";
 export const SET_LOGGEDIN = "SET_LOGGEDIN";
 export const SET_FORM_FIELD = "SET_FORM_FIELD";
 export const SET_FORM_ERROR = "SET_FORM_ERROR";
+export const SET_POLL_OPTIONS = "SET_POLL_OPTIONS";
 export const SET_VALIDATION_ERRORS = "SET_VALIDATION_ERRORS";
 export const RESET_FORM = "RESET_FORM";
 export const SHOW_FORM_ERRORS = "SHOW_FORM_ERRORS";
@@ -63,6 +64,13 @@ export function setFormError(msg) {
   return {
     type: SET_FORM_ERROR,
     payload: msg
+  };
+}
+
+export function setPollOptions(options) {
+  return {
+    type: SET_POLL_OPTIONS,
+    payload: options
   };
 }
 

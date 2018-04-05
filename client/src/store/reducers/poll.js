@@ -3,6 +3,7 @@ import update from "immutability-helper";
 import {
   SET_FORM_FIELD,
   SET_FORM_ERROR,
+  SET_POLL_OPTIONS,
   RESET_FORM,
   DISMISS_MODAL,
   SET_MODAL_ERROR,
@@ -48,13 +49,24 @@ function poll(state = INITIAL_STATE, action) {
   let error;
   switch (action.type) {
     /*
-    * Called from: <Login />, <Register />, <ResetPassword />
+    * Called from: <Form />, <ModalSm />, <CreatePoll />
     * Payload: Form field Name and Value
     * Purpose: Update the connected form field.
     */
     case SET_FORM_FIELD:
       return update(state, {
         form: { [action.payload.id]: { $set: action.payload.value } }
+      });
+
+    /*
+    * Called from: <CreatePoll />
+    * Payload: Form field Name and Value
+    * Purpose: Update the connected form field.
+    */
+    case SET_POLL_OPTIONS:
+      console.log(action.payload);
+      return update(state, {
+        form: { options: { $set: action.payload } }
       });
 
     /*
