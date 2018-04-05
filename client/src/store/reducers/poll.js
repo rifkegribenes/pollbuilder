@@ -3,7 +3,8 @@ import update from "immutability-helper";
 import {
   SET_FORM_FIELD,
   SET_FORM_ERROR,
-  SET_POLL_OPTIONS,
+  SET_OPTION,
+  DELETE_OPTION,
   RESET_FORM,
   DISMISS_MODAL,
   SET_MODAL_ERROR,
@@ -63,10 +64,17 @@ function poll(state = INITIAL_STATE, action) {
     * Payload: Form field Name and Value
     * Purpose: Update the connected form field.
     */
-    case SET_POLL_OPTIONS:
-      console.log(action.payload);
+    case SET_OPTION:
+      // console.log(action.payload);
       return update(state, {
         form: { options: { $set: action.payload } }
+      });
+
+    case DELETE_OPTION:
+      const { array, idx } = action.payload;
+      const newOptions = array.filter((item, index) => index !== idx);
+      return update(state, {
+        form: { options: { $set: newOptions } }
       });
 
     /*

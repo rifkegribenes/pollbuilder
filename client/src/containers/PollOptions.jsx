@@ -31,24 +31,23 @@ class PollOptions extends React.Component {
     this.setState({ optionsErr: false });
     const { options } = this.props.poll.form;
     options[event.target.name] = event.target.value;
-    this.props.actions.setPollOptions(options);
+    this.props.actions.setOption(options);
   }
 
   addOption() {
     this.setState({ optionsErr: false });
     const { options } = this.props.poll.form;
     options.push("");
-    this.props.actions.setPollOptions(options);
+    this.props.actions.setOption(options);
   }
 
   deleteOption(index) {
     if (this.props.poll.form.options.length === 2) {
       this.setState({ optionsErr: true });
       return;
+    } else {
+      this.props.actions.deleteOption(this.props.poll.form.options, index);
     }
-    const { options } = this.props.poll.form;
-    options.splice(index, 1);
-    this.props.actions.setPollOptions(options);
   }
 
   dismissError() {
@@ -60,24 +59,28 @@ class PollOptions extends React.Component {
       <div className="form__input-group options-container">
         {this.props.poll.form.options.map((option, index) => {
           return (
-            <div className="form__input-group poll__option-group" key={index}>
-              <FormInput
-                handleChange={this.editOption}
-                handleFocus={this.onFocus}
-                label={`Option ${index + 1}`}
-                placeholder={`Option ${index + 1}`}
-                value={option}
-                name={index.toString()}
-                type="text"
-              />
-              <button
-                className="poll__icon-button"
-                onClick={() => this.deleteOption(index)}
-                title="Delete"
-                type="button"
-              >
-                <span className="poll__icon-wrap">&times;</span>
-              </button>
+            <div key={`Option ${index + 1}`}>
+              {index <= this.props.poll.form.options.length && (
+                <div className="form__input-group poll__option-group">
+                  <FormInput
+                    handleChange={this.editOption}
+                    handleFocus={this.onFocus}
+                    label={`Option ${index + 1}`}
+                    placeholder={`Option ${index + 1}`}
+                    value={option}
+                    name={index.toString()}
+                    type="text"
+                  />
+                  <button
+                    className="poll__icon-button"
+                    onClick={() => this.deleteOption(index)}
+                    title="Delete"
+                    type="button"
+                  >
+                    <span className="poll__icon-wrap">&times;</span>
+                  </button>
+                </div>
+              )}
             </div>
           );
         })}
@@ -116,7 +119,7 @@ PollOptions.propTypes = {
     setFormField: PropTypes.func,
     setFormError: PropTypes.func,
     clearFormError: PropTypes.func,
-    setPollOptions: PropTypes.func
+    setOption: PropTypes.func
   }).isRequired,
   api: PropTypes.shape({
     resetPassword: PropTypes.func

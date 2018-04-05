@@ -2,7 +2,8 @@ export const LOGOUT = "LOGOUT";
 export const SET_LOGGEDIN = "SET_LOGGEDIN";
 export const SET_FORM_FIELD = "SET_FORM_FIELD";
 export const SET_FORM_ERROR = "SET_FORM_ERROR";
-export const SET_POLL_OPTIONS = "SET_POLL_OPTIONS";
+export const SET_OPTION = "SET_OPTION";
+export const DELETE_OPTION = "DELETE_OPTION";
 export const SET_VALIDATION_ERRORS = "SET_VALIDATION_ERRORS";
 export const RESET_FORM = "RESET_FORM";
 export const SHOW_FORM_ERRORS = "SHOW_FORM_ERRORS";
@@ -67,10 +68,17 @@ export function setFormError(msg) {
   };
 }
 
-export function setPollOptions(options) {
+export function setOption(options) {
   return {
-    type: SET_POLL_OPTIONS,
+    type: SET_OPTION,
     payload: options
+  };
+}
+
+export function deleteOption(array, idx) {
+  return {
+    type: DELETE_OPTION,
+    payload: { array, idx }
   };
 }
 
