@@ -24,20 +24,30 @@ class PollOptions extends React.Component {
   onFocus() {
     this.setState({ optionsErr: false });
   }
+
   editOption(event) {
     this.setState({ optionsErr: false });
     const { options } = this.props.poll.form;
     options[event.target.name] = event.target.value;
     this.props.actions.updatePollOptions(options);
   }
+
   addOption() {
     this.setState({ optionsErr: false });
     const { options } = this.props.poll.form;
     options.push("");
     this.props.actions.updatePollOptions(options);
   }
+
   deleteOption(index) {
+    console.log("delete");
     if (this.props.poll.form.options.length === 2) {
+      console.log("show error");
+      console.log(
+        `this.props.poll.form.options.length: ${
+          this.props.poll.form.options.length
+        }`
+      );
       this.setState({ optionsErr: true });
       return;
     }
@@ -45,6 +55,7 @@ class PollOptions extends React.Component {
     options.splice(index, 1);
     this.props.actions.updatePollOptions(options);
   }
+
   render() {
     const options = this.props.poll.form.options.map((option, index) => {
       return (
@@ -55,7 +66,7 @@ class PollOptions extends React.Component {
             label={`Option ${index + 1}`}
             placeholder={`Option ${index + 1}`}
             value={option}
-            name={index}
+            name={index.toString()}
             type="text"
           />
           <button
@@ -78,7 +89,11 @@ class PollOptions extends React.Component {
     return (
       <div className="form__input-group options-container">
         {options}
-        {this.state.optionsErr ? deleteOptionError : null}
+        {this.state.optionsErr && (
+          <div className="form__input-group">
+            <div className="error">{deleteOptionError}</div>
+          </div>
+        )}
         <button
           className="poll__icon-button poll__icon--plus"
           onClick={this.addAnotherOption}

@@ -1383,7 +1383,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
   height: auto; }
   .poll__icon--plus {
     right: -10px;
-    top: 41px; }
+    top: 118px; }
   .poll__icon:hover {
     opacity: .6; }
 .poll__option-group {
