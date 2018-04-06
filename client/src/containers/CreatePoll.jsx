@@ -65,11 +65,7 @@ class CreatePoll extends React.Component {
     const token = this.props.appState.authToken;
     const body = {
       question: this.props.poll.form.question,
-      options: this.props.poll.form.options,
-      ownerID: this.props.profile.user._id,
-      ownerName: `${this.props.profile.user.firstName} ${
-        this.props.profile.user.lastName
-      }`
+      options: this.props.poll.form.options
     };
     console.log(body);
     console.log(token);
