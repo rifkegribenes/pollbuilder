@@ -26,7 +26,7 @@ exports.viewPollBySlug = (req, res, next) => {
   });
 };
 
-// Create a new poll.
+// Create a new poll
 exports.newPoll = (user, req, res, next) => {
   const options = req.body.options.map(option => {
     return {
@@ -39,11 +39,29 @@ exports.newPoll = (user, req, res, next) => {
     ownerID: user._id,
     ownerName: `${user.profile.firstName} ${user.profile.lastName}`
   }
-  Poll.create(body, (err, poll) => {
-    if(err) { return handleError(res, err); }
-    return res.status(201).json(poll);
-  });
-};
+  // check if poll question is unique
+  Poll.findOne({ question: req.body.question })
+    .then( (existingPoll) => {
+      // If poll is not unique
+      if (existingPoll) {
+        return res.status(422).send({ message: 'Oops! A poll with that question already exists. Please try again with a different question.' });
+        } else {
+          // if not, poll question is unique; create new poll
+          Poll.create(body, (err, poll) => {
+            if (err) {
+              return handleError(res, err);
+            } else {
+              return res.status(201).json(poll);
+            }
+          });
+        }
+    }) // then (Poll.findOne)
+    .catch( (err) => {
+      console.log('poll.ctrl.js > newPoll > catch 131');
+      console.log(err);
+      return next(err);
+    }); // catch (Poll.findOne)
+}; // newPoll
 
 // Update an existing poll.
 exports.updatePoll = (req, res, next) => {

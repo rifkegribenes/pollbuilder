@@ -182,7 +182,18 @@ class Header extends React.Component {
                     className="h-nav__item-link h-nav__item-link"
                     activeClassName="h-nav__item-link--active"
                   >
-                    All Polls
+                    Vote
+                  </NavLink>
+                </li>
+              )}
+              {this.props.appState.loggedIn && (
+                <li className="h-nav__item">
+                  <NavLink
+                    to="/createpoll"
+                    className="h-nav__item-link h-nav__item-link"
+                    activeClassName="h-nav__item-link--active"
+                  >
+                    New Poll
                   </NavLink>
                 </li>
               )}
