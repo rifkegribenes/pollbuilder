@@ -51,7 +51,7 @@ class Home extends React.Component {
           </div>
           <div className="splash__button-wrap">
             <NavLink
-              to="/login"
+              to="/createpoll"
               className="form__button form__button--big splash__login"
               activeClassName="h-nav__item-link--active"
             >

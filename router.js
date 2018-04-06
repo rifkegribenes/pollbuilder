@@ -190,6 +190,8 @@ module.exports = function (app) {
   pollRoutes.get('/:pollId', requireAuth, PollController.viewPollById);
 
   // Create a poll
+  // Returns fail status + message -or- poll object
+  pollRoutes.post('/createpoll', requireAuth, PollController.newPoll);
 
   // Update a poll
 

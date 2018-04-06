@@ -4,12 +4,18 @@ import { bindActionCreators } from "redux";
 import PropTypes from "prop-types";
 
 import * as Actions from "../store/actions";
-import * as apiActions from "../store/actions/apiActions";
+import * as apiActions from "../store/actions/apiPollActions";
 import Form from "./Form";
 
 import logo from "../img/bot-head_340.png";
 
 class CreatePoll extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.createPoll = this.createPoll.bind(this);
+  }
+
   componentDidMount() {
     // TODO: y i k e s  fix this mess.....
     // user is verified if local account email is verified
@@ -56,6 +62,25 @@ class CreatePoll extends React.Component {
 
   createPoll() {
     console.log("createPoll");
+    const token = this.props.appState.authToken;
+    const body = {
+      question: this.props.poll.form.question,
+      options: this.props.poll.form.options,
+      ownerID: this.props.profile.user._id,
+      ownerName: `${this.props.profile.user.firstName} ${
+        this.props.profile.user.lastName
+      }`
+    };
+    console.log(body);
+    console.log(token);
+    this.props.api
+      .createPoll(token, body)
+      .then(result => {
+        console.log(result);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   render() {
@@ -99,8 +124,10 @@ CreatePoll.propTypes = {
   }).isRequired,
   profile: PropTypes.shape({
     user: PropTypes.shape({
+      _id: PropTypes.string,
       profile: PropTypes.shape({
         firstName: PropTypes.string,
+        lastName: PropTypes.string,
         email: PropTypes.string
       }).isRequired,
       verified: PropTypes.boolean
@@ -116,8 +143,7 @@ CreatePoll.propTypes = {
     })
   }).isRequired,
   api: PropTypes.shape({
-    refreshToken: PropTypes.func,
-    validateToken: PropTypes.func
+    createPoll: PropTypes.func
   }).isRequired,
   actions: PropTypes.shape({
     setModalError: PropTypes.func,

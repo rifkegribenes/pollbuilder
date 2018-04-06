@@ -28,6 +28,7 @@ exports.viewPollBySlug = (req, res, next) => {
 
 // Create a new poll.
 exports.newPoll = (req, res, next) => {
+  console.log('newpoll');
   Poll.create(req.body, (err, poll) => {
     if(err) { return handleError(res, err); }
     return res.status(201).json(poll);

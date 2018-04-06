@@ -21,7 +21,7 @@ export const CREATE_POLL_FAILURE = "CREATE_POLL_FAILURE";
 export function createPoll(token, body) {
   return {
     [RSAA]: {
-      endpoint: `${BASE_URL}/api/auth/createpoll`,
+      endpoint: `${BASE_URL}/api/poll/createpoll`,
       method: "POST",
       types: [
         CREATE_POLL_REQUEST,
