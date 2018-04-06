@@ -1,5 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+
+import * as Actions from "../store/actions";
 
 import ghIcon from "../img/github-white.svg";
 import fbIcon from "../img/facebook-white.svg";
@@ -12,7 +16,7 @@ const SocialAuth = props => (
       href="http://localhost:8080/api/auth/github/"
       id="btn-github"
       onClick={() => {
-        props.setSpinner("show");
+        props.actions.setSpinner("show");
         props.toggleLocalForm(false);
       }}
     >
@@ -32,7 +36,7 @@ const SocialAuth = props => (
       id="btn-facebook"
       href="http://localhost:8080/api/auth/facebook"
       onClick={() => {
-        props.setSpinner("show");
+        props.actions.setSpinner("show");
         props.toggleLocalForm(false);
       }}
     >
@@ -52,7 +56,7 @@ const SocialAuth = props => (
       id="btn-google"
       href="http://localhost:8080/api/auth/google"
       onClick={() => {
-        props.setSpinner("show");
+        props.actions.setSpinner("show");
         props.toggleLocalForm(false);
       }}
     >
@@ -76,4 +80,14 @@ SocialAuth.propTypes = {
   buttonText: PropTypes.string
 };
 
-export default SocialAuth;
+const mapStateToProps = state => ({
+  appState: state.appState,
+  profile: state.profile,
+  poll: state.poll
+});
+
+const mapDispatchToProps = dispatch => ({
+  actions: bindActionCreators(Actions, dispatch)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SocialAuth);

@@ -101,7 +101,6 @@ class ComboBox extends React.Component {
         )}
         {!(reset || resetPwd) && (
           <SocialAuth
-            setSpinner={this.props.actions.setSpinner}
             toggleLocalForm={this.toggleLocalForm}
             buttonText={login ? "Log in" : "Sign up"}
           />
@@ -156,8 +155,16 @@ ComboBox.propTypes = {
   }).isRequired
 };
 
+const mapStateToProps = state => ({
+  appState: state.appState,
+  profile: state.profile,
+  poll: state.poll
+});
+
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(Actions, dispatch)
 });
 
-export default withRouter(connect(mapDispatchToProps)(ComboBox));
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(ComboBox)
+);

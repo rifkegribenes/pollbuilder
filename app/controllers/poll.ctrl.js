@@ -28,12 +28,9 @@ exports.viewPollBySlug = (req, res, next) => {
 
 // Create a new poll.
 exports.newPoll = (user, req, res, next) => {
-  console.log('newpoll');
-  console.log(user.profile.email);
-  console.log(req.body);
   const body = {
     question: req.body.question,
-    // options: [ ...req.body.options ],
+    options: [ ...req.body.options ],
     ownerID: user._id,
     ownerName: `${user.profile.firstName} ${user.profile.lastName}`
   }

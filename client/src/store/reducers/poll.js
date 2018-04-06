@@ -193,7 +193,7 @@ function poll(state = INITIAL_STATE, action) {
           class: "modal__show",
           type: "modal__success",
           title: "New Poll Created",
-          text: `Your poll ${action.payload.title} was created successfully`,
+          text: `Your poll was created successfully`,
           buttonText: "View Poll",
           redirect: `/poll/${action.payload.id}`
         }
