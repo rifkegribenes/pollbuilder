@@ -32,7 +32,6 @@ class PollOptions extends React.Component {
     const { options } = this.props.poll.form;
     const field = e.target.name;
     const validationErrors = pollOptionsValidation(options, field);
-    console.log(validationErrors);
     const showFormErrors = !!Object.values(validationErrors).length;
 
     this.props.actions.setTouched(field);
@@ -40,8 +39,6 @@ class PollOptions extends React.Component {
     if (showFormErrors) {
       this.props.actions.setShowError(field, true);
       this.props.actions.setValidationErrors({ ...validationErrors });
-      console.log(field);
-      console.log(this.props.poll.form.validationErrors);
     }
   }
 
@@ -110,7 +107,7 @@ class PollOptions extends React.Component {
             </div>
           );
         })}
-        {this.props.poll.form.error && (
+        {this.props.poll.errorMsg && (
           <div className="form__input-group">
             <div className="error">
               <button
@@ -121,7 +118,7 @@ class PollOptions extends React.Component {
               >
                 <span className="poll__icon-wrap">&times;</span>
               </button>
-              {this.props.poll.form.error}
+              {this.props.poll.errorMsg}
             </div>
           </div>
         )}

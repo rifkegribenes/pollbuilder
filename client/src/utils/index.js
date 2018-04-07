@@ -1,7 +1,6 @@
 // //////// FORM VALIDATION FUNCTIONS //////////
 
 const findDupes = options => {
-  console.log("findDupes");
   let dupes = [];
   options.forEach((option, index) => {
     // check if dupe
@@ -27,7 +26,6 @@ const _minLength = length => fieldName =>
   `${fieldName} must be at least ${length} characters`;
 
 export const checkDupes = (options, fieldName) => {
-  console.log("checkDupes");
   if (findDupes(options).length) {
     return {
       [fieldName]: "Options must be unique"

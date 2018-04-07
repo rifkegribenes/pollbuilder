@@ -85,7 +85,6 @@ export function deleteOption(array, idx) {
 }
 
 export function setValidationErrors(errors) {
-  console.log(errors);
   return {
     type: SET_VALIDATION_ERRORS,
     payload: { ...errors }

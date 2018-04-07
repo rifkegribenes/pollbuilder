@@ -93,6 +93,8 @@ function poll(state = INITIAL_STATE, action) {
         error = action.payload;
       } else if (typeof action.payload.message === "string") {
         error = action.payload.message;
+      } else if (action.payload.message === null) {
+        error = null;
       } else {
         error = "Sorry, something went wrong :( \n Please try again.";
       }
@@ -132,8 +134,6 @@ function poll(state = INITIAL_STATE, action) {
     *  Purpose: Set validation errors object
     */
     case SET_VALIDATION_ERRORS:
-      console.log(action.payload);
-      console.log({ ...action.payload });
       return update(state, {
         form: {
           validationErrors: { $merge: { ...action.payload } }
