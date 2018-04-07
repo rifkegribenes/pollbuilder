@@ -1,5 +1,20 @@
 // //////// FORM VALIDATION FUNCTIONS //////////
 
+const findDupes = options => {
+  console.log("findDupes");
+  let dupes = [];
+  options.forEach((option, index) => {
+    // check if dupe
+    if (options.indexOf(option, index + 1) > -1) {
+      // check if in dupes array
+      if (dupes.indexOf(option) === -1) {
+        dupes.push(option);
+      }
+    }
+  });
+  return dupes;
+};
+
 const _isRequired = fieldName => `${fieldName} is required`;
 
 const _atLeastTwoRequired = fieldName =>
@@ -10,6 +25,17 @@ const _mustMatch = otherFieldName => fieldName =>
 
 const _minLength = length => fieldName =>
   `${fieldName} must be at least ${length} characters`;
+
+export const checkDupes = (options, fieldName) => {
+  console.log("checkDupes");
+  if (findDupes(options).length) {
+    return {
+      [fieldName]: "Options must be unique"
+    };
+  } else {
+    return {};
+  }
+};
 
 export const required = text => {
   if (text) {
@@ -89,6 +115,10 @@ export const fieldValidations = {
     ruleRunner("question", "Question", required),
     ruleRunner("option", "Option", atLeastTwoRequired)
   ]
+};
+
+export const pollOptionsValidation = (options, fieldName) => {
+  return checkDupes(options, fieldName);
 };
 
 // force focus on #main when using skip navigation link

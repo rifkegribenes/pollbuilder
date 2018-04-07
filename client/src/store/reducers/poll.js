@@ -8,7 +8,10 @@ import {
   RESET_FORM,
   DISMISS_MODAL,
   SET_MODAL_ERROR,
-  SET_SPINNER
+  SET_SPINNER,
+  SET_TOUCHED,
+  SET_VALIDATION_ERRORS,
+  SET_SHOW_ERROR
 } from "../actions";
 import {
   CREATE_POLL_REQUEST,
@@ -42,7 +45,10 @@ const INITIAL_STATE = {
   form: {
     question: "",
     options: ["", ""],
-    error: false
+    error: false,
+    touched: {},
+    showFieldErrors: {},
+    validationErrors: {}
   }
 };
 
@@ -91,6 +97,48 @@ function poll(state = INITIAL_STATE, action) {
         error = "Sorry, something went wrong :( \n Please try again.";
       }
       return Object.assign({}, state, { errorMsg: error });
+
+    /*
+    *  Called From: <PollOptions />
+    *  Payload: Field Name
+    *  Purpose: Set field "touched" for validation error display logic
+    */
+    case SET_TOUCHED:
+      return update(state, {
+        form: {
+          touched: {
+            [action.payload]: { $set: true }
+          }
+        }
+      });
+
+    /*
+    *  Called From: <PollOptions />
+    *  Payload: Field Name
+    *  Purpose: Set field "touched" for validation error display logic
+    */
+    case SET_SHOW_ERROR:
+      return update(state, {
+        form: {
+          showFieldErrors: {
+            [action.payload.name]: { $set: action.payload.bool }
+          }
+        }
+      });
+
+    /*
+    *  Called From: <PollOptions />
+    *  Payload: Validation errors object
+    *  Purpose: Set validation errors object
+    */
+    case SET_VALIDATION_ERRORS:
+      console.log(action.payload);
+      console.log({ ...action.payload });
+      return update(state, {
+        form: {
+          validationErrors: { $merge: { ...action.payload } }
+        }
+      });
 
     /*
     *  Called From: <Login />, <Register />, <ResetPassword />

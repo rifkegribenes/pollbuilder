@@ -7,15 +7,14 @@ import * as Actions from "../store/actions";
 import * as apiActions from "../store/actions/apiActions";
 import FormInput from "./FormInput";
 
+import { pollOptionsValidation } from "../utils/";
+
 class PollOptions extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      optionsErr: false
-    };
-
     this.onFocus = this.onFocus.bind(this);
+    this.onBlur = this.onBlur.bind(this);
     this.editOption = this.editOption.bind(this);
     this.addOption = this.addOption.bind(this);
     this.deleteOption = this.deleteOption.bind(this);
@@ -23,19 +22,38 @@ class PollOptions extends React.Component {
 
   componentDidMount() {}
 
-  onFocus() {
-    this.setState({ optionsErr: false });
+  onFocus(e) {
+    this.props.actions.setFormError({ message: null });
+    this.props.actions.setShowError(e.target.name, false);
+  }
+
+  onBlur(e) {
+    // check if options are unique
+    const { options } = this.props.poll.form;
+    const field = e.target.name;
+    const validationErrors = pollOptionsValidation(options, field);
+    console.log(validationErrors);
+    const showFormErrors = !!Object.values(validationErrors).length;
+
+    this.props.actions.setTouched(field);
+
+    if (showFormErrors) {
+      this.props.actions.setShowError(field, true);
+      this.props.actions.setValidationErrors({ ...validationErrors });
+      console.log(field);
+      console.log(this.props.poll.form.validationErrors);
+    }
   }
 
   editOption(event) {
-    this.setState({ optionsErr: false });
+    this.props.actions.setFormError({ message: null });
     const { options } = this.props.poll.form;
     options[event.target.name] = event.target.value;
     this.props.actions.setOption(options);
   }
 
   addOption() {
-    this.setState({ optionsErr: false });
+    this.props.actions.setFormError({ message: null });
     const { options } = this.props.poll.form;
     options.push("");
     this.props.actions.setOption(options);
@@ -43,7 +61,9 @@ class PollOptions extends React.Component {
 
   deleteOption(index) {
     if (this.props.poll.form.options.length === 2) {
-      this.setState({ optionsErr: true });
+      this.props.actions.setFormError({
+        message: "At least two options are required"
+      });
       return;
     } else {
       this.props.actions.deleteOption(this.props.poll.form.options, index);
@@ -51,7 +71,7 @@ class PollOptions extends React.Component {
   }
 
   dismissError() {
-    this.setState({ optionsErr: false });
+    this.props.actions.setFormError({ message: null });
   }
 
   render() {
@@ -65,10 +85,16 @@ class PollOptions extends React.Component {
                   <FormInput
                     handleChange={this.editOption}
                     handleFocus={this.onFocus}
+                    handleBlur={this.onBlur}
                     label={`Option ${index + 1}`}
                     placeholder={`Option ${index + 1}`}
                     value={option}
                     name={index.toString()}
+                    showError={
+                      this.props.poll.form.showFieldErrors[index.toString()]
+                    }
+                    errorText={this.props.poll.form.validationErrors[index]}
+                    touched={this.props.poll.form.touched[index.toString()]}
                     type="text"
                   />
                   <button
@@ -84,7 +110,7 @@ class PollOptions extends React.Component {
             </div>
           );
         })}
-        {this.state.optionsErr && (
+        {this.props.poll.form.error && (
           <div className="form__input-group">
             <div className="error">
               <button
@@ -95,7 +121,7 @@ class PollOptions extends React.Component {
               >
                 <span className="poll__icon-wrap">&times;</span>
               </button>
-              At least two options are required
+              {this.props.poll.form.error}
             </div>
           </div>
         )}
