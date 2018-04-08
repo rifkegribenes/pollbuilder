@@ -15,6 +15,7 @@ import Spinner from "./containers/Spinner";
 import ModalSm from "./containers/ModalSm";
 import VerifyEmail from "./containers/VerifyEmail";
 import CreatePoll from "./containers/CreatePoll";
+import ViewPoll from "./containers/ViewPoll";
 import Logout from "./containers/Logout";
 import Polls from "./containers/Polls";
 
@@ -109,6 +110,10 @@ class App extends Component {
               <Route
                 path="/user/:id?/:token?"
                 render={routeProps => <Profile {...routeProps} />}
+              />
+              <Route
+                path="/poll/:id"
+                render={routeProps => <ViewPoll {...routeProps} />}
               />
               <Route
                 exact

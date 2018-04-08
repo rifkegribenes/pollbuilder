@@ -4,6 +4,9 @@ import { BASE_URL } from "./apiConfig.js";
 export const CREATE_POLL_REQUEST = "CREATE_POLL_REQUEST";
 export const CREATE_POLL_SUCCESS = "CREATE_POLL_SUCCESS";
 export const CREATE_POLL_FAILURE = "CREATE_POLL_FAILURE";
+export const VIEW_POLL_REQUEST = "VIEW_POLL_REQUEST";
+export const VIEW_POLL_SUCCESS = "VIEW_POLL_SUCCESS";
+export const VIEW_POLL_FAILURE = "VIEW_POLL_FAILURE";
 
 /*
 * Function: createPoll - create a new poll
@@ -48,6 +51,51 @@ export function createPoll(token, body) {
         "Content-Type": "application/json"
       },
       body: JSON.stringify(body)
+    }
+  };
+}
+
+/*
+* Function: viewPoll - get a single poll by ID
+* @param {string} token, pollId
+* This action dispatches additional actions as it executes:
+*   VIEW_POLL_REQUEST:
+*     Initiates a spinner on the home page.
+*   VIEW_POLL_SUCCESS:
+*     If new poll successfully retrieved, hides spinner
+*   VIEW_POLL_FAILURE:
+*     If database error,
+*     Hides spinner, displays error message in modal
+*/
+export function viewPoll(token, pollId) {
+  console.log(token);
+  return {
+    [RSAA]: {
+      endpoint: `${BASE_URL}/api/poll/${pollId}`,
+      method: "GET",
+      types: [
+        VIEW_POLL_REQUEST,
+        VIEW_POLL_SUCCESS,
+        {
+          type: VIEW_POLL_FAILURE,
+          payload: (action, state, res) => {
+            return res.json().then(data => {
+              let message = "Sorry, something went wrong :(";
+              if (data) {
+                if (data.message) {
+                  message = data.message;
+                }
+                return { message };
+              } else {
+                return { message };
+              }
+            });
+          }
+        }
+      ],
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
     }
   };
 }

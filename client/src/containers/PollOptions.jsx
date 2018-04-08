@@ -41,7 +41,6 @@ class PollOptions extends React.Component {
       options,
       field
     );
-    console.log(validationErrors);
     const showFormError = !!Object.values(validationErrors).length;
 
     this.props.actions.setTouched(field);

@@ -17,16 +17,16 @@ import {
 import {
   CREATE_POLL_REQUEST,
   CREATE_POLL_SUCCESS,
-  CREATE_POLL_FAILURE
+  CREATE_POLL_FAILURE,
   // UPDATE_POLL_REQUEST,
   // UPDATE_POLL_SUCCESS,
   // UPDATE_POLL_FAILURE,
   // DELETE_POLL_REQUEST,
   // DELETE_POLL_SUCCESS,
   // DELETE_POLL_FAILURE,
-  // VIEW_POLL_REQUEST,
-  // VIEW_POLL_SUCCESS,
-  // VIEW_POLL_FAILURE
+  VIEW_POLL_REQUEST,
+  VIEW_POLL_SUCCESS,
+  VIEW_POLL_FAILURE
 } from "../actions/apiPollActions";
 import {
   RESEND_VLINK_REQUEST,
@@ -44,6 +44,7 @@ const INITIAL_STATE = {
     text: ""
   },
   form: {
+    _id: "",
     question: "",
     options: ["", ""],
     error: false,
@@ -56,6 +57,7 @@ const INITIAL_STATE = {
 
 function poll(state = INITIAL_STATE, action) {
   let error;
+  let title;
   switch (action.type) {
     /*
     * Called from: <Form />, <ModalSm />, <CreatePoll />
@@ -176,12 +178,13 @@ function poll(state = INITIAL_STATE, action) {
       });
 
     /*
-    *  Called From: <CreatePoll />
+    *  Called From: <CreatePoll />, <ViewPoll />
     *  Payload: None
     *  Purpose: Activate spinner to indicates API request is in progress
     */
     case RESEND_VLINK_REQUEST:
     case CREATE_POLL_REQUEST:
+    case VIEW_POLL_REQUEST:
       return Object.assign({}, state, {
         spinnerClass: "spinner__show",
         modal: {
@@ -245,6 +248,7 @@ function poll(state = INITIAL_STATE, action) {
     *  Purpose: Display a success message with link to view poll
     */
     case CREATE_POLL_SUCCESS:
+      console.log(action.payload._id);
       return Object.assign({}, state, {
         spinnerClass: "spinner__hide",
         modal: {
@@ -253,7 +257,26 @@ function poll(state = INITIAL_STATE, action) {
           title: "New Poll Created",
           text: `Your poll was created successfully`,
           buttonText: "View Poll",
-          redirect: `/poll/${action.payload.id}`
+          redirect: `/poll/${action.payload._id}`
+        }
+      });
+
+    /*
+    *  Called from: <ViewPoll />
+    *  Payload: poll object
+    *  Purpose: Display poll
+    */
+    case VIEW_POLL_SUCCESS:
+      console.log(action.payload);
+      return Object.assign({}, state, {
+        spinnerClass: "spinner__hide",
+        modal: {
+          class: "modal__hide"
+        },
+        form: {
+          _id: action.payload.id,
+          question: action.payload.question,
+          options: [...action.payload.options]
         }
       });
 
@@ -262,11 +285,17 @@ function poll(state = INITIAL_STATE, action) {
     *  Payload: Error message
     *  Purpose: Display an error message to the user.
     */
+    case VIEW_POLL_FAILURE:
     case CREATE_POLL_FAILURE:
       if (typeof action.payload.message === "string") {
         error = action.payload.message;
       } else {
         error = "Sorry, something went wrong :(\nPlease try again.";
+      }
+      if (action.type === "VIEW_POLL_FAILURE") {
+        title = "Error: Poll not found";
+      } else {
+        title = "Failure: Poll not saved";
       }
       return Object.assign({}, state, {
         spinnerClass: "spinner__hide",
@@ -274,7 +303,7 @@ function poll(state = INITIAL_STATE, action) {
           class: "modal__show",
           type: "modal__error",
           text: error,
-          title: "Failure: Poll not saved",
+          title,
           buttonText: "Try again"
         }
       });
