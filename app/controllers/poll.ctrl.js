@@ -10,7 +10,7 @@ exports.allPolls = (req, res, next) => {
 
 // Get a single poll by id
 exports.viewPollById = (userObj, req, res, next) => {
-  Poll.findById(req.params.pollId,  (err, poll) => {
+  Poll.findById(req.params.pollId ,  (err, poll) => {
     if(err) { return handleError(res, err); }
     if(!poll) { return res.status(404).send({message: 'Not Found'}); }
     return res.json(poll);
@@ -28,14 +28,9 @@ exports.viewPollBySlug = (req, res, next) => {
 
 // Create a new poll
 exports.newPoll = (user, req, res, next) => {
-  const options = req.body.options.map(option => {
-    return {
-      text: option
-    }
-  });
   const body = {
     question: req.body.question,
-    options,
+    options: [ ...req.body.options ],
     ownerID: user._id,
     ownerName: `${user.profile.firstName} ${user.profile.lastName}`
   }

@@ -6,11 +6,23 @@ export const onlyUnique = (value, index, self) => {
   return self.indexOf(value) === index;
 };
 
+export const isOptionInArray = (arr, option, index) => {
+  // loop through options in array, checking if the "text" key matches
+  // the "text" key on any other option at a different index
+  for (let i = 0; i < arr.length; i++) {
+    if (i !== index && arr[i]["text"] === option["text"]) {
+      return true;
+    }
+  }
+  return false;
+};
+
 const findDupes = options => {
   let dupes = [];
   options.forEach((option, index) => {
     // check if dupe
-    if (options.indexOf(option, index + 1) > -1) {
+    if (isOptionInArray(options, option, index)) {
+      // if (options.indexOf(option, index + 1) > -1) {
       // check if in dupes array
       if (dupes.indexOf(option) === -1) {
         dupes.push(option);
@@ -32,7 +44,7 @@ const _minLength = length => fieldName =>
   `${fieldName} must be at least ${length} characters`;
 
 export const checkDupes = (errorsObj, options, fieldName) => {
-  if (options[fieldName].length) {
+  if (options[fieldName].text.length) {
     // don't run test if field is blank
     if (findDupes(options).length) {
       return update(errorsObj, {

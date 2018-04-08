@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import PropTypes from "prop-types";
@@ -28,6 +28,7 @@ class ViewPoll extends React.Component {
   }
 
   render() {
+    console.log(this.props.poll.form.options);
     const options = this.props.poll.form.options.map((option, idx) => {
       return (
         <button
@@ -86,7 +87,7 @@ class ViewPoll extends React.Component {
                 <img className="profile__icon" src={editIcon} alt="" />
               </span>
             </button>
-            {options}
+            {this.props.poll.form.options[0] !== "" ? options : ""}
           </div>
         </div>
       </div>

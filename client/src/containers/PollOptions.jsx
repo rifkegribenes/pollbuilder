@@ -55,14 +55,14 @@ class PollOptions extends React.Component {
   editOption(event) {
     this.props.actions.setFormError({ message: null });
     const { options } = this.props.poll.form;
-    options[event.target.name] = event.target.value;
+    options[event.target.name].text = event.target.value;
     this.props.actions.setOption(options);
   }
 
   addOption() {
     this.props.actions.setFormError({ message: null });
     const { options } = this.props.poll.form;
-    options.push("");
+    options.push({ text: "" });
     this.props.actions.setOption(options);
   }
 
@@ -99,7 +99,7 @@ class PollOptions extends React.Component {
                     handleBlur={this.onBlur}
                     label={`Option ${index + 1}`}
                     placeholder={`Option ${index + 1}`}
-                    value={option}
+                    value={option.text}
                     name={index.toString()}
                     showError={
                       this.props.poll.form.showFieldErrors[index.toString()]
@@ -163,7 +163,11 @@ PollOptions.propTypes = {
   }).isRequired,
   poll: PropTypes.shape({
     form: PropTypes.shape({
-      options: PropTypes.arrayOf(PropTypes.string).isRequired
+      options: PropTypes.arrayOf(
+        PropTypes.shape({
+          text: PropTypes.string
+        })
+      ).isRequired
     })
   })
 };

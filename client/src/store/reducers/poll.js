@@ -44,9 +44,15 @@ const INITIAL_STATE = {
     text: ""
   },
   form: {
-    _id: "",
     question: "",
-    options: ["", ""],
+    options: [
+      {
+        text: ""
+      },
+      {
+        text: ""
+      }
+    ],
     error: false,
     touched: {},
     showFieldErrors: {},
@@ -274,7 +280,7 @@ function poll(state = INITIAL_STATE, action) {
           class: "modal__hide"
         },
         form: {
-          _id: action.payload.id,
+          _id: action.payload._id,
           question: action.payload.question,
           options: [...action.payload.options]
         }
