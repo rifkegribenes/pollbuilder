@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import * as Actions from "../store/actions";
 import * as apiActions from "../store/actions/apiPollActions";
 import Form from "./Form";
+import { onlyUnique } from "../utils/";
 
 import logo from "../img/bot-head_340.png";
 
@@ -19,16 +20,11 @@ class CreatePoll extends React.Component {
   componentDidMount() {}
 
   createPoll() {
-    console.log("createPoll");
-    console.log(this.props.poll.form.validationErrors);
-    console.log(this.props.poll.errorMsg);
     const token = this.props.appState.authToken;
     const body = {
       question: this.props.poll.form.question,
       options: this.props.poll.form.options
     };
-    console.log(body);
-    console.log(token);
     if (
       !Object.values(this.props.poll.form.validationErrors).length &&
       !this.props.poll.errorMsg
@@ -42,8 +38,20 @@ class CreatePoll extends React.Component {
           console.log(err);
         });
     } else {
+      const { validationErrors } = this.props.poll.form;
+      let errorList = "";
+      // filter validation errors to find only unique values, then
+      // concatenate into comma-separated string
+      Object.values(validationErrors)
+        .filter(onlyUnique)
+        .map(error => {
+          errorList += `${error}, `;
+          return null;
+        });
+      // remove trailing comma and space from final string
+      errorList = errorList.substring(0, errorList.length - 2);
       this.props.actions.setFormError({
-        message: "Please resolve errors to save poll."
+        message: `Please resolve errors to save poll: ${errorList}`
       });
     }
   }

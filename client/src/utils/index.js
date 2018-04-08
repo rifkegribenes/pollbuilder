@@ -1,4 +1,10 @@
+import update from "immutability-helper";
+
 // //////// FORM VALIDATION FUNCTIONS //////////
+
+export const onlyUnique = (value, index, self) => {
+  return self.indexOf(value) === index;
+};
 
 const findDupes = options => {
   let dupes = [];
@@ -25,21 +31,20 @@ const _mustMatch = otherFieldName => fieldName =>
 const _minLength = length => fieldName =>
   `${fieldName} must be at least ${length} characters`;
 
-export const checkDupes = (options, fieldName) => {
+export const checkDupes = (errorsObj, options, fieldName) => {
   if (options[fieldName].length) {
-    // check for field value first
-    console.log(options[fieldName]);
+    // don't run test if field is blank
     if (findDupes(options).length) {
-      return {
-        [fieldName]: "Options must be unique"
-      };
+      return update(errorsObj, {
+        [fieldName]: { $set: "Options must be unique" }
+      });
     } else {
-      return {};
+      return errorsObj;
     }
   } else {
-    return {
-      [fieldName]: "Option cannot be blank"
-    };
+    return update(errorsObj, {
+      [fieldName]: { $set: "Option cannot be blank" }
+    });
   }
 };
 
@@ -123,8 +128,8 @@ export const fieldValidations = {
   ]
 };
 
-export const pollOptionsValidation = (options, fieldName) => {
-  return checkDupes(options, fieldName);
+export const pollOptionsValidation = (errorsObj, options, fieldName) => {
+  return checkDupes(errorsObj, options, fieldName);
 };
 
 // force focus on #main when using skip navigation link

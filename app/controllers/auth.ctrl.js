@@ -177,7 +177,7 @@ exports.ghCallback = (req, res) => {
       undefined;
     if (userObj) {
       // successful authentication from github
-
+      console.log('github auth');
       // generate token and return user ID & token to client as URL parameters
       const userInfo = helpers.setUserInfo(userObj._doc);
       const token = helpers.generateToken(userInfo);

@@ -35,7 +35,12 @@ class PollOptions extends React.Component {
     // check if options are unique
     const { options } = this.props.poll.form;
     const field = e.target.name;
-    const validationErrors = pollOptionsValidation(options, field);
+    const validationErrors = pollOptionsValidation(
+      this.props.poll.form.validationErrors,
+      options,
+      field
+    );
+    console.log(validationErrors);
     const showFormErrors = !!Object.values(validationErrors).length;
 
     this.props.actions.setTouched(field);

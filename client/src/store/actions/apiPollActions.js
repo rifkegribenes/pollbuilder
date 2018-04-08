@@ -19,8 +19,6 @@ export const CREATE_POLL_FAILURE = "CREATE_POLL_FAILURE";
 *     Hides spinner, displays error message in modal
 */
 export function createPoll(token, body) {
-  console.log("apiPollActions > 22");
-  console.log(JSON.stringify(body));
   return {
     [RSAA]: {
       endpoint: `${BASE_URL}/api/poll/createpoll`,
