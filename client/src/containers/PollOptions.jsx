@@ -29,6 +29,7 @@ class PollOptions extends React.Component {
     const validationErrors = { ...this.props.poll.form.validationErrors };
     delete validationErrors[field];
     this.props.actions.setValidationErrors({ ...validationErrors });
+    this.props.actions.showFormError(false);
   }
 
   onBlur(e) {
@@ -41,13 +42,14 @@ class PollOptions extends React.Component {
       field
     );
     console.log(validationErrors);
-    const showFormErrors = !!Object.values(validationErrors).length;
+    const showFormError = !!Object.values(validationErrors).length;
 
     this.props.actions.setTouched(field);
 
-    if (showFormErrors) {
+    if (showFormError) {
       this.props.actions.setShowError(field, true);
       this.props.actions.setValidationErrors({ ...validationErrors });
+      this.props.actions.showFormError(true);
     }
   }
 

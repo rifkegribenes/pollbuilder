@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { bindActionCreators } from "redux";
 import PropTypes from "prop-types";
-import update from "immutability-helper";
 
 import Spinner from "./Spinner";
 import ModalSm from "./ModalSm";
@@ -14,13 +13,8 @@ import * as Actions from "../store/actions";
 import * as apiActions from "../store/actions/apiActions";
 
 const initialState = {
-  showFormErrors: false,
   showLocalForm: false,
-  showFieldErrors: {},
-  validationErrors: {},
-  touched: {},
-  submit: false,
-  success: null
+  submit: false
 };
 
 class Form extends React.Component {
@@ -70,21 +64,15 @@ class Form extends React.Component {
       validationErrors = vErrors;
     }
 
-    const showFormErrors = !!Object.values(validationErrors).length;
+    const showFormError = !!Object.values(validationErrors).length;
 
     // set current field as 'touched' and display errors onBlur
-    const newState = update(this.state, {
-      touched: {
-        [field]: { $set: true }
-      },
-      showFieldErrors: {
-        [field]: { $set: true }
-      },
-      validationErrors: { $set: { ...validationErrors } },
-      showFormErrors: { $set: showFormErrors }
-    });
+    this.props.actions.setTouched(field);
 
-    this.setState({ ...newState });
+    if (showFormError) {
+      this.props.actions.setShowError(field, true);
+      this.props.actions.setValidationErrors({ ...validationErrors });
+    }
   }
 
   handleFocus(e, reducer) {
@@ -103,26 +91,20 @@ class Form extends React.Component {
       validationErrors = vErrors;
     }
 
-    const newState = update(this.state, {
-      showFieldErrors: {
-        [field]: { $set: false }
-      },
-      validationErrors: { $set: { ...validationErrors } },
-      showFormErrors: { $set: false }
-    });
-
-    this.setState({ ...newState });
+    this.props.actions.setShowError(field, false);
+    this.props.actions.setValidationErrors({ ...validationErrors });
+    this.props.actions.showFormError(false);
   }
 
-  errorFor(field) {
+  errorFor(field, reducer) {
     // run validation check and return error(s) for this field
-    if (Object.values(this.state.validationErrors).length) {
+    if (Object.values(this.props[reducer].form.validationErrors).length) {
       if (
-        this.state.validationErrors[field] &&
-        (this.state.showFormErrors === true ||
-          this.state.showFieldErrors[field] === true)
+        this.props[reducer].form.validationErrors[field] &&
+        (this.props[reducer].form.showFormError === true ||
+          this.props[reducer].form.showFieldErrors[field] === true)
       ) {
-        return this.state.validationErrors[field] || "";
+        return this.props[reducer].form.validationErrors[field] || "";
       }
     }
     return null;
@@ -141,10 +123,10 @@ class Form extends React.Component {
             label={label}
             placeholder={placeholder}
             autoComplete={autoComplete}
-            showError={this.state.showFieldErrors[name]}
+            showError={this.props[reducer].form.showFieldErrors[name]}
             value={this.props[reducer].form[name]}
-            errorText={this.errorFor([name])}
-            touched={this.state.touched[name]}
+            errorText={this.errorFor([name], [reducer])}
+            touched={this.props[reducer].form.touched[name]}
             name={name}
             submit={this.state.submit}
             type={type || "text"}
@@ -152,14 +134,14 @@ class Form extends React.Component {
         </div>
       );
     });
-    const buttonState = this.state.showFormErrors
+    const buttonState = this.props[reducer].showFormError
       ? "form__button--disabled"
       : "";
     const errorClass =
       this.props[reducer].form.error ||
-      (this.state.showFormErrors &&
+      (this.props[reducer].showFormError &&
         this.state.submit &&
-        Object.values(this.state.validationErrors).length)
+        Object.values(this.props[reducer].form.validationErrors).length)
         ? "error"
         : "hidden";
     return (

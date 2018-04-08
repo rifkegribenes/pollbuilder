@@ -8,8 +8,10 @@ import {
   DISMISS_MODAL,
   LOGOUT,
   SET_SPINNER,
-  SHOW_FORM_ERRORS,
-  SET_SUBMIT
+  SHOW_FORM_ERROR,
+  SET_SUBMIT,
+  SET_TOUCHED,
+  SET_SHOW_ERROR
 } from "../actions";
 import {
   LOGIN_REQUEST,
@@ -42,11 +44,13 @@ const INITIAL_STATE = {
     password: "",
     confirmPwd: "",
     error: false,
-    avatarUrl: ""
+    avatarUrl: "",
+    touched: {},
+    showFieldErrors: {},
+    validationErrors: {}
   },
-  submit: false,
-  showFormErrors: false,
-  validationErrors: {},
+  showFormError: false,
+  submit: false
 };
 
 function auth(state = INITIAL_STATE, action) {
@@ -75,14 +79,54 @@ function auth(state = INITIAL_STATE, action) {
       }
       return Object.assign({}, state, { errorMsg: error });
 
-    case SHOW_FORM_ERRORS:
-      return Object.assign({}, state, { showFormErrors: true });
+    case SHOW_FORM_ERROR:
+      return Object.assign({}, state, { showFormError: action.payload });
 
+    /*
+    *  Called From: <Form />
+    *  Payload: Field Name
+    *  Purpose: Set bool for error visibility for field
+    *  (this action also handled in poll reducer for <PollOptions />)
+    */
+    case SET_SHOW_ERROR:
+      return update(state, {
+        form: {
+          showFieldErrors: {
+            [action.payload.name]: { $set: action.payload.bool }
+          }
+        }
+      });
+
+    /*
+    *  Called From: <Form />
+    *  Payload: Validation errors object
+    *  Purpose: Set validation errors object
+    *  (this action also handled in poll reducer for <PollOptions />)
+    */
     case SET_VALIDATION_ERRORS:
-      return Object.assign({}, state, { validationErrors: { ...action.payload }});
+      return update(state, {
+        form: {
+          validationErrors: { $set: { ...action.payload } }
+        }
+      });
 
     case SET_SUBMIT:
       return Object.assign({}, state, { submit: true });
+
+    /*
+    *  Called From: <Form />
+    *  Payload: Field Name
+    *  Purpose: Set field "touched" for validation error display logic
+    *  (this action also handled in poll reducer for <PollOptions />)
+    */
+    case SET_TOUCHED:
+      return update(state, {
+        form: {
+          touched: {
+            [action.payload]: { $set: true }
+          }
+        }
+      });
 
     case LOGOUT:
       return INITIAL_STATE;

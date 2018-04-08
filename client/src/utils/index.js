@@ -122,10 +122,7 @@ export const fieldValidations = {
     ruleRunner("lastName", "Last Name", required)
   ],
   email: [ruleRunner("email", "Email", required)],
-  create: [
-    ruleRunner("question", "Question", required),
-    ruleRunner("option", "Option", atLeastTwoRequired)
-  ]
+  create: [ruleRunner("question", "Question", required)]
 };
 
 export const pollOptionsValidation = (errorsObj, options, fieldName) => {

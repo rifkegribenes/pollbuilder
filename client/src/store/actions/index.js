@@ -6,7 +6,7 @@ export const SET_OPTION = "SET_OPTION";
 export const DELETE_OPTION = "DELETE_OPTION";
 export const SET_VALIDATION_ERRORS = "SET_VALIDATION_ERRORS";
 export const RESET_FORM = "RESET_FORM";
-export const SHOW_FORM_ERRORS = "SHOW_FORM_ERRORS";
+export const SHOW_FORM_ERROR = "SHOW_FORM_ERROR";
 export const SET_TOUCHED = "SET_TOUCHED";
 export const SET_SHOW_ERROR = "SET_SHOW_ERROR";
 export const SET_SUBMIT = "SET_SUBMIT";
@@ -91,9 +91,10 @@ export function setValidationErrors(errors) {
   };
 }
 
-export function showFormErrors() {
+export function showFormError(bool) {
   return {
-    type: SHOW_FORM_ERRORS
+    type: SHOW_FORM_ERROR,
+    payload: bool
   };
 }
 

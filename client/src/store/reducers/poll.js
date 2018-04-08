@@ -3,6 +3,7 @@ import update from "immutability-helper";
 import {
   SET_FORM_FIELD,
   SET_FORM_ERROR,
+  SHOW_FORM_ERROR,
   SET_OPTION,
   DELETE_OPTION,
   RESET_FORM,
@@ -49,7 +50,8 @@ const INITIAL_STATE = {
     touched: {},
     showFieldErrors: {},
     validationErrors: {}
-  }
+  },
+  showFormError: false
 };
 
 function poll(state = INITIAL_STATE, action) {
@@ -105,8 +107,11 @@ function poll(state = INITIAL_STATE, action) {
       }
       return Object.assign({}, state, { errorMsg: error });
 
+    case SHOW_FORM_ERROR:
+      return Object.assign({}, state, { showFormError: action.payload });
+
     /*
-    *  Called From: <PollOptions />
+    *  Called From: <PollOptions />, <Form />
     *  Payload: Field Name
     *  Purpose: Set field "touched" for validation error display logic
     */

@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import * as Actions from "../store/actions";
 import * as apiActions from "../store/actions/apiPollActions";
 import Form from "./Form";
-import { onlyUnique } from "../utils/";
+import { onlyUnique, pollOptionsValidation } from "../utils/";
 
 import logo from "../img/bot-head_340.png";
 
@@ -20,15 +20,23 @@ class CreatePoll extends React.Component {
   componentDidMount() {}
 
   createPoll() {
-    const token = this.props.appState.authToken;
-    const body = {
-      question: this.props.poll.form.question,
-      options: this.props.poll.form.options
-    };
-    if (
-      !Object.values(this.props.poll.form.validationErrors).length &&
-      !this.props.poll.errorMsg
-    ) {
+    // run error checks on all option fields
+    const { options } = this.props.poll.form;
+    let finalErrors = {};
+    options.forEach((option, idx) => {
+      finalErrors = pollOptionsValidation(finalErrors, options, idx);
+    });
+
+    if (!this.props.poll.form.question) {
+      finalErrors.question = "Question is required";
+    }
+
+    if (!Object.values(finalErrors).length && !this.props.poll.errorMsg) {
+      const token = this.props.appState.authToken;
+      const body = {
+        question: this.props.poll.form.question,
+        options: this.props.poll.form.options
+      };
       this.props.api
         .createPoll(token, body)
         .then(result => {
@@ -38,11 +46,10 @@ class CreatePoll extends React.Component {
           console.log(err);
         });
     } else {
-      const { validationErrors } = this.props.poll.form;
       let errorList = "";
       // filter validation errors to find only unique values, then
       // concatenate into comma-separated string
-      Object.values(validationErrors)
+      Object.values(finalErrors)
         .filter(onlyUnique)
         .map(error => {
           errorList += `${error}, `;
