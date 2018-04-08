@@ -16,52 +16,12 @@ class CreatePoll extends React.Component {
     this.createPoll = this.createPoll.bind(this);
   }
 
-  componentDidMount() {
-    // TODO: y i k e s  fix this mess.....
-    // user is verified if local account email is verified
-    // OR if they logged in with social auth
-    //   if (!this.props.appState.loggedIn) {
-    //     this.props.actions.setModalError({
-    //       message: `Please log in to create a poll.`,
-    //       buttonText: "Log in",
-    //       title: "Login required",
-    //       action: () => this.props.history.push("/login"),
-    //       redirect: "/login"
-    //     });
-    //   }
-    //   const verified =
-    //     this.props.appState.loggedIn && this.props.profile.user.verified;
-    //   if (!verified) {
-    //     if (!this.props.profile.user.profile.email) {
-    //       // if user profile isn't already saved in app state, retrieve it
-    //       // to use email to resend verification link
-    //       const userId =
-    //         this.props.profile.user._id ||
-    //         JSON.parse(window.localStorage.getItem("userId"));
-    //       const token =
-    //         this.props.appState.authToken ||
-    //         JSON.parse(window.localStorage.getItem("authToken"));
-    //       this.props.api.getProfile(token, userId).then(result => {});
-    //     }
-    //   }
-    //   if (!verified && this.props.profile.user.profile.email) {
-    //     const email = this.props.profile.user.profile.email;
-    //     const body = { email };
-    //     this.props.actions.setModalError({
-    //       message: `You must verify your email before you can create a poll.\nClick below to send a new verification link to ${
-    //         this.props.profile.user.profile.email
-    //       }`,
-    //       buttonText: "Send verification link",
-    //       title: "Email verification required",
-    //       action: () => {
-    //         this.props.api.resendVerificationLink(body);
-    //       }
-    //     });
-    //   }
-  }
+  componentDidMount() {}
 
   createPoll() {
     console.log("createPoll");
+    console.log(this.props.poll.form.validationErrors);
+    console.log(this.props.poll.errorMsg);
     const token = this.props.appState.authToken;
     const body = {
       question: this.props.poll.form.question,
@@ -69,14 +29,23 @@ class CreatePoll extends React.Component {
     };
     console.log(body);
     console.log(token);
-    this.props.api
-      .createPoll(token, body)
-      .then(result => {
-        console.log(result);
-      })
-      .catch(err => {
-        console.log(err);
+    if (
+      !Object.values(this.props.poll.form.validationErrors).length &&
+      !this.props.poll.errorMsg
+    ) {
+      this.props.api
+        .createPoll(token, body)
+        .then(result => {
+          console.log(result);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    } else {
+      this.props.actions.setFormError({
+        message: "Please resolve errors to save poll."
       });
+    }
   }
 
   render() {

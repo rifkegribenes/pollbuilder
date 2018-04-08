@@ -26,12 +26,20 @@ const _minLength = length => fieldName =>
   `${fieldName} must be at least ${length} characters`;
 
 export const checkDupes = (options, fieldName) => {
-  if (findDupes(options).length) {
-    return {
-      [fieldName]: "Options must be unique"
-    };
+  if (options[fieldName].length) {
+    // check for field value first
+    console.log(options[fieldName]);
+    if (findDupes(options).length) {
+      return {
+        [fieldName]: "Options must be unique"
+      };
+    } else {
+      return {};
+    }
   } else {
-    return {};
+    return {
+      [fieldName]: "Option cannot be blank"
+    };
   }
 };
 

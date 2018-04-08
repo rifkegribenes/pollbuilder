@@ -77,10 +77,10 @@ export function setOption(options) {
   };
 }
 
-export function deleteOption(array, idx) {
+export function deleteOption(options, errors, idx) {
   return {
     type: DELETE_OPTION,
-    payload: { array, idx }
+    payload: { options, errors, idx }
   };
 }
 

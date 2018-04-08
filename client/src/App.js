@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Switch, Route, withRouter } from "react-router-dom";
+import { Switch, Route, withRouter, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import PropTypes from "prop-types";
@@ -20,6 +20,23 @@ import Polls from "./containers/Polls";
 
 import * as apiActions from "./store/actions/apiActions";
 import * as Actions from "./store/actions";
+
+const PrivateRoute = ({ component: Component, loggedIn, ...rest }) => {
+  return (
+    <Route
+      {...rest}
+      render={props =>
+        loggedIn === true ? (
+          <Component {...rest} {...props} />
+        ) : (
+          <Redirect
+            to={{ pathname: "/login", state: { from: props.location } }}
+          />
+        )
+      }
+    />
+  );
+};
 
 class App extends Component {
   componentWillMount() {
@@ -144,10 +161,10 @@ class App extends Component {
                   />
                 )}
               />
-              <Route
-                exact
+              <PrivateRoute
+                loggedIn={this.props.appState.loggedIn}
                 path="/createpoll"
-                render={routeProps => <CreatePoll {...routeProps} />}
+                component={CreatePoll}
               />
               <Route
                 exact

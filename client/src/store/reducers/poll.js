@@ -77,10 +77,15 @@ function poll(state = INITIAL_STATE, action) {
       });
 
     case DELETE_OPTION:
-      const { array, idx } = action.payload;
-      const newOptions = array.filter((item, index) => index !== idx);
+      const { options, errors, idx } = action.payload;
+      const newOptions = options.filter((item, index) => index !== idx);
+      const newErrors = { ...errors };
+      delete newErrors[idx];
       return update(state, {
-        form: { options: { $set: newOptions } }
+        form: {
+          options: { $set: newOptions },
+          validationErrors: { $set: newErrors }
+        }
       });
 
     /*
@@ -136,7 +141,7 @@ function poll(state = INITIAL_STATE, action) {
     case SET_VALIDATION_ERRORS:
       return update(state, {
         form: {
-          validationErrors: { $merge: { ...action.payload } }
+          validationErrors: { $set: { ...action.payload } }
         }
       });
 

@@ -23,8 +23,12 @@ class PollOptions extends React.Component {
   componentDidMount() {}
 
   onFocus(e) {
+    const field = e.target.name;
     this.props.actions.setFormError({ message: null });
     this.props.actions.setShowError(e.target.name, false);
+    const validationErrors = { ...this.props.poll.form.validationErrors };
+    delete validationErrors[field];
+    this.props.actions.setValidationErrors({ ...validationErrors });
   }
 
   onBlur(e) {
@@ -63,7 +67,11 @@ class PollOptions extends React.Component {
       });
       return;
     } else {
-      this.props.actions.deleteOption(this.props.poll.form.options, index);
+      this.props.actions.deleteOption(
+        this.props.poll.form.options,
+        this.props.poll.form.validationErrors,
+        index
+      );
     }
   }
 
