@@ -111,9 +111,10 @@ class App extends Component {
                 path="/user/:id?/:token?"
                 render={routeProps => <Profile {...routeProps} />}
               />
-              <Route
+              <PrivateRoute
+                loggedIn={this.props.appState.loggedIn}
                 path="/poll/:id"
-                render={routeProps => <ViewPoll {...routeProps} />}
+                component={ViewPoll}
               />
               <Route
                 exact

@@ -238,9 +238,6 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     border-radius: 4px;
     transition: opacity .15s linear;
     text-align: center; }
-  @media (min-width: 1600px) {
-    .form__error-wrap {
-      margin-top: -20px; } }
   .form__error-content {
     color: red; }
   .form__local--visible {
