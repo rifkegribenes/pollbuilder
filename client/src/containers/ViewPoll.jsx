@@ -33,20 +33,25 @@ class ViewPoll extends React.Component {
     if (this.props.poll.form.options[0].text !== "") {
       options = this.props.poll.form.options.map((option, idx) => {
         return (
-          <button
-            key={`${option._id}`}
-            className="aria-button profile__email"
-            title="Edit option"
-            onClick={() => console.log("edit option")}
-          >
-            {option.text}
-            <span className="profile__edit">
-              <img className="profile__icon" src={editIcon} alt="" />
-            </span>
-          </button>
+          <div>
+            {option._id !== undefined && (
+              <button
+                key={`${option._id}`}
+                className={`aria-button profile__email ${option._id}`}
+                title="Edit option"
+                onClick={() => console.log("edit option")}
+              >
+                {option.text}
+                <span className="profile__edit">
+                  <img className="profile__icon" src={editIcon} alt="" />
+                </span>
+              </button>
+            )}
+          </div>
         );
       });
     }
+    console.log(options);
     return (
       <div>
         <Spinner cssClass={this.props.poll.spinnerClass} />
@@ -90,7 +95,7 @@ class ViewPoll extends React.Component {
                 <img className="profile__icon" src={editIcon} alt="" />
               </span>
             </button>
-            {this.props.poll.form.options[0].text !== "" ? options : ""}
+            {options}
           </div>
         </div>
       </div>
