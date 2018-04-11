@@ -61,6 +61,10 @@ class Profile extends React.Component {
     // retrieve user profile & save to app state
     this.props.api.getProfile(token, userId).then(result => {
       if (result.type === "GET_PROFILE_SUCCESS") {
+        if (this.props.appState.redirectUrl) {
+          this.props.history.push(this.props.appState.redirectUrl);
+          this.props.actions.setRedirectUrl("");
+        }
       }
     });
   }

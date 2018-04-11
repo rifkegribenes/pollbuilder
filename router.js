@@ -97,10 +97,6 @@ module.exports = function (app) {
   app.use(passport.initialize());
   app.use(passport.session());
 
-  // Catch client-side routes that don't exist on the back-end.
-  // Redirects to /#/redirect={route}/{optional_id}
-  app.get('/:client_route/:uid?', StaticController.redirectHash);
-
 // ============================================================================
 // AUTHENTICATE ===============================================================
 // ============================================================================
@@ -213,4 +209,8 @@ module.exports = function (app) {
 
   // Set url for API group routes
   app.use('/api', apiRoutes);
+
+  // Catch client-side routes that don't exist on the back-end.
+  // Redirects to /#/redirect={route}/{optional_id}
+  app.get('/:client_route/:id?/:token?', StaticController.redirectHash);
 };
