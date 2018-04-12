@@ -17,16 +17,16 @@ class Profile extends React.Component {
     let userId;
     let token;
     // check for facebook redirect hash
-    // if (window.location.hash === "#_=_") {
-    //   this.props.actions.setLoggedIn();
-    //   window.history.replaceState
-    //     ? window.history.replaceState(
-    //         null,
-    //         null,
-    //         window.location.href.split("#")[0]
-    //       )
-    //     : (window.location.hash = "");
-    // }
+    if (window.location.hash === "#_=_") {
+      this.props.actions.setLoggedIn();
+      window.history.replaceState
+        ? window.history.replaceState(
+            null,
+            null,
+            window.location.href.split("#")[0]
+          )
+        : (window.location.hash = "");
+    }
     // if landing on this page from a callback from social login,
     // the userid and token will be in the route params.
     // extract them to use in the api call, then strip them from
@@ -39,7 +39,7 @@ class Profile extends React.Component {
       // console.log("this is the token pulled out of route params by client");
       // console.log(token);
       this.props.actions.setLoggedIn();
-      // window.history.replaceState(null, null, `${window.location.origin}/user`);
+      window.history.replaceState(null, null, `${window.location.origin}/user`);
       this.props.actions.setSpinner("hide");
     } else {
       // if they're not in the route params
@@ -61,12 +61,9 @@ class Profile extends React.Component {
     // retrieve user profile & save to app state
     this.props.api.getProfile(token, userId).then(result => {
       if (result.type === "GET_PROFILE_SUCCESS") {
-        this.props.actions.setLoggedIn();
-        const redirect = window.localStorage.getItem("redirectUrl");
-        console.log(redirect);
-        if (redirect) {
-          this.props.history.push(redirect);
-          window.localStorage.setItem("redirectUrl", null);
+        if (this.props.appState.redirectUrl) {
+          this.props.history.push(this.props.appState.redirectUrl);
+          this.props.actions.setRedirectUrl("");
         }
       }
     });
