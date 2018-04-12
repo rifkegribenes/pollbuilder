@@ -16,8 +16,6 @@ class ViewPoll extends React.Component {
       this.props.appState.authToken ||
       JSON.parse(window.localStorage.getItem("authToken"));
     const pollId = this.props.match.params.id;
-    console.log(token);
-    console.log(pollId);
     // retrieve requested & save to app state
     this.props.api.viewPoll(token, pollId).then(result => {
       console.log(result);
@@ -28,15 +26,13 @@ class ViewPoll extends React.Component {
   }
 
   render() {
-    console.log(this.props.poll.form.options);
-    let options = {};
+    let options = [];
     if (this.props.poll.form.options[0].text !== "") {
       options = this.props.poll.form.options.map((option, idx) => {
         return (
-          <div>
+          <div key={option._id}>
             {option._id !== undefined && (
               <button
-                key={`${option._id}`}
                 className={`aria-button profile__email ${option._id}`}
                 title="Edit option"
                 onClick={() => console.log("edit option")}
@@ -51,7 +47,6 @@ class ViewPoll extends React.Component {
         );
       });
     }
-    console.log(options);
     return (
       <div>
         <Spinner cssClass={this.props.poll.spinnerClass} />

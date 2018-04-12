@@ -36,8 +36,8 @@ class Profile extends React.Component {
     if (this.props.match && this.props.match.params.id) {
       userId = this.props.match.params.id;
       token = this.props.match.params.token;
-      console.log("this is the token pulled out of route params by client");
-      console.log(token);
+      // console.log("this is the token pulled out of route params by client");
+      // console.log(token);
       this.props.actions.setLoggedIn();
       // window.history.replaceState(null, null, `${window.location.origin}/user`);
       this.props.actions.setSpinner("hide");
