@@ -45,7 +45,6 @@ module.exports = (passport) => {
   passport.use('jwt', new JwtStrategy(jwtOptions,
     (req, payload, done) => {
       console.log('jwt');
-      console.log(jwtOptions.jwtFromRequest);
       console.log(payload);
       User.findById(payload._id, (err, user) => {
         if (err) { return done(err, false); }
@@ -160,7 +159,7 @@ module.exports = (passport) => {
         // found user with matching id and different platform key.
         // update & return new user
         console.log(`${platform} found and updated user with a different ${platform} id`);
-        console.log(user);
+        console.log(user._doc);
         return done(null, user);
       }
     }) // then
@@ -222,7 +221,7 @@ module.exports = (passport) => {
   // Github login strategy
   passport.use('github', new GithubStrategy(githubOptions,
     function(req, token, refreshToken, profile, done) {
-      console.log(`Github login by ${profile.name}, ID: ${profile.id}`);
+      console.log(`Github login by ${profile.displayName}, ID: ${profile.id}`);
       process.nextTick( () => {
         console.log(req.user);
         // check if user is already logged in

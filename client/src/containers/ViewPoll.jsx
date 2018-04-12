@@ -90,7 +90,7 @@ class ViewPoll extends React.Component {
                 <img className="profile__icon" src={editIcon} alt="" />
               </span>
             </button>
-            {options}
+            {this.props.poll.form.options[0].text !== "" ? options : ""}
           </div>
         </div>
       </div>

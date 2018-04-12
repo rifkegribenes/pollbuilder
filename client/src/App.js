@@ -85,14 +85,14 @@ class App extends Component {
     window.addEventListener("keydown", handleFirstTab);
 
     // Check for hash-fragment and store it in redux
-    if (this.props.location.hash) {
-      console.log("hash");
-      const hash = this.props.location.hash.slice(2);
-      const url = `/${hash.split("=")[1]}`;
-      console.log(url);
-      // this.props.actions.setRedirect(url);
-      this.props.history.push(url);
-    }
+    // if (this.props.location.hash) {
+    //   console.log("hash");
+    //   const hash = this.props.location.hash.slice(2);
+    //   const url = `/${hash.split("=")[1]}`;
+    //   console.log(url);
+    //   // this.props.actions.setRedirect(url);
+    //   this.props.history.push(url);
+    // }
   }
 
   render() {
