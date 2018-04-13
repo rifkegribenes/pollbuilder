@@ -12,6 +12,7 @@ var https = require('https');
 var configDB = require('./app/config/database.js');
 const User = require('./app/models/user');
 const session = require('express-session');
+const cookiesMiddleware = require('universal-cookie-express');
 const passport = require('passport');
 const user = require('./app/utils/passport-serialize');
 
@@ -25,6 +26,7 @@ require('./app/config/passport')(passport); // pass passport for configuration
 app.use(bodyParser.urlencoded({ extended: true })); // Parses urlencoded bodies
 app.use(bodyParser.json()); // Send JSON responses
 app.use(morgan('dev')); // Log requests to API using morgan
+app.use(cookiesMiddleware());
 
 
 // Enable CORS from client side
@@ -47,7 +49,7 @@ const router = require('./router');
 router(app);
 
 // launch ======================================================================
-var port = process.env.PORT || 8080;
+var port = process.env.PORT || 3001;
 app.listen(port,  function () {
 	console.log('Node.js listening on port ' + port + '...');
 });

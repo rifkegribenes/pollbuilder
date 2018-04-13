@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import PropTypes from "prop-types";
 import { debounce } from "lodash";
+import { withCookies, cookie } from "react-cookie";
 
 import Header from "./containers/Header";
 import Home from "./containers/Home";
@@ -42,6 +43,9 @@ const PrivateRoute = ({ component: Component, loggedIn, ...rest }) => {
 class App extends Component {
   componentWillMount() {
     this.updateDimensions();
+    const { cookies } = this.props;
+    const token = cookie.load("token");
+    console.log(token);
   }
 
   componentWillUnmount() {
@@ -85,14 +89,13 @@ class App extends Component {
     window.addEventListener("keydown", handleFirstTab);
 
     // Check for hash-fragment and store it in redux
-    // if (this.props.location.hash) {
-    //   console.log("hash");
-    //   const hash = this.props.location.hash.slice(2);
-    //   const url = `/${hash.split("=")[1]}`;
-    //   console.log(url);
-    //   // this.props.actions.setRedirect(url);
-    //   this.props.history.push(url);
-    // }
+    if (this.props.location.hash) {
+      console.log("hash");
+      const hash = this.props.location.hash.slice(2);
+      const url = `/${hash.split("=")[1]}`;
+      console.log(url);
+      this.props.history.push(url);
+    }
   }
 
   render() {
@@ -115,6 +118,10 @@ class App extends Component {
               <Route
                 exact
                 path="/"
+                render={routeProps => <Home {...routeProps} />}
+              />
+              <Route
+                path="/json/:version?"
                 render={routeProps => <Home {...routeProps} />}
               />
               <Route
@@ -203,6 +210,7 @@ class App extends Component {
 }
 
 App.propTypes = {
+  // cookies: PropTypes.instanceOf(Cookies).isRequired,
   appState: PropTypes.shape({
     spinnerClass: PropTypes.string,
     modal: PropTypes.shape({
@@ -231,4 +239,6 @@ const mapDispatchToProps = dispatch => ({
   api: bindActionCreators(apiActions, dispatch)
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
+export default withRouter(
+  withCookies(connect(mapStateToProps, mapDispatchToProps)(App))
+);
