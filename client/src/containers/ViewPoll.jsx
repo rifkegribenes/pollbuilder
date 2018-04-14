@@ -16,7 +16,7 @@ class ViewPoll extends React.Component {
       this.props.appState.authToken ||
       JSON.parse(window.localStorage.getItem("authToken"));
     const pollId = this.props.match.params.id;
-    // retrieve requested & save to app state
+    // retrieve requested poll & save to app state
     this.props.api.viewPoll(token, pollId).then(result => {
       console.log(result);
       if (result.type === "GET_POLL_SUCCESS") {
