@@ -17,7 +17,6 @@ class Profile extends React.Component {
     if (this.props.match && this.props.match.params.id) {
       userId = this.props.match.params.id;
       token = this.props.match.params.token;
-      console.log(token);
       authCallback = true;
       // if logged in for first time through social auth,
       // need to save userId & token to local storage
@@ -49,7 +48,6 @@ class Profile extends React.Component {
           // if landing on profile page after auth callback,
           // check for redirect url in local storage
           const redirect = window.localStorage.getItem("redirectUrl");
-          console.log(`redirect: ${redirect}`);
           if (redirect) {
             // redirect to originally requested page and then clear value
             // from local storage

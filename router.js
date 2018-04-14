@@ -136,7 +136,7 @@ module.exports = function (app) {
   // return user object and fb token to client
   // need to handle login errors client-side here if redirected to login
   authRoutes.get('/facebook/callback',
-    passport.authenticate('facebook'), AuthController.fbCallback
+    passport.authenticate('facebook'), AuthController.socialAuthCallback
     );
 
   // Github authentication with passport
@@ -147,7 +147,7 @@ module.exports = function (app) {
   // return user object and fb token to client
   // need to handle login errors client-side here if redirected to login
   authRoutes.get('/github/callback',
-    passport.authenticate('github'), AuthController.ghCallback
+    passport.authenticate('github'), AuthController.socialAuthCallback
     );
 
   // Google authentication with passport
@@ -159,7 +159,7 @@ module.exports = function (app) {
   // return user object and fb token to client
   // need to handle login errors client-side here if redirected to login
   authRoutes.get('/google/callback',
-    passport.authenticate('google'), AuthController.googleCallback
+    passport.authenticate('google'), AuthController.socialAuthCallback
     );
 
   //= ========================

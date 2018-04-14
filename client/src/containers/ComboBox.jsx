@@ -32,7 +32,6 @@ class ComboBox extends React.Component {
       this.toggleForm("resetPwd");
     }
     const { from } = this.props.location.state || { from: { pathname: "/" } };
-    console.log(from);
     const pathname = from.pathname;
     window.localStorage.setItem("redirectUrl", pathname);
   }
