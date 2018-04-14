@@ -29,6 +29,7 @@ const checkVerified = (req, res, next) => {
 
 const requireAuth = (req, res, next) => {
   console.log('requireAuth');
+  console.log(req.body);
   console.log(req.params.pollId);
   passport.authenticate('jwt', { session: false },
     (err, user, info) => {

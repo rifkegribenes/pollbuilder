@@ -12,7 +12,6 @@ var https = require('https');
 var configDB = require('./app/config/database.js');
 const User = require('./app/models/user');
 const session = require('express-session');
-const cookiesMiddleware = require('universal-cookie-express');
 const passport = require('passport');
 const user = require('./app/utils/passport-serialize');
 
@@ -26,7 +25,6 @@ require('./app/config/passport')(passport); // pass passport for configuration
 app.use(bodyParser.urlencoded({ extended: true })); // Parses urlencoded bodies
 app.use(bodyParser.json()); // Send JSON responses
 app.use(morgan('dev')); // Log requests to API using morgan
-app.use(cookiesMiddleware());
 
 
 // Enable CORS from client side

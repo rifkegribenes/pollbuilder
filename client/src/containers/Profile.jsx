@@ -13,61 +13,45 @@ import editIcon from "../img/edit.svg";
 
 class Profile extends React.Component {
   componentWillMount() {
-    // get user id and token
-    let userId;
-    let token;
-    // check for facebook redirect hash
-    // if (window.location.hash === "#_=_") {
-    //   this.props.actions.setLoggedIn();
-    //   window.history.replaceState
-    //     ? window.history.replaceState(
-    //         null,
-    //         null,
-    //         window.location.href.split("#")[0]
-    //       )
-    //     : (window.location.hash = "");
-    // }
-    // if landing on this page from a callback from social login,
-    // the userid and token will be in the route params.
-    // extract them to use in the api call, then strip them from
-    // the URL, and hide the spinner.
-    // there is probably a better way to do this but idk what it is...
-    // also set Verified to true since email has been verified by social auth
+    let userId, authCallback;
+    const token = window.localStorage.getItem("authToken");
+    console.log(token);
     if (this.props.match && this.props.match.params.id) {
       userId = this.props.match.params.id;
-      token = this.props.match.params.token;
-      // console.log("this is the token pulled out of route params by client");
-      // console.log(token);
+      authCallback = this.props.match.params.auth;
+      // if loading this page after callback from social auth,
+      // authCallback will be true
+      console.log(authCallback);
       this.props.actions.setLoggedIn();
-      // window.history.replaceState(null, null, `${window.location.origin}/user`);
       this.props.actions.setSpinner("hide");
     } else {
-      // if they're not in the route params
-      // then they've already been saved to redux store or local storage;
-      // look for them there
+      // if userId is not in route params
+      // look in redux store or local storage
       userId =
         this.props.profile.user._id ||
         JSON.parse(window.localStorage.getItem("userId"));
-      token =
-        this.props.appState.authToken ||
-        JSON.parse(window.localStorage.getItem("authToken"));
     }
 
     // if logged in for first time through social auth,
-    // need to save them to local storage
-    window.localStorage.setItem("authToken", JSON.stringify(token));
+    // need to save userId to local storage
     window.localStorage.setItem("userId", JSON.stringify(userId));
 
     // retrieve user profile & save to app state
     this.props.api.getProfile(token, userId).then(result => {
       if (result.type === "GET_PROFILE_SUCCESS") {
         this.props.actions.setLoggedIn();
-        // const redirect = window.localStorage.getItem("redirectUrl");
-        // console.log(`redirect: ${redirect}`);
-        //   if (redirect) {
-        //     this.props.history.push(redirect);
-        //     window.localStorage.setItem("redirectUrl", null);
-        // }
+        if (authCallback) {
+          // if landing on profile page after auth callback,
+          // check for redirect url in local storage
+          const redirect = window.localStorage.getItem("redirectUrl");
+          console.log(`redirect: ${redirect}`);
+          if (redirect) {
+            // redirect to originally requested page and then clear value
+            // from local storage
+            this.props.history.push(redirect);
+            window.localStorage.setItem("redirectUrl", null);
+          }
+        }
       }
     });
   }

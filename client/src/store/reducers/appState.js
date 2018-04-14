@@ -90,8 +90,11 @@ function appState(state = INITIAL_STATE, action) {
     * Set spinner class to show to indicate API call in progress
     */
     case VERIFY_EMAIL_REQUEST:
-    case VALIDATE_TOKEN_REQUEST:
       return Object.assign({}, state, { spinnerClass: "spinner__show" });
+
+    case VALIDATE_TOKEN_REQUEST:
+      console.log("validate token request");
+      return state;
 
     /*
     * Toggle spinner class (for social auth done with href

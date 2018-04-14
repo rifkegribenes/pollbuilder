@@ -190,6 +190,8 @@ function auth(state = INITIAL_STATE, action) {
     *  Note: this action is also handled in the appState reducer.
     */
     case LOGIN_SUCCESS:
+      console.log("login success -- where is token?");
+      console.log(action.payload);
       return Object.assign({}, state, {
         loginEmail: "",
         loginPassword: ""

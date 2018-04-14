@@ -42,6 +42,7 @@ class LocalLogin extends React.Component {
       this.props.api.login(body).then(result => {
         console.log(result);
         if (result.type === "LOGIN_SUCCESS") {
+          // cookie.save('token', response.data.token, { path: '/' });
           this.props.history.push("/");
         }
       });

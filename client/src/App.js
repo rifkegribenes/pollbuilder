@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import PropTypes from "prop-types";
 import { debounce } from "lodash";
-import { withCookies, cookie } from "react-cookie";
 
 import Header from "./containers/Header";
 import Home from "./containers/Home";
@@ -43,9 +42,6 @@ const PrivateRoute = ({ component: Component, loggedIn, ...rest }) => {
 class App extends Component {
   componentWillMount() {
     this.updateDimensions();
-    const { cookies } = this.props;
-    const token = cookie.load("token");
-    console.log(token);
   }
 
   componentWillUnmount() {
@@ -125,7 +121,7 @@ class App extends Component {
                 render={routeProps => <Home {...routeProps} />}
               />
               <Route
-                path="/user/:id?/:token?"
+                path="/user/:id?/:auth?"
                 render={routeProps => <Profile {...routeProps} />}
               />
               <PrivateRoute
@@ -210,7 +206,6 @@ class App extends Component {
 }
 
 App.propTypes = {
-  // cookies: PropTypes.instanceOf(Cookies).isRequired,
   appState: PropTypes.shape({
     spinnerClass: PropTypes.string,
     modal: PropTypes.shape({
@@ -239,6 +234,4 @@ const mapDispatchToProps = dispatch => ({
   api: bindActionCreators(apiActions, dispatch)
 });
 
-export default withRouter(
-  withCookies(connect(mapStateToProps, mapDispatchToProps)(App))
-);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

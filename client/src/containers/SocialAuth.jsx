@@ -13,7 +13,7 @@ const SocialAuth = props => (
   <div className="combo__social-wrap">
     <a
       className="form__button form__button--sm"
-      href="http://localhost:8080/api/auth/github/"
+      href="http://localhost:3001/api/auth/github/"
       id="btn-github"
       onClick={() => {
         props.actions.setSpinner("show");
@@ -34,7 +34,7 @@ const SocialAuth = props => (
     <a
       className="form__button form__button--sm"
       id="btn-facebook"
-      href="http://localhost:8080/api/auth/facebook"
+      href="http://localhost:3001/api/auth/facebook"
       onClick={() => {
         props.actions.setSpinner("show");
         props.toggleLocalForm(false);
@@ -54,7 +54,7 @@ const SocialAuth = props => (
     <a
       className="form__button form__button--sm"
       id="btn-google"
-      href="http://localhost:8080/api/auth/google"
+      href="http://localhost:3001/api/auth/google"
       onClick={() => {
         props.actions.setSpinner("show");
         props.toggleLocalForm(false);
