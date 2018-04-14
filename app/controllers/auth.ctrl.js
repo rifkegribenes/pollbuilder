@@ -198,23 +198,8 @@ exports.ghCallback = (req, res) => {
       //   token,
       //   user
       // })
-      // return res.redirect(`${CLIENT_URL}/user/${userObj._doc._id}/${token}`);
-      const stringifiedToken = JSON.stringify(token);
-      const redirectUrl = JSON.stringify(`/user/${userObj._doc._id}`);
-      const htmlWithEmbeddedJWT = `
-      <html>
-        <script>
-          // Save JWT to localStorage
-          console.log(${stringifiedToken});
-          window.localStorage.setItem('authToken', ${stringifiedToken});
-          console.log(window.localStorage.getItem("authToken"));
-          // Redirect browser to user profile page (which will handle further redirects if necessary)
-          window.location.href = ${redirectUrl};
-        </script>
-      </html>
-      `;
+      return res.redirect(`${CLIENT_URL}/user/${userObj._doc._id}/${token}`);
 
-      res.send(htmlWithEmbeddedJWT);
     } else {
       return res.redirect('/login');
     }

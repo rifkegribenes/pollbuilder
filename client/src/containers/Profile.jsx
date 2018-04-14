@@ -13,28 +13,33 @@ import editIcon from "../img/edit.svg";
 
 class Profile extends React.Component {
   componentWillMount() {
-    let userId, authCallback;
-    const token = window.localStorage.getItem("authToken");
-    console.log(token);
+    let userId, token, authCallback;
     if (this.props.match && this.props.match.params.id) {
       userId = this.props.match.params.id;
-      authCallback = this.props.match.params.auth;
-      // if loading this page after callback from social auth,
-      // authCallback will be true
-      console.log(authCallback);
+      token = this.props.match.params.token;
+      console.log(token);
+      authCallback = true;
+      // if logged in for first time through social auth,
+      // need to save userId & token to local storage
+      window.localStorage.setItem("userId", JSON.stringify(userId));
+      window.localStorage.setItem("authToken", JSON.stringify(token));
       this.props.actions.setLoggedIn();
       this.props.actions.setSpinner("hide");
+      // remove id & token from route params after saving to local storage
+      window.history.replaceState(null, null, `${window.location.origin}/user`);
     } else {
+      console.log("user id not in route params");
       // if userId is not in route params
       // look in redux store or local storage
       userId =
         this.props.profile.user._id ||
         JSON.parse(window.localStorage.getItem("userId"));
+      if (window.localStorage.getItem("authToken")) {
+        token = window.localStorage.getItem("authToken");
+      } else {
+        token = this.props.appState.authToken;
+      }
     }
-
-    // if logged in for first time through social auth,
-    // need to save userId to local storage
-    window.localStorage.setItem("userId", JSON.stringify(userId));
 
     // retrieve user profile & save to app state
     this.props.api.getProfile(token, userId).then(result => {
