@@ -51,7 +51,7 @@ class RequestReset extends React.Component {
 
 RequestReset.propTypes = {
   actions: PropTypes.shape({
-    showFormErrors: PropTypes.func,
+    showFormError: PropTypes.func,
     setSubmit: PropTypes.func,
     setValidationErrors: PropTypes.func,
     setFormError: PropTypes.func

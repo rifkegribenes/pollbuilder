@@ -29,21 +29,23 @@ class LocalSignup extends React.Component {
     const { firstName, lastName, email, password } = this.props.auth.form;
 
     // show validation errors
-    this.props.actions.showFormErrors();
+    this.props.actions.showFormError();
     this.props.actions.setSubmit();
 
     const vErrors = run(this.props.auth.form, fieldValidations.signup);
     const validationErrors = validateEmail(vErrors);
 
+    console.log(validationErrors);
+
     this.props.actions.setValidationErrors(validationErrors);
 
-    if (!Object.values(this.props.auth.validationErrors).length) {
+    if (!Object.values(this.props.auth.form.validationErrors).length) {
       const body = { firstName, lastName, email, password };
       this.props.api
         .registration(body)
         .then(result => {
           if (result.type === "REGISTRATION_FAILURE") {
-            this.props.actions.showFormErrors();
+            this.props.actions.showFormError();
             this.props.actions.setSubmit();
           }
         })
@@ -58,7 +60,7 @@ class LocalSignup extends React.Component {
             error: err
           });
           // show validation errors
-          this.props.actions.showFormErrors();
+          this.props.actions.showFormError();
           this.props.actions.setSubmit();
         });
     } else {
@@ -119,7 +121,7 @@ class LocalSignup extends React.Component {
 
 LocalSignup.propTypes = {
   actions: PropTypes.shape({
-    showFormErrors: PropTypes.func,
+    showFormError: PropTypes.func,
     setSubmit: PropTypes.func,
     setValidationErrors: PropTypes.func,
     setFormError: PropTypes.func

@@ -24,7 +24,7 @@ class ResetPassword extends React.Component {
     const { password, confirmPwd } = this.props.auth.form;
 
     // show validation errors
-    this.props.actions.showFormErrors();
+    this.props.actions.showFormError();
     this.props.actions.setSubmit();
 
     const validationErrors = run(
@@ -95,7 +95,7 @@ class ResetPassword extends React.Component {
 
 ResetPassword.propTypes = {
   actions: PropTypes.shape({
-    showFormErrors: PropTypes.func,
+    showFormError: PropTypes.func,
     setSubmit: PropTypes.func,
     setValidationErrors: PropTypes.func,
     setFormError: PropTypes.func

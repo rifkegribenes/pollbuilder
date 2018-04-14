@@ -104,6 +104,7 @@ function auth(state = INITIAL_STATE, action) {
     *  (this action also handled in poll reducer for <PollOptions />)
     */
     case SET_VALIDATION_ERRORS:
+      console.log(action.payload);
       return update(state, {
         form: {
           validationErrors: { $set: { ...action.payload } }

@@ -84,7 +84,7 @@ class LocalLogin extends React.Component {
 
 LocalLogin.propTypes = {
   actions: PropTypes.shape({
-    showFormErrors: PropTypes.func,
+    showFormError: PropTypes.func,
     setSubmit: PropTypes.func,
     setValidationErrors: PropTypes.func,
     setFormError: PropTypes.func
