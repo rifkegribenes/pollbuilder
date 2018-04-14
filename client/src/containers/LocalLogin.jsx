@@ -29,7 +29,7 @@ class LocalLogin extends React.Component {
     console.log(email, password);
 
     // show validation errors
-    this.props.actions.showFormErrors();
+    this.props.actions.showFormError();
     this.props.actions.setSubmit();
 
     const vErrors = run(this.props.auth.form, fieldValidations.login);
@@ -41,9 +41,10 @@ class LocalLogin extends React.Component {
       const body = { email, password };
       this.props.api.login(body).then(result => {
         console.log(result);
+        const { authToken } = this.props.appState;
+        const { _id } = this.props.profile.user;
         if (result.type === "LOGIN_SUCCESS") {
-          // cookie.save('token', response.data.token, { path: '/' });
-          this.props.history.push("/");
+          this.props.history.push(`/user/${_id}/${authToken}`);
         }
       });
     } else {
@@ -104,7 +105,9 @@ LocalLogin.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  appState: state.appState,
+  profile: state.profile
 });
 
 const mapDispatchToProps = dispatch => ({
