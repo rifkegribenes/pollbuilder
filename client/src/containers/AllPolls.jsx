@@ -18,7 +18,7 @@ class AllPolls extends React.Component {
     this.props.api.getAllPolls(token).then(result => {
       console.log(result);
       if (result.type === "GET_ALL_POLLS_SUCCESS") {
-        console.log(this.props.poll.polls);
+        this.props.actions.setLoggedIn();
       }
     });
   }
@@ -47,7 +47,7 @@ class AllPolls extends React.Component {
         });
       }
       return (
-        <div className="profile__card">
+        <div className="profile__card" key={poll._id}>
           <button
             className="aria-button profile__name"
             title="Edit question"

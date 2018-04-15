@@ -5,7 +5,7 @@ exports.getAllPolls = (user, req, res, next) => {
   Poll.find( (err, polls) => {
     console.log('getAllPolls');
     if (err) { return handleError(res, err); }
-    return res.status(200).json(polls);
+    return res.status(200).json({user, polls});
   });
 };
 

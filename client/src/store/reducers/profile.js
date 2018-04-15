@@ -1,5 +1,6 @@
 import update from "immutability-helper";
 import { DISMISS_MODAL, LOGOUT, SET_MODAL_INFO } from "../actions/";
+import { GET_ALL_POLLS_SUCCESS } from "../actions/apiPollActions";
 import {
   GET_PROFILE_REQUEST,
   GET_PROFILE_SUCCESS,
@@ -60,10 +61,11 @@ function profile(state = INITIAL_STATE, action) {
   let user = {};
   switch (action.type) {
     /*
-    * Called from: <Home />
+    * Called from: <Home />, <AllPolls />
     * Payload: User Profile
     * Purpose: Set current user data when token is successfully loaded from localStorage
     */
+    case GET_ALL_POLLS_SUCCESS:
     case VALIDATE_TOKEN_SUCCESS:
       return update(state, {
         user: { $merge: action.payload.user }

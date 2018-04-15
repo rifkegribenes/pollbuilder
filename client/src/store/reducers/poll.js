@@ -296,13 +296,12 @@ function poll(state = INITIAL_STATE, action) {
     *  Purpose: Display polls
     */
     case GET_ALL_POLLS_SUCCESS:
-      console.log(action.payload);
       return Object.assign({}, state, {
         spinnerClass: "spinner__hide",
         modal: {
           class: "modal__hide"
         },
-        polls: [...action.payload]
+        polls: [...action.payload.polls]
       });
 
     /*
