@@ -34,12 +34,14 @@ class Profile extends React.Component {
         this.props.profile.user._id ||
         JSON.parse(window.localStorage.getItem("userId"));
       if (window.localStorage.getItem("authToken")) {
-        token = window.localStorage.getItem("authToken");
+        token = JSON.parse(window.localStorage.getItem("authToken"));
       } else {
         token = this.props.appState.authToken;
       }
     }
 
+    console.log(userId);
+    console.log(token);
     // retrieve user profile & save to app state
     this.props.api.getProfile(token, userId).then(result => {
       if (result.type === "GET_PROFILE_SUCCESS") {

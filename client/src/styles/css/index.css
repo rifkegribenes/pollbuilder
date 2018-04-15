@@ -1437,9 +1437,12 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     line-height: 1em;
     margin-bottom: .5em;
     color: #833ab4;
-    font-weight: 400; }
+    font-weight: 400;
+    position: relative; }
   .polls-grid__option {
-    color: #545454; }
+    color: #545454;
+    position: relative;
+    width: 100%; }
 
 * {
   -moz-box-sizing: border-box;

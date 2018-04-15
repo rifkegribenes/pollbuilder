@@ -8,7 +8,7 @@ import * as apiActions from "../store/actions/apiPollActions";
 
 import Spinner from "./Spinner";
 import ModalSm from "./ModalSm";
-import editIcon from "../img/edit.svg";
+// import editIcon from "../img/edit.svg";
 
 class AllPolls extends React.Component {
   componentWillMount() {

@@ -46,9 +46,12 @@
 		margin-bottom: .5em;
 		color: $color_grape;
 		font-weight: 400;
+		position: relative;
 	}
 
 	&__option {
 		color: $color_gray_text;
+		position: relative;
+		width: 100%;
 	}
 }

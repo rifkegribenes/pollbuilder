@@ -33,7 +33,9 @@ class ViewPoll extends React.Component {
           <div key={option._id}>
             {option._id !== undefined && (
               <button
-                className={`aria-button profile__email ${option._id}`}
+                className={`aria-button profile__email polls-grid__option ${
+                  option._id
+                }`}
                 title="Edit option"
                 onClick={() => console.log("edit option")}
               >
