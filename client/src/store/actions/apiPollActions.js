@@ -7,6 +7,9 @@ export const CREATE_POLL_FAILURE = "CREATE_POLL_FAILURE";
 export const VIEW_POLL_REQUEST = "VIEW_POLL_REQUEST";
 export const VIEW_POLL_SUCCESS = "VIEW_POLL_SUCCESS";
 export const VIEW_POLL_FAILURE = "VIEW_POLL_FAILURE";
+export const GET_ALL_POLLS_REQUEST = "GET_ALL_POLLS_REQUEST";
+export const GET_ALL_POLLS_SUCCESS = "GET_ALL_POLLS_SUCCESS";
+export const GET_ALL_POLLS_FAILURE = "GET_ALL_POLLS_FAILURE";
 
 /*
 * Function: createPoll - create a new poll
@@ -78,6 +81,51 @@ export function viewPoll(token, pollId) {
         VIEW_POLL_SUCCESS,
         {
           type: VIEW_POLL_FAILURE,
+          payload: (action, state, res) => {
+            return res.json().then(data => {
+              let message = "Sorry, something went wrong :(";
+              if (data) {
+                if (data.message) {
+                  message = data.message;
+                }
+                return { message };
+              } else {
+                return { message };
+              }
+            });
+          }
+        }
+      ],
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  };
+}
+
+/*
+* Function: getAllPolls - return all active polls in database
+* @param {string} token
+* This action dispatches additional actions as it executes:
+*   GET_ALL_POLLS_REQUEST:
+*     Initiates a spinner on the home page.
+*   GET_ALL_POLLS_SUCCESS:
+*     If polls array successfully retrieved, hides spinner
+*   GET_ALL_POLLS_FAILURE:
+*     If database error,
+*     Hides spinner, displays error message in modal
+*/
+export function getAllPolls(token) {
+  console.log(token);
+  return {
+    [RSAA]: {
+      endpoint: `${BASE_URL}/api/poll/allpolls`,
+      method: "GET",
+      types: [
+        GET_ALL_POLLS_REQUEST,
+        GET_ALL_POLLS_SUCCESS,
+        {
+          type: GET_ALL_POLLS_FAILURE,
           payload: (action, state, res) => {
             return res.json().then(data => {
               let message = "Sorry, something went wrong :(";

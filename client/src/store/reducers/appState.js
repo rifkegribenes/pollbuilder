@@ -93,7 +93,6 @@ function appState(state = INITIAL_STATE, action) {
       return Object.assign({}, state, { spinnerClass: "spinner__show" });
 
     case VALIDATE_TOKEN_REQUEST:
-      console.log("validate token request");
       return state;
 
     /*

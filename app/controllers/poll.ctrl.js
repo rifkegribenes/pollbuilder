@@ -1,9 +1,10 @@
 const Poll = require('../models/poll');
 
 // Get all polls
-exports.allPolls = (req, res, next) => {
+exports.getAllPolls = (user, req, res, next) => {
   Poll.find( (err, polls) => {
-    if(err) { return handleError(res, err); }
+    console.log('getAllPolls');
+    if (err) { return handleError(res, err); }
     return res.status(200).json(polls);
   });
 };
@@ -11,7 +12,7 @@ exports.allPolls = (req, res, next) => {
 // Get a single poll by id
 exports.viewPollById = (userObj, req, res, next) => {
   Poll.findById(req.params.pollId ,  (err, poll) => {
-    if(err) { return handleError(res, err); }
+    if (err) { return handleError(res, err); }
     if(!poll) { return res.status(404).send({message: 'Not Found'}); }
     return res.json(poll);
   });
@@ -20,8 +21,8 @@ exports.viewPollById = (userObj, req, res, next) => {
 // Get a single poll by slug
 exports.viewPollBySlug = (req, res, next) => {
   Poll.find( { slug: req.params.id }, (err, poll) => {
-    if(err) { return handleError(res, err); }
-    if(!poll || poll.length === 0) { return res.status(404).send({message: 'Not Found'}); }
+    if (err) { return handleError(res, err); }
+    if (!poll || poll.length === 0) { return res.status(404).send({message: 'Not Found'}); }
     return res.json(poll[0]);
   });
 };

@@ -17,7 +17,7 @@ import VerifyEmail from "./containers/VerifyEmail";
 import CreatePoll from "./containers/CreatePoll";
 import ViewPoll from "./containers/ViewPoll";
 import Logout from "./containers/Logout";
-import Polls from "./containers/Polls";
+import AllPolls from "./containers/AllPolls";
 
 import * as apiActions from "./store/actions/apiActions";
 import * as Actions from "./store/actions";
@@ -187,8 +187,8 @@ class App extends Component {
               />
               <Route
                 exact
-                path="/polls"
-                render={routeProps => <Polls {...routeProps} />}
+                path="/dashboard"
+                render={routeProps => <AllPolls {...routeProps} />}
               />
               <Route
                 exact

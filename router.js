@@ -29,8 +29,6 @@ const checkVerified = (req, res, next) => {
 
 const requireAuth = (req, res, next) => {
   console.log('requireAuth');
-  console.log(req.body);
-  console.log(req.params.pollId);
   passport.authenticate('jwt', { session: false },
     (err, user, info) => {
       console.log(err);
@@ -189,6 +187,8 @@ module.exports = function (app) {
   apiRoutes.use('/poll', pollRoutes);
 
   // Get all polls
+  // Returns fail status + message -or- array of all active polls
+  pollRoutes.get('/allpolls', requireAuth, PollController.getAllPolls);
 
   // View a single poll
   // Returns fail status + message -or- poll object

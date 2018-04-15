@@ -26,7 +26,10 @@ import {
   // DELETE_POLL_FAILURE,
   VIEW_POLL_REQUEST,
   VIEW_POLL_SUCCESS,
-  VIEW_POLL_FAILURE
+  VIEW_POLL_FAILURE,
+  GET_ALL_POLLS_REQUEST,
+  GET_ALL_POLLS_SUCCESS,
+  GET_ALL_POLLS_FAILURE
 } from "../actions/apiPollActions";
 import {
   RESEND_VLINK_REQUEST,
@@ -58,6 +61,7 @@ const INITIAL_STATE = {
     showFieldErrors: {},
     validationErrors: {}
   },
+  polls: [],
   showFormError: false
 };
 
@@ -184,10 +188,11 @@ function poll(state = INITIAL_STATE, action) {
       });
 
     /*
-    *  Called From: <CreatePoll />, <ViewPoll />
+    *  Called From: <CreatePoll />, <ViewPoll />, <AllPolls />
     *  Payload: None
     *  Purpose: Activate spinner to indicates API request is in progress
     */
+    case GET_ALL_POLLS_REQUEST:
     case RESEND_VLINK_REQUEST:
     case CREATE_POLL_REQUEST:
     case VIEW_POLL_REQUEST:
@@ -254,7 +259,6 @@ function poll(state = INITIAL_STATE, action) {
     *  Purpose: Display a success message with link to view poll
     */
     case CREATE_POLL_SUCCESS:
-      console.log(action.payload._id);
       return Object.assign({}, state, {
         spinnerClass: "spinner__hide",
         modal: {
@@ -287,10 +291,26 @@ function poll(state = INITIAL_STATE, action) {
       });
 
     /*
-    *  Called from: <CreatePoll />
-    *  Payload: Error message
-    *  Purpose: Display an error message to the user.
+    *  Called from: <AllPolls />
+    *  Payload: array of poll objects
+    *  Purpose: Display polls
     */
+    case GET_ALL_POLLS_SUCCESS:
+      console.log(action.payload);
+      return Object.assign({}, state, {
+        spinnerClass: "spinner__hide",
+        modal: {
+          class: "modal__hide"
+        },
+        polls: [...action.payload]
+      });
+
+    /*
+    *  Called from: <CreatePoll />, <ViewPoll />, <AllPolls />
+    *  Payload: Error message
+    *  Purpose: Display error message
+    */
+    case GET_ALL_POLLS_FAILURE:
     case VIEW_POLL_FAILURE:
     case CREATE_POLL_FAILURE:
       if (typeof action.payload.message === "string") {
@@ -300,8 +320,10 @@ function poll(state = INITIAL_STATE, action) {
       }
       if (action.type === "VIEW_POLL_FAILURE") {
         title = "Error: Poll not found";
+      } else if (action.type === "GET_ALL_POLLS_FAILURE") {
+        title = "Error: Could not load polls";
       } else {
-        title = "Failure: Poll not saved";
+        title = "Error: Poll not saved";
       }
       return Object.assign({}, state, {
         spinnerClass: "spinner__hide",

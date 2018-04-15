@@ -44,7 +44,6 @@ module.exports = (passport) => {
   // JWT login strategy
   passport.use('jwt', new JwtStrategy(jwtOptions,
     (req, payload, done) => {
-      console.log('jwt');
       console.log(payload);
       User.findById(payload._id, (err, user) => {
         if (err) { return done(err, false); }
