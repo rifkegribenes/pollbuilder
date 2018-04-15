@@ -29,37 +29,22 @@ class AllPolls extends React.Component {
       if (poll.options[0].text !== "") {
         options = poll.options.map((option, idx) => {
           return (
-            <div key={option._id}>
-              {option._id !== undefined && (
-                <button
-                  className={`aria-button profile__email ${option._id}`}
-                  title="Edit option"
-                  onClick={() => console.log("edit option")}
-                >
-                  {option.text}
-                  <span className="profile__edit">
-                    <img className="profile__icon" src={editIcon} alt="" />
-                  </span>
-                </button>
-              )}
+            <div key={option._id} className="polls-grid__option">
+              {option._id !== undefined && option.text}
             </div>
           );
         });
       }
       return (
-        <div className="polls-grid__card" key={poll._id}>
-          <button
-            className="aria-button profile__name"
-            title="Edit question"
-            onClick={() => console.log("edit question")}
-          >
-            {poll.question}
-            <span className="profile__edit">
-              <img className="profile__icon" src={editIcon} alt="" />
-            </span>
-          </button>
+        <button
+          key={poll._id}
+          className="aria-button polls-grid__card"
+          title="View Poll"
+          onClick={() => this.props.history.push(`/poll/${poll._id}`)}
+        >
+          <h3 className="polls-grid__title">{poll.question}</h3>
           {poll.options[0].text !== "" ? options : ""}
-        </div>
+        </button>
       );
     });
     return (

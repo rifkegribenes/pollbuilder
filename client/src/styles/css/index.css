@@ -1420,6 +1420,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     .polls-grid {
       column-count: 3; } }
   .polls-grid__card {
+    font-size: 1em;
     padding: 20px;
     display: inline-block;
     width: 100%;
@@ -1431,6 +1432,14 @@ input:not([type=checkbox]):not([type=radio]), textarea {
       content: '';
       display: block;
       height: 20px; }
+  .polls-grid__title {
+    font-size: 32px;
+    line-height: 1em;
+    margin-bottom: .5em;
+    color: #833ab4;
+    font-weight: 400; }
+  .polls-grid__option {
+    color: #545454; }
 
 * {
   -moz-box-sizing: border-box;

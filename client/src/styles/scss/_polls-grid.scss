@@ -12,7 +12,8 @@
 		column-count: 3;
 	}
 
-		&__card {
+	&__card {
+		font-size: 1em;
 		padding: 20px;
 		display: inline-block;
 		width: 100%;
@@ -37,5 +38,17 @@
 
     @include for-tablet-landscape-up {
     }
+	}
+
+	&__title {
+		font-size: 32px;
+		line-height: 1em;
+		margin-bottom: .5em;
+		color: $color_grape;
+		font-weight: 400;
+	}
+
+	&__option {
+		color: $color_gray_text;
 	}
 }
