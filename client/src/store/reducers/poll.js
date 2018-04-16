@@ -29,7 +29,10 @@ import {
   VIEW_POLL_FAILURE,
   GET_ALL_POLLS_REQUEST,
   GET_ALL_POLLS_SUCCESS,
-  GET_ALL_POLLS_FAILURE
+  GET_ALL_POLLS_FAILURE,
+  GET_USER_POLLS_REQUEST,
+  GET_USER_POLLS_SUCCESS,
+  GET_USER_POLLS_FAILURE
 } from "../actions/apiPollActions";
 import {
   RESEND_VLINK_REQUEST,
@@ -59,7 +62,9 @@ const INITIAL_STATE = {
     error: false,
     touched: {},
     showFieldErrors: {},
-    validationErrors: {}
+    validationErrors: {},
+    ownerID: "",
+    ownerName: ""
   },
   polls: [],
   showFormError: false
@@ -178,12 +183,19 @@ function poll(state = INITIAL_STATE, action) {
           text: { $set: "" }
         },
         form: {
-          firstName: { $set: "" },
-          lastName: { $set: "" },
-          email: { $set: "" },
-          password: { $set: "" },
-          confirmPwd: { $set: "" },
-          error: { $set: false }
+          question: { $set: "" },
+          options: [
+            {
+              text: { $set: "" }
+            },
+            {
+              text: { $set: "" }
+            }
+          ],
+          error: { $set: false },
+          touched: { $set: {} },
+          showFieldErrors: { $set: {} },
+          validationErrors: { $set: {} }
         }
       });
 
@@ -192,6 +204,7 @@ function poll(state = INITIAL_STATE, action) {
     *  Payload: None
     *  Purpose: Activate spinner to indicates API request is in progress
     */
+    case GET_USER_POLLS_REQUEST:
     case GET_ALL_POLLS_REQUEST:
     case RESEND_VLINK_REQUEST:
     case CREATE_POLL_REQUEST:
@@ -286,16 +299,19 @@ function poll(state = INITIAL_STATE, action) {
         form: {
           _id: action.payload._id,
           question: action.payload.question,
-          options: [...action.payload.options]
+          options: [...action.payload.options],
+          ownerID: action.payload.ownerID,
+          ownerName: action.payload.ownerName
         }
       });
 
     /*
-    *  Called from: <AllPolls />
+    *  Called from: <AllPolls />, <UserPolls />
     *  Payload: array of poll objects
     *  Purpose: Display polls
     */
     case GET_ALL_POLLS_SUCCESS:
+    case GET_USER_POLLS_SUCCESS:
       return Object.assign({}, state, {
         spinnerClass: "spinner__hide",
         modal: {
@@ -305,10 +321,11 @@ function poll(state = INITIAL_STATE, action) {
       });
 
     /*
-    *  Called from: <CreatePoll />, <ViewPoll />, <AllPolls />
+    *  Called from: <CreatePoll />, <ViewPoll />, <AllPolls />, <UserPolls />
     *  Payload: Error message
     *  Purpose: Display error message
     */
+    case GET_USER_POLLS_FAILURE:
     case GET_ALL_POLLS_FAILURE:
     case VIEW_POLL_FAILURE:
     case CREATE_POLL_FAILURE:

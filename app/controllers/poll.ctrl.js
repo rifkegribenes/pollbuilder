@@ -3,7 +3,17 @@ const Poll = require('../models/poll');
 // Get all polls
 exports.getAllPolls = (user, req, res, next) => {
   Poll.find( (err, polls) => {
+    // need to add logic here to return only active polls
     console.log('getAllPolls');
+    if (err) { return handleError(res, err); }
+    return res.status(200).json({user, polls});
+  });
+};
+
+// Get all polls for a specific user
+exports.getUserPolls = (user, req, res, next) => {
+  Poll.find( { ownerID: user._id }, (err, polls) => {
+    console.log('getUserPolls');
     if (err) { return handleError(res, err); }
     return res.status(200).json({user, polls});
   });

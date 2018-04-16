@@ -10,6 +10,9 @@ export const VIEW_POLL_FAILURE = "VIEW_POLL_FAILURE";
 export const GET_ALL_POLLS_REQUEST = "GET_ALL_POLLS_REQUEST";
 export const GET_ALL_POLLS_SUCCESS = "GET_ALL_POLLS_SUCCESS";
 export const GET_ALL_POLLS_FAILURE = "GET_ALL_POLLS_FAILURE";
+export const GET_USER_POLLS_REQUEST = "GET_USER_POLLS_REQUEST";
+export const GET_USER_POLLS_SUCCESS = "GET_USER_POLLS_SUCCESS";
+export const GET_USER_POLLS_FAILURE = "GET_USER_POLLS_FAILURE";
 
 /*
 * Function: createPoll - create a new poll
@@ -71,7 +74,6 @@ export function createPoll(token, body) {
 *     Hides spinner, displays error message in modal
 */
 export function viewPoll(token, pollId) {
-  console.log(token);
   return {
     [RSAA]: {
       endpoint: `${BASE_URL}/api/poll/${pollId}`,
@@ -116,7 +118,6 @@ export function viewPoll(token, pollId) {
 *     Hides spinner, displays error message in modal
 */
 export function getAllPolls(token) {
-  console.log(token);
   return {
     [RSAA]: {
       endpoint: `${BASE_URL}/api/poll/allpolls`,
@@ -126,6 +127,50 @@ export function getAllPolls(token) {
         GET_ALL_POLLS_SUCCESS,
         {
           type: GET_ALL_POLLS_FAILURE,
+          payload: (action, state, res) => {
+            return res.json().then(data => {
+              let message = "Sorry, something went wrong :(";
+              if (data) {
+                if (data.message) {
+                  message = data.message;
+                }
+                return { message };
+              } else {
+                return { message };
+              }
+            });
+          }
+        }
+      ],
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  };
+}
+
+/*
+* Function: getUserPolls - return all polls for specific user
+* @param {string} token
+* This action dispatches additional actions as it executes:
+*   GET_USER_POLLS_REQUEST:
+*     Initiates a spinner on the home page.
+*   GET_USER_POLLS_SUCCESS:
+*     If polls array successfully retrieved, hides spinner
+*   GET_USER_POLLS_FAILURE:
+*     If database error,
+*     Hides spinner, displays error message in modal
+*/
+export function getUserPolls(token, userId) {
+  return {
+    [RSAA]: {
+      endpoint: `${BASE_URL}/api/poll/userpolls`,
+      method: "GET",
+      types: [
+        GET_USER_POLLS_REQUEST,
+        GET_USER_POLLS_SUCCESS,
+        {
+          type: GET_USER_POLLS_FAILURE,
           payload: (action, state, res) => {
             return res.json().then(data => {
               let message = "Sorry, something went wrong :(";

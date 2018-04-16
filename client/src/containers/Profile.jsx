@@ -27,7 +27,6 @@ class Profile extends React.Component {
       // remove id & token from route params after saving to local storage
       window.history.replaceState(null, null, `${window.location.origin}/user`);
     } else {
-      console.log("user id not in route params");
       // if userId is not in route params
       // look in redux store or local storage
       userId =
@@ -39,9 +38,6 @@ class Profile extends React.Component {
         token = this.props.appState.authToken;
       }
     }
-
-    console.log(userId);
-    console.log(token);
     // retrieve user profile & save to app state
     this.props.api.getProfile(token, userId).then(result => {
       if (result.type === "GET_PROFILE_SUCCESS") {

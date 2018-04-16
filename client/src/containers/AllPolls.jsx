@@ -8,6 +8,7 @@ import * as apiActions from "../store/actions/apiPollActions";
 
 import Spinner from "./Spinner";
 import ModalSm from "./ModalSm";
+import PollCard from "./PollCard";
 // import editIcon from "../img/edit.svg";
 
 class AllPolls extends React.Component {
@@ -25,26 +26,13 @@ class AllPolls extends React.Component {
 
   render() {
     const polls = this.props.poll.polls.map((poll, idx) => {
-      let options = [];
-      if (poll.options[0].text !== "") {
-        options = poll.options.map((option, idx) => {
-          return (
-            <div key={option._id} className="polls-grid__option">
-              {option._id !== undefined && option.text}
-            </div>
-          );
-        });
-      }
       return (
-        <button
+        <PollCard
           key={poll._id}
-          className="aria-button polls-grid__card"
-          title="View Poll"
-          onClick={() => this.props.history.push(`/poll/${poll._id}`)}
-        >
-          <h3 className="polls-grid__title">{poll.question}</h3>
-          {poll.options[0].text !== "" ? options : ""}
-        </button>
+          owner={poll.ownerID === this.props.profile.user._id}
+          poll={poll}
+          history={this.props.history}
+        />
       );
     });
     return (
@@ -106,7 +94,9 @@ AllPolls.propTypes = {
           text: PropTypes.string,
           _id: PropTypes.string
         })
-      )
+      ),
+      ownerID: PropTypes.string,
+      ownerName: PropTypes.string
     }).isRequired,
     errorMsg: PropTypes.string,
     spinnerClass: PropTypes.string,
@@ -123,7 +113,8 @@ AllPolls.propTypes = {
 
 const mapStateToProps = state => ({
   appState: state.appState,
-  poll: state.poll
+  poll: state.poll,
+  profile: state.profile
 });
 
 const mapDispatchToProps = dispatch => ({

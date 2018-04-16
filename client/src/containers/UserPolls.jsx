@@ -11,21 +11,33 @@ import ModalSm from "./ModalSm";
 import PollCard from "./PollCard";
 // import editIcon from "../img/edit.svg";
 
-class ViewPoll extends React.Component {
+class UserPolls extends React.Component {
   componentWillMount() {
     const token =
       this.props.appState.authToken ||
       JSON.parse(window.localStorage.getItem("authToken"));
-    const pollId = this.props.match.params.id;
-    // retrieve requested poll & save to app state
-    this.props.api.viewPoll(token, pollId).then(result => {
-      if (result.type === "VIEW_POLL_SUCCESS") {
-        // console.log(this.props.poll.form);
+    const userId =
+      this.props.profile.user._id ||
+      JSON.parse(window.localStorage.getItem("userId"));
+    this.props.api.getUserPolls(token, userId).then(result => {
+      console.log(result);
+      if (result.type === "GET_USER_POLLS_SUCCESS") {
+        this.props.actions.setLoggedIn();
       }
     });
   }
 
   render() {
+    const polls = this.props.poll.polls.map((poll, idx) => {
+      return (
+        <PollCard
+          key={poll._id}
+          owner={true}
+          poll={poll}
+          history={this.props.history}
+        />
+      );
+    });
     return (
       <div>
         <Spinner cssClass={this.props.poll.spinnerClass} />
@@ -57,22 +69,17 @@ class ViewPoll extends React.Component {
             }
           }}
         />
-        <div className="container poll__container">
-          <PollCard
-            single={true}
-            owner={this.props.profile.user._id === this.props.poll.form.ownerID}
-            poll={this.props.poll.form}
-            history={this.props.history}
-          />
-        </div>
+        <div className="polls-grid">{polls}</div>
       </div>
     );
   }
 }
 
-ViewPoll.propTypes = {
+UserPolls.propTypes = {
   appState: PropTypes.shape({
-    loggedIn: PropTypes.bool,
+    loggedIn: PropTypes.bool
+  }).isRequired,
+  profile: PropTypes.shape({
     user: PropTypes.shape({
       _id: PropTypes.string
     })
@@ -84,11 +91,6 @@ ViewPoll.propTypes = {
   api: PropTypes.shape({
     viewPoll: PropTypes.func
   }).isRequired,
-  profile: PropTypes.shape({
-    user: PropTypes.shape({
-      _id: PropTypes.string
-    })
-  }).isRequired,
   poll: PropTypes.shape({
     form: PropTypes.shape({
       question: PropTypes.string,
@@ -97,9 +99,7 @@ ViewPoll.propTypes = {
           text: PropTypes.string,
           _id: PropTypes.string
         })
-      ).isRequired,
-      ownerID: PropTypes.string,
-      _id: PropTypes.string
+      )
     }).isRequired,
     errorMsg: PropTypes.string,
     spinnerClass: PropTypes.string,
@@ -126,5 +126,5 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(ViewPoll)
+  connect(mapStateToProps, mapDispatchToProps)(UserPolls)
 );

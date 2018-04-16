@@ -18,6 +18,7 @@ import CreatePoll from "./containers/CreatePoll";
 import ViewPoll from "./containers/ViewPoll";
 import Logout from "./containers/Logout";
 import AllPolls from "./containers/AllPolls";
+import UserPolls from "./containers/UserPolls";
 
 import * as apiActions from "./store/actions/apiActions";
 import * as Actions from "./store/actions";
@@ -188,6 +189,11 @@ class App extends Component {
               <Route
                 exact
                 path="/dashboard"
+                render={routeProps => <UserPolls {...routeProps} />}
+              />
+              <Route
+                exact
+                path="/polls"
                 render={routeProps => <AllPolls {...routeProps} />}
               />
               <Route

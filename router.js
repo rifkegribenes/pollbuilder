@@ -190,6 +190,10 @@ module.exports = function (app) {
   // Returns fail status + message -or- array of all active polls
   pollRoutes.get('/allpolls', requireAuth, PollController.getAllPolls);
 
+  // Get all polls for specific user
+  // Returns fail status + message -or- array of all active polls
+  pollRoutes.get('/userpolls', requireAuth, PollController.getUserPolls);
+
   // View a single poll
   // Returns fail status + message -or- poll object
   pollRoutes.get('/:pollId', requireAuth, PollController.viewPollById);
