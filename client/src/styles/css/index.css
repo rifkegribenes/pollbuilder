@@ -438,7 +438,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
   z-index: 3;
   justify-content: space-between;
   position: fixed; }
-  @media (min-width: 560px) {
+  @media (min-width: 670px) {
     .header {
       box-shadow: 0 1px 5px 2px rgba(131, 58, 180, 0.2);
       margin-bottom: 40px; } }
@@ -485,7 +485,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     border: 0;
     background: transparent;
     color: transparent; }
-    @media (min-width: 560px) {
+    @media (min-width: 670px) {
       .h-nav__icon {
         display: none; } }
     .h-nav__icon:focus {
@@ -585,7 +585,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     padding: 10px;
     margin-left: 13px;
     display: flex; }
-    @media (min-width: 560px) {
+    @media (min-width: 670px) {
       .h-nav__item-link {
         font-size: 24px; } }
     .h-nav__item-link--login {
@@ -595,7 +595,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
       font-size: 20px;
       padding: 4px 20px 6px 20px;
       text-transform: capitalize; }
-    @media (min-width: 560px) {
+    @media (min-width: 670px) {
       .h-nav__item-link--logout {
         display: none; } }
     .h-nav__item-link--menu {
@@ -635,7 +635,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
       box-shadow: 0 4px 2px 0 rgba(131, 58, 180, 0.2); }
     .h-nav__nav--hidden {
       opacity: 0; }
-  @media (min-width: 560px) {
+  @media (min-width: 670px) {
     .h-nav {
       position: relative;
       top: 0;
@@ -842,7 +842,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     max-width: 600px;
     margin: -40px auto 20px auto;
     z-index: -1; }
-    @media (min-width: 560px) {
+    @media (min-width: 670px) {
       .splash__logo {
         display: none; } }
   .splash__icon {
