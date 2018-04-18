@@ -297,11 +297,11 @@ function poll(state = INITIAL_STATE, action) {
           class: "modal__hide"
         },
         form: {
-          _id: action.payload._id,
-          question: action.payload.question,
-          options: [...action.payload.options],
-          ownerID: action.payload.ownerID,
-          ownerName: action.payload.ownerName
+          _id: action.payload.poll._id,
+          question: action.payload.poll.question,
+          options: [...action.payload.poll.options],
+          ownerID: action.payload.poll.ownerID,
+          ownerName: action.payload.poll.ownerName
         }
       });
 

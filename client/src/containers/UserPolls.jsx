@@ -28,16 +28,14 @@ class UserPolls extends React.Component {
   }
 
   render() {
-    const polls = this.props.poll.polls.map((poll, idx) => {
-      return (
-        <PollCard
-          key={poll._id}
-          owner={true}
-          poll={poll}
-          history={this.props.history}
-        />
-      );
-    });
+    const polls = this.props.poll.polls.map(poll => (
+      <PollCard
+        key={poll._id}
+        owner={true}
+        poll={poll}
+        history={this.props.history}
+      />
+    ));
     return (
       <div>
         <Spinner cssClass={this.props.poll.spinnerClass} />

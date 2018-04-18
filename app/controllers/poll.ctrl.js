@@ -20,11 +20,11 @@ exports.getUserPolls = (user, req, res, next) => {
 };
 
 // Get a single poll by id
-exports.viewPollById = (userObj, req, res, next) => {
-  Poll.findById(req.params.pollId ,  (err, poll) => {
+exports.viewPollById = (user, req, res, next) => {
+  Poll.findById( req.params.pollId,  (err, poll) => {
     if (err) { return handleError(res, err); }
-    if(!poll) { return res.status(404).send({message: 'Not Found'}); }
-    return res.json(poll);
+    if (!poll) { return res.status(404).send({message: 'Not Found'}); }
+    return res.status(200).json({user, poll});
   });
 };
 
