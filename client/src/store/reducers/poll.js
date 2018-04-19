@@ -291,19 +291,22 @@ function poll(state = INITIAL_STATE, action) {
     */
     case VIEW_POLL_SUCCESS:
       console.log(action.payload);
-      return Object.assign({}, state, {
-        spinnerClass: "spinner__hide",
+      return update(state, {
+        spinnerClass: { $set: "spinner__hide" },
         modal: {
-          class: "modal__hide"
+          class: { $set: "modal__hide" }
         },
-        form: {
-          _id: action.payload.poll._id,
-          question: action.payload.poll.question,
-          options: [...action.payload.poll.options],
-          ownerID: action.payload.poll.ownerID,
-          ownerName: action.payload.poll.ownerName
-        }
+        form: { $merge: action.payload.poll }
       });
+
+    // form: {
+    //   _id: action.payload.poll._id,
+    //   question: action.payload.poll.question,
+    //   options: [...action.payload.poll.options],
+    //   ownerID: action.payload.poll.ownerID,
+    //   ownerName: action.payload.poll.ownerName
+    // }
+    // });
 
     /*
     *  Called from: <AllPolls />, <UserPolls />

@@ -15,9 +15,25 @@ class CreatePoll extends React.Component {
     super(props);
 
     this.createPoll = this.createPoll.bind(this);
+    this.updatePoll = this.updatePoll.bind(this);
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    if (this.props.match.params.id) {
+      const token =
+        this.props.appState.authToken ||
+        JSON.parse(window.localStorage.getItem("authToken"));
+      const pollId = this.props.match.params.id;
+      // retrieve requested poll & save to app state
+      this.props.api.viewPoll(token, pollId).then(result => {
+        if (result.type === "VIEW_POLL_SUCCESS") {
+          this.props.actions.setLoggedIn();
+        }
+      });
+    }
+  }
+
+  updatePoll() {}
 
   createPoll() {
     // run error checks on all option fields
@@ -80,15 +96,17 @@ class CreatePoll extends React.Component {
             <div className="combo__logo-wrap">
               <img className="combo__logo" src={logo} alt="surveybot" />
             </div>
-            <div className="combo__title">Create Poll</div>
+            <div className="combo__title">
+              {this.props.edit ? "Edit Poll" : "Create Poll"}
+            </div>
           </div>
           <div className="combo__form">
             <Form
               fields={fields}
               reducer="poll"
               form="create"
-              buttonText="Create Poll"
-              formAction={this.createPoll}
+              buttonText={this.props.edit ? "Edit Poll" : "Create Poll"}
+              formAction={this.props.edit ? this.updatePoll : this.createPoll}
             />
           </div>
         </div>

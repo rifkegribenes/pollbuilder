@@ -40,6 +40,8 @@ const PrivateRoute = ({ component: Component, loggedIn, ...rest }) => {
   );
 };
 
+const EditPoll = routeProps => <CreatePoll edit={true} {...routeProps} />;
+
 class App extends Component {
   componentWillMount() {
     this.updateDimensions();
@@ -185,6 +187,11 @@ class App extends Component {
                 loggedIn={this.props.appState.loggedIn}
                 path="/createpoll"
                 component={CreatePoll}
+              />
+              <PrivateRoute
+                loggedIn={this.props.appState.loggedIn}
+                path="/edit/:id"
+                component={EditPoll}
               />
               <Route
                 exact
