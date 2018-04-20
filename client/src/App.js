@@ -188,7 +188,7 @@ class App extends Component {
                 path="/createpoll"
                 component={CreatePoll}
               />
-              <PrivateRoute
+              <Route
                 loggedIn={this.props.appState.loggedIn}
                 path="/edit/:id"
                 component={EditPoll}

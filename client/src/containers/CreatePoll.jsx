@@ -14,8 +14,7 @@ class CreatePoll extends React.Component {
   constructor(props) {
     super(props);
 
-    this.createPoll = this.createPoll.bind(this);
-    this.updatePoll = this.updatePoll.bind(this);
+    this.createOrUpdate = this.createOrUpdate.bind(this);
   }
 
   componentDidMount() {
@@ -33,9 +32,7 @@ class CreatePoll extends React.Component {
     }
   }
 
-  updatePoll() {}
-
-  createPoll() {
+  createOrUpdate(action) {
     // run error checks on all option fields
     const { options } = this.props.poll.form;
     let finalErrors = {};
@@ -53,14 +50,26 @@ class CreatePoll extends React.Component {
         question: this.props.poll.form.question,
         options: this.props.poll.form.options
       };
-      this.props.api
-        .createPoll(token, body)
-        .then(result => {
-          // console.log(result);
-        })
-        .catch(err => {
-          console.log(err);
-        });
+      if (action === "create") {
+        this.props.api
+          .createPoll(token, body)
+          .then(result => {
+            // console.log(result);
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      } else if (action === "update") {
+        body._id = this.props.match.params.id;
+        this.props.api
+          .updatePoll(token, body)
+          .then(result => {
+            // console.log(result);
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }
     } else {
       let errorList = "";
       // filter validation errors to find only unique values, then
@@ -105,8 +114,12 @@ class CreatePoll extends React.Component {
               fields={fields}
               reducer="poll"
               form="create"
-              buttonText={this.props.edit ? "Edit Poll" : "Create Poll"}
-              formAction={this.props.edit ? this.updatePoll : this.createPoll}
+              buttonText={this.props.edit ? "Save Poll" : "Create Poll"}
+              formAction={
+                this.props.edit
+                  ? () => this.createOrUpdate("update")
+                  : () => this.createOrUpdate("create")
+              }
             />
           </div>
         </div>

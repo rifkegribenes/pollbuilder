@@ -187,22 +187,24 @@ module.exports = function (app) {
   apiRoutes.use('/poll', pollRoutes);
 
   // Get all polls
-  // Returns fail status + message -or- array of all active polls
+  // Returns fail status + message -or- array of all active polls & user
   pollRoutes.get('/allpolls', requireAuth, PollController.getAllPolls);
 
   // Get all polls for specific user
-  // Returns fail status + message -or- array of all active polls
+  // Returns fail status + message -or- array of all active polls & user
   pollRoutes.get('/userpolls', requireAuth, PollController.getUserPolls);
 
   // View a single poll
-  // Returns fail status + message -or- poll object
+  // Returns fail status + message -or- poll object & user
   pollRoutes.get('/:pollId', requireAuth, PollController.viewPollById);
 
   // Create a poll
-  // Returns fail status + message -or- poll object
+  // Returns fail status + message -or- poll object & user
   pollRoutes.post('/createpoll', requireAuth, PollController.newPoll);
 
   // Update a poll
+  // Returns fail status + message -or- poll object
+  pollRoutes.post('/update/:pollId', requireAuth, PollController.updatePoll);
 
   // Delete a poll
 

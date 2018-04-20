@@ -60,8 +60,7 @@ function appState(state = INITIAL_STATE, action) {
     * to hide spinner & modal on all pages
     */
     case LOGOUT:
-      window.localStorage.removeItem("authToken");
-      window.localStorage.removeItem("userId");
+      window.localStorage.clear();
       return INITIAL_STATE;
 
     /*

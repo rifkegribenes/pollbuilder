@@ -4,6 +4,9 @@ import { BASE_URL } from "./apiConfig.js";
 export const CREATE_POLL_REQUEST = "CREATE_POLL_REQUEST";
 export const CREATE_POLL_SUCCESS = "CREATE_POLL_SUCCESS";
 export const CREATE_POLL_FAILURE = "CREATE_POLL_FAILURE";
+export const UPDATE_POLL_REQUEST = "UPDATE_POLL_REQUEST";
+export const UPDATE_POLL_SUCCESS = "UPDATE_POLL_SUCCESS";
+export const UPDATE_POLL_FAILURE = "UPDATE_POLL_FAILURE";
 export const VIEW_POLL_REQUEST = "VIEW_POLL_REQUEST";
 export const VIEW_POLL_SUCCESS = "VIEW_POLL_SUCCESS";
 export const VIEW_POLL_FAILURE = "VIEW_POLL_FAILURE";
@@ -16,7 +19,7 @@ export const GET_USER_POLLS_FAILURE = "GET_USER_POLLS_FAILURE";
 
 /*
 * Function: createPoll - create a new poll
-* @param {string} body - poll title, questions and options; userId & token
+* @param {string} body - poll title, question and options; userId & token
 * This action dispatches additional actions as it executes:
 *   CREATE_POLL_REQUEST:
 *     Initiates a spinner on the home page.
@@ -37,6 +40,54 @@ export function createPoll(token, body) {
         CREATE_POLL_SUCCESS,
         {
           type: CREATE_POLL_FAILURE,
+          payload: (action, state, res) => {
+            return res.json().then(data => {
+              let message = "Sorry, something went wrong :(";
+              if (data) {
+                if (data.message) {
+                  message = data.message;
+                }
+                return { message };
+              } else {
+                return { message };
+              }
+            });
+          }
+        }
+      ],
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(body)
+    }
+  };
+}
+
+/*
+* Function: updatePoll - find and update existing poll
+* @param {string} body - poll id, title, question and options; userId & token
+* This action dispatches additional actions as it executes:
+*   UPDATE_POLL_REQUEST:
+*     Initiates a spinner on the home page.
+*   UPDATE_POLL_SUCCESS:
+*     If poll successfully saved to database, Hides spinner,
+*     displays success message in modal
+*   UPDATE_POLL_FAILURE:
+*     If poll update fails,
+*     Hides spinner, displays error message in modal
+*/
+export function updatePoll(token, body) {
+  console.log(body._id);
+  return {
+    [RSAA]: {
+      endpoint: `${BASE_URL}/api/poll/update/${body._id}`,
+      method: "POST",
+      types: [
+        UPDATE_POLL_REQUEST,
+        UPDATE_POLL_SUCCESS,
+        {
+          type: UPDATE_POLL_FAILURE,
           payload: (action, state, res) => {
             return res.json().then(data => {
               let message = "Sorry, something went wrong :(";

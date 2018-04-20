@@ -18,9 +18,9 @@ import {
   CREATE_POLL_REQUEST,
   CREATE_POLL_SUCCESS,
   CREATE_POLL_FAILURE,
-  // UPDATE_POLL_REQUEST,
-  // UPDATE_POLL_SUCCESS,
-  // UPDATE_POLL_FAILURE,
+  UPDATE_POLL_REQUEST,
+  UPDATE_POLL_SUCCESS,
+  UPDATE_POLL_FAILURE,
   // DELETE_POLL_REQUEST,
   // DELETE_POLL_SUCCESS,
   // DELETE_POLL_FAILURE,
@@ -73,6 +73,7 @@ const INITIAL_STATE = {
 function poll(state = INITIAL_STATE, action) {
   let error;
   let title;
+  let message;
   switch (action.type) {
     /*
     * Called from: <Form />, <ModalSm />, <CreatePoll />
@@ -204,6 +205,7 @@ function poll(state = INITIAL_STATE, action) {
     *  Payload: None
     *  Purpose: Activate spinner to indicates API request is in progress
     */
+    case UPDATE_POLL_REQUEST:
     case GET_USER_POLLS_REQUEST:
     case GET_ALL_POLLS_REQUEST:
     case RESEND_VLINK_REQUEST:
@@ -271,14 +273,20 @@ function poll(state = INITIAL_STATE, action) {
     *  Payload: poll id and title
     *  Purpose: Display a success message with link to view poll
     */
+    case UPDATE_POLL_SUCCESS:
     case CREATE_POLL_SUCCESS:
+      if (action.type === "UPDATE_POLL_SUCCESS") {
+        message = "updated";
+      } else if (action.type === "CREATE_POLL_SUCCESS") {
+        message = "created";
+      }
       return Object.assign({}, state, {
         spinnerClass: "spinner__hide",
         modal: {
           class: "modal__show",
           type: "modal__success",
           title: "New Poll Created",
-          text: `Your poll was created successfully`,
+          text: `Your poll was ${message} successfully`,
           buttonText: "View Poll",
           redirect: `/poll/${action.payload._id}`
         }
@@ -290,7 +298,6 @@ function poll(state = INITIAL_STATE, action) {
     *  Purpose: Display poll
     */
     case VIEW_POLL_SUCCESS:
-      console.log(action.payload);
       return update(state, {
         spinnerClass: { $set: "spinner__hide" },
         modal: {
@@ -328,6 +335,7 @@ function poll(state = INITIAL_STATE, action) {
     *  Payload: Error message
     *  Purpose: Display error message
     */
+    case UPDATE_POLL_FAILURE:
     case GET_USER_POLLS_FAILURE:
     case GET_ALL_POLLS_FAILURE:
     case VIEW_POLL_FAILURE:
@@ -341,6 +349,8 @@ function poll(state = INITIAL_STATE, action) {
         title = "Error: Poll not found";
       } else if (action.type === "GET_ALL_POLLS_FAILURE") {
         title = "Error: Could not load polls";
+      } else if (action.type === "UPDATE_POLL_FAILURE") {
+        title = "Error: Could not update poll";
       } else {
         title = "Error: Poll not saved";
       }
