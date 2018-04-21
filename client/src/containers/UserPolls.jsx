@@ -20,7 +20,7 @@ class UserPolls extends React.Component {
       this.props.profile.user._id ||
       JSON.parse(window.localStorage.getItem("userId"));
     this.props.api.getUserPolls(token, userId).then(result => {
-      console.log(result);
+      // console.log(result);
       if (result.type === "GET_USER_POLLS_SUCCESS") {
         this.props.actions.setLoggedIn();
       }

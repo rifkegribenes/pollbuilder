@@ -48,4 +48,24 @@ PollSchema.pre('save', function(next) {
   next();
 });
 
+// Also do this on update i guess? no way to combine these functions?
+PollSchema.pre('update', function(next) {
+  const sanitize = {
+    allowedTags: [],
+    allowedAttributes: []
+  };
+
+  this.question = sanitizeHtml(this.question, sanitize);
+  this.options = this.options.map((option) => {
+      option.text = sanitizeHtml(option.text, sanitize);
+      return option;
+    });
+  this.slug = slugify(this.question, {
+    replacement: '-',
+    remove: /[$*_+~.()'"!\-:;^%={}<>?|,@]/g,
+    lower: true
+  });
+  next();
+});
+
 module.exports = mongoose.model('Poll', PollSchema);

@@ -29,28 +29,28 @@ const checkVerified = (req, res, next) => {
 
 const requireAuth = (req, res, next) => {
   console.log('requireAuth');
-  passport.authenticate('jwt', { session: false },
+  passport.authenticate('jwt', { session: true },
     (err, user, info) => {
       console.log(err);
       console.log(`info: ${info}`);
       if (err) {
-        console.log('36');
+        console.log('router.js > 37');
         return res.status(422).send({ success : false, message : err.message });
       }
       if (!user) {
-        console.log('40');
+        console.log('router.js > 41');
         return res.status(422).send({ success : false, message : 'Sorry, you must log in to view this page.' });
       }
       if (user) {
-        console.log('44');
+        console.log('router.js > 45');
         const userInfo = helpers.setUserInfo(user);
         req.login(user, loginErr => {
           if (loginErr) {
-            console.log('48');
+            console.log('router.js > 49');
             console.log(loginErr);
             return next(loginErr);
           }
-          console.log('52');
+          console.log('router.js > 53');
           return next(user);
         }); // req.login
       }

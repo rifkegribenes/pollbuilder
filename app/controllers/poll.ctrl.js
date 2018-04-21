@@ -70,22 +70,69 @@ exports.newPoll = (user, req, res, next) => {
 }; // newPoll
 
 // Update an existing poll.
-exports.updatePoll = (req, res, next) => {
-  if(req.body._id) { delete req.body._id; }
-  Poll.findById(req.params.id, (err, poll) => {
-    if (err) { return handleError(res, err); }
-    if(!poll) { return res.status(404).send({message: 'Not Found'}); }
-    const updated = {...poll, ...req.body};
+exports.updatePoll = (user, req, res, next) => {
+  const pollId = req.body._id;
+  console.log(`poll.ctrl.js > 75, pollId: ${pollId}`);
+  console.log(req.body);
+
+  const target = {
+    _id: pollId
+  };
+
+  // kick off promise chain
+  new Promise( (resolve, reject) => {
 
     // Must be poll owner or site admin to update
-    if(poll.owner.toString() === req.user._id.toString() || req.user.role === 'admin') {
-      updated.save( (err) => {
-        if (err) { return handleError(res, err); }
-        return res.status(200).json(poll);
-      });
+    if (req.body.ownerId.toString() === user._id.toString() || user.role === 'admin') {
+      console.log('userId matches poll owner ID');
+      resolve(target);
     } else {
-      return res.status(403).send('You do not have permission to update this item');
+      console.log('poll owner id:');
+      console.log(req.body.ownerId);
+      console.log('requesting user id');
+      console.log(req.user._id)
+      reject({message: 'You do not have permission to update this poll.'});
     }
+
+  })
+  .then( () => {
+    console.log('poll.ctrl.js > 96');
+    // map enumerable req body properties to updates object
+    if (req.body._id) { delete req.body._id };
+    const updates = { ...req.body };
+
+    // return updated document rather than the original
+    const options = { new: true };
+    Poll.findOneAndUpdate(target, updates, options)
+      .exec()
+        .then((poll) => {
+          console.log('poll.ctrl.js > 105');
+          console.log(poll);
+          if (!poll) {
+            return res
+              .status(404)
+              .json({message: 'Poll not found'});
+          } else {
+            console.log('updated poll:');
+            console.log(poll);
+            return res
+              .status(200)
+              .json({
+                message: 'Poll updated successfully',
+                user,
+                poll
+            });
+          }
+        })
+        .catch(err => {
+          console.log('catch block poll.ctrl.js > 124');
+          return handleError(res, err);
+        });
+
+    })
+  .catch(err => {
+    console.log('catch block poll.ctrl.js > 130');
+    return handleError(res, err);
   });
 };
 
