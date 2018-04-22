@@ -34,6 +34,8 @@ class UserPolls extends React.Component {
         owner={true}
         poll={poll}
         history={this.props.history}
+        token={this.props.appState.authToken}
+        deletePoll={this.props.api.deletePoll}
       />
     ));
     return (
@@ -75,7 +77,8 @@ class UserPolls extends React.Component {
 
 UserPolls.propTypes = {
   appState: PropTypes.shape({
-    loggedIn: PropTypes.bool
+    loggedIn: PropTypes.bool,
+    authToken: PropTypes.string
   }).isRequired,
   profile: PropTypes.shape({
     user: PropTypes.shape({
@@ -87,7 +90,8 @@ UserPolls.propTypes = {
     dismissModal: PropTypes.func
   }).isRequired,
   api: PropTypes.shape({
-    viewPoll: PropTypes.func
+    viewPoll: PropTypes.func,
+    deletePoll: PropTypes.func
   }).isRequired,
   poll: PropTypes.shape({
     form: PropTypes.shape({

@@ -1427,6 +1427,21 @@ input:not([type=checkbox]):not([type=radio]), textarea {
   @media (min-width: 901px) {
     .polls-grid {
       column-count: 3; } }
+  .polls-grid__icon {
+    width: 20px;
+    height: 20px; }
+  .polls-grid__admin-buttons {
+    position: absolute;
+    right: 10px;
+    bottom: -8px;
+    display: flex; }
+  .polls-grid__edit {
+    width: 36px;
+    height: auto; }
+    .polls-grid__edit .polls-grid__icon {
+      width: 100%;
+      height: auto;
+      padding-top: 9px; }
   .polls-grid__card {
     font-size: 1em;
     padding: 20px;
@@ -1435,7 +1450,9 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     margin: .1em 0 1em;
     -webkit-column-break-inside: avoid;
     border-radius: 4px;
-    box-shadow: 0px 0px 3px 0px #833ab4; }
+    box-shadow: 0px 0px 3px 0px #833ab4;
+    text-decoration: none !important;
+    position: relative; }
     .polls-grid__card:after {
       content: '';
       display: block;
@@ -1446,11 +1463,18 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     margin-bottom: .5em;
     color: #833ab4;
     font-weight: 400;
-    position: relative; }
+    position: relative;
+    text-decoration: none !important; }
   .polls-grid__option {
     color: #545454;
     position: relative;
-    width: 100%; }
+    width: 100%;
+    text-decoration: none !important; }
+
+a > .polls-grid__title {
+  text-decoration: none !important; }
+  a > .polls-grid__title:hover, a > .polls-grid__title:active, a > .polls-grid__title:focus {
+    border-bottom: 1px dotted #833ab4; }
 
 * {
   -moz-box-sizing: border-box;
@@ -1543,17 +1567,18 @@ body.user-is-tabbing *:focus {
     text-transform: inherit;
     font-weight: inherit;
     cursor: pointer; }
-  .aria-button__link {
+  .aria-button__link, .aria-button a {
     border-bottom: 1px solid transparent;
     text-align: left;
     font-family: inherit;
     font-weight: inherit;
     font-size: inherit;
     width: 100%;
-    padding-bottom: 5px;
-    margin-bottom: 10px; }
-    .aria-button__link:hover, .aria-button__link:active, .aria-button__link:focus {
-      border-bottom: 1px dotted #545454;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    text-decoration: none !important; }
+    .aria-button__link:hover, .aria-button__link:active, .aria-button__link:focus, .aria-button a:hover, .aria-button a:active, .aria-button a:focus {
+      border-bottom: 1px dotted #833ab4;
       cursor: pointer; }
 
 .link {
@@ -1629,17 +1654,17 @@ input:invalid {
     width: auto;
     height: auto;
     overflow: visible;
-    padding: 7px 10px;
+    padding: 7px 15px;
     border-radius: 20px;
     appearance: none;
     -webkit-appearance: none;
-    background: #182848;
+    background: #833ab4;
     z-index: 100;
     border: 1px solid white;
-    color: #fffdb7;
+    color: white;
     font-family: "Titillium Web", Helvetica, Arial, sans-serif;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 1.5px;
     font-size: 1.2em; }
     .skip:active i, .skip:focus i, .skip:hover i {
       font-size: .8em; }

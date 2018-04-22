@@ -21,9 +21,9 @@ import {
   UPDATE_POLL_REQUEST,
   UPDATE_POLL_SUCCESS,
   UPDATE_POLL_FAILURE,
-  // DELETE_POLL_REQUEST,
-  // DELETE_POLL_SUCCESS,
-  // DELETE_POLL_FAILURE,
+  DELETE_POLL_REQUEST,
+  DELETE_POLL_SUCCESS,
+  DELETE_POLL_FAILURE,
   VIEW_POLL_REQUEST,
   VIEW_POLL_SUCCESS,
   VIEW_POLL_FAILURE,
@@ -193,6 +193,7 @@ function poll(state = INITIAL_STATE, action) {
               text: { $set: "" }
             }
           ],
+          ownerId: { $set: "" },
           error: { $set: false },
           touched: { $set: {} },
           showFieldErrors: { $set: {} },
@@ -205,6 +206,7 @@ function poll(state = INITIAL_STATE, action) {
     *  Payload: None
     *  Purpose: Activate spinner to indicates API request is in progress
     */
+    case DELETE_POLL_REQUEST:
     case UPDATE_POLL_REQUEST:
     case GET_USER_POLLS_REQUEST:
     case GET_ALL_POLLS_REQUEST:
@@ -293,6 +295,24 @@ function poll(state = INITIAL_STATE, action) {
       });
 
     /*
+    *  Called from: <PollCard />
+    *  Payload: success message
+    *  Purpose: Display status update on delete action
+    */
+    case DELETE_POLL_SUCCESS:
+      return Object.assign({}, state, {
+        spinnerClass: "spinner__hide",
+        modal: {
+          class: "modal__show",
+          type: "modal__success",
+          title: `Poll Deleted`,
+          text: `Your poll was deleted successfully`,
+          buttonText: "Continue",
+          redirect: `/polls`
+        }
+      });
+
+    /*
     *  Called from: <ViewPoll />
     *  Payload: poll object
     *  Purpose: Display poll
@@ -335,6 +355,7 @@ function poll(state = INITIAL_STATE, action) {
     *  Payload: Error message
     *  Purpose: Display error message
     */
+    case DELETE_POLL_FAILURE:
     case UPDATE_POLL_FAILURE:
     case GET_USER_POLLS_FAILURE:
     case GET_ALL_POLLS_FAILURE:
@@ -351,6 +372,8 @@ function poll(state = INITIAL_STATE, action) {
         title = "Error: Could not load polls";
       } else if (action.type === "UPDATE_POLL_FAILURE") {
         title = "Error: Could not update poll";
+      } else if (action.type === "DELETE_POLL_FAILURE") {
+        title = "Error: Could not delete poll";
       } else {
         title = "Error: Poll not saved";
       }

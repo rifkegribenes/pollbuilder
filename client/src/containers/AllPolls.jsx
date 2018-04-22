@@ -17,7 +17,7 @@ class AllPolls extends React.Component {
       this.props.appState.authToken ||
       JSON.parse(window.localStorage.getItem("authToken"));
     this.props.api.getAllPolls(token).then(result => {
-      console.log(result);
+      // console.log(result);
       if (result.type === "GET_ALL_POLLS_SUCCESS") {
         this.props.actions.setLoggedIn();
       }
@@ -32,6 +32,8 @@ class AllPolls extends React.Component {
           owner={poll.ownerId === this.props.profile.user._id}
           poll={poll}
           history={this.props.history}
+          token={this.props.appState.authToken}
+          deletePoll={this.props.api.deletePoll}
         />
       );
     });
@@ -77,14 +79,16 @@ AllPolls.propTypes = {
     loggedIn: PropTypes.bool,
     user: PropTypes.shape({
       _id: PropTypes.string
-    })
+    }),
+    authToken: PropTypes.string
   }).isRequired,
   actions: PropTypes.shape({
     setLoggedIn: PropTypes.func,
     dismissModal: PropTypes.func
   }).isRequired,
   api: PropTypes.shape({
-    viewPoll: PropTypes.func
+    viewPoll: PropTypes.func,
+    deletePoll: PropTypes.func
   }).isRequired,
   poll: PropTypes.shape({
     form: PropTypes.shape({

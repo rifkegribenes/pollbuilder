@@ -41,7 +41,10 @@ class ViewPoll extends React.Component {
           buttonText={this.props.poll.modal.buttonText}
           dismiss={() => {
             this.props.actions.dismissModal();
-            if (this.props.poll.modal.type === "modal__error") {
+            if (
+              this.props.poll.modal.type === "modal__error" &&
+              this.props.poll.modal.buttonText !== "Delete"
+            ) {
               this.props.history.push("/login");
             }
           }}
@@ -63,6 +66,9 @@ class ViewPoll extends React.Component {
             owner={this.props.profile.user._id === this.props.poll.form.ownerId}
             poll={this.props.poll.form}
             history={this.props.history}
+            deletePoll={this.props.api.deletePoll}
+            token={this.props.appState.authToken}
+            setModalError={this.props.actions.setModalError}
           />
         </div>
       </div>
@@ -75,14 +81,16 @@ ViewPoll.propTypes = {
     loggedIn: PropTypes.bool,
     user: PropTypes.shape({
       _id: PropTypes.string
-    })
+    }),
+    authToken: PropTypes.string
   }).isRequired,
   actions: PropTypes.shape({
     setLoggedIn: PropTypes.func,
     dismissModal: PropTypes.func
   }).isRequired,
   api: PropTypes.shape({
-    viewPoll: PropTypes.func
+    viewPoll: PropTypes.func,
+    deletePoll: PropTypes.func
   }).isRequired,
   profile: PropTypes.shape({
     user: PropTypes.shape({

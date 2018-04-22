@@ -39,6 +39,9 @@ exports.viewPollBySlug = (req, res, next) => {
 
 // Create a new poll
 exports.newPoll = (user, req, res, next) => {
+  if (!user) {
+    return res.status(422).send({ message: 'You must be logged in to create a new poll.' });
+  }
   const body = {
     question: req.body.question,
     options: [ ...req.body.options ],
@@ -180,7 +183,7 @@ exports.resetVotes = (req, res, next) => {
 };
 
 // Deletes a poll from the DB.
-exports.destroy = function(req, res) {
+exports.deletePoll = function(req, res) {
   Poll.findById(req.params.id, function (err, poll) {
     if(err) { return handleError(res, err); }
     if(!poll) { return res.status(404).send('Not Found'); }

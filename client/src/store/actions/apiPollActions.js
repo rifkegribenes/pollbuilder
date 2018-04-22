@@ -7,6 +7,9 @@ export const CREATE_POLL_FAILURE = "CREATE_POLL_FAILURE";
 export const UPDATE_POLL_REQUEST = "UPDATE_POLL_REQUEST";
 export const UPDATE_POLL_SUCCESS = "UPDATE_POLL_SUCCESS";
 export const UPDATE_POLL_FAILURE = "UPDATE_POLL_FAILURE";
+export const DELETE_POLL_REQUEST = "DELETE_POLL_REQUEST";
+export const DELETE_POLL_SUCCESS = "DELETE_POLL_SUCCESS";
+export const DELETE_POLL_FAILURE = "DELETE_POLL_FAILURE";
 export const VIEW_POLL_REQUEST = "VIEW_POLL_REQUEST";
 export const VIEW_POLL_SUCCESS = "VIEW_POLL_SUCCESS";
 export const VIEW_POLL_FAILURE = "VIEW_POLL_FAILURE";
@@ -133,6 +136,50 @@ export function viewPoll(token, pollId) {
         VIEW_POLL_SUCCESS,
         {
           type: VIEW_POLL_FAILURE,
+          payload: (action, state, res) => {
+            return res.json().then(data => {
+              let message = "Sorry, something went wrong :(";
+              if (data) {
+                if (data.message) {
+                  message = data.message;
+                }
+                return { message };
+              } else {
+                return { message };
+              }
+            });
+          }
+        }
+      ],
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  };
+}
+
+/*
+* Function: deletePoll - delete a single poll by ID
+* @param {string} token, pollId
+* This action dispatches additional actions as it executes:
+*   DELETE_POLL_REQUEST:
+*     Initiates a spinner on the home page.
+*   DELETE_POLL_SUCCESS:
+*     If poll successfully deleted, hides spinner
+*   DELETE_POLL_FAILURE:
+*     If database error,
+*     Hides spinner, displays error message in modal
+*/
+export function deletePoll(token, pollId) {
+  return {
+    [RSAA]: {
+      endpoint: `${BASE_URL}/api/poll/delete/${pollId}`,
+      method: "DELETE",
+      types: [
+        DELETE_POLL_REQUEST,
+        DELETE_POLL_SUCCESS,
+        {
+          type: DELETE_POLL_FAILURE,
           payload: (action, state, res) => {
             return res.json().then(data => {
               let message = "Sorry, something went wrong :(";

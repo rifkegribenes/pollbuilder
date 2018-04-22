@@ -29,6 +29,8 @@ class CreatePoll extends React.Component {
           this.props.actions.setLoggedIn();
         }
       });
+    } else {
+      this.props.actions.resetForm();
     }
   }
 

@@ -120,18 +120,19 @@ body.user-is-tabbing *:focus {
     font-weight: inherit;
     cursor: pointer;
   }
-  &__link {
+  &__link, a {
     border-bottom: 1px solid transparent;
     text-align: left;
     font-family: inherit;
     font-weight: inherit;
     font-size: inherit;
     width: 100%;
-    padding-bottom: 5px;
+    padding-bottom: 10px;
     margin-bottom: 10px;
+    text-decoration: none !important;
 
     &:hover, &:active, &:focus {
-      border-bottom: 1px dotted $color_gray_text;
+      border-bottom: 1px dotted $color_grape;
       cursor: pointer;
 
     }
@@ -226,17 +227,17 @@ input:invalid {
       width: auto;
       height: auto;
       overflow: visible;
-      padding: 7px 10px;
+      padding: 7px 15px;
       border-radius: 20px;
       appearance: none;
       -webkit-appearance: none;
-      background: $color_sky;
+      background: $color_grape;
       z-index: 100;
       border: 1px solid white;
-      color: $color_cream;
+      color: white;
       font-family: $font-stack;
       text-transform: uppercase;
-      letter-spacing: 2px;
+      letter-spacing: 1.5px;
       font-size: 1.2em;
 
       & i {
