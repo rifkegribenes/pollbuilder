@@ -78,7 +78,6 @@ export function createPoll(token, body) {
 *     Hides spinner, displays error message in modal
 */
 export function updatePoll(token, body) {
-  console.log(body._id);
   return {
     [RSAA]: {
       endpoint: `${BASE_URL}/api/poll/update/${body._id}`,

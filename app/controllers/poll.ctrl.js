@@ -4,7 +4,7 @@ const Poll = require('../models/poll');
 exports.getAllPolls = (user, req, res, next) => {
   Poll.find( (err, polls) => {
     // need to add logic here to return only active polls
-    console.log('getAllPolls');
+
     if (err) { return handleError(res, err); }
     return res.status(200).json({user, polls});
   });
@@ -13,7 +13,7 @@ exports.getAllPolls = (user, req, res, next) => {
 // Get all polls for a specific user
 exports.getUserPolls = (user, req, res, next) => {
   Poll.find( { ownerId: user._id }, (err, polls) => {
-    console.log('getUserPolls');
+
     if (err) { return handleError(res, err); }
     return res.status(200).json({user, polls});
   });
@@ -63,7 +63,7 @@ exports.newPoll = (user, req, res, next) => {
         }
     }) // then (Poll.findOne)
     .catch( (err) => {
-      console.log('poll.ctrl.js > newPoll > catch 131');
+      console.log('poll.ctrl.js > newPoll > catch 66');
       console.log(err);
       return next(err);
     }); // catch (Poll.findOne)
@@ -72,8 +72,6 @@ exports.newPoll = (user, req, res, next) => {
 // Update an existing poll.
 exports.updatePoll = (user, req, res, next) => {
   const pollId = req.body._id;
-  console.log(`poll.ctrl.js > 75, pollId: ${pollId}`);
-  console.log(req.body);
 
   const target = {
     _id: pollId
@@ -81,25 +79,15 @@ exports.updatePoll = (user, req, res, next) => {
 
   // kick off promise chain
   new Promise( (resolve, reject) => {
-    console.log('poll.ctrl.js > 84');
-    console.log(user);
-    console.log(user._id);
-    console.log(req.body);
     // Must be poll owner or site admin to update
     if (req.body.ownerId.toString() === user._id.toString() || user.role === 'admin') {
-      console.log('userId matches poll owner ID');
       resolve(target);
     } else {
-      console.log('poll owner id:');
-      console.log(req.body.ownerId);
-      console.log('requesting user id');
-      console.log(req.user._id)
       reject({message: 'You do not have permission to update this poll.'});
     }
 
   })
   .then( () => {
-    console.log('poll.ctrl.js > 99');
     // map enumerable req body properties to updates object
     if (req.body._id) { delete req.body._id };
     const updates = { ...req.body };
@@ -109,15 +97,11 @@ exports.updatePoll = (user, req, res, next) => {
     Poll.findOneAndUpdate(target, updates, options)
       .exec()
         .then((poll) => {
-          console.log('poll.ctrl.js > 109');
-          console.log(poll);
           if (!poll) {
             return res
               .status(404)
               .json({message: 'Poll not found'});
           } else {
-            console.log('updated poll:');
-            console.log(poll);
             return res
               .status(200)
               .json({
@@ -128,13 +112,14 @@ exports.updatePoll = (user, req, res, next) => {
           }
         })
         .catch(err => {
-          console.log('catch block poll.ctrl.js > 128');
+          console.log('catch block poll.ctrl.js > 115');
+          console.log(err);
           return handleError(res, err);
         });
 
     })
   .catch(err => {
-    console.log('catch block poll.ctrl.js > 134');
+    console.log('catch block poll.ctrl.js > 121');
     console.log(err);
     return handleError(res, err);
   });
