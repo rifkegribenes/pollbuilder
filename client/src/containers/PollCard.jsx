@@ -47,7 +47,7 @@ PollCard.propTypes = {
         _id: PropTypes.string
       })
     ),
-    ownerID: PropTypes.string,
+    ownerId: PropTypes.string,
     ownerName: PropTypes.string
   }).isRequired,
   history: PropTypes.shape({

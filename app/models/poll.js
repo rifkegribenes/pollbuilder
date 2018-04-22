@@ -22,7 +22,7 @@ const PollSchema = new Schema({
   slug: {type: String },
   options: [OptionSchema],
   votes: [VoteSchema],
-  ownerID: {type: Schema.Types.ObjectId, required: false},
+  ownerId: {type: Schema.Types.ObjectId, required: false},
   ownerName: {type: String, required: false}
 },{
   timestamps: true

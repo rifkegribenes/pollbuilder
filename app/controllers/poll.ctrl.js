@@ -12,7 +12,7 @@ exports.getAllPolls = (user, req, res, next) => {
 
 // Get all polls for a specific user
 exports.getUserPolls = (user, req, res, next) => {
-  Poll.find( { ownerID: user._id }, (err, polls) => {
+  Poll.find( { ownerId: user._id }, (err, polls) => {
     console.log('getUserPolls');
     if (err) { return handleError(res, err); }
     return res.status(200).json({user, polls});
@@ -42,7 +42,7 @@ exports.newPoll = (user, req, res, next) => {
   const body = {
     question: req.body.question,
     options: [ ...req.body.options ],
-    ownerID: user._id,
+    ownerId: user._id,
     ownerName: `${user.profile.firstName} ${user.profile.lastName}`
   }
   // check if poll question is unique
@@ -81,7 +81,10 @@ exports.updatePoll = (user, req, res, next) => {
 
   // kick off promise chain
   new Promise( (resolve, reject) => {
-
+    console.log('poll.ctrl.js > 84');
+    console.log(user);
+    console.log(user._id);
+    console.log(req.body);
     // Must be poll owner or site admin to update
     if (req.body.ownerId.toString() === user._id.toString() || user.role === 'admin') {
       console.log('userId matches poll owner ID');
@@ -96,7 +99,7 @@ exports.updatePoll = (user, req, res, next) => {
 
   })
   .then( () => {
-    console.log('poll.ctrl.js > 96');
+    console.log('poll.ctrl.js > 99');
     // map enumerable req body properties to updates object
     if (req.body._id) { delete req.body._id };
     const updates = { ...req.body };
@@ -106,7 +109,7 @@ exports.updatePoll = (user, req, res, next) => {
     Poll.findOneAndUpdate(target, updates, options)
       .exec()
         .then((poll) => {
-          console.log('poll.ctrl.js > 105');
+          console.log('poll.ctrl.js > 109');
           console.log(poll);
           if (!poll) {
             return res
@@ -125,13 +128,14 @@ exports.updatePoll = (user, req, res, next) => {
           }
         })
         .catch(err => {
-          console.log('catch block poll.ctrl.js > 124');
+          console.log('catch block poll.ctrl.js > 128');
           return handleError(res, err);
         });
 
     })
   .catch(err => {
-    console.log('catch block poll.ctrl.js > 130');
+    console.log('catch block poll.ctrl.js > 134');
+    console.log(err);
     return handleError(res, err);
   });
 };

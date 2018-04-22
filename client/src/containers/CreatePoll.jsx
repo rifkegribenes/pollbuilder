@@ -61,6 +61,7 @@ class CreatePoll extends React.Component {
           });
       } else if (action === "update") {
         body._id = this.props.match.params.id;
+        body.ownerId = this.props.poll.form.ownerId;
         this.props.api
           .updatePoll(token, body)
           .then(result => {

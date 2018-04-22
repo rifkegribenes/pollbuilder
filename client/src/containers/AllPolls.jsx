@@ -29,7 +29,7 @@ class AllPolls extends React.Component {
       return (
         <PollCard
           key={poll._id}
-          owner={poll.ownerID === this.props.profile.user._id}
+          owner={poll.ownerId === this.props.profile.user._id}
           poll={poll}
           history={this.props.history}
         />
@@ -95,7 +95,7 @@ AllPolls.propTypes = {
           _id: PropTypes.string
         })
       ),
-      ownerID: PropTypes.string,
+      ownerId: PropTypes.string,
       ownerName: PropTypes.string
     }).isRequired,
     errorMsg: PropTypes.string,

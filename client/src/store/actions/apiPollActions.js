@@ -82,7 +82,7 @@ export function updatePoll(token, body) {
   return {
     [RSAA]: {
       endpoint: `${BASE_URL}/api/poll/update/${body._id}`,
-      method: "POST",
+      method: "PUT",
       types: [
         UPDATE_POLL_REQUEST,
         UPDATE_POLL_SUCCESS,

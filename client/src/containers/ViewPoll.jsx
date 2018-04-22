@@ -60,7 +60,7 @@ class ViewPoll extends React.Component {
         <div className="container poll__container">
           <PollCard
             single={true}
-            owner={this.props.profile.user._id === this.props.poll.form.ownerID}
+            owner={this.props.profile.user._id === this.props.poll.form.ownerId}
             poll={this.props.poll.form}
             history={this.props.history}
           />
@@ -98,7 +98,7 @@ ViewPoll.propTypes = {
           _id: PropTypes.string
         })
       ).isRequired,
-      ownerID: PropTypes.string,
+      ownerId: PropTypes.string,
       _id: PropTypes.string
     }).isRequired,
     errorMsg: PropTypes.string,

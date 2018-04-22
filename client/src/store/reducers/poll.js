@@ -63,7 +63,7 @@ const INITIAL_STATE = {
     touched: {},
     showFieldErrors: {},
     validationErrors: {},
-    ownerID: "",
+    ownerId: "",
     ownerName: ""
   },
   polls: [],
@@ -285,10 +285,10 @@ function poll(state = INITIAL_STATE, action) {
         modal: {
           class: "modal__show",
           type: "modal__success",
-          title: "New Poll Created",
+          title: `Poll ${message}`,
           text: `Your poll was ${message} successfully`,
           buttonText: "View Poll",
-          redirect: `/poll/${action.payload._id}`
+          redirect: `/poll/${action.payload.poll._id}`
         }
       });
 
@@ -310,7 +310,7 @@ function poll(state = INITIAL_STATE, action) {
     //   _id: action.payload.poll._id,
     //   question: action.payload.poll.question,
     //   options: [...action.payload.poll.options],
-    //   ownerID: action.payload.poll.ownerID,
+    //   ownerId: action.payload.poll.ownerId,
     //   ownerName: action.payload.poll.ownerName
     // }
     // });
