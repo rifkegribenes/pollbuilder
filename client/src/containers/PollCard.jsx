@@ -18,13 +18,10 @@ const PollCard = props => (
     }
     onClick={() => {
       if (props.owner && props.single) {
-        console.log("owner single");
         props.history.push(`/edit/${props.poll._id}`);
       } else if (!props.single) {
-        console.log("not single");
         props.history.push(`/poll/${props.poll._id}`);
       } else {
-        console.log("single and not owner");
         return null;
       }
     }}
