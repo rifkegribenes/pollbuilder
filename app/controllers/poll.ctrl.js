@@ -183,22 +183,35 @@ exports.resetVotes = (req, res, next) => {
 };
 
 // Deletes a poll from the DB.
-exports.deletePoll = function(req, res) {
-  Poll.findById(req.params.id, function (err, poll) {
-    if(err) { return handleError(res, err); }
-    if(!poll) { return res.status(404).send('Not Found'); }
-
-    // Only owners and admins may delete
-    if(poll.owner.toString() === req.user._id.toString() || req.user.role === 'admin') {
-      poll.remove(function(err) {
-        if(err) { return handleError(res, err); }
-        return res.status(204).send('No Content');
-      });
-    } else {
-      return res.status(403).send('You do not have permission to delete this item');
-    }
-  });
-};
+exports.deletePoll = (user, req, res, next) => {
+  Poll.findOne({ _id: req.params.pollId })
+    .then((poll) => {
+      if (!poll) {
+        console.log('poll.ctrl.js > 195: Poll not found');
+        return res.status(404).json({message: 'Poll not found.'});
+      } else {
+        // Only owners and admins can delete
+        if (poll.ownerId.toString() === user._id.toString() ||
+          user.role === 'admin') {
+          poll.remove((err) => {
+            if (err) {
+              return handleError(res, err);
+            } else {
+              console.log('poll.ctrl.js > 203');
+              return res.status(204).json({message: 'Poll was successfully deleted.'});
+            }
+          });
+        } else {
+          return res.status(403).json({message: 'You do not have permission to delete this item.'});
+        }
+      }
+  })
+  .catch((err) => {
+      console.log('poll.ctrl.js > 190');
+      console.log(err);
+      return handleError(res, err);
+    });
+}
 
 function handleError(res, err) {
   return res.status(500).send(err);

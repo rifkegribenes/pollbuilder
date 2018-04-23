@@ -43,7 +43,7 @@ const PollCard = props => (
             title="Edit poll"
             onClick={() => props.history.push(`/edit/${props.poll._id}`)}
           >
-            <img src={editIcon} className="polls-grid__icon" />
+            <img src={editIcon} className="polls-grid__icon" alt="" />
           </button>
           <button
             className="aria-button polls-grid__admin polls-grid__delete"
@@ -54,7 +54,7 @@ const PollCard = props => (
               )
             }
           >
-            <img src={deleteIcon} className="polls-grid__icon" />
+            <img src={deleteIcon} className="polls-grid__icon" alt="" />
           </button>
         </div>
       )}
