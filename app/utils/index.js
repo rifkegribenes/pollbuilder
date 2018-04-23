@@ -2,12 +2,7 @@ const jwt = require('jsonwebtoken');
 
 exports.setUserInfo = (request) => {
   const getUserInfo = {
-    _id: request._id,
-    firstName: request.profile.firstName,
-    lastName: request.profile.lastName,
-    email: request.profile.email,
-    avatarUrl: request.profile.avatarUrl,
-    validated: request.validated
+    _id: request._id
   };
 
   return getUserInfo;

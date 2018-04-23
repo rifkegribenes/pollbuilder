@@ -40,36 +40,40 @@ exports.viewPollBySlug = (req, res, next) => {
 // Create a new poll
 exports.newPoll = (user, req, res, next) => {
   if (!user) {
-    return res.status(422).send({ message: 'You must be logged in to create a new poll.' });
-  }
-  const body = {
-    question: req.body.question,
-    options: [ ...req.body.options ],
-    ownerId: user._id,
-    ownerName: `${user.profile.firstName} ${user.profile.lastName}`
-  }
-  // check if poll question is unique
-  Poll.findOne({ question: req.body.question })
-    .then( (existingPoll) => {
-      // If poll is not unique
-      if (existingPoll) {
-        return res.status(422).send({ message: 'Oops! A poll with that question already exists. Please try again with a different question.' });
-        } else {
-          // if not, poll question is unique; create new poll
-          Poll.create(body, (err, poll) => {
-            if (err) {
-              return handleError(res, err);
-            } else {
-              return res.status(201).json(poll);
-            }
-          });
-        }
-    }) // then (Poll.findOne)
-    .catch( (err) => {
-      console.log('poll.ctrl.js > newPoll > catch 66');
-      console.log(err);
-      return next(err);
-    }); // catch (Poll.findOne)
+    console.log('no user returned from reqireAuth (poll.ctrl.js > 43)');
+    return res.status(422).json({ message: 'You must be logged in to create a new poll.' });
+  } else {
+    console.log('poll.ctrl.js > 46');
+    console.log(user._id);
+    const body = {
+      question: req.body.question,
+      options: [ ...req.body.options ],
+      ownerId: user._id,
+      ownerName: `${user.profile.firstName} ${user.profile.lastName}`
+    }
+    // check if poll question is unique
+    Poll.findOne({ question: req.body.question })
+      .then( (existingPoll) => {
+        // If poll is not unique
+        if (existingPoll) {
+          return res.status(422).send({ message: 'Oops! A poll with that question already exists. Please try again with a different question.' });
+          } else {
+            // if not, poll question is unique; create new poll
+            Poll.create(body, (err, poll) => {
+              if (err) {
+                return handleError(res, err);
+              } else {
+                return res.status(201).json({ user, poll });
+              }
+            });
+          }
+      }) // then (Poll.findOne)
+      .catch( (err) => {
+        console.log('poll.ctrl.js > catch block 71');
+        console.log(err);
+        return next(err);
+      }); // catch (Poll.findOne)
+    }
 }; // newPoll
 
 // Update an existing poll.

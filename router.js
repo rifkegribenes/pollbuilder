@@ -29,7 +29,7 @@ const checkVerified = (req, res, next) => {
 
 const requireAuth = (req, res, next) => {
   console.log('requireAuth');
-  passport.authenticate('jwt', { session: true },
+  passport.authenticate('jwt', { session: false },
     (err, user, info) => {
       console.log(err);
       console.log(`info: ${info}`);
@@ -43,15 +43,18 @@ const requireAuth = (req, res, next) => {
       }
       if (user) {
         console.log('router.js > 45');
-        const userInfo = helpers.setUserInfo(user);
-        req.login(user, loginErr => {
+        // const userInfo = helpers.setUserInfo(user);
+        req.login(user, (loginErr) => {
           if (loginErr) {
             console.log('router.js > 49');
             console.log(loginErr);
             return next(loginErr);
+          } else {
+            console.log('router.js > 53');
+            console.log('this is the user being passed to "next":');
+            console.log(user);
+            return next(user);
           }
-          console.log('router.js > 53');
-          return next(user);
         }); // req.login
       }
     })(req, res, next);
