@@ -251,7 +251,8 @@ function poll(state = INITIAL_STATE, action) {
           title: { $set: action.payload.title },
           type: { $set: "modal__error" },
           buttonText: { $set: action.payload.buttonText },
-          action: { $set: action.payload.action }
+          action: { $set: action.payload.action },
+          modalDanger: { $set: action.payload.modalDanger }
         }
       });
 

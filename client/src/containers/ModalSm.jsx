@@ -234,7 +234,7 @@ class ModalSm extends React.Component {
                   )}
                 </div>
               )}
-              {this.props.modalType === "modal__danger" ? (
+              {this.props.modalDanger ? (
                 <div className="modal__action">
                   <button
                     className="modal__button"

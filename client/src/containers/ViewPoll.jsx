@@ -39,6 +39,7 @@ class ViewPoll extends React.Component {
           inputLabel={this.props.poll.modal.inputLabel}
           inputType={this.props.poll.modal.inputType}
           buttonText={this.props.poll.modal.buttonText}
+          modalDanger={this.props.poll.modal.modalDanger}
           dismiss={() => {
             this.props.actions.dismissModal();
             if (

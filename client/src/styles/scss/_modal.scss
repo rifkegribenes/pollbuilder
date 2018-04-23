@@ -59,7 +59,8 @@
   &__action {
     cursor: pointer;
     padding: 5px 40px;
-    text-align: center;
+    display: flex;
+    justify-content: center;
     @include for-phone-landscape-up {
       margin-top: 40px
     }
@@ -90,6 +91,14 @@
     overflow: hidden;
     cursor: pointer;
 
+    &:last-child {
+      margin-left: 20px;
+    }
+
+    &:first-child {
+      margin-left: 0 !important;
+    }
+
       &:hover, &:focus {
         -webkit-appearance: none;
         appearance: none;
@@ -98,7 +107,12 @@
         transition: all 500ms ease-in-out;
       }
     }
+
+  &__danger {
+    background: $color_raspberry;
+  }
 }
+
 .modal-close {
   position: absolute;
   top: 8px;

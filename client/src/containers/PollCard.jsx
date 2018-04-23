@@ -8,6 +8,7 @@ const deleteModal = (pollId, token, deletePoll) => {
   return {
     title: "Confirm Delete",
     buttonText: "Delete",
+    modalDanger: true,
     action: () => deletePoll(token, pollId),
     message: "Are you sure you want to delete this poll? This cannot be undone."
   };
