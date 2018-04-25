@@ -5,7 +5,7 @@
 
 	@include for-phone-landscape-up {
 		column-count: 2;
-		column-gap: 1em;
+		column-gap: 1.5em;
 	}
 
 	@include for-tablet-landscape-up {
@@ -40,12 +40,15 @@
 		padding: 20px 20px 10px 20px;
 		display: inline-block;
 		width: 100%;
-		margin: .1em 0 1em;
+		margin: .5em 0 1em;
 		-webkit-column-break-inside: avoid;
 		border-radius: $btn_border-radius;
     box-shadow: 0px 0px 3px 0px $color_grape;
     text-decoration: none !important;
     position: relative;
+    -webkit-column-break-inside: avoid;
+    page-break-inside: avoid;
+    break-inside: avoid;
 
 		&:first-child {
 				// margin: 0 0 1em;
