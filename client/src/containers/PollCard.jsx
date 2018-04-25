@@ -14,22 +14,15 @@ const deleteModal = (pollId, token, deletePoll) => {
   };
 };
 
-const PollCard = props => (
+const PollInnards = props => (
   <div
-    key={props.poll._id}
     className={
       props.owner
-        ? "aria-button polls-grid__card polls-grid__card--owner"
-        : "aria-button polls-grid__card"
+        ? "polls-grid__card polls-grid__card--owner"
+        : "polls-grid__card"
     }
   >
-    {props.single ? (
-      <div className="polls-grid__title">{props.poll.question}</div>
-    ) : (
-      <Link to={`/poll/${props.poll._id}`}>
-        <div className="polls-grid__title">{props.poll.question}</div>
-      </Link>
-    )}
+    <div className="polls-grid__title">{props.poll.question}</div>
     {props.poll.options[0].text !== "" &&
       props.poll.options.map((option, idx) => (
         <div key={option._id || idx} className="polls-grid__option">
@@ -59,6 +52,22 @@ const PollCard = props => (
           </button>
         </div>
       )}
+  </div>
+);
+
+const PollCard = props => (
+  <div key={props.poll._id}>
+    {props.single ? (
+      <PollInnards {...props} />
+    ) : (
+      <Link to={`/poll/${props.poll._id}`} className="polls-grid__link-wrap">
+        <div className="polls-grid__card">
+          <div className="polls-grid__title polls-grid__title--sm">
+            {props.poll.question}
+          </div>
+        </div>
+      </Link>
+    )}
   </div>
 );
 

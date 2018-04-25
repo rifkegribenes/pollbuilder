@@ -37,7 +37,7 @@
 
 	&__card {
 		font-size: 1em;
-		padding: 20px;
+		padding: 20px 20px 10px 20px;
 		display: inline-block;
 		width: 100%;
 		margin: .1em 0 1em;
@@ -63,12 +63,6 @@
 			}
 		}
 
-		@include for-phone-landscape-up {
-
-    }
-
-    @include for-tablet-landscape-up {
-    }
 	}
 
 
@@ -81,6 +75,10 @@
 		font-weight: 400;
 		position: relative;
 		text-decoration: none !important;
+
+		&--sm {
+			margin-bottom: 0;
+		}
 	}
 
 	&__option {
@@ -91,9 +89,8 @@
 	}
 }
 
-a > .polls-grid__title {
-	text-decoration: none !important;
+a > .polls-grid__card {
 	&:hover, &:active, &:focus {
-		border-bottom: 1px dotted $color_grape;
+		box-shadow: 0 0 1em $color_focus_ring;
 	}
 }

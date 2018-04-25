@@ -1451,7 +1451,7 @@ input:not([type=checkbox]):not([type=radio]), textarea {
       padding-top: 9px; }
   .polls-grid__card {
     font-size: 1em;
-    padding: 20px;
+    padding: 20px 20px 10px 20px;
     display: inline-block;
     width: 100%;
     margin: .1em 0 1em;
@@ -1472,16 +1472,16 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     font-weight: 400;
     position: relative;
     text-decoration: none !important; }
+    .polls-grid__title--sm {
+      margin-bottom: 0; }
   .polls-grid__option {
     color: #545454;
     position: relative;
     width: 100%;
     text-decoration: none !important; }
 
-a > .polls-grid__title {
-  text-decoration: none !important; }
-  a > .polls-grid__title:hover, a > .polls-grid__title:active, a > .polls-grid__title:focus {
-    border-bottom: 1px dotted #833ab4; }
+a > .polls-grid__card:hover, a > .polls-grid__card:active, a > .polls-grid__card:focus {
+  box-shadow: 0 0 1em #4b6cb7; }
 
 * {
   -moz-box-sizing: border-box;
