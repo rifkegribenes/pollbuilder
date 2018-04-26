@@ -134,31 +134,51 @@ exports.updatePoll = (user, req, res, next) => {
 
 // add voter to poll
 exports.vote = (req, res, next) => {
-  console.log('poll.ctrl.js > 127: vote');
-  Poll.findById(req.params.pollId, (err, poll) => {  // change to findeOneAndUpdate
-    if (err) { return handleError(res, err); }
-    if (!poll) { return res.status(404).send('Not Found'); }
-    const updated = { ...req.body };
+  const target = {
+    _id: req.params.pollId
+  };
+  if (req.body._id) { delete req.body._id };
+  const updates = { ...req.body };
+  const options = { new: true };
 
-    // Add voter IP
-    let voterIP = req.headers["x-forwarded-for"];
-    if (voterIP){
-      const list = voterIP.split(",");
-      voterIP = list[list.length-1];
-    } else {
-      voterIP = req.connection.remoteAddress;
-    }
-    // need to attach vote to option, so need to know optionID here
-    updated.votes.push({
-      option: req.params.optionId,
-      voterIP
-    });
+  // Add voter IP
+  let voterIP = req.headers["x-forwarded-for"];
+  if (voterIP) {
+    const list = voterIP.split(",");
+    voterIP = list[list.length-1];
+  } else {
+    voterIP = req.connection.remoteAddress;
+  }
 
-    updated.save(function (err) {
-      if (err) { return handleError(res, err); }
-      return res.status(200).json(poll);
-    });
+  if (!updates.votes) {
+    updates.votes = [];
+  }
+  updates.votes.push({
+    option: req.params.optionId,
+    voterIP
   });
+
+  Poll.findOneAndUpdate(target, updates, options)
+    .exec()
+    .then((poll) => {
+      if (!poll) {
+        return res
+          .status(404)
+          .json({message: 'Poll not found'});
+      } else {
+        return res
+          .status(200)
+          .json({
+            message: 'Vote recorded successfully',
+            poll
+          });
+      }
+    })
+    .catch(err => {
+      console.log('catch block poll.ctrl.js > 178');
+      console.log(err);
+      return handleError(res, err);
+    });
 };
 
 // reset votes on a poll
@@ -217,5 +237,6 @@ exports.deletePoll = (user, req, res, next) => {
 }
 
 function handleError(res, err) {
+  console.log(err);
   return res.status(500).send(err);
 }

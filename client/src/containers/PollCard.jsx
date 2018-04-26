@@ -23,19 +23,21 @@ const PollInnards = props => (
     }
   >
     <div className="polls-grid__title">{props.poll.question}</div>
-    {props.poll.options[0].text !== "" &&
-      props.poll.options.map((option, idx) => (
-        <button
-          key={option._id || idx}
-          className="polls-grid__option"
-          onClick={() => {
-            const body = { ...props.poll };
-            props.vote(props.poll._id, props.option._id, body);
-          }}
-        >
-          {option._id !== undefined && option.text}
-        </button>
-      ))}
+    <div className="polls-grid__options-wrap">
+      {props.poll.options[0].text !== "" &&
+        props.poll.options.map((option, idx) => (
+          <button
+            key={option._id || idx}
+            className="polls-grid__option form__button"
+            onClick={() => {
+              const body = { ...props.poll };
+              props.vote(props.poll._id, option._id, body);
+            }}
+          >
+            {option._id !== undefined && option.text}
+          </button>
+        ))}
+    </div>
     {props.owner &&
       props.single && (
         <div className="polls-grid__admin-buttons">

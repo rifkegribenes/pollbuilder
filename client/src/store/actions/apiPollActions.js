@@ -330,7 +330,10 @@ export function vote(pollId, optionId, body) {
           }
         }
       ],
-      headers: {}
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(body)
     }
   };
 }

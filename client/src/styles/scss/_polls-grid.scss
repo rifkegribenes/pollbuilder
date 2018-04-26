@@ -88,10 +88,17 @@
 		}
 	}
 
-	&__option {
-		color: $color_gray_text;
-		position: relative;
+	&__options-wrap {
 		width: 100%;
+	}
+
+	&__option {
+		color: white;
+		text-transform: none !important;
+		letter-spacing: normal;
+		position: relative;
+		max-width: 300px;
+		margin-bottom: 20px;
 		text-decoration: none !important;
 
 		&--button {

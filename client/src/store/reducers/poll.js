@@ -32,7 +32,10 @@ import {
   GET_ALL_POLLS_FAILURE,
   GET_USER_POLLS_REQUEST,
   GET_USER_POLLS_SUCCESS,
-  GET_USER_POLLS_FAILURE
+  GET_USER_POLLS_FAILURE,
+  VOTE_REQUEST,
+  VOTE_SUCCESS,
+  VOTE_FAILURE
 } from "../actions/apiPollActions";
 import {
   RESEND_VLINK_REQUEST,
@@ -59,6 +62,7 @@ const INITIAL_STATE = {
         text: ""
       }
     ],
+    votes: [],
     error: false,
     touched: {},
     showFieldErrors: {},
@@ -213,6 +217,7 @@ function poll(state = INITIAL_STATE, action) {
     case RESEND_VLINK_REQUEST:
     case CREATE_POLL_REQUEST:
     case VIEW_POLL_REQUEST:
+    case VOTE_REQUEST:
       return Object.assign({}, state, {
         spinnerClass: "spinner__show",
         modal: {
@@ -318,6 +323,7 @@ function poll(state = INITIAL_STATE, action) {
     *  Payload: poll object
     *  Purpose: Display poll
     */
+    case VOTE_SUCCESS:
     case VIEW_POLL_SUCCESS:
       return update(state, {
         spinnerClass: { $set: "spinner__hide" },
@@ -362,21 +368,11 @@ function poll(state = INITIAL_STATE, action) {
     case GET_ALL_POLLS_FAILURE:
     case VIEW_POLL_FAILURE:
     case CREATE_POLL_FAILURE:
+    case VOTE_FAILURE:
       if (typeof action.payload.message === "string") {
         error = action.payload.message;
       } else {
         error = "Sorry, something went wrong :(\nPlease try again.";
-      }
-      if (action.type === "VIEW_POLL_FAILURE") {
-        title = "Error: Poll not found";
-      } else if (action.type === "GET_ALL_POLLS_FAILURE") {
-        title = "Error: Could not load polls";
-      } else if (action.type === "UPDATE_POLL_FAILURE") {
-        title = "Error: Could not update poll";
-      } else if (action.type === "DELETE_POLL_FAILURE") {
-        title = "Error: Could not delete poll";
-      } else {
-        title = "Error: Poll not saved";
       }
       return Object.assign({}, state, {
         spinnerClass: "spinner__hide",

@@ -1475,10 +1475,15 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     text-decoration: none !important; }
     .polls-grid__title--sm {
       margin-bottom: 0; }
+  .polls-grid__options-wrap {
+    width: 100%; }
   .polls-grid__option {
-    color: #545454;
+    color: white;
+    text-transform: none !important;
+    letter-spacing: normal;
     position: relative;
-    width: 100%;
+    max-width: 300px;
+    margin-bottom: 20px;
     text-decoration: none !important; }
 
 a > .polls-grid__card:hover, a > .polls-grid__card:active, a > .polls-grid__card:focus {
