@@ -60,6 +60,10 @@
 		  height: 20px;
 		}
 
+		&--single {
+
+		}
+
 		&--owner {
 			&:hover {
 
@@ -89,6 +93,10 @@
 		position: relative;
 		width: 100%;
 		text-decoration: none !important;
+
+		&--button {
+
+		}
 	}
 }
 

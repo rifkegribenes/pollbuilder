@@ -1373,12 +1373,10 @@ input:not([type=checkbox]):not([type=radio]), textarea {
 
 .poll__container {
   width: 100%;
+  max-width: 880px !important;
   margin: auto;
   position: relative;
   margin-bottom: 80px; }
-  @media (min-width: 400px) {
-    .poll__container {
-      width: 380px; } }
 .poll__icon-button {
   appearance: none;
   -webkit-appearance: none;

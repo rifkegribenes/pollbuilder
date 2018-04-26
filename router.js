@@ -214,6 +214,8 @@ module.exports = function (app) {
   pollRoutes.delete('/delete/:pollId', requireAuth, PollController.deletePoll);
 
   // Vote in a poll
+  // Returns fail status + message -or- poll object & user
+  pollRoutes.post('/vote/:pollId/:optionId', PollController.vote);
 
   // Reset votes
 

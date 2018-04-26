@@ -134,11 +134,11 @@ exports.updatePoll = (user, req, res, next) => {
 
 // add voter to poll
 exports.vote = (req, res, next) => {
-  // if(req.body._id) { delete req.body._id; }  ?????
-  Poll.findById(req.params.id, (err, poll) => {  // change to findeOneAndUpdate
+  console.log('poll.ctrl.js > 127: vote');
+  Poll.findById(req.params.pollId, (err, poll) => {  // change to findeOneAndUpdate
     if (err) { return handleError(res, err); }
-    if(!poll) { return res.status(404).send('Not Found'); }
-    const updated = {...poll, ...req.body};
+    if (!poll) { return res.status(404).send('Not Found'); }
+    const updated = { ...req.body };
 
     // Add voter IP
     let voterIP = req.headers["x-forwarded-for"];
@@ -149,10 +149,9 @@ exports.vote = (req, res, next) => {
       voterIP = req.connection.remoteAddress;
     }
     // need to attach vote to option, so need to know optionID here
-    updated.voter.push({
-      voterID: Schema.Types.ObjectId,
-      option: String,
-      voterIP: String
+    updated.votes.push({
+      option: req.params.optionId,
+      voterIP
     });
 
     updated.save(function (err) {

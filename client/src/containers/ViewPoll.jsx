@@ -70,6 +70,7 @@ class ViewPoll extends React.Component {
             deletePoll={this.props.api.deletePoll}
             token={this.props.appState.authToken}
             setModalError={this.props.actions.setModalError}
+            vote={this.props.api.vote}
           />
         </div>
       </div>
@@ -91,7 +92,8 @@ ViewPoll.propTypes = {
   }).isRequired,
   api: PropTypes.shape({
     viewPoll: PropTypes.func,
-    deletePoll: PropTypes.func
+    deletePoll: PropTypes.func,
+    vote: PropTypes.func
   }).isRequired,
   profile: PropTypes.shape({
     user: PropTypes.shape({

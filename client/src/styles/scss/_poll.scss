@@ -2,12 +2,13 @@
 
 	&__container {
 		width: 100%;
+		max-width: 880px !important;
 		margin: auto;
 	  position: relative;
 	  margin-bottom: 80px;
 
 	@include for-phone-portrait-up {
-      width: 380px;
+
     }
 	}
 	&__icon-button {

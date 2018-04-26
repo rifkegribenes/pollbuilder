@@ -19,6 +19,9 @@ export const GET_ALL_POLLS_FAILURE = "GET_ALL_POLLS_FAILURE";
 export const GET_USER_POLLS_REQUEST = "GET_USER_POLLS_REQUEST";
 export const GET_USER_POLLS_SUCCESS = "GET_USER_POLLS_SUCCESS";
 export const GET_USER_POLLS_FAILURE = "GET_USER_POLLS_FAILURE";
+export const VOTE_REQUEST = "VOTE_REQUEST";
+export const VOTE_SUCCESS = "VOTE_SUCCESS";
+export const VOTE_FAILURE = "VOTE_FAILURE";
 
 /*
 * Function: createPoll - create a new poll
@@ -286,6 +289,48 @@ export function getUserPolls(token, userId) {
       headers: {
         Authorization: `Bearer ${token}`
       }
+    }
+  };
+}
+
+/*
+* Function: vote - vote for an option in a poll
+* @param {string} token
+* This action dispatches additional actions as it executes:
+*   VOTE_REQUEST:
+*     Initiates a spinner on the home page.
+*   VOTE_SUCCESS:
+*     If vote succesfully recorded, hides spinner
+*   VOTE_FAILURE:
+*     If database error,
+*     Hides spinner, displays error message in modal
+*/
+export function vote(pollId, optionId, body) {
+  return {
+    [RSAA]: {
+      endpoint: `${BASE_URL}/api/poll/vote/${pollId}/${optionId}`,
+      method: "POST",
+      types: [
+        VOTE_REQUEST,
+        VOTE_SUCCESS,
+        {
+          type: VOTE_FAILURE,
+          payload: (action, state, res) => {
+            return res.json().then(data => {
+              let message = "Sorry, something went wrong :(";
+              if (data) {
+                if (data.message) {
+                  message = data.message;
+                }
+                return { message };
+              } else {
+                return { message };
+              }
+            });
+          }
+        }
+      ],
+      headers: {}
     }
   };
 }

@@ -13,7 +13,7 @@ const OptionSchema = new Schema({
   addedBy: Schema.Types.ObjectId
 });
 const VoteSchema = new Schema({
-  voterID: Schema.Types.ObjectId,
+  voterId: Schema.Types.ObjectId,
   option: String,
   voterIP: String
 });

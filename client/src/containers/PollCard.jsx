@@ -18,16 +18,23 @@ const PollInnards = props => (
   <div
     className={
       props.owner
-        ? "polls-grid__card polls-grid__card--owner"
-        : "polls-grid__card"
+        ? "polls-grid__card polls-grid__card--single polls-grid__card--owner"
+        : "polls-grid__card polls-grid__card--single"
     }
   >
     <div className="polls-grid__title">{props.poll.question}</div>
     {props.poll.options[0].text !== "" &&
       props.poll.options.map((option, idx) => (
-        <div key={option._id || idx} className="polls-grid__option">
+        <button
+          key={option._id || idx}
+          className="polls-grid__option"
+          onClick={() => {
+            const body = { ...props.poll };
+            props.vote(props.poll._id, props.option._id, body);
+          }}
+        >
           {option._id !== undefined && option.text}
-        </div>
+        </button>
       ))}
     {props.owner &&
       props.single && (
@@ -91,7 +98,8 @@ PollCard.propTypes = {
   }).isRequired,
   owner: PropTypes.bool.isRequired,
   single: PropTypes.bool,
-  setModalError: PropTypes.func
+  setModalError: PropTypes.func,
+  vote: PropTypes.func
 };
 
 export default withRouter(PollCard);
