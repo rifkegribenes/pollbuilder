@@ -13,26 +13,6 @@ const SocialAuth = props => (
   <div className="combo__social-wrap">
     <a
       className="form__button form__button--sm"
-      href="http://localhost:3001/api/auth/github/"
-      id="btn-github"
-      onClick={() => {
-        props.actions.setSpinner("show");
-        props.toggleLocalForm(false);
-      }}
-    >
-      <div className="form__button--github">
-        <img
-          className="form__icon form__icon--github"
-          alt="github"
-          src={ghIcon}
-        />
-      </div>
-      <span className="form__sm-button-text">{`${
-        props.buttonText
-      } with Github`}</span>
-    </a>
-    <a
-      className="form__button form__button--sm"
       id="btn-facebook"
       href="http://localhost:3001/api/auth/facebook"
       onClick={() => {
@@ -70,6 +50,26 @@ const SocialAuth = props => (
       <span className="form__sm-button-text">{`${
         props.buttonText
       } with Google`}</span>
+    </a>
+    <a
+      className="form__button form__button--sm"
+      href="http://localhost:3001/api/auth/github/"
+      id="btn-github"
+      onClick={() => {
+        props.actions.setSpinner("show");
+        props.toggleLocalForm(false);
+      }}
+    >
+      <div className="form__button--github">
+        <img
+          className="form__icon form__icon--github"
+          alt="github"
+          src={ghIcon}
+        />
+      </div>
+      <span className="form__sm-button-text">{`${
+        props.buttonText
+      } with Github`}</span>
     </a>
   </div>
 );

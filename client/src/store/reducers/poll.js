@@ -174,37 +174,12 @@ function poll(state = INITIAL_STATE, action) {
       });
 
     /*
-    *  Called From: <Login />, <Register />, <ResetPassword />
+    *  Called From: <Login />, <Register />, <ResetPassword />, <CreatePoll />
     *  Payload: none
     *  Purpose: Reset Form
     */
     case RESET_FORM:
-      return update(state, {
-        errorMsg: { $set: "" },
-        spinnerClass: { $set: "spinner__hide" },
-        modal: {
-          class: { $set: "modal__hide" },
-          type: { $set: "" },
-          title: { $set: "" },
-          text: { $set: "" }
-        },
-        form: {
-          question: { $set: "" },
-          options: [
-            {
-              text: { $set: "" }
-            },
-            {
-              text: { $set: "" }
-            }
-          ],
-          ownerId: { $set: "" },
-          error: { $set: false },
-          touched: { $set: {} },
-          showFieldErrors: { $set: {} },
-          validationErrors: { $set: {} }
-        }
-      });
+      return INITIAL_STATE;
 
     /*
     *  Called From: <CreatePoll />, <ViewPoll />, <AllPolls />

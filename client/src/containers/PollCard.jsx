@@ -1,5 +1,5 @@
 import React from "react";
-import { withRouter, Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { Doughnut } from "react-chartjs-2";
 
@@ -16,7 +16,7 @@ const deleteModal = (pollId, token, deletePoll) => {
   };
 };
 
-const PollInnards = props => {
+const PollCard = props => {
   const chartData = {
     labels: props.poll.options.map(option => option.text),
     datasets: [
@@ -42,37 +42,36 @@ const PollInnards = props => {
     }
   };
   return (
-    <div
-      className={
-        props.owner
-          ? "polls-grid__card polls-grid__card--single polls-grid__card--owner"
-          : "polls-grid__card polls-grid__card--single"
-      }
-    >
-      <div className="polls-grid__title">{props.poll.question}</div>
-      <div className="polls-grid__inner-wrap">
-        <div className="polls-grid__options-wrap">
-          {props.poll.options[0].text !== "" &&
-            props.poll.options.map((option, idx) => (
-              <button
-                key={option._id || idx}
-                className="polls-grid__option form__button"
-                onClick={() => {
-                  const body = { ...props.poll };
-                  props.vote(props.poll._id, option._id, body);
-                }}
-              >
-                {option._id !== undefined && option.text}
-              </button>
-            ))}
+    <div key={props.poll._id}>
+      <div
+        className={
+          props.owner
+            ? "polls-grid__card polls-grid__card--single polls-grid__card--owner"
+            : "polls-grid__card polls-grid__card--single"
+        }
+      >
+        <div className="polls-grid__title">{props.poll.question}</div>
+        <div className="polls-grid__inner-wrap">
+          <div className="polls-grid__options-wrap">
+            {props.poll.options[0].text !== "" &&
+              props.poll.options.map((option, idx) => (
+                <button
+                  key={option._id || idx}
+                  className="polls-grid__option form__button"
+                  onClick={() => {
+                    const body = { ...props.poll };
+                    props.vote(props.poll._id, option._id, body);
+                  }}
+                >
+                  {option._id !== undefined && option.text}
+                </button>
+              ))}
+          </div>
+          <div className="polls-grid__chart-wrap">
+            <Doughnut data={chartData} options={chartOptions} />
+          </div>
         </div>
-        <div className="polls-grid__chart-wrap">
-          <Doughnut data={chartData} options={chartOptions} />
-        </div>
-      </div>
-
-      {props.owner &&
-        props.single && (
+        {props.owner && (
           <div className="polls-grid__admin-buttons">
             <button
               className="aria-button polls-grid__admin polls-grid__edit"
@@ -94,25 +93,10 @@ const PollInnards = props => {
             </button>
           </div>
         )}
+      </div>
     </div>
   );
 };
-
-const PollCard = props => (
-  <div key={props.poll._id}>
-    {props.single ? (
-      <PollInnards {...props} />
-    ) : (
-      <Link to={`/poll/${props.poll._id}`} className="polls-grid__link-wrap">
-        <div className="polls-grid__card">
-          <div className="polls-grid__title polls-grid__title--sm">
-            {props.poll.question}
-          </div>
-        </div>
-      </Link>
-    )}
-  </div>
-);
 
 PollCard.propTypes = {
   token: PropTypes.string.isRequired,

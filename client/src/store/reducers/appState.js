@@ -261,17 +261,17 @@ function appState(state = INITIAL_STATE, action) {
     *  Display error message in modal. Generic, called from various components
     */
     case SET_MODAL_ERROR:
-      if (typeof action.payload.message === "string") {
-        error = action.payload.message;
-      } else {
-        error = "Sorry, something went wrong :(\nPlease try again.";
-      }
+      // if (typeof action.payload.message === "string") {
+      //   error = action.payload.message;
+      // } else {
+      //   error = "Sorry, something went wrong :(\nPlease try again.";
+      // }
       return update(state, {
         spinnerClass: { $set: "spinner__hide" },
         modal: {
           class: { $set: "modal__show" },
-          text: { $set: error },
-          title: { $set: "Something went wrong" },
+          text: { $set: action.payload.message },
+          title: { $set: action.payload.title },
           type: { $set: "modal__error" }
         }
       });

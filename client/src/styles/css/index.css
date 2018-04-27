@@ -576,7 +576,6 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     color: #833ab4;
     font-family: "Titillium Web", Helvetica, Arial, sans-serif;
     letter-spacing: 1.5px;
-    padding: 5px;
     font-size: 16px;
     text-transform: uppercase;
     text-decoration: none;
@@ -691,7 +690,8 @@ input:not([type=checkbox]):not([type=radio]), textarea {
         width: auto;
         font-size: 14px;
         text-transform: uppercase;
-        height: 53px; }
+        height: 53px;
+        cursor: pointer; }
         .h-nav__item-link:hover, .h-nav__item-link:focus {
           border-bottom: 3px solid #833ab4; }
       .h-nav__logo-wrap {

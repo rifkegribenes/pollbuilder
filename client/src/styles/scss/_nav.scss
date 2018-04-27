@@ -205,7 +205,6 @@
     color: $color_grape;
     font-family: $font-stack;
     letter-spacing: 1.5px;
-    padding: 5px;
     font-size: 16px;
     text-transform: uppercase;
     text-decoration: none;
@@ -366,6 +365,37 @@
       font-size: 14px;
       text-transform: uppercase;
       height: 53px;
+      cursor: pointer;
+
+      // &--button {
+      //   -webkit-appearance: none;
+      //   appearance: none;
+      //   border: none;
+      //   background: transparent;
+      //   color: $color_grape;
+      //   font-family: $font-stack;
+      //   letter-spacing: 1.5px;
+      //   text-transform: uppercase;
+      //   font-weight: inherit;
+      //   cursor: pointer;
+      //   margin-top: -8px !important;
+      //   border-bottom: 3px transparent;
+
+      //   &:hover, &:focus, &:active {
+      //     -webkit-appearance: none;
+      //     appearance: none;
+      //     border: none;
+      //     background: transparent;
+      //     outline: none;
+      //     color: $color_grape;
+      //     font-family: $font-stack;
+      //     letter-spacing: 1.5px;
+      //     text-transform: uppercase;
+      //     font-weight: inherit;
+      //     cursor: pointer;
+
+      //   }
+      // }
 
       &:hover, &:focus {
         border-bottom: 3px solid $color_grape;

@@ -8,7 +8,7 @@ import * as apiActions from "../store/actions/apiPollActions";
 
 import Spinner from "./Spinner";
 import ModalSm from "./ModalSm";
-import PollCard from "./PollCard";
+import PollCardMini from "./PollCardMini";
 // import editIcon from "../img/edit.svg";
 
 class AllPolls extends React.Component {
@@ -27,13 +27,11 @@ class AllPolls extends React.Component {
   render() {
     const polls = this.props.poll.polls.map((poll, idx) => {
       return (
-        <PollCard
+        <PollCardMini
           key={poll._id}
           owner={poll.ownerId === this.props.profile.user._id}
           poll={poll}
           history={this.props.history}
-          token={this.props.appState.authToken}
-          deletePoll={this.props.api.deletePoll}
         />
       );
     });
