@@ -71,6 +71,7 @@ class ViewPoll extends React.Component {
             token={this.props.appState.authToken}
             setModalError={this.props.actions.setModalError}
             vote={this.props.api.vote}
+            voted={this.props.poll.voted}
           />
         </div>
       </div>

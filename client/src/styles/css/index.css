@@ -1468,15 +1468,25 @@ input:not([type=checkbox]):not([type=radio]), textarea {
   .polls-grid__title {
     font-size: 32px;
     line-height: 1em;
-    margin-bottom: .5em;
+    margin-bottom: 1em;
     color: #833ab4;
     font-weight: 400;
     position: relative;
     text-decoration: none !important; }
     .polls-grid__title--sm {
       margin-bottom: 0; }
+  .polls-grid__inner-wrap {
+    display: flex; }
+  .polls-grid__chart-wrap {
+    width: 100%; }
   .polls-grid__options-wrap {
     width: 100%; }
+    @media (min-width: 480px) {
+      .polls-grid__options-wrap {
+        max-width: 50%; } }
+    @media (min-width: 901px) {
+      .polls-grid__options-wrap {
+        max-width: 33%; } }
   .polls-grid__option {
     color: white;
     text-transform: none !important;

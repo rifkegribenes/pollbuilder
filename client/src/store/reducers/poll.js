@@ -71,7 +71,8 @@ const INITIAL_STATE = {
     ownerName: ""
   },
   polls: [],
-  showFormError: false
+  showFormError: false,
+  voted: false
 };
 
 function poll(state = INITIAL_STATE, action) {
@@ -323,7 +324,6 @@ function poll(state = INITIAL_STATE, action) {
     *  Payload: poll object
     *  Purpose: Display poll
     */
-    case VOTE_SUCCESS:
     case VIEW_POLL_SUCCESS:
       return update(state, {
         spinnerClass: { $set: "spinner__hide" },
@@ -333,14 +333,20 @@ function poll(state = INITIAL_STATE, action) {
         form: { $merge: action.payload.poll }
       });
 
-    // form: {
-    //   _id: action.payload.poll._id,
-    //   question: action.payload.poll.question,
-    //   options: [...action.payload.poll.options],
-    //   ownerId: action.payload.poll.ownerId,
-    //   ownerName: action.payload.poll.ownerName
-    // }
-    // });
+    /*
+    *  Called from: <PollCard />
+    *  Payload: poll object
+    *  Purpose: Display poll, set 'voted' to true
+    */
+    case VOTE_SUCCESS:
+      return update(state, {
+        spinnerClass: { $set: "spinner__hide" },
+        modal: {
+          class: { $set: "modal__hide" }
+        },
+        form: { $merge: action.payload.poll },
+        voted: { $set: true }
+      });
 
     /*
     *  Called from: <AllPolls />, <UserPolls />
@@ -368,7 +374,6 @@ function poll(state = INITIAL_STATE, action) {
     case GET_ALL_POLLS_FAILURE:
     case VIEW_POLL_FAILURE:
     case CREATE_POLL_FAILURE:
-    case VOTE_FAILURE:
       if (typeof action.payload.message === "string") {
         error = action.payload.message;
       } else {
@@ -383,6 +388,24 @@ function poll(state = INITIAL_STATE, action) {
           title,
           buttonText: "Try again"
         }
+      });
+
+    case VOTE_FAILURE:
+      if (typeof action.payload.message === "string") {
+        error = action.payload.message;
+      } else {
+        error = "Sorry, something went wrong :(\nPlease try again.";
+      }
+      return Object.assign({}, state, {
+        spinnerClass: "spinner__hide",
+        modal: {
+          class: "modal__show",
+          type: "modal__error",
+          text: error,
+          title,
+          buttonText: "Try again"
+        },
+        voted: true
       });
 
     /*
