@@ -9,19 +9,15 @@ const toLower = (str) => {
 
 const OptionSchema = new Schema({
   text: String,
-  votes: Number,
-  addedBy: Schema.Types.ObjectId
+  votes: {type: Number, default: 0},
+  addedBy: String
 });
-const VoteSchema = new Schema({
-  voterId: Schema.Types.ObjectId,
-  option: String,
-  voterIP: String
-});
+
 const PollSchema = new Schema({
   question: {type: String, required: true, unique: true},
   slug: {type: String },
   options: [OptionSchema],
-  votes: [VoteSchema],
+  voters: [],
   ownerId: {type: Schema.Types.ObjectId, required: false},
   ownerName: {type: String, required: false}
 },{

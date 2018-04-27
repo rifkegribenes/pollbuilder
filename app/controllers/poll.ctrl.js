@@ -23,7 +23,7 @@ exports.getUserPolls = (user, req, res, next) => {
 exports.viewPollById = (user, req, res, next) => {
   Poll.findById( req.params.pollId,  (err, poll) => {
     if (err) { return handleError(res, err); }
-    if (!poll) { return res.status(404).send({message: 'Not Found'}); }
+    if (!poll) { return res.status(404).send({message: 'Error: Poll not found'}); }
     return res.status(200).json({user, poll});
   });
 };
@@ -32,7 +32,7 @@ exports.viewPollById = (user, req, res, next) => {
 exports.viewPollBySlug = (req, res, next) => {
   Poll.find( { slug: req.params.id }, (err, poll) => {
     if (err) { return handleError(res, err); }
-    if (!poll || poll.length === 0) { return res.status(404).send({message: 'Not Found'}); }
+    if (!poll || poll.length === 0) { return res.status(404).send({message: 'Error: Poll not found'}); }
     return res.json(poll[0]);
   });
 };
@@ -134,29 +134,41 @@ exports.updatePoll = (user, req, res, next) => {
 
 // add voter to poll
 exports.vote = (req, res, next) => {
+  const { pollId, optionId } = req.params;
   const target = {
-    _id: req.params.pollId
+    _id: pollId
   };
   if (req.body._id) { delete req.body._id };
   const updates = { ...req.body };
   const options = { new: true };
 
-  // Add voter IP
-  let voterIP = req.headers["x-forwarded-for"];
-  if (voterIP) {
-    const list = voterIP.split(",");
-    voterIP = list[list.length-1];
-  } else {
-    voterIP = req.connection.remoteAddress;
+  // get voter IP
+  let voterIP = (req.headers['x-forwarded-for'] ||
+     req.connection.remoteAddress ||
+     req.socket.remoteAddress ||
+     req.connection.socket.remoteAddress).split(",")[0];
+
+  // only allow one vote per IP address
+  if (updates.voters.indexOf(voterIP) !== -1) {
+    console.log('already voted');
+    return res
+      .status(404)
+      .json({message: 'You have already voted in this poll'});
   }
 
-  if (!updates.votes) {
-    updates.votes = [];
-  }
-  updates.votes.push({
-    option: req.params.optionId,
-    voterIP
-  });
+  // add voter IP to voters array
+  updates.voters.push(voterIP);
+
+  // map through options and increase votes on matching option
+  const pollOptions = [ ...updates.options ];
+  updates.options = pollOptions.map((option) => {
+    if (option._id === optionId) {
+      option.votes++;
+      return option;
+    } else {
+      return option;
+    }
+  })
 
   Poll.findOneAndUpdate(target, updates, options)
     .exec()

@@ -62,7 +62,7 @@ const INITIAL_STATE = {
         text: ""
       }
     ],
-    votes: [],
+    voters: [],
     error: false,
     touched: {},
     showFieldErrors: {},

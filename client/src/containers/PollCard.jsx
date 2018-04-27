@@ -35,6 +35,8 @@ const PollInnards = props => (
             }}
           >
             {option._id !== undefined && option.text}
+            <br />
+            {option.votes}
           </button>
         ))}
     </div>
