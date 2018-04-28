@@ -35,8 +35,6 @@ class LocalSignup extends React.Component {
     const vErrors = run(this.props.auth.form, fieldValidations.signup);
     const validationErrors = validateEmail(vErrors);
 
-    console.log(validationErrors);
-
     this.props.actions.setValidationErrors(validationErrors);
 
     if (!Object.values(this.props.auth.form.validationErrors).length) {

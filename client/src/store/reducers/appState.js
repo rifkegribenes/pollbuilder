@@ -6,6 +6,7 @@ import {
   SET_REDIRECT_URL,
   DISMISS_MODAL,
   SET_MODAL_ERROR,
+  SET_MODAL_ERROR_H,
   SET_SPINNER,
   SET_MENU_STATE,
   SET_ADMIN_MENU_STATE,
@@ -36,8 +37,8 @@ const INITIAL_STATE = {
   adminMenuState: "closed",
   menuState: "closed",
   windowSize: {
-    width: undefined,
-    height: undefined
+    width: window.innerWidth,
+    height: window.innerHeight
   }
 };
 
@@ -261,11 +262,28 @@ function appState(state = INITIAL_STATE, action) {
     *  Display error message in modal. Generic, called from various components
     */
     case SET_MODAL_ERROR:
-      // if (typeof action.payload.message === "string") {
-      //   error = action.payload.message;
-      // } else {
-      //   error = "Sorry, something went wrong :(\nPlease try again.";
-      // }
+      if (typeof action.payload.message === "string") {
+        error = action.payload.message;
+      } else {
+        error = "Sorry, something went wrong :(\nPlease try again.";
+      }
+      return update(state, {
+        spinnerClass: { $set: "spinner__hide" },
+        modal: {
+          class: { $set: "modal__show" },
+          text: { $set: error },
+          title: { $set: action.payload.title },
+          type: { $set: "modal__error" }
+        }
+      });
+
+    /*
+    *  Called From: <Header />
+    *  Payload: Error Message
+    *  Purpose: Hide spinner,
+    *  Display error message in modal.
+    */
+    case SET_MODAL_ERROR_H:
       return update(state, {
         spinnerClass: { $set: "spinner__hide" },
         modal: {

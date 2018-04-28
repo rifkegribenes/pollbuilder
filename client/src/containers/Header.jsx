@@ -27,8 +27,9 @@ class Header extends React.Component {
   }
 
   navToggle = () => {
-    if (this.props.appState.windowSize.width < 650) {
+    if (this.props.appState.windowSize.width < 670) {
       if (this.props.appState.menuState === "closed") {
+        console.log("setting open");
         this.props.actions.setMenuState("open");
       } else {
         this.props.actions.setMenuState("closing");
@@ -218,12 +219,10 @@ class Header extends React.Component {
                     onClick={() => {
                       console.log("click");
                       if (!this.props.appState.loggedIn) {
-                        console.log("not logged in");
-                        this.props.actions.setModalError(
+                        this.props.actions.setModalErrorH(
                           "You must log in to create a poll"
                         );
                       } else {
-                        console.log("goto createpoll");
                         this.props.history.push("/createpoll");
                       }
                     }}

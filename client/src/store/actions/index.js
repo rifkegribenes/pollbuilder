@@ -14,6 +14,7 @@ export const SET_PROFILE_VIEW = "SET_PROFILE_VIEW";
 export const SET_REDIRECT_URL = "SET_REDIRECT_URL";
 export const DISMISS_MODAL = "DISMISS_MODAL";
 export const SET_MODAL_ERROR = "SET_MODAL_ERROR";
+export const SET_MODAL_ERROR_H = "SET_MODAL_ERROR_H";
 export const SET_MODAL_INFO = "SET_MODAL_INFO";
 export const SET_SPINNER = "SET_SPINNER";
 export const SET_MENU_STATE = "SET_MENU_STATE";
@@ -121,6 +122,13 @@ export function setSubmit() {
 export function setModalError(msg) {
   return {
     type: SET_MODAL_ERROR,
+    payload: msg
+  };
+}
+
+export function setModalErrorH(msg) {
+  return {
+    type: SET_MODAL_ERROR_H,
     payload: msg
   };
 }

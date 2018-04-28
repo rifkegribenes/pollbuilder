@@ -59,7 +59,7 @@ class App extends Component {
     };
     this.props.actions.setWindowSize(size);
     if (
-      this.props.appState.windowSize.width > 650 &&
+      this.props.appState.windowSize.width > 670 &&
       this.props.appState.menuState === "open"
     ) {
       this.props.actions.setMenuState("closed");

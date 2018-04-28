@@ -26,7 +26,6 @@ class LocalLogin extends React.Component {
   */
   login() {
     const { email, password } = this.props.auth.form;
-    console.log(email, password);
 
     // show validation errors
     this.props.actions.showFormError();
@@ -40,7 +39,6 @@ class LocalLogin extends React.Component {
     if (email && password) {
       const body = { email, password };
       this.props.api.login(body).then(result => {
-        console.log(result);
         const { authToken } = this.props.appState;
         const { _id } = this.props.profile.user;
         if (result.type === "LOGIN_SUCCESS") {
