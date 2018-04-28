@@ -64,6 +64,7 @@ class ViewPoll extends React.Component {
             owner={this.props.profile.user._id === this.props.poll.form.ownerId}
             poll={this.props.poll.form}
             history={this.props.history}
+            appState={this.props.appState}
             deletePoll={this.props.api.deletePoll}
             token={this.props.appState.authToken}
             setModalError={this.props.actions.setModalError}
