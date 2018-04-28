@@ -20,8 +20,6 @@ const deleteModal = (pollId, token, deletePoll) => {
 };
 
 const PollCard = props => {
-  const legendPosition =
-    props.appState.windowSize.width > 670 ? "right" : "bottom";
   const chartData = {
     labels: props.poll.options.map(option => option.text),
     datasets: [

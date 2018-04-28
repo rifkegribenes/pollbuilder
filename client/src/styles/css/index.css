@@ -1769,4 +1769,13 @@ input:invalid {
   display: flex;
   justify-content: center; }
 
+.single-msg {
+  color: #833ab4;
+  font-weight: 100;
+  font-size: 10vw;
+  text-align: center;
+  width: 100%;
+  margin: auto;
+  font-family: "Titillium Web", Helvetica, Arial, sans-serif; }
+
 /*# sourceMappingURL=index.css.map */

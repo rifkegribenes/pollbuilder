@@ -7,12 +7,15 @@ import * as Actions from "../store/actions";
 class Logout extends React.Component {
   componentDidMount() {
     this.props.actions.logout();
+    setTimeout(() => {
+      this.props.history.push("/login");
+    }, 1000);
   }
 
   render() {
     return (
-      <div className="container logout">
-        <div className="logout__header">goodbye</div>
+      <div className="container">
+        <div className="single-msg">goodbye</div>
       </div>
     );
   }

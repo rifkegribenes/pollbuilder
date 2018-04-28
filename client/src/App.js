@@ -89,11 +89,12 @@ class App extends Component {
 
     // Check for hash-fragment and store it in redux
     if (this.props.location.hash) {
-      console.log("hash");
       const hash = this.props.location.hash.slice(2);
       const url = `/${hash.split("=")[1]}`;
-      console.log(url);
-      this.props.history.push(url);
+      // don't redirect for facebook hash after social auth
+      if (url !== "/_") {
+        this.props.history.push(url);
+      }
     }
   }
 
