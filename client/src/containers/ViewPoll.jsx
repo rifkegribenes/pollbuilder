@@ -13,14 +13,11 @@ import PollCard from "./PollCard";
 
 class ViewPoll extends React.Component {
   componentWillMount() {
-    const token =
-      this.props.appState.authToken ||
-      JSON.parse(window.localStorage.getItem("authToken"));
     const pollId = this.props.match.params.id;
     // retrieve requested poll & save to app state
-    this.props.api.viewPoll(token, pollId).then(result => {
+    this.props.api.viewPoll(pollId).then(result => {
       if (result.type === "VIEW_POLL_SUCCESS") {
-        this.props.actions.setLoggedIn();
+        // this.props.actions.setLoggedIn();
       }
     });
   }

@@ -270,7 +270,7 @@ function appState(state = INITIAL_STATE, action) {
         spinnerClass: { $set: "spinner__hide" },
         modal: {
           class: { $set: "modal__show" },
-          text: { $set: action.payload.message },
+          text: { $set: action.payload },
           title: { $set: action.payload.title },
           type: { $set: "modal__error" }
         }

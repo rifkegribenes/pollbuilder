@@ -119,7 +119,7 @@ export function updatePoll(token, body) {
 
 /*
 * Function: viewPoll - get a single poll by ID
-* @param {string} token, pollId
+* @param {string} pollId
 * This action dispatches additional actions as it executes:
 *   VIEW_POLL_REQUEST:
 *     Initiates a spinner on the home page.
@@ -129,7 +129,7 @@ export function updatePoll(token, body) {
 *     If database error,
 *     Hides spinner, displays error message in modal
 */
-export function viewPoll(token, pollId) {
+export function viewPoll(pollId) {
   return {
     [RSAA]: {
       endpoint: `${BASE_URL}/api/poll/${pollId}`,
@@ -153,10 +153,7 @@ export function viewPoll(token, pollId) {
             });
           }
         }
-      ],
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
+      ]
     }
   };
 }
@@ -217,7 +214,7 @@ export function deletePoll(token, pollId) {
 *     If database error,
 *     Hides spinner, displays error message in modal
 */
-export function getAllPolls(token) {
+export function getAllPolls() {
   return {
     [RSAA]: {
       endpoint: `${BASE_URL}/api/poll/allpolls`,
@@ -241,10 +238,7 @@ export function getAllPolls(token) {
             });
           }
         }
-      ],
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
+      ]
     }
   };
 }

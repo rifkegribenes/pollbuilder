@@ -88,11 +88,15 @@ class Header extends React.Component {
         ariaE: false
       }
     };
+    let avatarUrl;
+    if (this.props.profile.user.profile) {
+      avatarUrl = this.props.profile.user.profile.avatarUrl;
+    }
 
-    let avatarUrl = this.props.profile.user.profile.avatarUrl;
     if (
+      !avatarUrl ||
       avatarUrl ===
-      "https://raw.githubusercontent.com/rifkegribenes/surveybot/master/client/public/img/surveybot_icon.png"
+        "https://raw.githubusercontent.com/rifkegribenes/surveybot/master/client/public/img/surveybot_icon.png"
     ) {
       avatarUrl = gear;
     }
