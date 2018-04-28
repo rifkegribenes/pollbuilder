@@ -38,19 +38,22 @@
 
 	&__admin-buttons {
 		position: absolute;
-		right: 10px;
-		bottom: -8px;
+		right: 20px;
+		bottom: 20px;
 		display: flex;
 	}
 
 	&__edit {
-		width: 36px;
-		height: auto;
+		width: 43px;
+		height: 43px;
+		position: relative;
 
 		& .polls-grid__icon {
 			width: 100%;
 			height: auto;
-			padding-top: 9px;
+			position: absolute;
+			top: -9px;
+			left: -12px;
 		}
 	}
 
@@ -96,6 +99,7 @@
 	&__inner-wrap {
 		display: flex;
 		flex-wrap: wrap;
+		margin-bottom: 43px;
 
 		@include for-tablet-landscape-up {
 			flex-wrap: nowrap;

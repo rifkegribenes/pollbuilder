@@ -1,14 +1,17 @@
 .poll {
 
 	&__container {
-		width: 100%;
+		width: calc(100% + 40px);
 		max-width: 880px !important;
-		margin: auto;
+		margin: 0 -20px 80px -20px !important;
 	  position: relative;
 	  margin-bottom: 80px;
+	  padding: 0;
 
 	@include for-phone-portrait-up {
-
+			width: 100%;
+			margin: auto !important;
+		  margin-bottom: 80px !important;
     }
 	}
 	&__icon-button {

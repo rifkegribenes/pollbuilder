@@ -118,14 +118,18 @@ const PollCard = props => {
         {props.owner && (
           <div className="polls-grid__admin-buttons">
             <button
-              className="aria-button polls-grid__admin polls-grid__edit"
+              className="form__button polls-grid__btn--icon polls-grid__edit"
               title="Edit poll"
               onClick={() => props.history.push(`/edit/${props.poll._id}`)}
             >
-              <img src={editIcon} className="polls-grid__icon" alt="" />
+              <img
+                className="form__icon polls-grid__icon"
+                alt=""
+                src={editIcon}
+              />
             </button>
             <button
-              className="aria-button polls-grid__admin polls-grid__delete"
+              className="form__button polls-grid__btn--icon"
               title="Delete poll"
               onClick={() =>
                 props.setModalError(
@@ -133,7 +137,11 @@ const PollCard = props => {
                 )
               }
             >
-              <img src={deleteIcon} className="polls-grid__icon" alt="" />
+              <img
+                className="form__icon polls-grid__icon"
+                alt=""
+                src={deleteIcon}
+              />
             </button>
           </div>
         )}

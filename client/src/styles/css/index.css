@@ -1374,11 +1374,17 @@ input:not([type=checkbox]):not([type=radio]), textarea {
         font-size: 1.2em; } }
 
 .poll__container {
-  width: 100%;
+  width: calc(100% + 40px);
   max-width: 880px !important;
-  margin: auto;
+  margin: 0 -20px 80px -20px !important;
   position: relative;
-  margin-bottom: 80px; }
+  margin-bottom: 80px;
+  padding: 0; }
+  @media (min-width: 400px) {
+    .poll__container {
+      width: 100%;
+      margin: auto !important;
+      margin-bottom: 80px !important; } }
 .poll__icon-button {
   appearance: none;
   -webkit-appearance: none;
@@ -1452,16 +1458,19 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     height: 20px; }
   .polls-grid__admin-buttons {
     position: absolute;
-    right: 10px;
-    bottom: -8px;
+    right: 20px;
+    bottom: 20px;
     display: flex; }
   .polls-grid__edit {
-    width: 36px;
-    height: auto; }
+    width: 43px;
+    height: 43px;
+    position: relative; }
     .polls-grid__edit .polls-grid__icon {
       width: 100%;
       height: auto;
-      padding-top: 9px; }
+      position: absolute;
+      top: -9px;
+      left: -12px; }
   .polls-grid__card {
     font-size: 1em;
     padding: 20px 20px 10px 20px;
@@ -1492,7 +1501,8 @@ input:not([type=checkbox]):not([type=radio]), textarea {
       margin-bottom: 0; }
   .polls-grid__inner-wrap {
     display: flex;
-    flex-wrap: wrap; }
+    flex-wrap: wrap;
+    margin-bottom: 43px; }
     @media (min-width: 901px) {
       .polls-grid__inner-wrap {
         flex-wrap: nowrap; } }
