@@ -1,5 +1,5 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import PropTypes from "prop-types";
@@ -67,7 +67,16 @@ class UserPolls extends React.Component {
             }
           }}
         />
-        <div className="polls-grid">{polls}</div>
+        {this.props.poll.polls.length ? (
+          <div className="polls-grid">{polls}</div>
+        ) : (
+          <div className="polls-grid__empty">
+            You haven't made any polls yet.<br />
+            <Link to="/createPoll" className="link">
+              Make one here
+            </Link>
+          </div>
+        )}
       </div>
     );
   }

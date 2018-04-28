@@ -218,11 +218,13 @@ class Header extends React.Component {
                     onClick={() => {
                       console.log("click");
                       if (!this.props.appState.loggedIn) {
+                        console.log("not logged in");
                         this.props.actions.setModalError(
                           "You must log in to create a poll"
                         );
                       } else {
-                        this.props.history.push("/polls");
+                        console.log("goto createpoll");
+                        this.props.history.push("/createpoll");
                       }
                     }}
                   >

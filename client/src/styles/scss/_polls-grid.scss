@@ -12,6 +12,19 @@
 		column-count: 3;
 	}
 
+	&__empty {
+		width: 100%;
+		margin: auto;
+		font-size: 1.3em;
+		text-align: center;
+	}
+
+	&__icon-wrap {
+		display: flex;
+		position: absolute;
+		bottom: 20px;
+	}
+
 	&__icon {
 		width: 20px;
 		height: 20px;
@@ -50,24 +63,10 @@
     page-break-inside: avoid;
     break-inside: avoid;
 
-		&:first-child {
-				// margin: 0 0 1em;
-			}
-
 		&:after {
 			content: '';
 		  display: block;
 		  height: 20px;
-		}
-
-		&--single {
-
-		}
-
-		&--owner {
-			&:hover {
-
-			}
 		}
 
 	}

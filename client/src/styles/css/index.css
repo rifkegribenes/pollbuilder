@@ -593,7 +593,8 @@ input:not([type=checkbox]):not([type=radio]), textarea {
       top: 20px;
       font-size: 20px;
       padding: 4px 20px 6px 20px;
-      text-transform: capitalize; }
+      text-transform: capitalize;
+      width: 92px; }
     @media (min-width: 670px) {
       .h-nav__item-link--logout {
         display: none; } }
@@ -1432,6 +1433,15 @@ input:not([type=checkbox]):not([type=radio]), textarea {
   @media (min-width: 901px) {
     .polls-grid {
       column-count: 3; } }
+  .polls-grid__empty {
+    width: 100%;
+    margin: auto;
+    font-size: 1.3em;
+    text-align: center; }
+  .polls-grid__icon-wrap {
+    display: flex;
+    position: absolute;
+    bottom: 20px; }
   .polls-grid__icon {
     width: 20px;
     height: 20px; }
@@ -1567,6 +1577,21 @@ body.user-is-tabbing *:focus {
   clip: rect(0, 0, 0, 0);
   border: 0; }
 
+.link {
+  border-bottom: 1px solid transparent;
+  text-align: left;
+  font-family: inherit;
+  font-weight: inherit;
+  font-size: inherit;
+  width: 100%;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+  text-decoration: none !important;
+  color: #833ab4; }
+  .link:hover, .link:active, .link:focus {
+    border-bottom: 1px dotted #833ab4;
+    cursor: pointer; }
+
 .aria-button {
   -webkit-appearance: none;
   appearance: none;
@@ -1590,7 +1615,7 @@ body.user-is-tabbing *:focus {
     text-transform: inherit;
     font-weight: inherit;
     cursor: pointer; }
-  .aria-button__link, .aria-button a {
+  .aria-button__link {
     border-bottom: 1px solid transparent;
     text-align: left;
     font-family: inherit;
@@ -1600,7 +1625,7 @@ body.user-is-tabbing *:focus {
     padding-bottom: 10px;
     margin-bottom: 10px;
     text-decoration: none !important; }
-    .aria-button__link:hover, .aria-button__link:active, .aria-button__link:focus, .aria-button a:hover, .aria-button a:active, .aria-button a:focus {
+    .aria-button__link:hover, .aria-button__link:active, .aria-button__link:focus {
       border-bottom: 1px dotted #833ab4;
       cursor: pointer; }
 

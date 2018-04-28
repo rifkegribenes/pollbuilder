@@ -1,10 +1,6 @@
 import update from "immutability-helper";
 import { DISMISS_MODAL, LOGOUT, SET_MODAL_INFO } from "../actions/";
-import {
-  // GET_ALL_POLLS_SUCCESS,
-  // VIEW_POLL_SUCCESS,
-  GET_USER_POLLS_SUCCESS
-} from "../actions/apiPollActions";
+import { GET_USER_POLLS_SUCCESS } from "../actions/apiPollActions";
 import {
   GET_PROFILE_REQUEST,
   GET_PROFILE_SUCCESS,
@@ -77,8 +73,6 @@ function profile(state = INITIAL_STATE, action) {
     case REGISTRATION_SUCCESS:
     case GET_PROFILE_SUCCESS:
     case MODIFY_PROFILE_SUCCESS:
-    // case VIEW_POLL_SUCCESS:
-    // case GET_ALL_POLLS_SUCCESS:
     case GET_USER_POLLS_SUCCESS:
     case VALIDATE_TOKEN_SUCCESS:
       user = { ...action.payload.user };

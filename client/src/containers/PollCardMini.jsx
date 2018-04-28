@@ -3,15 +3,15 @@ import { withRouter, Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
 const PollCardMini = props => (
-  <div key={props.poll._id}>
-    <Link to={`/poll/${props.poll._id}`} className="polls-grid__link-wrap">
-      <div className="polls-grid__card">
-        <div className="polls-grid__title polls-grid__title--sm">
-          {props.poll.question}
-        </div>
-      </div>
-    </Link>
-  </div>
+  <Link
+    to={`/poll/${props.poll._id}`}
+    className="polls-grid__card"
+    key={props.poll._id}
+  >
+    <div className="polls-grid__title polls-grid__title--sm">
+      {props.poll.question}
+    </div>
+  </Link>
 );
 
 PollCardMini.propTypes = {

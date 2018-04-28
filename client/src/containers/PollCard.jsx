@@ -71,6 +71,32 @@ const PollCard = props => {
             <Doughnut data={chartData} options={chartOptions} />
           </div>
         </div>
+        <div className="polls-grid__icon-wrap">
+          <a
+            className="polls-grid__btn--icon"
+            href="http://www.facebook.com/sharer.php?u=http://anti-fascist-heroine-addiction.surge.sh/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span className="polls-grid__icon polls-grid__icon-facebook" />
+          </a>
+          <a
+            className="polls-grid__btn--icon"
+            href="https://twitter.com/share?url=http://anti-fascist-heroine-addiction.surge.sh/&text=Anti-Fascist%20Heroine%20Addiction%2C%20The%20Game%3A%20Chase%20Ted%20Cruz%27s%20disembodied%20head%20around%20the%20gameboard%20and%20punch%20it."
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span className="polls-grid__icon polls-grid__icon-twitter" />
+          </a>
+          <a
+            className="polls-grid__btn--icon"
+            href="http://www.tumblr.com/share/link?url=http://anti-fascist-heroine-addiction.surge.sh/&name=Anti-Fascist%20Heroine%20Addiction%2C%20The%20Game&description=Chase%20Ted%20Cruz%27s%20disembodied%20head%20around%20the%20gameboard%20and%20punch%20it."
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span className="polls-grid__icon polls-grid__icon-tumblr" />
+          </a>
+        </div>
         {props.owner && (
           <div className="polls-grid__admin-buttons">
             <button

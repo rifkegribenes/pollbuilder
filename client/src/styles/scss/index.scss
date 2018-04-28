@@ -91,6 +91,24 @@ body.user-is-tabbing *:focus {
     border: 0;
 }
 
+.link {
+  border-bottom: 1px solid transparent;
+  text-align: left;
+  font-family: inherit;
+  font-weight: inherit;
+  font-size: inherit;
+  width: 100%;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+  text-decoration: none !important;
+  color: $color_grape;
+
+  &:hover, &:active, &:focus {
+    border-bottom: 1px dotted $color_grape;
+    cursor: pointer;
+  }
+}
+
 // use when you need to wrap an interactive element in a <button> element to enable keypress behavior and WAI-ARIA roles but don't want default browser button styling
 //
 .aria-button {
@@ -118,7 +136,7 @@ body.user-is-tabbing *:focus {
     font-weight: inherit;
     cursor: pointer;
   }
-  &__link, a {
+  &__link {
     border-bottom: 1px solid transparent;
     text-align: left;
     font-family: inherit;
