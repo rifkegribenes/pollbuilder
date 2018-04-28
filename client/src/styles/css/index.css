@@ -1439,6 +1439,10 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     margin: auto;
     font-size: 1.3em;
     text-align: center; }
+  .polls-grid__btn--icon {
+    padding: 0 !important;
+    height: 43px;
+    margin-right: 10px; }
   .polls-grid__icon-wrap {
     display: flex;
     position: absolute;

@@ -19,6 +19,12 @@
 		text-align: center;
 	}
 
+	&__btn--icon {
+	  padding: 0 !important;
+	  height: 43px;
+	  margin-right: 10px;
+	}
+
 	&__icon-wrap {
 		display: flex;
 		position: absolute;

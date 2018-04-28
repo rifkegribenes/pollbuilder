@@ -5,6 +5,9 @@ import { Doughnut } from "react-chartjs-2";
 
 import editIcon from "../img/edit.svg";
 import deleteIcon from "../img/delete.svg";
+import twIcon from "../img/twitter.svg";
+import fbIcon from "../img/facebook-white.svg";
+import tmIcon from "../img/tumblr.svg";
 
 const deleteModal = (pollId, token, deletePoll) => {
   return {
@@ -76,28 +79,40 @@ const PollCard = props => {
         </div>
         <div className="polls-grid__icon-wrap">
           <a
-            className="polls-grid__btn--icon"
-            href="http://www.facebook.com/sharer.php?u=http://anti-fascist-heroine-addiction.surge.sh/"
+            className="form__button polls-grid__btn--icon"
+            href="http://www.facebook.com/sharer.php?u=http://#/"
             target="_blank"
             rel="noopener noreferrer"
           >
-            <span className="polls-grid__icon polls-grid__icon-facebook" />
+            <img
+              className="form__icon polls-grid__icon"
+              alt="facebook"
+              src={fbIcon}
+            />
           </a>
           <a
-            className="polls-grid__btn--icon"
-            href="https://twitter.com/share?url=http://anti-fascist-heroine-addiction.surge.sh/&text=Anti-Fascist%20Heroine%20Addiction%2C%20The%20Game%3A%20Chase%20Ted%20Cruz%27s%20disembodied%20head%20around%20the%20gameboard%20and%20punch%20it."
+            className="form__button polls-grid__btn--icon"
+            href="https://twitter.com/share?url=http://#/&text=URIencodedtext."
             target="_blank"
             rel="noopener noreferrer"
           >
-            <span className="polls-grid__icon polls-grid__icon-twitter" />
+            <img
+              className="form__icon polls-grid__icon"
+              alt="twitter"
+              src={twIcon}
+            />
           </a>
           <a
-            className="polls-grid__btn--icon"
-            href="http://www.tumblr.com/share/link?url=http://anti-fascist-heroine-addiction.surge.sh/&name=Anti-Fascist%20Heroine%20Addiction%2C%20The%20Game&description=Chase%20Ted%20Cruz%27s%20disembodied%20head%20around%20the%20gameboard%20and%20punch%20it."
+            className="form__button polls-grid__btn--icon"
+            href="http://www.tumblr.com/share/link?url=http://#/&name=Name&description=description."
             target="_blank"
             rel="noopener noreferrer"
           >
-            <span className="polls-grid__icon polls-grid__icon-tumblr" />
+            <img
+              className="form__icon polls-grid__icon"
+              alt="tumblr"
+              src={tmIcon}
+            />
           </a>
         </div>
         {props.owner && (
