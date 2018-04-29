@@ -191,7 +191,7 @@ module.exports = function (app) {
 
   // Get all polls
   // Returns fail status + message -or- array of all active polls & user
-  pollRoutes.get('/allpolls', requireAuth, PollController.getAllPolls);
+  pollRoutes.get('/allpolls', PollController.getAllPolls);
 
   // Get all polls for specific user
   // Returns fail status + message -or- array of all active polls & user
@@ -199,7 +199,7 @@ module.exports = function (app) {
 
   // View a single poll
   // Returns fail status + message -or- poll object & user
-  pollRoutes.get('/:pollId', requireAuth, PollController.viewPollById);
+  pollRoutes.get('/:pollId', PollController.viewPollById);
 
   // Create a poll
   // Returns fail status + message -or- poll object & user

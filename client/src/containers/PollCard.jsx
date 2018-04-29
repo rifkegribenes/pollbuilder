@@ -45,6 +45,12 @@ const PollCard = props => {
     },
     maintainAspectRatio: false
   };
+  const backgroundStyle = {
+    backgroundImage: `url(${props.poll.ownerAvatar ||
+      "https://raw.githubusercontent.com/rifkegribenes/surveybot/master/client/public/img/surveybot_icon.png"})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center center"
+  };
   return (
     <div key={props.poll._id}>
       <div
@@ -113,7 +119,7 @@ const PollCard = props => {
             />
           </a>
         </div>
-        {props.owner && (
+        {props.owner ? (
           <div className="polls-grid__admin-buttons">
             <button
               className="form__button polls-grid__btn--icon polls-grid__edit"
@@ -141,6 +147,17 @@ const PollCard = props => {
                 src={deleteIcon}
               />
             </button>
+          </div>
+        ) : (
+          <div className="h-nav__image-aspect">
+            <div className="h-nav__image-crop">
+              <div
+                className="h-nav__image"
+                style={backgroundStyle}
+                role="img"
+                aria-label={props.poll.ownerName}
+              />
+            </div>
           </div>
         )}
       </div>

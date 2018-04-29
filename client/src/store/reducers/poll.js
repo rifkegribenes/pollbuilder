@@ -68,7 +68,8 @@ const INITIAL_STATE = {
     showFieldErrors: {},
     validationErrors: {},
     ownerId: "",
-    ownerName: ""
+    ownerName: "",
+    ownerAvatar: ""
   },
   polls: [],
   showFormError: false,

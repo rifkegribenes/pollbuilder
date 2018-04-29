@@ -7,7 +7,6 @@ const helpers = require('../utils/index');
 exports.viewProfile = (req, res, next) => {
   const userId = req.params.userId;
 
-  // if (req.params.userId !== userId) { return res.status(401).json({ message: 'You are not authorized to view this user profile.' }); }
   User.findById(userId, (err, user) => {
     if (err) {
       return res.status(400).json({ message: 'No user found.' });

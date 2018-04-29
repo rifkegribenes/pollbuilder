@@ -1,12 +1,12 @@
 const Poll = require('../models/poll');
 
 // Get all polls
-exports.getAllPolls = (user, req, res, next) => {
+exports.getAllPolls = (req, res, next) => {
+  console.log('getAllPolls');
   Poll.find( (err, polls) => {
-    // need to add logic here to return only active polls
 
     if (err) { return handleError(res, err); }
-    return res.status(200).json({user, polls});
+    return res.status(200).json({polls});
   });
 };
 
@@ -20,11 +20,11 @@ exports.getUserPolls = (user, req, res, next) => {
 };
 
 // Get a single poll by id
-exports.viewPollById = (user, req, res, next) => {
+exports.viewPollById = (req, res, next) => {
   Poll.findById( req.params.pollId,  (err, poll) => {
     if (err) { return handleError(res, err); }
     if (!poll) { return res.status(404).send({message: 'Error: Poll not found'}); }
-    return res.status(200).json({user, poll});
+    return res.status(200).json({poll});
   });
 };
 
@@ -49,7 +49,8 @@ exports.newPoll = (user, req, res, next) => {
       question: req.body.question,
       options: [ ...req.body.options ],
       ownerId: user._id,
-      ownerName: `${user.profile.firstName} ${user.profile.lastName}`
+      ownerName: `${user.profile.firstName} ${user.profile.lastName}`,
+      ownerAvatar: user.profile.avatarUrl
     }
     // check if poll question is unique
     Poll.findOne({ question: req.body.question })
@@ -98,6 +99,10 @@ exports.updatePoll = (user, req, res, next) => {
     // map enumerable req body properties to updates object
     if (req.body._id) { delete req.body._id };
     const updates = { ...req.body };
+
+    updates.ownerId = user._id;
+    updates.ownerName = `${user.profile.firstName} ${user.profile.lastName}`;
+    updates.ownerAvatar = user.profile.avatarUrl;
 
     // return updated document rather than the original
     const options = { new: true };

@@ -19,7 +19,8 @@ const PollSchema = new Schema({
   options: [OptionSchema],
   voters: [],
   ownerId: {type: Schema.Types.ObjectId, required: false},
-  ownerName: {type: String, required: false}
+  ownerName: {type: String, required: false},
+  ownerAvatar: {type: String, required: false}
 },{
   timestamps: true
 });
