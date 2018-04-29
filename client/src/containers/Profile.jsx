@@ -9,7 +9,7 @@ import * as apiActions from "../store/actions/apiActions";
 
 import Spinner from "./Spinner";
 import ModalSm from "./ModalSm";
-import editIcon from "../img/edit.svg";
+import editIcon from "../img/edit_g.svg";
 
 class Profile extends React.Component {
   componentWillMount() {
