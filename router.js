@@ -174,12 +174,12 @@ module.exports = function (app) {
 
   // View user profile route
   // Returns fail status + message -or- user object
-  userRoutes.get('/:userId', requireAuth, UserController.viewProfile);
+  userRoutes.get('/:userId', UserController.viewProfile);
 
   // Update a user's profile.
   // Returns fail status + message -or- updated user object
-  // userRoutes.put('/:userId', requireAuth, UserController.updateProfile);
-  userRoutes.put('/:userId', UserController.updateProfile);
+  userRoutes.put('/:userId', requireAuth, UserController.updateProfile);
+  // userRoutes.put('/:userId', UserController.updateProfile);
 
 
   //= ========================

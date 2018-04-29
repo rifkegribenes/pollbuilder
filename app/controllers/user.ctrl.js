@@ -4,8 +4,8 @@ const helpers = require('../utils/index');
 //= =======================================
 // User Routes
 //= =======================================
-exports.viewProfile = (userObj, req, res, next) => {
-  const userId = userObj._id;
+exports.viewProfile = (req, res, next) => {
+  const userId = req.params.userId;
 
   // if (req.params.userId !== userId) { return res.status(401).json({ message: 'You are not authorized to view this user profile.' }); }
   User.findById(userId, (err, user) => {
@@ -29,7 +29,7 @@ exports.viewProfile = (userObj, req, res, next) => {
   });
 };
 
-exports.updateProfile = (req, res, next) => {
+exports.updateProfile = (userObj, req, res, next) => {
   const userId = req._id;
 
   const target = {
