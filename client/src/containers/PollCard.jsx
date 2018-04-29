@@ -149,7 +149,7 @@ const PollCard = props => {
             </button>
           </div>
         ) : (
-          <div className="h-nav__image-aspect">
+          <div className="h-nav__image-aspect polls-grid__avatar">
             <div className="h-nav__image-crop">
               <div
                 className="h-nav__image"

@@ -1461,6 +1461,10 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     right: 20px;
     bottom: 20px;
     display: flex; }
+  .polls-grid__avatar {
+    position: absolute;
+    right: 0;
+    bottom: 20px; }
   .polls-grid__edit {
     width: 43px;
     height: 43px;
