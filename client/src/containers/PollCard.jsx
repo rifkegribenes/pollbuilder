@@ -1,8 +1,8 @@
 import React from "react";
 import { withRouter, Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import { Doughnut } from "react-chartjs-2";
 
+import Chart from "./Chart";
 import editIcon from "../img/edit.svg";
 import deleteIcon from "../img/delete.svg";
 import twIcon from "../img/twitter.svg";
@@ -20,6 +20,31 @@ const deleteModal = (pollId, token, deletePoll) => {
 };
 
 const PollCard = props => {
+  const legendCallback = chart => {
+    let text = [];
+    text.push('<ul class="polls-grid__legend">');
+    for (let i = 0; i < chart.data.datasets[0].data.length; i++) {
+      console.log(i);
+      console.log(chart.data.datasets[0].data[i]);
+      console.log(chart.data.labels[i]);
+      text.push(
+        `<li class="polls-grid__legend--li"><span class="polls-grid__legend--bar" style="background-color: ${
+          chart.data.datasets[0].backgroundColor[i]
+        }; height: 20px; width: 60px;"></span><span class="polls-grid__legend--label">${
+          chart.data.labels[i]
+        }</span></li>`
+      );
+    }
+    text.push("</ul>");
+    return text.join("");
+  };
+
+  const chartOptions = {
+    legend: { display: false },
+    legendCallback,
+    maintainAspectRatio: false
+  };
+
   const chartData = {
     labels: props.poll.options.map(option => option.text),
     datasets: [
@@ -39,12 +64,7 @@ const PollCard = props => {
       }
     ]
   };
-  const chartOptions = {
-    legend: {
-      position: "bottom"
-    },
-    maintainAspectRatio: false
-  };
+
   const backgroundStyle = {
     backgroundImage: `url(${props.poll.ownerAvatar ||
       "https://raw.githubusercontent.com/rifkegribenes/surveybot/master/client/public/img/surveybot_icon.png"})`,
@@ -78,7 +98,7 @@ const PollCard = props => {
               ))}
           </div>
           <div className="polls-grid__chart-wrap">
-            <Doughnut data={chartData} options={chartOptions} />
+            <Chart data={chartData} options={chartOptions} />
           </div>
         </div>
         <div className="polls-grid__icon-wrap">
