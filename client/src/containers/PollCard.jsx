@@ -1,5 +1,5 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { Doughnut } from "react-chartjs-2";
 
@@ -149,7 +149,10 @@ const PollCard = props => {
             </button>
           </div>
         ) : (
-          <div className="h-nav__image-aspect polls-grid__avatar">
+          <Link
+            to={`/userpolls/${props.poll.ownerId}`}
+            className="h-nav__image-aspect polls-grid__avatar"
+          >
             <div className="h-nav__image-crop">
               <div
                 className="h-nav__image"
@@ -158,7 +161,7 @@ const PollCard = props => {
                 aria-label={props.poll.ownerName}
               />
             </div>
-          </div>
+          </Link>
         )}
       </div>
     </div>

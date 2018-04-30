@@ -121,10 +121,6 @@ class App extends Component {
                 render={routeProps => <Home {...routeProps} />}
               />
               <Route
-                path="/json/:version?"
-                render={routeProps => <Home {...routeProps} />}
-              />
-              <Route
                 path="/user/:id?/:token?"
                 render={routeProps => <Profile {...routeProps} />}
               />
@@ -195,7 +191,7 @@ class App extends Component {
               />
               <Route
                 exact
-                path="/dashboard"
+                path="/userpolls/:id?"
                 render={routeProps => <UserPolls {...routeProps} />}
               />
               <Route

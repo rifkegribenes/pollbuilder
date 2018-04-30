@@ -255,7 +255,7 @@ export function getAllPolls() {
 *     If database error,
 *     Hides spinner, displays error message in modal
 */
-export function getUserPolls(token, userId) {
+export function getUserPolls(userId) {
   return {
     [RSAA]: {
       endpoint: `${BASE_URL}/api/poll/userpolls`,
@@ -279,10 +279,7 @@ export function getUserPolls(token, userId) {
             });
           }
         }
-      ],
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
+      ]
     }
   };
 }

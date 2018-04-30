@@ -13,13 +13,16 @@ import PollCardMini from "./PollCardMini";
 
 class UserPolls extends React.Component {
   componentWillMount() {
-    const token =
-      this.props.appState.authToken ||
-      JSON.parse(window.localStorage.getItem("authToken"));
-    const userId =
-      this.props.profile.user._id ||
-      JSON.parse(window.localStorage.getItem("userId"));
-    this.props.api.getUserPolls(token, userId).then(result => {
+    let userId;
+    if (!this.props.match.params.id) {
+      userId =
+        this.props.profile.user._id ||
+        JSON.parse(window.localStorage.getItem("userId"));
+    } else {
+      userId = this.props.match.params.id;
+    }
+
+    this.props.api.getUserPolls(userId).then(result => {
       // console.log(result);
       if (result.type === "GET_USER_POLLS_SUCCESS") {
         this.props.actions.setLoggedIn();

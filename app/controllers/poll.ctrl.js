@@ -11,11 +11,11 @@ exports.getAllPolls = (req, res, next) => {
 };
 
 // Get all polls for a specific user
-exports.getUserPolls = (user, req, res, next) => {
-  Poll.find( { ownerId: user._id }, (err, polls) => {
+exports.getUserPolls = (req, res, next) => {
+  Poll.find( { ownerId: req.params.userId }, (err, polls) => {
 
     if (err) { return handleError(res, err); }
-    return res.status(200).json({user, polls});
+    return res.status(200).json({polls});
   });
 };
 
