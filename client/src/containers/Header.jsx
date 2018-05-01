@@ -7,7 +7,7 @@ import * as Actions from "../store/actions";
 import ModalSm from "./ModalSm";
 
 import { skip } from "../utils";
-import logo from "../img/surveybot.svg";
+import logo from "../img/pollbuilder.svg";
 import gear from "../img/gear.svg";
 
 class Header extends React.Component {
@@ -97,7 +97,7 @@ class Header extends React.Component {
     if (
       !avatarUrl ||
       avatarUrl ===
-        "https://raw.githubusercontent.com/rifkegribenes/surveybot/master/client/public/img/surveybot_icon.png"
+        "https://raw.githubusercontent.com/rifkegribenes/pollbuilder/master/client/public/img/pollbuilder_icon.png"
     ) {
       avatarUrl = gear;
     }
@@ -106,10 +106,7 @@ class Header extends React.Component {
       backgroundSize: "cover",
       backgroundPosition: "center center"
     };
-    let adminLinks = ["my account", "logout"];
-    if (this.props.profile.user.verified) {
-      adminLinks = ["my account", "my polls", "logout"];
-    }
+    let adminLinks = ["my account", "my polls", "logout"];
 
     const linkmap = {
       "my account": "user",
@@ -194,7 +191,7 @@ class Header extends React.Component {
                 className="h-nav__logo-wrap"
                 activeClassName="h-nav__logo-wrap--active"
               >
-                <img src={logo} className="h-nav__logo" alt="surveybot" />
+                <img src={logo} className="h-nav__logo" alt="pollbuilder" />
               </NavLink>
             </div>
 

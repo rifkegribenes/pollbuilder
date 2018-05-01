@@ -29,8 +29,7 @@ PollCardMini.propTypes = {
   }).isRequired,
   history: PropTypes.shape({
     push: PropTypes.func
-  }).isRequired,
-  owner: PropTypes.bool.isRequired
+  }).isRequired
 };
 
 export default withRouter(PollCardMini);

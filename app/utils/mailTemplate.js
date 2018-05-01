@@ -155,7 +155,7 @@ const shortEmail = (title, appName, url, preheader, headline, heroUrl, body, but
                     <tr style="max-height: 180px;">
                         <td align="center" valign="top" style="padding: 15px 0 0 0; display: flex; justify-content: center;" class="logo">
                             <a href=${CLIENT_URL} target="_blank" style="padding: 0; width: 100%; text-align: center;">
-                                <img alt="Surveybot" src="https://raw.githubusercontent.com/rifkegribenes/surveybot/master/client/public/img/surveybot.png" style="display: block; margin: auto; width:100%; max-width: 500px; height: auto; max-height: 180px;" border="0">
+                                <img alt="pollbuilder" src="https://raw.githubusercontent.com/rifkegribenes/pollbuilder/master/client/public/img/pollbuilder.png" style="display: block; margin: auto; width:100%; max-width: 500px; height: auto; max-height: 180px;" border="0">
                             </a>
                         </td>
                     </tr>
@@ -255,41 +255,41 @@ const shortEmail = (title, appName, url, preheader, headline, heroUrl, body, but
 exports.pwResetTemplate = (url) => {
      return shortEmail(
       'Reset Password', // title
-      'Surveybot', // appName
+      'pollbuilder', // appName
       url, // url
       'Click here to reset your password', // preheader
       'Forgot your password?', // headline
-      'https://raw.githubusercontent.com/rifkegribenes/surveybot/master/client/public/img/email-banner.png', // heroUrl
+      'https://raw.githubusercontent.com/rifkegribenes/pollbuilder/master/client/public/img/email-banner.png', // heroUrl
       'No problem! Click below to reset it!', // body
       'Reset Password', // buttonText
-      'surveybot | rifkegribenes.io' // footerText
+      'pollbuilder | rifkegribenes.io' // footerText
       );
  };
 
 exports.pwResetConfirmation = () => {
      return shortEmail(
       'Your password was reset', // title
-      'Surveybot', // appName
+      'pollbuilder', // appName
       CLIENT_URL, // url
       'Your password was reset successfully', // preheader
       'You changed your password', // headline
-      'https://raw.githubusercontent.com/rifkegribenes/surveybot/master/client/src/img/checkbox_500x180.png', // heroUrl
+      'https://raw.githubusercontent.com/rifkegribenes/pollbuilder/master/client/src/img/checkbox_500x180.png', // heroUrl
       'Or somebody did...\nIf it wasn\'t you, please contact us right away and get that fixed!', // body
       'My Account', // buttonText
-      'surveybot | rifkegribenes.io' // footerText
+      'pollbuilder | rifkegribenes.io' // footerText
       );
  };
 
 exports.verificationTemplate = (url) => {
   return shortEmail(
     'Please verify your email', // title
-    'Surveybot', // appName
+    'pollbuilder', // appName
     url, // url
     'Click here to verify your email', // preheader
     'Welcome!', // headline
-    'https://raw.githubusercontent.com/rifkegribenes/surveybot/master/client/public/img/email-banner.png', // heroUrl
+    'https://raw.githubusercontent.com/rifkegribenes/pollbuilder/master/client/public/img/email-banner.png', // heroUrl
     'Click below to verify your email:', // body
     'Verify Email', // buttonText
-    'surveybot | rifkegribenes.io' // footerText
+    'pollbuilder | rifkegribenes.io' // footerText
     );
 };

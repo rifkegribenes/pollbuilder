@@ -40,6 +40,11 @@ class ViewPoll extends React.Component {
           dismiss={() => {
             this.props.actions.dismissModal();
             if (
+              this.props.poll.modal.text ===
+              "You have already voted in this poll"
+            ) {
+              this.props.history.push("/polls");
+            } else if (
               this.props.poll.modal.type === "modal__error" &&
               this.props.poll.modal.buttonText !== "Delete"
             ) {
@@ -52,9 +57,6 @@ class ViewPoll extends React.Component {
               this.props.poll.modal.action();
             } else {
               this.props.actions.dismissModal();
-              if (this.props.poll.modal.type === "modal__error") {
-                this.props.history.push("/login");
-              }
             }
           }}
         />

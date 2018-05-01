@@ -103,7 +103,7 @@ class CreatePoll extends React.Component {
         <div className="container combo">
           <div className="combo__header">
             <div className="combo__logo-wrap">
-              <img className="combo__logo" src={logo} alt="surveybot" />
+              <img className="combo__logo" src={logo} alt="pollbuilder" />
             </div>
             <div className="combo__title">
               {this.props.edit ? "Edit Poll" : "Create Poll"}

@@ -1,4 +1,4 @@
-## Surveybot (Freecodecamp Project)
+## pollbuilder (Freecodecamp Project)
 
 ### User stories:
 
@@ -20,4 +20,4 @@
 
 #### Screenshot:
 
-![surveybot screenshot](https://raw.githubusercontent.com/rifkegribenes/surveybot/master/client/public/img/Screenshot%202018-03-27%2013.06.38.png)
+![pollbuilder screenshot](https://raw.githubusercontent.com/rifkegribenes/pollbuilder/master/client/public/img/Screenshot%202018-03-27%2013.06.38.png)

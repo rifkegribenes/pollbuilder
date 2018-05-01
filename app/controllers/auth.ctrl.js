@@ -102,7 +102,7 @@ exports.register = function (req, res, next) {
 
         // assign generic avatar URL, will be overwritten if user later links
         // a social media accout
-        const avatarUrl = 'https://raw.githubusercontent.com/rifkegribenes/surveybot/master/client/public/img/surveybot_icon.png';
+        const avatarUrl = 'https://raw.githubusercontent.com/rifkegribenes/pollbuilder/master/client/public/img/pollbuilder_icon.png';
         const user = new User({
           local: { email, password },
           profile: { firstName, lastName, email, avatarUrl },
@@ -116,7 +116,7 @@ exports.register = function (req, res, next) {
           }
 
           // Send verification email
-          const subject = "Surveybot | Email Verification Required";
+          const subject = "pollbuilder | Email Verification Required";
           const url = mailUtils.makeVerificationUrl(key.key);
           const html = mailTemplate.verificationTemplate(url);
           const text = `Please click here to verify your email: ${url}`;
@@ -239,7 +239,7 @@ exports.verifyEmail = (req, res) => {
 */
 const sendPWResetEmail = (params) => {
     const url     = `${CLIENT_URL}/resetpassword/${params.key}`;
-    const subject = 'Surveybot | Password Reset Request';
+    const subject = 'pollbuilder | Password Reset Request';
     const html = mailTemplate.pwResetTemplate(url);
     const text = `Click here to reset your password: ${url}`;
     mailUtils.sendMail(params.to_email, subject, html, text)
@@ -346,7 +346,7 @@ exports.sendVerify = (req, res, next) => {
         });
       } else {
           // Send verification email
-          const subject = "Surveybot | Email Verification Required";
+          const subject = "pollbuilder | Email Verification Required";
           const url = mailUtils.makeVerificationUrl(key.key);
           const html = mailTemplate.verificationTemplate(url);
           const text = `Please click here to verify your email: ${url}`;
@@ -410,7 +410,7 @@ exports.resetPass = (req, res, next) => {
         if (err) { return next(err); };
 
         // Send user email confirmation of password change via Mailgun
-        const subject = "Surveybot | Password Changed";
+        const subject = "pollbuilder | Password Changed";
         const text = 'You are receiving this email because you changed your password. \n\n' +
         'If you did not request this change, please contact us immediately.';
         const html = mailTemplate.pwResetConfirmation();

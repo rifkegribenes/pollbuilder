@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import logo from "../img/surveybot.svg";
+import logo from "../img/pollbuilder.svg";
 import github from "../img/github-gradient.svg";
 
 const Footer = props => (
@@ -12,12 +12,12 @@ const Footer = props => (
         className="footer__logo-wrap"
         activeClassName="footer__logo-wrap--active"
       >
-        <img src={logo} className="footer__logo" alt="surveybot" />
+        <img src={logo} className="footer__logo" alt="pollbuilder" />
       </NavLink>
     </div>
     <div className="footer__right">
       <a
-        href="https://github.com/rifkegribenes/surveybot"
+        href="https://github.com/rifkegribenes/pollbuilder"
         rel="noopener noreferrer"
         target="_blank"
         className="footer__link"

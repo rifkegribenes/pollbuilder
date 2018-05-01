@@ -1,5 +1,5 @@
 {
-  "name": "surveybot",
+  "name": "pollbuilder",
   "version": "1.0.0",
   "description": "Build your own polls, share with your friends, vote in polls created by other users, and view results of any poll.",
   "main": "server.js",
@@ -13,10 +13,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rifkegribenes/surveybot.git"
+    "url": "git+https://github.com/rifkegribenes/pollbuilder.git"
   },
-  "bugs": "https://github.com/rifkegribenes/surveybot/issues",
-  "homepage": "https://github.com/rifkegribenes/surveybot#readme",
+  "bugs": "https://github.com/rifkegribenes/pollbuilder/issues",
+  "homepage": "https://github.com/rifkegribenes/pollbuilder#readme",
   "keywords": [
     "MongoDB",
     "Mongoose",

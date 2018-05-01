@@ -77,7 +77,7 @@ const PollCard = props => {
 
   const backgroundStyle = {
     backgroundImage: `url(${props.poll.ownerAvatar ||
-      "https://raw.githubusercontent.com/rifkegribenes/surveybot/master/client/public/img/surveybot_icon.png"})`,
+      "https://raw.githubusercontent.com/rifkegribenes/pollbuilder/master/client/public/img/pollbuilder_icon.png"})`,
     backgroundSize: "cover",
     backgroundPosition: "center center"
   };

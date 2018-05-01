@@ -43,26 +43,23 @@ class UserPolls extends React.Component {
       !this.props.match.params.id ||
       this.props.match.params.id === this.props.profile.user._id;
     const polls = this.props.poll.polls.map(poll => (
-      <PollCardMini
-        key={poll._id}
-        owner={true}
-        poll={poll}
-        history={this.props.history}
-      />
+      <PollCardMini key={poll._id} poll={poll} history={this.props.history} />
     ));
     let backgroundStyle;
     if (!owner && !this.props.poll.polls.length) {
       backgroundStyle = {
         backgroundImage: `url(${this.props.poll.form.ownerAvatar ||
-          "https://raw.githubusercontent.com/rifkegribenes/surveybot/master/client/public/img/surveybot_icon.png"})`,
+          "https://raw.githubusercontent.com/rifkegribenes/pollbuilder/master/client/public/img/pollbuilder_icon.png"})`,
         backgroundSize: "cover",
         backgroundPosition: "center center"
       };
     }
     if (this.props.poll.polls.length) {
       backgroundStyle = {
-        backgroundImage: `url(${this.props.poll.polls[0].ownerAvatar ||
-          "https://raw.githubusercontent.com/rifkegribenes/surveybot/master/client/public/img/surveybot_icon.png"})`,
+        backgroundImage: `url(${this.props.poll.polls[
+          this.props.poll.polls.length - 1
+        ].ownerAvatar ||
+          "https://raw.githubusercontent.com/rifkegribenes/pollbuilder/master/client/public/img/pollbuilder_icon.png"})`,
         backgroundSize: "cover",
         backgroundPosition: "center center"
       };

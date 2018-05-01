@@ -31,15 +31,6 @@ exports.viewPollById = (req, res, next) => {
   });
 };
 
-// Get a single poll by slug
-exports.viewPollBySlug = (req, res, next) => {
-  Poll.find( { slug: req.params.id }, (err, poll) => {
-    if (err) { return handleError(res, err); }
-    if (!poll || poll.length === 0) { return res.status(404).send({message: 'Error: Poll not found'}); }
-    return res.json(poll[0]);
-  });
-};
-
 // Create a new poll
 exports.newPoll = (user, req, res, next) => {
   if (!user) {

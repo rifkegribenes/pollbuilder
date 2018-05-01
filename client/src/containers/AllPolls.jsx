@@ -14,7 +14,7 @@ import PollCardMini from "./PollCardMini";
 class AllPolls extends React.Component {
   componentWillMount() {
     this.props.api.getAllPolls().then(result => {
-      console.log(result);
+      // console.log(result);
       if (result.type === "GET_ALL_POLLS_SUCCESS") {
         // this.props.actions.setLoggedIn();
       }
