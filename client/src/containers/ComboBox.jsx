@@ -19,7 +19,7 @@ class ComboBox extends React.Component {
     super(props);
 
     this.state = {
-      form: props.initalForm || "login",
+      form: this.props.initalForm || "login",
       localForm: false
     };
 
@@ -30,6 +30,9 @@ class ComboBox extends React.Component {
   componentDidMount() {
     if (this.props.match.params.key) {
       this.toggleForm("resetPwd");
+    }
+    if (this.props.location.pathname === "/reset") {
+      this.toggleForm("reset");
     }
     const { from } = this.props.location.state || { from: { pathname: "/" } };
     const pathname = from.pathname;

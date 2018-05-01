@@ -207,6 +207,14 @@ class Form extends React.Component {
           dismiss={() => {
             this.props.actions.dismissModal();
             this.props.actions.resetForm();
+            if (
+              this.props[reducer].modal.title === "Failure: Password not reset"
+            ) {
+              this.props.history.push("/reset");
+              this.props.toggleForm("reset");
+              this.forceUpdate();
+              return;
+            }
             if (this.props.toggleform) {
               this.props.toggleForm("login");
             }
@@ -216,6 +224,7 @@ class Form extends React.Component {
           location={this.props.location}
           resetForm={this.props.actions.resetForm}
           toggleForm={this.props.toggleForm || null}
+          action={this.props[reducer].modal.action}
         />
       </div>
     );

@@ -128,33 +128,14 @@ function auth(state = INITIAL_STATE, action) {
         }
       });
 
-    case LOGOUT:
-      return INITIAL_STATE;
-
     /*
     *  Called From: <Login />, <Register />, <ResetPassword />
     *  Payload: none
     *  Purpose: Reset Form
     */
+    case LOGOUT:
     case RESET_FORM:
-      return update(state, {
-        errorMsg: { $set: "" },
-        spinnerClass: { $set: "spinner__hide" },
-        modal: {
-          class: { $set: "modal__hide" },
-          type: { $set: "" },
-          title: { $set: "" },
-          text: { $set: "" }
-        },
-        form: {
-          firstName: { $set: "" },
-          lastName: { $set: "" },
-          email: { $set: "" },
-          password: { $set: "" },
-          confirmPwd: { $set: "" },
-          error: { $set: false }
-        }
-      });
+      return INITIAL_STATE;
 
     /*
     *  Called From: <ComboBox />
@@ -244,7 +225,8 @@ function auth(state = INITIAL_STATE, action) {
           class: "modal__show",
           type: "modal__success",
           text: "Your password has been reset.\nClick Sign In to continue",
-          buttonText: "Sign in"
+          buttonText: "Sign in",
+          redirect: "/login"
         }
       });
 

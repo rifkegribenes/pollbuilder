@@ -58,7 +58,10 @@ body.user-is-tabbing *:focus {
   max-width: 1170px;
   margin: auto;
   margin-bottom: 80px;
-  min-height: calc(100vh - 237px);
+
+  &__flex {
+      min-height: calc(100vh - 237px);
+  }
 }
 
 .main {

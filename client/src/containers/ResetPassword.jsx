@@ -47,6 +47,9 @@ class ResetPassword extends React.Component {
           this.setState({ ...newState }, () => {
             console.log(`success: ${this.state.success}`);
           });
+        } else if (result === "RESET_PW_FAILURE") {
+          console.log("forcing route update");
+          this.forceUpdate();
         }
       });
     } else {
