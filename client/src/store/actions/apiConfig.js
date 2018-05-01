@@ -5,7 +5,7 @@
 
 /* ================================= SETUP ================================= */
 
-// const prodUrl = 'https://pollbuilder.glitch.me';
+const prodUrl = 'https://pollbuilder.glitch.me';
 const devUrl = "http://localhost:3001"; // server url for local install
 
 /* ================================ EXPORTS ================================ */

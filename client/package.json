@@ -33,7 +33,6 @@
     "sass": "sass --watch src/styles/scss:src/styles/css",
     "precommit": "lint-staged"
   },
-  "proxy": "http://localhost:3001/",
   "lint-staged": {
     "*.{js,jsx}": [
       "prettier --parser flow --write",
