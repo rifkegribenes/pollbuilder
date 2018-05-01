@@ -215,6 +215,12 @@ class Form extends React.Component {
               this.forceUpdate();
               return;
             }
+            if (this.props[reducer].modal.title === "Check your Email") {
+              this.props.history.push("/login");
+              this.props.toggleForm("login");
+              this.forceUpdate();
+              return;
+            }
             if (this.props.toggleform) {
               this.props.toggleForm("login");
             }
