@@ -1,39 +1,53 @@
-// server.js
-// where your node app starts
+'use strict';
 
-// init project
-const express = require('express')
-const app = express()
+// set up ======================================================================
+var express = require('express');
+var app = express();
+require('dotenv').load();
+var mongoose = require('mongoose');
+var cors = require('cors');
+var morgan = require('morgan');
+var bodyParser = require('body-parser');
+var https = require('https');
+var configDB = require('./app/config/database.js');
+const User = require('./app/models/user');
+const session = require('express-session');
+const passport = require('passport');
+const user = require('./app/utils/passport-serialize');
 
-// we've started you off with Express, 
-// but feel free to use whatever libs or frameworks you'd like through `package.json`.
 
-// http://expressjs.com/en/starter/static-files.html
-app.use(express.static('public'))
+// configuration ===============================================================
+mongoose.connect(configDB.url, configDB.options); // connect to our database
+mongoose.Promise = global.Promise;
+require('./app/config/passport')(passport); // pass passport for configuration
 
-// http://expressjs.com/en/starter/basic-routing.html
-app.get("/", (request, response) => {
-  response.sendFile(__dirname + '/views/index.html')
-})
+// Basic middleware for all Express requests
+app.use(bodyParser.urlencoded({ extended: true })); // Parses urlencoded bodies
+app.use(bodyParser.json()); // Send JSON responses
+app.use(morgan('dev')); // Log requests to API using morgan
 
-// Simple in-memory store
-const dreams = [
-  "Find and count some sheep",
-  "Climb a really tall mountain",
-  "Wash the dishes"
-]
 
-app.get("/dreams", (request, response) => {
-  response.send(dreams)
-})
+// Enable CORS from client side
+app.use(cors());
 
-// could also use the POST body instead of query string: http://expressjs.com/en/api.html#req.body
-app.post("/dreams", (request, response) => {
-  dreams.push(request.query.dream)
-  response.sendStatus(200)
-})
+app.use(session({
+  secret: process.env.JWT_SECRET,
+  resave: false,
+  saveUninitialized: true
+}))
+app.use(passport.initialize());
+app.use(passport.session());
 
-// listen for requests :)
-const listener = app.listen(process.env.PORT, () => {
-  console.log(`Your app is listening on port ${listener.address().port}`)
-})
+
+passport.serializeUser(user.serialize);
+passport.deserializeUser(user.deserialize);
+
+// routes ======================================================================
+const router = require('./router');
+router(app);
+
+// launch ======================================================================
+var port = process.env.PORT || 3001;
+app.listen(port,  function () {
+	console.log('Node.js listening on port ' + port + '...');
+});

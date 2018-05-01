@@ -1,0 +1,272 @@
+@import 'media-queries';
+@import 'vars';
+@import 'form';
+@import 'nav';
+@import 'home';
+@import 'footer';
+@import 'spinner';
+@import 'modal';
+@import 'profile';
+@import 'combo';
+@import 'verify';
+@import 'poll';
+@import 'polls-grid';
+
+* {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  outline: 0;
+}
+
+/* a subtle focus style for keyboard-input elements */
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+textarea:focus {
+  box-shadow: 0 0 .5em $color_focus_ring !important;
+}
+
+/* no focus style for non-keyboard-inputs elements */
+button:focus,
+select:focus {
+  outline: none;
+}
+
+/* and for keyboard users, override everything with
+   a border when focused on any element */
+body.user-is-tabbing *:focus {
+  box-shadow: 0 0 1em $color_focus_ring !important;
+}
+
+/* fake focus class for elements like labels of custom-styled buttons that hide html inputs */
+.fake-focus {
+  box-shadow: 0 0 1em $color_focus_ring !important;
+}
+
+.app {
+  height: 100%;
+  font-family: $font-stack;
+  color: $color_gray_text;
+}
+
+.container {
+	display: flex;
+  flex-direction: column;
+	justify-content: center;
+  max-width: 1170px;
+  margin: auto;
+  margin-bottom: 80px;
+
+  &__flex {
+      min-height: calc(100vh - 237px);
+  }
+}
+
+.main {
+  height: 100%;
+  min-height: calc(100vh - 60px);
+  padding: 137px 20px 20px 20px;
+  max-width: 1170px;
+  margin: auto;
+}
+
+.title {
+	color: $color_cream;
+	text-shadow: 0 0 20px rgba(0, 0, 0, 0.63);
+  font-weight: 100;
+  font-size: 10vw;
+  text-align: center;
+  width: 100%;
+  margin: auto;
+  font-family: $font-stack;
+  text-transform: uppercase;
+}
+
+// visible to screenreader only
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    border: 0;
+}
+
+.link {
+  border-bottom: 1px solid transparent;
+  text-align: left;
+  font-family: inherit;
+  font-weight: inherit;
+  font-size: inherit;
+  width: 100%;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+  text-decoration: none !important;
+  color: $color_grape;
+
+  &:hover, &:active, &:focus {
+    border-bottom: 1px dotted $color_grape;
+    cursor: pointer;
+  }
+}
+
+// use when you need to wrap an interactive element in a <button> element to enable keypress behavior and WAI-ARIA roles but don't want default browser button styling
+//
+.aria-button {
+  -webkit-appearance: none;
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: inherit;
+  font-family: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  font-weight: inherit;
+  cursor: pointer;
+
+  &:hover, &:active, &:focus {
+    -webkit-appearance: none;
+    appearance: none;
+    border: none;
+    background: transparent;
+    outline: none;
+    color: inherit;
+    font-family: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+    font-weight: inherit;
+    cursor: pointer;
+  }
+  &__link {
+    border-bottom: 1px solid transparent;
+    text-align: left;
+    font-family: inherit;
+    font-weight: inherit;
+    font-size: inherit;
+    width: 100%;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    text-decoration: none !important;
+
+    &:hover, &:active, &:focus {
+      border-bottom: 1px dotted $color_grape;
+      cursor: pointer;
+
+    }
+
+  }
+}
+
+.center {
+  text-align: center;
+}
+
+.error {
+    font-family: $font-stack;
+    color: $color_error_text;
+    background-color: $color_error_bkg;
+    font-size: 1.2em;
+    font-weight: 300;
+    margin: 15px auto;
+    border: 1px solid $color_error_text;
+    padding: 7px;
+    border-radius: 3px;
+    transition: opacity .15s linear;
+    text-align: center;
+    position: relative;
+  }
+
+input:invalid {
+    border: 1px solid red;
+  }
+
+.success {
+    font-family: $font-stack;
+    color: $color_success_text;
+    background-color: $color_success_bkg;
+    font-size: 1.2em;
+    font-weight: 300;
+    margin: 15px auto;
+    border: 1px solid $color_success_text;
+    padding: 7px;
+    border-radius: 3px;
+    transition: opacity .15s linear;
+    text-align: center;
+  }
+
+.unstyled-link {
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+.hidden {
+    display: none !important;
+  }
+
+.visible {
+  display: block !important;
+}
+
+.character-count {
+  text-align: right;
+  font-family: $font-stack;
+  color: $color_gray_text;
+
+}
+
+.skip {
+    position: absolute;
+    top: -1000px;
+    left: -1000px;
+    height: 1px;
+    width: 1px;
+    text-align: left;
+    overflow: hidden;
+
+    &:active, &:focus, &:hover {
+      left: 10px;
+      top: 10px;
+      width: auto;
+      height: auto;
+      overflow: visible;
+      padding: 7px 15px;
+      border-radius: 20px;
+      appearance: none;
+      -webkit-appearance: none;
+      background: $color_grape;
+      z-index: 100;
+      border: 1px solid white;
+      color: white;
+      font-family: $font-stack;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-size: 1.2em;
+
+      & i {
+        font-size: .8em;
+      }
+
+    }
+}
+
+.not-found {
+  &__button-wrap {
+    display: flex;
+    justify-content: center;
+  }
+  }
+
+.single-msg {
+  color: $color_grape;
+  font-weight: 100;
+  font-size: 10vw;
+  text-align: center;
+  width: 100%;
+  margin: auto;
+  font-family: $font-stack;
+}

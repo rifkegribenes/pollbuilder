@@ -1,0 +1,104 @@
+.profile {
+	&__card {
+		padding: 20px;
+		display: flex;
+		flex-direction: column;
+		text-align: center;
+		width: 100%;
+		margin: auto;
+
+		@include for-phone-portrait-up {
+      width: 380px;
+		  border-radius: $btn_border-radius;
+      box-shadow: 0px 0px 3px 0px $color_grape;
+		  // box-shadow: 0px 0px 5px 0px $color_box-shadow;
+    }
+	}
+
+	&__icon {
+		width: 50px;
+		height: auto;
+	}
+	&__edit {
+		display: none;
+	}
+	&__name {
+		font-size: 32px;
+		color: $color_grape !important;
+		text-align: center;
+		letter-spacing: 1px;
+		line-height: 1em;
+		margin: 15px 0;
+		position: relative;
+
+		&:hover .profile__edit {
+			display:block;
+			cursor: pointer;
+			position: absolute;
+			right: 0;
+			top: -6px;
+		}
+	}
+
+	&__email {
+		font-size: 18px;
+		position: relative;
+		&:hover .profile__edit {
+			display:block;
+			cursor: pointer;
+			position: absolute;
+			right: 0;
+			top: -10px;
+		}
+	}
+
+	 &__image-span {
+  	display: none;
+  }
+
+  &__image-aspect {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    margin: auto;
+    border: 1px solid $color_grape;
+    border-radius: 100%;
+		appearance: none;
+		-webkit-appearance: none;
+		background: transparent;
+		outline: none;
+
+      &:hover  .profile__image-span,
+      &:focus  .profile__image-span {
+	  		display:block;
+	  		background: rgba(0,0,0,.5);
+	  		z-index: 2;
+	  		position: absolute;
+	  		top:40px;
+			  color: white;
+			  font-size: 12px;
+			  font-weight: bold;
+			  left: 0;
+			  line-height: 9px;
+			  padding: 7px 0;
+			  text-align: center;
+			  width: 100px;
+			  cursor: pointer;
+			  clip-path: circle(50px at center);
+	  	}
+  }
+
+
+
+	&__button {
+		text-transform: capitalize;
+		font-weight: 400;
+		letter-spacing: 1px;
+	}
+
+	&__unverified {
+		color: red;
+		font-weight: bold;
+		margin-bottom: 15px;
+	}
+}

@@ -1,0 +1,230 @@
+.modal {
+  color: rgba(0, 0, 0, 0.6);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  // height: 100%;
+  padding: 40px 20px 20px 20px;
+  background-color: white;
+  font-family: $font-stack;
+  @include for-phone-landscape-up {
+    top: 50%;
+    left: 50%;
+    bottom: auto;
+    right: auto;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    // height: auto;
+    box-shadow: 10px 10px 20px rgba(0,0,0,.5);
+  }
+  @include for-tablet-portrait-up {
+    padding: 60px;
+  }
+
+  &__hide {
+    display: none;
+  }
+  &__show {
+    display: block;
+  }
+  &__header {
+    line-height: 1.2em;
+    font-family: $font-stack;
+    font-weight: 300;
+    font-size: 1.3em;
+    font-weight: 700;
+    background-color: white;
+    padding: 5px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+  &__info {
+    color: $color_grape;
+  }
+  &__error {
+    color: $color_raspberry;
+  }
+  &__success {
+    color: $color_success_text;
+  }
+  &__body {
+    padding: 20px;
+    white-space: pre-wrap;
+    text-align: center;
+  }
+  &__action {
+    cursor: pointer;
+    padding: 5px 40px;
+    display: flex;
+    justify-content: center;
+    @include for-phone-landscape-up {
+      margin-top: 40px
+    }
+  }
+
+  &__button {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    color: white;
+    font-family: $font-stack;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 300;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 4px;
+    transition: $transition_button;
+    background: $color_grape;
+    background-image: -webkit-linear-gradient(-45deg, $color_grape 0px, $color_grape 50px, $color_raspberry, $color_mango 100%);
+    background-image: linear-gradient(135deg, $color_grape 0px, $color_grape 50px, $color_raspberry, $color_mango 100%);
+    background-size: 200% 200%;
+    background-position: 0 0;
+    transition: background-position 500ms ease-in-out;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+
+    &:last-child {
+      margin-left: 20px;
+    }
+
+    &:first-child {
+      margin-left: 0 !important;
+    }
+
+      &:hover, &:focus {
+        -webkit-appearance: none;
+        appearance: none;
+        background-position: 100% 100%;
+        box-shadow: 0 5px 10px rgba(131,58,180, 0.4);
+        transition: all 500ms ease-in-out;
+      }
+    }
+
+  &__danger {
+    background: $color_raspberry;
+  }
+}
+
+.modal-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  cursor: pointer;
+  font-weight: 100 !important;
+
+  &--pg {
+    top: 4px;
+    right: 4px;
+  }
+}
+.modal-close-sm {
+  font-size: 1.5em;
+  top: 0;
+  right: 0;
+  opacity: .6;
+  padding: 0 12px 2px 12px;
+  border-radius: 100%;
+  font-weight: 100!important;
+
+  &:hover, &:focus {
+    opacity: 1;
+  }
+}
+
+.ReactModal__Content .ReactModal__Content--after-open {
+
+}
+
+.overlay {
+  z-index: 3;
+  background: rgba(0,0,0,.7) !important;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.react-modal {
+  background: transparent;
+  border: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  @include for-phone-landscape-up {
+    top: 40px;
+    left: 40px;
+    right: 40px;
+    bottom: 40px;
+  }
+}
+
+// Animated checkbox for success modals
+
+.modal__checkbox {
+  width: 100px;
+  display: block;
+  margin: 40px auto 0;
+}
+
+.path {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 0;
+  &.circle {
+    -webkit-animation: dash .9s ease-in-out;
+    animation: dash .9s ease-in-out;
+  }
+  &.check {
+    stroke-dashoffset: -100;
+    -webkit-animation: dash-check .9s .35s ease-in-out forwards;
+    animation: dash-check .9s .35s ease-in-out forwards;
+  }
+}
+
+
+@-webkit-keyframes dash {
+  0% {
+    stroke-dashoffset: 1000;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes dash {
+  0% {
+    stroke-dashoffset: 1000;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@-webkit-keyframes dash-check {
+  0% {
+    stroke-dashoffset: -100;
+  }
+  100% {
+    stroke-dashoffset: 900;
+  }
+}
+
+@keyframes dash-check {
+  0% {
+    stroke-dashoffset: -100;
+  }
+  100% {
+    stroke-dashoffset: 900;
+  }
+}
+

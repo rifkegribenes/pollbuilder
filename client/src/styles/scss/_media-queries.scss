@@ -1,0 +1,91 @@
+/* MEDIA QUERIES */
+
+@mixin profile-card-breakpoint {
+  @media (min-width: 360px) {
+    @content;
+  }
+}
+
+@mixin for-short-viewports-only {
+  @media (max-height: 600px) {
+    @content;
+  }
+}
+
+@mixin for-phone-portrait-up {
+  @media (min-width: 400px) {
+    @content;
+  }
+}
+
+@mixin for-phone-landscape-up {
+  @media (min-width: 480px) {
+    @content;
+  }
+}
+
+@mixin for-phone-landscape-only {
+  @media (min-width: 480px) and (max-width: 599px) {
+    @content;
+  }
+}
+
+@mixin for-tablet-portrait-up {
+  @media (min-width: 600px) {
+    @content;
+  }
+}
+
+@mixin mobile-nav-breakpoint {
+  @media (min-width: 670px) {
+    @content;
+  }
+}
+
+@mixin grid-controls-breakpoint {
+  @media (min-width: 675px) {
+    @content;
+  }
+}
+
+@mixin for-tablet-portrait-only {
+  @media (min-width: 600px) and (max-width: 900px) {
+    @content;
+  }
+}
+
+@mixin for-tablet-landscape-up {
+  @media (min-width: 901px) {
+    @content;
+  }
+}
+
+@mixin for-tablet-landscape-only {
+  @media (min-width: 901px) and (max-width: 1199px) {
+    @content;
+  }
+}
+
+@mixin for-desktop-up {
+  @media (min-width: 1200px) {
+    @content;
+  }
+}
+
+@mixin for-desktop-only {
+  @media (min-width: 1200px) and (max-width: 1799px) {
+    @content;
+  }
+}
+
+@mixin for-big-desktop-up {
+  @media (min-width: 1600px) {
+    @content;
+  }
+}
+
+@mixin for-honkin-huge-screens {
+  @media (min-width: 1800px) {
+    @content;
+  }
+}

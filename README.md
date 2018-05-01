@@ -1,27 +1,23 @@
-Welcome to the Glitch BETA
-==========================
+## pollbuilder (Freecodecamp Project)
 
-Click `Show` in the header to see your app live. Updates to your code will instantly deploy and update live.
+### User stories:
 
-**Glitch** is the friendly community where you'll build the app of your dreams. Glitch lets you instantly create, remix, edit, and host an app, bot or site, and you can invite collaborators or helpers to simultaneously edit code with you.
+* As an authenticated user, I can keep my polls and come back later to access them.
 
-Find out more [about Glitch](https://glitch.com/about).
+* As an authenticated user, I can share my polls with my friends.
 
+* As an authenticated user, I can see the aggregate results of my polls.
 
-Your Project
-------------
+* As an authenticated user, I can delete polls that I decide I don't want anymore.
 
-On the front-end,
-- edit `public/client.js`, `public/style.css` and `views/index.html`
-- drag in `assets`, like images or music, to add them to your project
+* As an authenticated user, I can create a poll with any number of possible items.
 
-On the back-end,
-- your app starts at `server.js`
-- add frameworks and packages in `package.json`
-- safely store app secrets in `.env` (nobody can see this but you and people you invite)
+* As an unauthenticated or authenticated user, I can see and vote on everyone's polls.
 
+* As an unauthenticated or authenticated user, I can see the results of polls in chart form. (This could be implemented using Chart.js or Google Charts.)
 
-Made by [Fog Creek](https://fogcreek.com/)
--------------------
+* As an authenticated user, if I don't like the options on a poll, I can create a new option.
 
-\ ゜o゜)ノ
+#### Screenshot:
+
+![pollbuilder screenshot](https://raw.githubusercontent.com/rifkegribenes/pollbuilder/master/client/public/img/Screenshot%202018-03-27%2013.06.38.png)

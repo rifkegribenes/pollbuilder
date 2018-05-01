@@ -1,0 +1,44 @@
+.verify {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  height: 100%;
+  padding: 60px 0;
+
+  &__title {
+    margin: 25px auto;
+    font-weight: 200;
+  }
+
+  &__text-header {
+    text-align: center;
+    color: white;
+    margin: 15px 40px;
+    font-size: 36px;
+
+    @include for-phone-portrait-up {
+      margin: 40px;
+    }
+  }
+  &__text {
+    color: $color_gray_text;
+    align-self: center;
+    margin: 0 auto;
+    padding: 20px;
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+
+    & p {
+      margin-bottom: .8em;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    @include for-phone-portrait-up {
+          font-size: 1.2em;
+    }
+  }
+}

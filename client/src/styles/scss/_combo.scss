@@ -1,0 +1,127 @@
+.combo {
+	width: 100%;
+	margin: auto;
+  position: relative;
+  margin-bottom: 80px;
+
+	@include for-phone-portrait-up {
+      width: 380px;
+		  border-radius: $btn_border-radius;
+      box-shadow: 0px 0px 3px 0px $color_grape;
+		  // box-shadow: 0px 0px 5px 0px $color_box-shadow;
+    }
+
+  &__header {
+  	text-align: center;
+  	padding: 20px;
+    padding-bottom: 0;
+  	position: relative;
+  }
+
+  &__footer {
+    background: rgba(255,255,255,.6);
+  }
+
+  &__back-btn {
+  	position: absolute;
+  	top: 20px;
+  	left: 20px;
+  	appearance: none;
+  	-webkit-appearance: none;
+  	-moz-appearance: none;
+    background: transparent;
+    border: 1px solid $color_gray_lighter;
+  	border-radius: 20px;
+  	font-size: 20px;
+  	font-weight: 100;
+  	color: $color_gray_lighter;
+  	padding: 0 11px 4px 9px;
+
+  	&:hover, &:focus {
+  		box-shadow: 0px 0px 5px 0px $color_focus_ring;
+  	}
+  }
+
+  &__title {
+  	font-size: 1.5rem;
+
+  }
+
+  &__logo {
+    max-width: 100%;
+    margin: auto;
+    height: auto;
+  }
+
+  &__nav {
+  	background: rgba(255,255,255,.6);
+  	display: flex;
+  }
+
+  &__nav-button {
+  	appearance: none;
+  	-webkit-appearance: none;
+  	-moz-appearance: none;
+    background: transparent;
+  	width: 50%;
+  	font-size: .85em;
+  	padding: 15px 0;
+  	border: 1px solid transparent;
+  	border-bottom: 1px solid $color_gray_lightest;
+  	color: $color_gray_lightest;
+  	cursor: pointer;
+
+  	&:hover, &:focus {
+  		border: 1px solid $color_box-shadow;
+  		border-bottom: 1px solid $color_gray_lightest;
+			box-shadow: 0px 0px 5px 0px $color_box-shadow;
+  	}
+
+  	&:focus {
+  		box-shadow: 0px 0px 5px 0px $color_focus_ring;
+  	}
+
+  	&--active {
+			color: $color_gray_text;
+			border-bottom: 1px solid $color_gray_text;
+			cursor: default;
+
+			&:hover {
+	  		border: 1px solid transparent;
+  			border-bottom: 1px solid $color_gray_text;
+				box-shadow: none;
+	  	}
+
+	  	&:focus {
+	  		box-shadow: 0px 0px 5px 0px $color_focus_ring;
+	  	}
+  	}
+
+  }
+
+  &__social-wrap {
+  	background: rgba(255,255,255,.6);
+    padding-top: 20px;
+
+    @include for-phone-portrait-up {
+      padding: 20px;
+      padding-bottom: 0;
+    }
+  }
+
+  &__form {
+  	background: rgba(255,255,255,.6);
+
+    @include for-phone-portrait-up {
+      padding: 0 20px;
+    }
+  }
+}
+
+.embed {
+  position: absolute;
+  top: 297px;
+  right: 20px;
+  background: white;
+
+}

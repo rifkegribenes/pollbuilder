@@ -1,0 +1,64 @@
+$color_gray_text: #545454;
+$color_gray_med: lighten($color_gray_text,10%);
+$color_gray_lighter: lighten($color_gray_text,20%);
+$color_gray_lightest: lighten($color_gray_text,40%);
+$color_gray_border: #d6d6d6;
+$color_gray_bkgrd: #e7e7e7;
+$color_gray_darker: #2B2B2B;
+$color_gray_medium: #ccc;
+
+$color_light-blue: #c2e0ff;
+$color_lighter-blue: #ebf5ff;
+$color_blue: #0575E6;
+$color_lime: #00f260;
+$color_grape: #833ab4; // 131,58,180
+$color_raspberry: #fd1d1d;
+$color_mango: #fcb045;
+$color_aqua: #4b6cb7;
+$color_aqua_darker: darken($color_aqua,10%);
+$color_aqua_lighter: lighten($color_aqua,10%);
+$color_aqua_lightest: lighten($color_aqua,35%);
+$color_sky: #182848;
+$color_sky_darker: darken($color_sky,10%);
+$color_sky_lighter: lighten($color_sky,10%);
+$color_sky_lightest: lighten($color_sky,35%);
+$color_sky_nav: #1B75BC;
+$color_purple_sky: #6B559D;
+$color_purple_sky_dark: #151741;
+$color_cream: #fffdb7;
+$color_cream_lighter: lighten($color_cream,5%);
+$color_pink: #f72359;
+
+$color_error_text: #a94442;
+$color_error_bkg: #f2dede;
+$color_success_text: #3c763d;
+$color_success_bkg: #dff0d8;
+
+$color_focus_ring: #4b6cb7;
+$color_box-shadow: rgba(167, 165, 123, .6);
+
+$transition_card: all 800ms ease-in-out;
+$transition_button: all 300ms ease-in-out;
+
+$font-stack: 'Titillium Web', Helvetica, Arial, sans-serif;
+$btn_border-radius: 4px;
+
+// IE 6-9 colors are hard-coded, change if app colors change
+
+@mixin linearGradient($left, $right){
+    background: $left; /* Old browsers */
+    background: -moz-linear-gradient(-45deg, $left 0%, $right 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(-45deg, $left 0%, $right 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(135deg,  $left 0%, $right 100%);  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00c4cc', endColorstr='#7d1ae8',GradientType=1 ); /* IE6-9 */
+}
+
+// usage
+
+.example {
+    @include linearGradient(#00c4cc, #7d1ae8);
+}
+
+
+
+
