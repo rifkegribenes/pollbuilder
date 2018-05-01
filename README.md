@@ -1,5 +1,9 @@
 ## pollbuilder (Freecodecamp Project)
 
+![pollbuilder screenshot](https://raw.githubusercontent.com/rifkegribenes/pollbuilder/master/client/public/img/screenshot1.png)
+
+![pollbuilder screenshot](https://raw.githubusercontent.com/rifkegribenes/pollbuilder/master/client/public/img/screenshot2.png)
+
 ### User stories:
 
 * As an authenticated user, I can keep my polls and come back later to access them.
@@ -17,9 +21,3 @@
 * As an unauthenticated or authenticated user, I can see the results of polls in chart form. (This could be implemented using Chart.js or Google Charts.)
 
 * As an authenticated user, if I don't like the options on a poll, I can create a new option.
-
-#### Screenshots:
-
-![pollbuilder screenshot](https://raw.githubusercontent.com/rifkegribenes/pollbuilder/master/client/public/img/screenshot1)
-
-![pollbuilder screenshot](https://raw.githubusercontent.com/rifkegribenes/pollbuilder/master/client/public/img/screenshot2)
