@@ -8,15 +8,6 @@ class Chart extends Component {
   }
 
   render() {
-    if (this.chartRef) {
-      console.log(this.refs.chartRef.chart_instance.generateLegend());
-      console.log(this.refs.chartRef.chartInstance.generateLegend());
-    }
-    // const chart = document.getElementsByTagName("canvas")[0];
-    // if (chart) {
-    //   // console.log(chart.chartInstance.generateLegend());
-    //   console.log(this.refs.chartRef.chart_instance.generateLegend());
-    // }
     return (
       <div>
         <Doughnut

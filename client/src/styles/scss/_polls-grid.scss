@@ -134,6 +134,7 @@
 		@include for-tablet-landscape-up {
 			display: block;
 			max-width: 320px;
+			margin-right: 20px;
 		}
 	}
 
@@ -185,24 +186,26 @@
 
 	&__legend {
 		display: flex;
+		flex-wrap: wrap;
 		margin-top: 20px;
-		justify-content: center;
 		width: 100%;
 
 		&--li {
 			list-style-type: none;
-			display: inline-block;
+			display: flex;
+			width: 100%;
+			margin-bottom: 10px;
 		}
 
 		&--bar {
-			width: 40px;
-			height: 40px;
 			display: inline-block;
+			flex-shrink: 0;
 		}
 		&--label {
 			display: inline-block;
 			padding: 0 10px;
 			color: $color_gray_text;
+			line-height: 1em;
 		}
 	}
 

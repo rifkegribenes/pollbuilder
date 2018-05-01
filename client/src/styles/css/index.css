@@ -1527,7 +1527,8 @@ input:not([type=checkbox]):not([type=radio]), textarea {
     @media (min-width: 901px) {
       .polls-grid__options-wrap {
         display: block;
-        max-width: 320px; } }
+        max-width: 320px;
+        margin-right: 20px; } }
   .polls-grid__option {
     color: white;
     text-transform: none !important;
@@ -1559,20 +1560,22 @@ input:not([type=checkbox]):not([type=radio]), textarea {
         margin-right: 0 !important; } }
   .polls-grid__legend {
     display: flex;
+    flex-wrap: wrap;
     margin-top: 20px;
-    justify-content: center;
     width: 100%; }
     .polls-grid__legend--li {
       list-style-type: none;
-      display: inline-block; }
+      display: flex;
+      width: 100%;
+      margin-bottom: 10px; }
     .polls-grid__legend--bar {
-      width: 40px;
-      height: 40px;
-      display: inline-block; }
+      display: inline-block;
+      flex-shrink: 0; }
     .polls-grid__legend--label {
       display: inline-block;
       padding: 0 10px;
-      color: #545454; }
+      color: #545454;
+      line-height: 1em; }
 
 a > .polls-grid__card:hover, a > .polls-grid__card:active, a > .polls-grid__card:focus {
   box-shadow: 0 0 1em #4b6cb7; }
