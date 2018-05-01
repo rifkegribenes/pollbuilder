@@ -1,45 +1,32 @@
 import React, { Component } from "react";
 import { Doughnut } from "react-chartjs-2";
-import { Parser as HtmlToReactParser } from "html-to-react";
 import PropTypes from "prop-types";
 
-const htmlToReactParser = new HtmlToReactParser();
-
 class Chart extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      legend: null
-    };
-  }
-
   componentDidMount() {
     this.forceUpdate();
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (!prevState.legend && this.refs.chart) {
-      console.log(this.refs.chart.chartInstance.generateLegend());
-      this.setState({
-        legend: true,
-        legendHtml: this.refs.chart.chartInstance.generateLegend()
-      });
-    }
-  }
-
   render() {
-    // if (this.refs.chart) {
-    //   document.getElementById('chart-legend').innerHTML =
+    if (this.chartRef) {
+      console.log(this.refs.chartRef.chart_instance.generateLegend());
+      console.log(this.refs.chartRef.chartInstance.generateLegend());
+    }
+    // const chart = document.getElementsByTagName("canvas")[0];
+    // if (chart) {
+    //   // console.log(chart.chartInstance.generateLegend());
+    //   console.log(this.refs.chartRef.chart_instance.generateLegend());
     // }
     return (
       <div>
         <Doughnut
           data={this.props.data}
           options={this.props.options}
-          ref="chart"
+          ref="chartRef"
         />
         <div id="chart-legend">
-          {this.state.legend && htmlToReactParser.parse(this.state.legendHtml)}
+          {this.refs.chartRef &&
+            this.refs.chartRef.chartInstance.generateLegend()}
         </div>
       </div>
     );

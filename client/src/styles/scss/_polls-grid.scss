@@ -183,21 +183,30 @@
 		}
 	}
 
-	&__legend--li {
-		list-style-type: none;
-		display: inline-block;
+	&__legend {
+		display: flex;
+		margin-top: 20px;
+		justify-content: center;
+		width: 100%;
+
+		&--li {
+			list-style-type: none;
+			display: inline-block;
+		}
+
+		&--bar {
+			width: 40px;
+			height: 40px;
+			display: inline-block;
+		}
+		&--label {
+			display: inline-block;
+			padding: 0 10px;
+			color: $color_gray_text;
+		}
 	}
 
-	&__legend--bar {
-		width: 40px;
-		height: 40px;
-		display: inline-block;
-	}
-	&__legend--label {
-		display: inline-block;
-		padding: 0 10px;
-		color: $color_gray_text;
-	}
+
 }
 
 a > .polls-grid__card {

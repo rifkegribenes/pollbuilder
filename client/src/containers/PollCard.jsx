@@ -2,6 +2,7 @@ import React from "react";
 import { withRouter, Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
+// import { Doughnut } from "react-chartjs-2";
 import Chart from "./Chart";
 import editIcon from "../img/edit.svg";
 import deleteIcon from "../img/delete.svg";
@@ -21,28 +22,30 @@ const deleteModal = (pollId, token, deletePoll) => {
 
 const PollCard = props => {
   const legendCallback = chart => {
-    let text = [];
-    text.push('<ul class="polls-grid__legend">');
-    for (let i = 0; i < chart.data.datasets[0].data.length; i++) {
-      console.log(i);
-      console.log(chart.data.datasets[0].data[i]);
-      console.log(chart.data.labels[i]);
-      text.push(
-        `<li class="polls-grid__legend--li"><span class="polls-grid__legend--bar" style="background-color: ${
-          chart.data.datasets[0].backgroundColor[i]
-        }; height: 20px; width: 60px;"></span><span class="polls-grid__legend--label">${
-          chart.data.labels[i]
-        }</span></li>`
-      );
-    }
-    text.push("</ul>");
-    return text.join("");
+    return chart.data.datasets[0].data.map((item, idx) => (
+      <ul className="polls-grid__legend" key={idx}>
+        <li className="polls-grid__legend--li">
+          <span
+            className="polls-grid__legend--bar"
+            style={{
+              backgroundColor: chart.data.datasets[0].backgroundColor[idx],
+              height: "20px",
+              width: "60px"
+            }}
+          />
+          <span className="polls-grid__legend--label">
+            {chart.data.labels[idx]}
+            }
+          </span>
+        </li>
+      </ul>
+    ));
   };
 
   const chartOptions = {
     legend: { display: false },
     legendCallback,
-    maintainAspectRatio: false
+    maintainAspectRatio: true
   };
 
   const chartData = {
