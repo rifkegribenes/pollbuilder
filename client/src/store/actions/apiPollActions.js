@@ -258,7 +258,7 @@ export function getAllPolls() {
 export function getUserPolls(userId) {
   return {
     [RSAA]: {
-      endpoint: `${BASE_URL}/api/poll/userpolls`,
+      endpoint: `${BASE_URL}/api/poll/userpolls/${userId}`,
       method: "GET",
       types: [
         GET_USER_POLLS_REQUEST,

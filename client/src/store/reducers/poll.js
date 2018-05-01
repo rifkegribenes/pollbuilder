@@ -40,7 +40,10 @@ import {
 import {
   RESEND_VLINK_REQUEST,
   RESEND_VLINK_SUCCESS,
-  RESEND_VLINK_FAILURE
+  RESEND_VLINK_FAILURE,
+  GET_PARTIAL_PROFILE_REQUEST,
+  GET_PARTIAL_PROFILE_SUCCESS,
+  GET_PARTIAL_PROFILE_FAILURE
 } from "../actions/apiActions";
 
 const INITIAL_STATE = {
@@ -183,10 +186,11 @@ function poll(state = INITIAL_STATE, action) {
       return INITIAL_STATE;
 
     /*
-    *  Called From: <CreatePoll />, <ViewPoll />, <AllPolls />
+    *  Called From: <CreatePoll />, <ViewPoll />, <AllPolls />, <UserPolls />
     *  Payload: None
     *  Purpose: Activate spinner to indicates API request is in progress
     */
+    case GET_PARTIAL_PROFILE_REQUEST:
     case DELETE_POLL_REQUEST:
     case UPDATE_POLL_REQUEST:
     case GET_USER_POLLS_REQUEST:
@@ -310,6 +314,24 @@ function poll(state = INITIAL_STATE, action) {
       });
 
     /*
+    *  Called from: <UserPolls />
+    *  Payload: partial user object (name and avatar only)
+    *  Purpose: Display name and avatar of poll owner
+    */
+    case GET_PARTIAL_PROFILE_SUCCESS:
+      return update(state, {
+        spinnerClass: { $set: "spinner__hide" },
+        modal: {
+          class: { $set: "modal__hide" }
+        },
+        form: {
+          ownerName: { $set: action.payload.firstName },
+          ownerAvatar: { $set: action.payload.avatarUrl },
+          ownerId: { $set: action.payload.ownerId }
+        }
+      });
+
+    /*
     *  Called from: <PollCard />
     *  Payload: poll object
     *  Purpose: Display poll, set 'voted' to true
@@ -344,6 +366,7 @@ function poll(state = INITIAL_STATE, action) {
     *  Payload: Error message
     *  Purpose: Display error message
     */
+    case GET_PARTIAL_PROFILE_FAILURE:
     case DELETE_POLL_FAILURE:
     case UPDATE_POLL_FAILURE:
     case GET_USER_POLLS_FAILURE:

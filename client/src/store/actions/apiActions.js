@@ -302,6 +302,39 @@ export function getProfile(token, userId) {
   };
 }
 
+export const GET_PARTIAL_PROFILE_REQUEST = "GET_PARTIAL_PROFILE_REQUEST";
+export const GET_PARTIAL_PROFILE_SUCCESS = "GET_PARTIAL_PROFILE_SUCCESS";
+export const GET_PARTIAL_PROFILE_FAILURE = "GET_PARTIAL_PROFILE_FAILURE";
+
+export function getPartialProfile(userId) {
+  return {
+    [RSAA]: {
+      endpoint: `${BASE_URL}/api/user/partial/${userId}`,
+      method: "GET",
+      types: [
+        GET_PARTIAL_PROFILE_REQUEST,
+        GET_PARTIAL_PROFILE_SUCCESS,
+        {
+          type: GET_PARTIAL_PROFILE_FAILURE,
+          payload: (action, state, res) => {
+            return res.json().then(data => {
+              let message = "Sorry, something went wrong :(";
+              if (data) {
+                if (data.message) {
+                  message = data.message;
+                }
+                return { message };
+              } else {
+                return { message };
+              }
+            });
+          }
+        }
+      ]
+    }
+  };
+}
+
 export const RESET_PW_REQUEST = "RESET_PW_REQUEST";
 export const RESET_PW_SUCCESS = "RESET_PW_SUCCESS";
 export const RESET_PW_FAILURE = "RESET_PW_FAILURE";

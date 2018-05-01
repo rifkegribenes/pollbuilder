@@ -28,6 +28,30 @@ exports.viewProfile = (req, res, next) => {
   });
 };
 
+exports.partialProfile = (req, res, next) => {
+  const userId = req.params.userId;
+
+  User.findById(userId, (err, user) => {
+    if (err) {
+      return res.status(400).json({ message: 'No user found.' });
+      console.log('user.js > 37');
+      console.log(err);
+    } else if (user) {
+      // Respond with first name and avatar from user object
+      const userInfo = helpers.setUserInfo(user);
+      return res.status(201).json({
+        avatarUrl: user.profile.avatarUrl,
+        firstName: user.profile.firstName,
+        ownerId: user._id
+      });
+    } else {
+      console.log('no user found, user.js > 26');
+      return res.status(400).json({ message: 'No user found.' });
+    }
+
+  });
+};
+
 exports.updateProfile = (userObj, req, res, next) => {
   const userId = req._id;
 

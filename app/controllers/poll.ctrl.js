@@ -12,9 +12,12 @@ exports.getAllPolls = (req, res, next) => {
 
 // Get all polls for a specific user
 exports.getUserPolls = (req, res, next) => {
+  console.log(req.params.userId);
   Poll.find( { ownerId: req.params.userId }, (err, polls) => {
 
     if (err) { return handleError(res, err); }
+    console.log('poll.ctrl.js > 18');
+    console.log(polls);
     return res.status(200).json({polls});
   });
 };

@@ -58,10 +58,12 @@ body.user-is-tabbing *:focus {
   max-width: 1170px;
   margin: auto;
   margin-bottom: 80px;
+  min-height: calc(100vh - 237px);
 }
 
 .main {
   height: 100%;
+  min-height: calc(100vh - 60px);
   padding: 137px 20px 20px 20px;
   max-width: 1170px;
   margin: auto;
@@ -152,20 +154,6 @@ body.user-is-tabbing *:focus {
       cursor: pointer;
 
     }
-
-  }
-}
-
-.link {
-  color: $color_sky;
-  border-bottom: 1px dotted $color_sky;
-  cursor: pointer;
-  text-decoration: none;
-
-    &:hover, &:active, &:focus {
-    color: $color_sky_lightest;
-    border-bottom: 1px dotted $color_sky_lightest;
-    cursor: pointer;
 
   }
 }

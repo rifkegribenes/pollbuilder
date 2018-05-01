@@ -176,6 +176,10 @@ module.exports = function (app) {
   // Returns fail status + message -or- user object
   userRoutes.get('/:userId', UserController.viewProfile);
 
+  // Get partial user profile route (unsecured)
+  // Returns fail status + message -or- username only
+  userRoutes.get('/partial/:userId', UserController.partialProfile);
+
   // Update a user's profile.
   // Returns fail status + message -or- updated user object
   userRoutes.put('/:userId', requireAuth, UserController.updateProfile);
@@ -195,7 +199,7 @@ module.exports = function (app) {
 
   // Get all polls for specific user
   // Returns fail status + message -or- array of all active polls & user
-  pollRoutes.get('/userpolls', PollController.getUserPolls);
+  pollRoutes.get('/userpolls/:userId', PollController.getUserPolls);
 
   // View a single poll
   // Returns fail status + message -or- poll object & user

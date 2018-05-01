@@ -61,6 +61,12 @@ const PollCard = props => {
           "rgba(224, 41, 72, 1)", // raspberry
           "rgba(250, 76, 53, 1)",
           "rgba(250, 124, 66, 1)",
+          "rgba(250, 171, 79, 1)", // mango
+          "rgba(130, 63, 178, 1)", // grape
+          "rgba(168, 54, 136, 1)",
+          "rgba(224, 41, 72, 1)", // raspberry
+          "rgba(250, 76, 53, 1)",
+          "rgba(250, 124, 66, 1)",
           "rgba(250, 171, 79, 1)" // mango
         ],
         borderColor: ["#ffffff"],
