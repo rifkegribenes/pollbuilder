@@ -75,7 +75,7 @@ class Profile extends React.Component {
       text: "Please paste in the URL of a new image",
       title: "Update profile image",
       inputName: ["avatarUrl"],
-      inputPlaceholder: ["http://www.linktoyourimage/yourpicture.jpg"],
+      inputPlaceholder: ["http://www.linktoyourimage.com/yourpicture.jpg"],
       inputLabel: ["Profile image URL"],
       buttonText: "Save profile",
       inputType: ["url"],
