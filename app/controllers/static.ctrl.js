@@ -1,8 +1,5 @@
-<<<<<<< HEAD
+
 const CLIENT_URL = process.env.NODE_ENV === 'production' ? process.env.APP_HOST : 'http://localhost:3000';
-=======
-const CLIENT_URL = process.env.NODE_ENV === 'production' ? APP_HOST : 'http://localhost:3000';
->>>>>>> a0d589fac739bf45e16bbc58c6a171b860b403e8
 
 
 // REDIRECT HASH

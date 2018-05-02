@@ -6,11 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-<<<<<<< HEAD
     "client": "cd client && yarn build && yarn start",
-=======
-    "client": "cd client && yarn start",
->>>>>>> a0d589fac739bf45e16bbc58c6a171b860b403e8
     "sass": "cd client && yarn sass",
     "server": "LOG_LEVEL=debug nodemon --inspect server.js",
     "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\" \"yarn sass\""
@@ -35,10 +31,7 @@
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.2",
     "concurrently": "^3.5.1",
-<<<<<<< HEAD
     "connect-mongo": "^2.0.1",
-=======
->>>>>>> a0d589fac739bf45e16bbc58c6a171b860b403e8
     "cors": "^2.8.4",
     "crypto": "^1.0.1",
     "dotenv": "^1.2.0",
