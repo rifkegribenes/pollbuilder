@@ -14,6 +14,7 @@ const User = require('./app/models/user');
 const session = require('express-session');
 const passport = require('passport');
 const user = require('./app/utils/passport-serialize');
+const MongoStore = require('connect-mongo')(session);
 
 
 // configuration ===============================================================
@@ -30,11 +31,12 @@ app.use(morgan('dev')); // Log requests to API using morgan
 // Enable CORS from client side
 app.use(cors());
 
-app.use(session({
+app.use(session({ 
+  store: new MongoStore({ db: mongoose.connection.db }),
   secret: process.env.JWT_SECRET,
   resave: false,
   saveUninitialized: true
-}))
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 
