@@ -19,7 +19,7 @@ const MongoStore = require('connect-mongo')(session);
 
 
 // configuration ===============================================================
-mongoose.connect(configDB.url, configDB.options); // connect to our database
+mongoose.connect(configDB.url, configDB.options); // connect to db
 mongoose.Promise = global.Promise;
 require('./app/config/passport')(passport); // pass passport for configuration
 
