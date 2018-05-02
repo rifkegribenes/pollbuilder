@@ -32,7 +32,9 @@ app.use(morgan('dev')); // Log requests to API using morgan
 app.use(cors());
 
 app.use(session({ 
-  store: new MongoStore({ db: mongoose.connection.db }),
+  store: new MongoStore({ 
+    mongooseConnection: mongoose.connection
+  }),
   secret: process.env.JWT_SECRET,
   resave: false,
   saveUninitialized: true
