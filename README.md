@@ -18,6 +18,6 @@
 
 * As an unauthenticated or authenticated user, I can see and vote on everyone's polls.
 
-* As an unauthenticated or authenticated user, I can see the results of polls in chart form. (This could be implemented using Chart.js or Google Charts.)
+* As an unauthenticated or authenticated user, I can see the results of polls in chart form.
 
 * As an authenticated user, if I don't like the options on a poll, I can create a new option.
