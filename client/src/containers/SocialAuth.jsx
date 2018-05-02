@@ -14,7 +14,7 @@ const SocialAuth = props => (
     <a
       className="form__button form__button--sm"
       id="btn-facebook"
-      href="http://localhost:3001/api/auth/facebook"
+      href="https://pollbuilder.glitch.me/api/auth/facebook"
       onClick={() => {
         props.actions.setSpinner("show");
         props.toggleLocalForm(false);
@@ -34,7 +34,7 @@ const SocialAuth = props => (
     <a
       className="form__button form__button--sm"
       id="btn-google"
-      href="http://localhost:3001/api/auth/google"
+      href="https://pollbuilder.glitch.me/api/auth/google"
       onClick={() => {
         props.actions.setSpinner("show");
         props.toggleLocalForm(false);
@@ -53,7 +53,7 @@ const SocialAuth = props => (
     </a>
     <a
       className="form__button form__button--sm"
-      href="http://localhost:3001/api/auth/github/"
+      href="https://pollbuilder.glitch.me/api/auth/github/"
       id="btn-github"
       onClick={() => {
         props.actions.setSpinner("show");
