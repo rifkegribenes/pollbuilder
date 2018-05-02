@@ -3,6 +3,7 @@
 // set up ======================================================================
 var express = require('express');
 var app = express();
+const path = require('path');
 require('dotenv').load();
 var mongoose = require('mongoose');
 var cors = require('cors');
@@ -46,6 +47,15 @@ app.use(passport.session());
 
 passport.serializeUser(user.serialize);
 passport.deserializeUser(user.deserialize);
+
+// set static path
+app.use(express.static(path.join(__dirname, '/client/build/')));
+
+app.get('/', (req, res) => {
+  console.log('root route, serving client');
+  res.status(200)
+    .sendFile(path.join(__dirname, '../client/build/index.html'));
+});
 
 // routes ======================================================================
 const router = require('./router');
