@@ -170,7 +170,7 @@ exports.socialAuthCallback = (req, res) => {
       const user = userObj._doc;
       const userInfo = helpers.setUserInfo(user);
       const token = helpers.generateToken(userInfo);
-      return res.redirect(`${CLIENT_URL}/user/${userObj._doc._id}/${token}`);
+      return res.redirect(`/user/${userObj._doc._id}/${token}`);
 
     } else {
       return res.redirect('/login');
