@@ -15,6 +15,7 @@ const SocialAuth = props => (
       className="form__button form__button--sm"
       id="btn-facebook"
       href="/api/auth/facebook"
+      target="_self"
       onClick={() => {
         props.actions.setSpinner("show");
         props.toggleLocalForm(false);
@@ -35,6 +36,7 @@ const SocialAuth = props => (
       className="form__button form__button--sm"
       id="btn-google"
       href="/api/auth/google"
+      target="_self"
       onClick={() => {
         props.actions.setSpinner("show");
         props.toggleLocalForm(false);
@@ -54,6 +56,7 @@ const SocialAuth = props => (
     <a
       className="form__button form__button--sm"
       href="/api/auth/github/"
+      target="_self"
       id="btn-github"
       onClick={() => {
         props.actions.setSpinner("show");
