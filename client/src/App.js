@@ -121,7 +121,7 @@ class App extends Component {
                 render={routeProps => <Home {...routeProps} />}
               />
               <Route
-                path="/user/:id?/:token?"
+                path="/profile/:id?/:token?"
                 render={routeProps => <Profile {...routeProps} />}
               />
               <Route
