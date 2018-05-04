@@ -51,8 +51,8 @@ passport.deserializeUser(user.deserialize);
 // set static path
 // app.use('/static', express.static('client/build/'));
 // app.use(express.static(__dirname + 'public'));
-// app.use(express.static(path.join(__dirname, '/client/build/')));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '/client/build/')));
+// app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
   console.log('root route, serving client');
