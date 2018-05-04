@@ -54,7 +54,7 @@ passport.deserializeUser(user.deserialize);
 app.use(express.static(path.join(__dirname, '/client/build/')));
 // app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/', (req, res) => {
+app.get('/*', (req, res) => {
   console.log('root route, serving client');
   res.status(200)
     .sendFile(path.join(__dirname, '../client/build/index.html'));
