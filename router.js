@@ -3,7 +3,7 @@ const CLIENT_URL = process.env.NODE_ENV === 'production' ? APP_HOST : 'localhost
 
 const AuthController = require('./app/controllers/auth.ctrl');
 const UserController = require('./app/controllers/user.ctrl');
-const StaticController = require('./app/controllers/static.ctrl');
+// const StaticController = require('./app/controllers/static.ctrl');
 const PollController = require('./app/controllers/poll.ctrl');
 
 const express = require('express');
