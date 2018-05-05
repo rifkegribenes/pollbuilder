@@ -109,7 +109,7 @@ class Header extends React.Component {
     let adminLinks = ["my account", "my polls", "logout"];
 
     const linkmap = {
-      "my account": "user",
+      "my account": "profile",
       "my polls": "userpolls",
       logout: "logout",
       login: "login",
