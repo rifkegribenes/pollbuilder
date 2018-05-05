@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Switch, Route, withRouter, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
+import Helmet from 'react-helmet';
 import { bindActionCreators } from "redux";
 import PropTypes from "prop-types";
 import { debounce } from "lodash";
