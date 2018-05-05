@@ -14,17 +14,6 @@ import editIcon from "../img/edit_g.svg";
 class Profile extends React.Component {
   componentWillMount() {
     let userId, token, authCallback;
-    // check for facebook redirect hash
-    if (window.location.hash === "#_=_") {
-      this.props.actions.setLoggedIn();
-      window.history.replaceState
-        ? window.history.replaceState(
-            null,
-            null,
-            window.location.href.split("#")[0]
-          )
-        : (window.location.hash = "");
-    }
     if (this.props.match && this.props.match.params.id) {
       userId = this.props.match.params.id;
       token = this.props.match.params.token;
