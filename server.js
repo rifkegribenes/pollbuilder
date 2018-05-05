@@ -55,11 +55,11 @@ passport.deserializeUser(user.deserialize);
 app.use(express.static(path.join(__dirname, '/client/build/')));
 // app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/', (req, res) => {
-  console.log('root route, serving client');
-  res.status(200)
-    .sendFile(path.join(__dirname, '../client/build/index.html'));
-});
+// app.get('/', (req, res) => {
+//   console.log('root route, serving client');
+//   res.status(200)
+//     .sendFile(path.join(__dirname, '../client/build/index.html'));
+// });
 
 app.get('/', (req, res) => {
   console.log('root route, serving client');
@@ -68,14 +68,13 @@ app.get('/', (req, res) => {
   // read in the index.html file
   fs.readFile(filePath, 'utf8', (err, data) => {
     if (err) {
-      return console.log(err);
-    }
+      return console.log(err);  }
     
     // replace the variables with server generated strings
     data = data.replace(/\$OG_TITLE/g, 'Pollbuilder');
-    data = data.replace(/\$OG_DESCRIPTION/g, "Home page description");
-    result = data.replace(/\$OG_IMAGE/g, 'https://i.imgur.com/V7irMl8.png');
-    response.send(result);
+    data = data.replace(/\$OG_DESCRIPTION/g, "Create polls, vote, share with friends, analyze results.");
+    res = data.replace(/\$OG_IMAGE/g, 'https://raw.githubusercontent.com/rifkegribenes/pollbuilder/master/client/public/img/og-img_1200x628.png');
+    res.status(200).send(res);
   });
 });
 
