@@ -170,7 +170,7 @@ exports.socialAuthCallback = (req, res) => {
       const user = userObj._doc;
       const userInfo = helpers.setUserInfo(user);
       const token = helpers.generateToken(userInfo);
-      return res.redirect(`${CLIENT_URL}/profile/${userObj._doc._id}/${token}`);
+      return res.redirect(`${CLIENT_URL}/#/redirect=profile/${userObj._doc._id}/${token}`);
 
     } else {
       return res.redirect('/login');
@@ -261,7 +261,7 @@ const sendPWResetEmail = (params) => {
 //        }
 //   Returns: success status & message on success
 //
-exports.sendReset = (req, res) => {
+exports.sendReset = (req, res, next) => {
 
   // generate reset key
   const resetKey = mailUtils.makeSignupKey();
