@@ -114,7 +114,7 @@ const PollCard = props => {
         <div className="polls-grid__icon-wrap">
           <a
             className="form__button polls-grid__btn--icon"
-            href="http://www.facebook.com/sharer.php?u=http://#/"
+            href={`http://www.facebook.com/sharer.php?u=https://pollbuilder.glitch.me/poll/${}`}
             target="_blank"
             rel="noopener noreferrer"
           >
