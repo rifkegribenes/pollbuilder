@@ -52,7 +52,7 @@ class App extends Component {
   }
 
   // Set window dimensions in Redux
-  updateDimensions = () => {
+  updateDimensions() {
     const size = {
       width: window.innerWidth,
       height: window.innerHeight
