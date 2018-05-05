@@ -126,7 +126,7 @@ const PollCard = props => {
           </a>
           <a
             className="form__button polls-grid__btn--icon"
-            href={`https://twitter.com/share?url=https://pollbuilder.glitch.me/poll/${props.poll._id}&text=${props.poll.question}.`}
+            href={`https://twitter.com/share?url=https://pollbuilder.glitch.me/poll/${props.poll._id}&text=${encodeURIComponent(props.poll.question)}`}
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -138,7 +138,7 @@ const PollCard = props => {
           </a>
           <a
             className="form__button polls-grid__btn--icon"
-            href={`http://www.tumblr.com/share/link?url=https://pollbuilder.glitch.me/poll/${props.poll._id}&name=${props.poll.question}&description=.`}
+            href={`http://www.tumblr.com/share/link?url=https://pollbuilder.glitch.me/poll/${props.poll._id}&name=${encodeURIComponent(props.poll.question)}&description=${encodeURIComponent("Pollbuilder: Create polls, share with friends, and analyze results.")}`}
             target="_blank"
             rel="noopener noreferrer"
           >
