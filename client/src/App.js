@@ -41,6 +41,8 @@ const PrivateRoute = ({ component: Component, loggedIn, ...rest }) => {
   );
 };
 
+const title = 'Pollbuilder'
+
 const EditPoll = routeProps => <CreatePoll edit={true} {...routeProps} />;
 
 class App extends Component {
@@ -102,6 +104,7 @@ class App extends Component {
   render() {
     return (
       <div>
+        <Helmet titleTemplate={`%s - ${title}`} />
         <Spinner cssClass={this.props.appState.spinnerClass} />
         <ModalSm
           modalClass={this.props.appState.modal.class}
