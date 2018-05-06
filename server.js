@@ -58,7 +58,8 @@ app.use(express.static(path.join(__dirname, '/client/build/')));
 app.get('/', (req, res) => {
   console.log('root route, serving client');
   res.status(200)
-    .sendFile(path.join(__dirname, '../client/build/index.html'));
+    // .sendFile(path.join(__dirname, '../client/build/200.html'));
+    .sendFile(path.resolve(__dirname, '/../client/build/index.html'));
 });
 
 // app.get('/', (req, res) => {
