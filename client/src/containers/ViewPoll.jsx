@@ -28,6 +28,9 @@ class ViewPoll extends React.Component {
       <div>
         <Helmet>
             <title>{this.props.poll.form.question}</title>
+            <meta property="og:title" content={this.props.poll.form.question} />
+            <meta property="og:description" content="Pollbuilder: Create polls, share with friends, vote, and analyze results." />
+            <meta property="og:image" content="" />
         </Helmet>
         <Spinner cssClass={this.props.poll.spinnerClass} />
         <ModalSm
