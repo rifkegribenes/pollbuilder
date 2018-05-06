@@ -28,7 +28,6 @@ class ViewPoll extends React.Component {
       <div>
         <Helmet>
             <title>{this.props.poll.form.question}</title>
-            <meta name="description" content="Nested component" />
         </Helmet>
         <Spinner cssClass={this.props.poll.spinnerClass} />
         <ModalSm

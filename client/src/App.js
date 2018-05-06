@@ -133,7 +133,6 @@ class App extends Component {
               />
               <Route
                 path="/poll/:id"
-                title={}
                 render={routeProps => <ViewPoll {...routeProps} />}
               />
               <Route
