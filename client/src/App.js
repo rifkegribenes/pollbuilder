@@ -104,7 +104,10 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Helmet titleTemplate={`%s - ${title}`} />
+        <Helmet 
+          titleTemplate={`%s - ${title}`}
+          defaultTitle="Pollbuilder"
+        />
         <Spinner cssClass={this.props.appState.spinnerClass} />
         <ModalSm
           modalClass={this.props.appState.modal.class}
@@ -130,6 +133,7 @@ class App extends Component {
               />
               <Route
                 path="/poll/:id"
+                title={}
                 render={routeProps => <ViewPoll {...routeProps} />}
               />
               <Route
