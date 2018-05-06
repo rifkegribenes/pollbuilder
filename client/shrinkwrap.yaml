@@ -12,7 +12,6 @@ dependencies:
   react-router-dom: 4.2.2
   redux: 3.7.2
   redux-api-middleware: 2.3.0
-  yarn: 1.6.0
 devDependencies:
   husky: 0.14.3
   lint-staged: 6.1.1
@@ -436,7 +435,7 @@ packages:
   /autoprefixer/6.7.7:
     dependencies:
       browserslist: 1.7.7
-      caniuse-db: 1.0.30000833
+      caniuse-db: 1.0.30000835
       normalize-range: 0.1.2
       num2fraction: 1.2.2
       postcss: 5.2.18
@@ -447,7 +446,7 @@ packages:
   /autoprefixer/7.1.6:
     dependencies:
       browserslist: 2.11.3
-      caniuse-lite: 1.0.30000833
+      caniuse-lite: 1.0.30000835
       normalize-range: 0.1.2
       num2fraction: 1.2.2
       postcss: 6.0.22
@@ -1391,14 +1390,14 @@ packages:
       integrity: sha512-Z942RysHXmJrhqk88FmKBVq/v5tqmSkDz7p54G/MGyjMnCFFnC79XWNbg+Vta8W6Wb2qtSZTSxIGkJrRpCFEiA==
   /browserslist/1.7.7:
     dependencies:
-      caniuse-db: 1.0.30000833
+      caniuse-db: 1.0.30000835
       electron-to-chromium: 1.3.45
     dev: true
     resolution:
       integrity: sha1-C9dnBCWL6CmyOYu1Dkti0aFmsLk=
   /browserslist/2.11.3:
     dependencies:
-      caniuse-lite: 1.0.30000833
+      caniuse-lite: 1.0.30000835
       electron-to-chromium: 1.3.45
     dev: true
     resolution:
@@ -1540,20 +1539,24 @@ packages:
   /caniuse-api/1.6.1:
     dependencies:
       browserslist: 1.7.7
-      caniuse-db: 1.0.30000833
+      caniuse-db: 1.0.30000835
       lodash.memoize: 4.1.2
       lodash.uniq: 4.5.0
     dev: true
     resolution:
       integrity: sha1-tTTnxzTE+B7F++isoq0kNUuWLGw=
-  /caniuse-db/1.0.30000833:
+  /caniuse-db/1.0.30000835:
     dev: true
     resolution:
-      integrity: sha1-K9e+cqQBZY0svLj012AN7r6xxnY=
+      integrity: sha1-ZVaTHN8DWQPYZV1jA/lQG1kV++k=
   /caniuse-lite/1.0.30000833:
     dev: true
     resolution:
       integrity: sha512-tKNuKu4WLImh4NxoTgntxFpDrRiA0Q6Q1NycNhuMST0Kx+Pt8YnRDW6V8xsyH6AtO2CpAoibatEk5eaEhP3O1g==
+  /caniuse-lite/1.0.30000835:
+    dev: true
+    resolution:
+      integrity: sha512-88MbwAwuVWfwC4xHwKx9Z/VSvmIfLPwURhmxTPqP5Cx6zHQ0xa2AFKJvTdC2aUn07f2tR9yvYL83CollBFANEA==
   /capture-stack-trace/1.0.0:
     dev: true
     engines:
@@ -2712,7 +2715,7 @@ packages:
       integrity: sha1-rT/0yG7C0CkyL1oCw6mmBslbP1k=
   /encoding/0.1.12:
     dependencies:
-      iconv-lite: 0.4.21
+      iconv-lite: 0.4.22
     resolution:
       integrity: sha1-U4tm8+5izRq1HsMjgp0flIDHS+s=
   /enhanced-resolve/3.4.1:
@@ -3277,7 +3280,7 @@ packages:
   /external-editor/2.2.0:
     dependencies:
       chardet: 0.4.2
-      iconv-lite: 0.4.21
+      iconv-lite: 0.4.22
       tmp: 0.0.33
     dev: true
     engines:
@@ -4345,13 +4348,13 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha512-oTZqweIP51xaGPI4uPa56/Pri/480R+mo7SeU+YETByQNhDG55ycFyNLIgta9vXhILrxXDmF7ZGhqZIcuN0gJQ==
-  /iconv-lite/0.4.21:
+  /iconv-lite/0.4.22:
     dependencies:
       safer-buffer: 2.1.2
     engines:
       node: '>=0.10.0'
     resolution:
-      integrity: sha512-En5V9za5mBt2oUA03WGD3TwDv0MKAruqsuxstbMUZaj9W9k/m1CV/9py3l0L5kw9Bln8fdHQmzHSYtvpvTLpKw==
+      integrity: sha512-1AinFBeDTnsvVEP+V1QBlHpM1UZZl7gWB6fcz7B1Ho+LI1dUh2sSrxoCfVt2PinRHzXAziSniEV3P7JbTDHcXA==
   /icss-replace-symbols/1.1.0:
     dev: true
     resolution:
@@ -6150,10 +6153,10 @@ packages:
       is-stream: 1.1.0
     resolution:
       integrity: sha512-NhZ4CsKx7cYm2vSrBAr2PvFOe6sWDf0UYLRqA6svUYg7+/TSfVAu49jYC4BvQ4Sms9SZgdqGBgroqfDhJdTyKQ==
-  /node-forge/0.7.1:
+  /node-forge/0.7.5:
     dev: true
     resolution:
-      integrity: sha1-naYR6giYL0uUIGs760zJZl8gwwA=
+      integrity: sha512-MmbQJ2MTESTjt3Gi/3yG1wGpIMhUfcIypUCGtTizFR9IiccFwxSpfp0vtIZlkFclEqERemxfnSdZEMR9VqqEFQ==
   /node-gyp/3.6.2:
     dependencies:
       fstream: 1.0.11
@@ -8269,12 +8272,12 @@ packages:
     dev: true
     resolution:
       integrity: sha1-Yl2GWPhlr0Psliv8N2o3NZpJlMo=
-  /selfsigned/1.10.2:
+  /selfsigned/1.10.3:
     dependencies:
-      node-forge: 0.7.1
+      node-forge: 0.7.5
     dev: true
     resolution:
-      integrity: sha1-tESVgNmZKbZbEKSDiTAaZZIIh1g=
+      integrity: sha512-vmZenZ+8Al3NLHkWnhBQ0x6BkML1eCP2xEi3JE+f3D9wW9fipD9NNJHYtE9XJM4TsPaHGZJIamrSI6MTg1dU2Q==
   /semver-diff/2.1.0:
     dependencies:
       semver: 5.5.0
@@ -9641,7 +9644,7 @@ packages:
       loglevel: 1.6.1
       opn: 5.3.0
       portfinder: 1.0.13
-      selfsigned: 1.10.2
+      selfsigned: 1.10.3
       serve-index: 1.9.1
       sockjs: 0.3.18
       sockjs-client: 1.1.4
@@ -9955,12 +9958,6 @@ packages:
     dev: true
     resolution:
       integrity: sha1-YpmpBVsc78lp/355wdkY3Osiw2A=
-  /yarn/1.6.0:
-    dev: false
-    engines:
-      node: '>=4.0.0'
-    resolution:
-      integrity: sha1-nOxveYbcI3057HBc502VFV/lXUs=
   /yauzl/2.4.1:
     dependencies:
       fd-slicer: 1.0.1
@@ -9986,9 +9983,8 @@ specifiers:
   react-modal: ^3.1.11
   react-redux: ^5.0.6
   react-router-dom: ^4.2.2
-  react-scripts: 1.1.0
+  react-scripts: ^1.1.0
   react-snap: ^1.12.2
   redux: ^3.7.2
   redux-api-middleware: ^2.2.0
   stylelint: ^8.4.0
-  yarn: ^1.6.0
