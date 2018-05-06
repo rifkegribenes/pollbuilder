@@ -41,6 +41,7 @@ const getMetaTags = ({
 const getHtmlAttributes = ({
   schema
 }) => {
+  let itemtype = "http://schema.org/" + schema;
   let result = {
     lang: 'en',
   };
@@ -48,7 +49,7 @@ const getHtmlAttributes = ({
     result = {
       ...result,
       itemscope: undefined,
-      itemtype: `http://schema.org/${schema}`,
+      itemtype,
     }
   }
   return result;
