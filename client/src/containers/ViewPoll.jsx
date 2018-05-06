@@ -15,20 +15,22 @@ import PollCard from "./PollCard";
 class ViewPoll extends React.Component {
   componentWillMount() {
     const pollId = this.props.match.params.id;
+    const currentPoll = window.SERVER_DATA.poll;
+    this.props.actions.setCurrentPoll(currentPoll);
     // retrieve requested poll & save to app state
-    this.props.api.viewPoll(pollId).then(result => {
-      if (result.type === "VIEW_POLL_SUCCESS") {
-        // this.props.actions.setLoggedIn();
-      }
-    });
+    // this.props.api.viewPoll(pollId).then(result => {
+    //   if (result.type === "VIEW_POLL_SUCCESS") {
+    //     // this.props.actions.setLoggedIn();
+    //   }
+    // });
   }
 
   render() {
     return (
       <div>
         <Helmet>
-            <title>{this.props.poll.form.question}</title>
-            <meta property="og:title" content={this.props.poll.form.question} />
+            <title>{window.SERVER_DATA.poll.question}</title>
+            <meta property="og:title" content={window.SERVER_DATA.poll.question} />
             <meta property="og:description" content="Pollbuilder: Create polls, share with friends, vote, and analyze results." />
             <meta property="og:image" content="https://raw.githubusercontent.com/rifkegribenes/pollbuilder/master/client/public/img/og-img_1200x628.png" />
         </Helmet>
