@@ -2,22 +2,19 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import { Helmet } from "react-helmet";
 import PropTypes from "prop-types";
 import * as Actions from "../store/actions";
 import * as apiActions from "../store/actions/apiPollActions";
 
-import Seo from "./Seo";
 import Spinner from "./Spinner";
 import ModalSm from "./ModalSm";
 import PollCard from "./PollCard";
+// import editIcon from "../img/edit.svg";
 
 class ViewPoll extends React.Component {
   componentWillMount() {
     const pollId = this.props.match.params.id;
-    // console.log(window.SERVER_DATA);
-    // const currentPoll = JSON.parse(window.SERVER_DATA.poll);
-    // console.log(currentPoll);
-    // this.props.actions.setCurrentPoll(currentPoll);
     // retrieve requested poll & save to app state
     this.props.api.viewPoll(pollId).then(result => {
       if (result.type === "VIEW_POLL_SUCCESS") {
@@ -29,10 +26,9 @@ class ViewPoll extends React.Component {
   render() {
     return (
       <div>
-        <Seo
-          title={this.props.poll.question}
-          description={`THIS IS DYNAMIC ${this.props.poll._id} Pollbuilder: Create polls, share with friends, vote, and analyze results.`}
-        />
+        <Helmet>
+            <title>{this.props.poll.form.question}</title>
+        </Helmet>
         <Spinner cssClass={this.props.poll.spinnerClass} />
         <ModalSm
           modalClass={this.props.poll.modal.class}
