@@ -4,7 +4,6 @@
 var express = require('express');
 var app = express();
 const path = require('path');
-const fs = require('fs');
 require('dotenv').load();
 var mongoose = require('mongoose');
 var cors = require('cors');
@@ -57,25 +56,9 @@ app.use(express.static(path.join(__dirname, '/client/build/')));
 
 app.get('/', (req, res) => {
   console.log('root route, serving client');
-  res.status(200).sendFile(path.join(__dirname, 'client/build/200.html'));
+  res.status(200)
+    .sendFile(path.join(__dirname, '../client/build/index.html'));
 });
-
-// app.get('/', (req, res) => {
-//   console.log('root route, serving client');
-//   const filePath = path.resolve(__dirname, '../client/build/index.html');
-
-//   // read in the index.html file
-//   fs.readFile(filePath, 'utf8', (err, data) => {
-//     if (err) {
-//       return console.log(err);  }
-    
-//     // replace the variables with server generated strings
-//     data = data.replace(/\$OG_TITLE/g, 'Pollbuilder');
-//     data = data.replace(/\$OG_DESCRIPTION/g, "Create polls, vote, share with friends, analyze results.");
-//     res = data.replace(/\$OG_IMAGE/g, 'https://raw.githubusercontent.com/rifkegribenes/pollbuilder/master/client/public/img/og-img_1200x628.png');
-//     res.status(200).send(res);
-//   });
-// });
 
 // routes ======================================================================
 const router = require('./router');
