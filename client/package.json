@@ -25,7 +25,8 @@
     "node-sass": "^4.7.2",
     "prettier": "^1.10.2",
     "react-snap": "^1.12.2",
-    "stylelint": "^8.4.0"
+    "stylelint": "^8.4.0",
+    "react-snap": "^1.12.2"
   },
   "scripts": {
     "start": "react-scripts start",
