@@ -30,7 +30,7 @@ class ViewPoll extends React.Component {
             <title>{this.props.poll.form.question}</title>
             <meta property="og:title" content={this.props.poll.form.question} />
             <meta property="og:description" content="Pollbuilder: Create polls, share with friends, vote, and analyze results." />
-            <meta property="og:image" content="" />
+            <meta property="og:image" content="https://raw.githubusercontent.com/rifkegribenes/pollbuilder/master/client/public/img/og-img_1200x628.png" />
         </Helmet>
         <Spinner cssClass={this.props.poll.spinnerClass} />
         <ModalSm
