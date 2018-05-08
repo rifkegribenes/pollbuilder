@@ -32,7 +32,7 @@ export function setRedirectUrl(url) {
 export function setCurrentPoll(poll) {
   return {
     type: SET_CURRENT_POLL,
-    payload: poll
+    payload: { poll }
   };
 }
 
