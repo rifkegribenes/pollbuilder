@@ -16,15 +16,14 @@
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
     "redux": "^3.7.2",
-    "redux-api-middleware": "^2.2.0",
-    "yarn": "^1.6.0"
+    "redux-api-middleware": "^2.2.0"
   },
   "devDependencies": {
     "husky": "^0.14.3",
     "lint-staged": "^6.1.0",
     "node-sass": "^4.7.2",
     "prettier": "^1.10.2",
-    "react-scripts": "1.1.0",
+    "react-scripts": "^1.1.0",
     "react-snap": "^1.12.2",
     "stylelint": "^8.4.0"
   },
