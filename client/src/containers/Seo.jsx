@@ -14,11 +14,11 @@ const getMetaTags = ({
     { name: 'description', content: description },
     { name: 'twitter:title', content: `${title} | pollbuilder.glitch.me` },
     { name: 'twitter:description', content: description },
-    { name: 'og:title', content: `${title} | pollbuilder.glitch.me` },
+    { name: 'og:title', content: `${title} | pollbuilder.glitch.me },
     { name: 'og:type', content: contentType },
     { name: 'og:url', content: url },
     { name: 'og:description', content: description },
-    { name: 'og:site_name', content: 'pollbuilder.glitch.me' },
+    { name: 'og:site_name', content: 'pollbuilder.glitch.me },
     { name: 'og:locale', content: 'en_EN' },
   ];
 
