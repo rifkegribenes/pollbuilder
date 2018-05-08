@@ -12,8 +12,7 @@ import {
   SET_SPINNER,
   SET_TOUCHED,
   SET_VALIDATION_ERRORS,
-  SET_SHOW_ERROR,
-  SET_CURRENT_POLL
+  SET_SHOW_ERROR
 } from "../actions";
 import {
   CREATE_POLL_REQUEST,
@@ -305,7 +304,6 @@ function poll(state = INITIAL_STATE, action) {
     *  Payload: poll object
     *  Purpose: Display poll
     */
-    case SET_CURRENT_POLL:
     case VIEW_POLL_SUCCESS:
       return update(state, {
         spinnerClass: { $set: "spinner__hide" },
