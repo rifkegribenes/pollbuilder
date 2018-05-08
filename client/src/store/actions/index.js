@@ -20,11 +20,19 @@ export const SET_SPINNER = "SET_SPINNER";
 export const SET_MENU_STATE = "SET_MENU_STATE";
 export const SET_ADMIN_MENU_STATE = "SET_ADMIN_MENU_STATE";
 export const SET_WINDOW_SIZE = "SET_WINDOW_SIZE";
+export const SET_CURRENT_POLL = "SET_CURRENT_POLL";
 
 export function setRedirectUrl(url) {
   return {
     type: SET_REDIRECT_URL,
     payload: url
+  };
+}
+
+export function setCurrentPoll(poll) {
+  return {
+    type: SET_CURRENT_POLL,
+    payload: poll
   };
 }
 
