@@ -15,7 +15,6 @@ import PollCard from "./PollCard";
 class ViewPoll extends React.Component {
   componentWillMount() {
     const pollId = this.props.match.params.id;
-    console.log(window.SERVER_DATA;
     const currentPoll = window.SERVER_DATA.poll;
     this.props.actions.setCurrentPoll(currentPoll);
     // retrieve requested poll & save to app state
