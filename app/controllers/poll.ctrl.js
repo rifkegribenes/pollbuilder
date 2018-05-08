@@ -40,7 +40,7 @@ exports.viewPollById = (req, res, next) => {
       // replace the variables with server generated strings
       data = data.replace(/\$OG_TITLE/g, 'Pollbuilder');
       data = data.replace(/\$OG_DESCRIPTION/g, poll.question);
-      data = data.replace(/\__SERVER_DATA__/g, poll);
+      data = data.replace(/\__SERVER_DATA__/g, JSON.stringify(poll));
       let result = data.replace(/\$OG_IMAGE/g, 'https://raw.githubusercontent.com/rifkegribenes/pollbuilder/master/client/public/img/og-img_1200x628.png');
       res.status(200).send(result);
     });
