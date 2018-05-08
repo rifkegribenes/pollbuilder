@@ -62,7 +62,7 @@ app.get('/', (req, res) => {
 
 // app.get('/', (req, res) => {
 //   console.log('root route, serving client');
-//   const filePath = path.join(__dirname, 'client/build/200.html');
+//   const filePath = path.resolve(__dirname, '../client/build/index.html');
 
 //   // read in the index.html file
 //   fs.readFile(filePath, 'utf8', (err, data) => {
