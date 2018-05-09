@@ -2,7 +2,6 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { Helmet } from "react-helmet";
 import PropTypes from "prop-types";
 import * as Actions from "../store/actions";
 import * as apiActions from "../store/actions/apiPollActions";
@@ -26,9 +25,6 @@ class ViewPoll extends React.Component {
   render() {
     return (
       <div>
-        <Helmet>
-            <title>{this.props.poll.form.question}</title>
-        </Helmet>
         <Spinner cssClass={this.props.poll.spinnerClass} />
         <ModalSm
           modalClass={this.props.poll.modal.class}
