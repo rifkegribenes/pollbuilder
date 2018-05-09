@@ -139,6 +139,7 @@ const PollCard = props => {
           <a
             className="form__button polls-grid__btn--icon"
             href={`http://www.tumblr.com/share/link?url=https://pollbuilder.glitch.me/poll/${props.poll._id}&name=${encodeURIComponent(props.poll.question)}&description=${encodeURIComponent("Pollbuilder: Create polls, share with friends, and analyze results.")}`}
+            href={`https://www.tumblr.com/widgets/share/tool?shareSource=legacy&canonicalUrl=<-urlencode(share_url)->&posttype=link
             target="_blank"
             rel="noopener noreferrer"
           >
