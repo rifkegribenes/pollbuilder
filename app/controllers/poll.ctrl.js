@@ -1,6 +1,4 @@
 const Poll = require('../models/poll');
-const path = require('path');
-const fs = require('fs');
 
 // Get all polls
 exports.getAllPolls = (req, res, next) => {
@@ -29,24 +27,7 @@ exports.viewPollById = (req, res, next) => {
   Poll.findById( req.params.pollId,  (err, poll) => {
     if (err) { return handleError(res, err); }
     if (!poll) { return res.status(404).send({message: 'Error: Poll not found'}); }
-    
-    const filePath = path.join(__dirname, 'client/build/200.html');
-
-    // read in the static html file
-    fs.readFile(filePath, 'utf8', (err, data) => {
-      if (err) {
-        return console.log(err);  }
-
-      // replace the variables with server generated strings
-      data = data.replace(/\$OG_TITLE/g, 'Pollbuilder');
-      data = data.replace(/\$OG_DESCRIPTION/g, poll.question);
-      data = data.replace(/\__SERVER_DATA__/g, JSON.stringify(poll));
-      let result = data.replace(/\$OG_IMAGE/g, 'https://raw.githubusercontent.com/rifkegribenes/pollbuilder/master/client/public/img/og-img_1200x628.png');
-      res.status(200).send(result);
-    });
-    
-    
-    // return res.status(200).json({poll});
+    return res.status(200).json({poll});
   });
 };
 

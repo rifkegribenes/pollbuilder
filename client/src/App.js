@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Switch, Route, withRouter, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import Helmet from 'react-helmet';
 import { bindActionCreators } from "redux";
 import PropTypes from "prop-types";
 import { debounce } from "lodash";
@@ -40,8 +39,6 @@ const PrivateRoute = ({ component: Component, loggedIn, ...rest }) => {
     />
   );
 };
-
-const title = 'Pollbuilder'
 
 const EditPoll = routeProps => <CreatePoll edit={true} {...routeProps} />;
 
@@ -104,10 +101,6 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Helmet 
-          titleTemplate={`%s - ${title}`}
-          defaultTitle="Pollbuilder"
-        />
         <Spinner cssClass={this.props.appState.spinnerClass} />
         <ModalSm
           modalClass={this.props.appState.modal.class}
