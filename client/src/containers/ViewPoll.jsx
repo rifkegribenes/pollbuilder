@@ -9,7 +9,6 @@ import * as apiActions from "../store/actions/apiPollActions";
 import Spinner from "./Spinner";
 import ModalSm from "./ModalSm";
 import PollCard from "./PollCard";
-// import editIcon from "../img/edit.svg";
 
 class ViewPoll extends React.Component {
   componentWillMount() {
@@ -17,7 +16,7 @@ class ViewPoll extends React.Component {
     // retrieve requested poll & save to app state
     this.props.api.viewPoll(pollId).then(result => {
       if (result.type === "VIEW_POLL_SUCCESS") {
-        // this.props.actions.setLoggedIn();
+
       }
     });
   }
