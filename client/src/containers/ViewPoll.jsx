@@ -20,7 +20,6 @@ class ViewPoll extends React.Component {
       }
     });
   // load FB SDK
-    let FB;
     window.fbAsyncInit = function() {
       FB.init({
         appId            : '327915941037806',
