@@ -16,7 +16,6 @@ class ViewPoll extends React.Component {
     // retrieve requested poll & save to app state
     this.props.api.viewPoll(pollId).then(result => {
       if (result.type === "VIEW_POLL_SUCCESS") {
-
       }
     });
   }
