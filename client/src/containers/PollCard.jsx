@@ -85,13 +85,14 @@ const PollCard = props => {
   const questionUriEncoded = encodeURIComponent(props.poll.question);
   const tumblrUrl = `https://www.tumblr.com/widgets/share/tool?canonicalUrl=${canonicalUrl}&posttype=link&description=${questionUriEncoded}&caption=${questionUriEncoded}`
   const fbShare = () => {
+    console.log('fb share');
     window.FB.ui({
-    method: 'feed',
-    link: canonicalUrl,
-    name: props.poll.question,
-    description: 'Create polls, vote, share with friends, and analyze results.',
-    caption: canonicalUrl
-  });
+      method: 'feed',
+      link: canonicalUrl,
+      name: props.poll.question,
+      description: 'Create polls, vote, share with friends, and analyze results.',
+      caption: canonicalUrl
+    });
 };
   
   return (
@@ -125,18 +126,19 @@ const PollCard = props => {
           </div>
         </div>
         <div className="polls-grid__icon-wrap">
-          <a
+          <button
             className="form__button polls-grid__btn--icon"
-            href={`http://www.facebook.com/sharer.php?u=${canonicalUrl}`}
-            target="_blank"
-            rel="noopener noreferrer"
+          //  href={`http://www.facebook.com/sharer.php?u=${canonicalUrl}`}
+            onClick={fbShare()}
+          //  target="_blank"
+          //  rel="noopener noreferrer"
           >
             <img
               className="form__icon polls-grid__icon"
               alt="facebook"
               src={fbIcon}
             />
-          </a>
+          </button>
           <a
             className="form__button polls-grid__btn--icon"
             href={`https://twitter.com/share?url=${canonicalUrl}&text=${questionUriEncoded}`}
