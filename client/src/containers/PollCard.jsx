@@ -2,7 +2,7 @@ import React from "react";
 import { withRouter, Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
-// import { Doughnut } from "react-chartjs-2";
+
 import Chart from "./Chart";
 import editIcon from "../img/edit.svg";
 import deleteIcon from "../img/delete.svg";
