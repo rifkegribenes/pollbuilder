@@ -21,12 +21,14 @@ class ViewPoll extends React.Component {
     });
   // load FB SDK
     window.fbAsyncInit = function() {
-      window.FB.init({
-        appId            : '327915941037806',
-        autoLogAppEvents : true,
-        xfbml            : true,
-        version          : 'v3.0'
-      });
+      if (window.FB !== undefined) {
+        window.FB.init({
+          appId            : '327915941037806',
+          autoLogAppEvents : true,
+          xfbml            : true,
+          version          : 'v3.0'
+        });
+      }
   };
 
   (function(d, s, id){
