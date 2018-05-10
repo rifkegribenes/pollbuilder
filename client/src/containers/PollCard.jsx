@@ -84,6 +84,16 @@ const PollCard = props => {
   const canonicalUrl = encodeURIComponent(`https://pollbuilder.glitch.me/poll/${props.poll._id}`);
   const questionUriEncoded = encodeURIComponent(props.poll.question);
   const tumblrUrl = `https://www.tumblr.com/widgets/share/tool?canonicalUrl=${canonicalUrl}&posttype=link&description=${questionUriEncoded}&caption=${questionUriEncoded}`
+  const fbShare = () => {
+    window.FB.ui({
+    method: 'feed',
+    link: canonicalUrl,
+    name: props.poll.question,
+    description: 'Create polls, vote, share with friends, and analyze results.',
+    caption: canonicalUrl
+  });
+};
+  
   return (
     <div key={props.poll._id}>
       <div
