@@ -21,7 +21,7 @@ class ViewPoll extends React.Component {
     });
   // load FB SDK
     window.fbAsyncInit = function() {
-      FB.init({
+      window.FB.init({
         appId            : '327915941037806',
         autoLogAppEvents : true,
         xfbml            : true,
