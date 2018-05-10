@@ -86,13 +86,15 @@ const PollCard = props => {
   const tumblrUrl = `https://www.tumblr.com/widgets/share/tool?canonicalUrl=${canonicalUrl}&posttype=link&description=${questionUriEncoded}&caption=${questionUriEncoded}`
   const fbShare = () => {
     console.log('fb share');
-    window.FB.ui({
-      method: 'feed',
-      link: canonicalUrl,
-      name: props.poll.question,
-      description: 'Create polls, vote, share with friends, and analyze results.',
-      caption: canonicalUrl
-    });
+    if (window.FB !== undefined) {
+      window.FB.ui({
+        method: 'feed',
+        link: canonicalUrl,
+        name: props.poll.question,
+        description: 'Create polls, vote, share with friends, and analyze results.',
+        caption: canonicalUrl
+      });
+    }
 };
   
   return (
