@@ -82,6 +82,8 @@ const PollCard = props => {
     backgroundPosition: "center center"
   };
   const canonicalUrl = encodeURIComponent(`https://pollbuilder.glitch.me/poll/${props.poll._id}`);
+  const questionUriEncoded = encodeURIComponent(props.poll.question);
+  const tumblrUrl = `https://www.tumblr.com/widgets/share/tool?canonicalUrl=${canonicalUrl}&posttype=link&description=${questionUriEncoded}&caption=${questionUriEncoded}`
   return (
     <div key={props.poll._id}>
       <div
@@ -127,7 +129,7 @@ const PollCard = props => {
           </a>
           <a
             className="form__button polls-grid__btn--icon"
-            href={`https://twitter.com/share?url=https://pollbuilder.glitch.me/poll/${props.poll._id}&text=${encodeURIComponent(props.poll.question)}`}
+            href={`https://twitter.com/share?url=${canonicalUrl}&text=${questionUriEncoded}`}
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -139,7 +141,7 @@ const PollCard = props => {
           </a>
           <a
             className="form__button polls-grid__btn--icon"
-            href={`https://www.tumblr.com/widgets/share/tool?shareSource=legacy&canonicalUrl=${canonicalUrl}&posttype=link&description=${encodeURIComponent(props.poll.question)}&caption=${encodeURIComponent(props.poll.question)}
+            href={tumblrUrl}
             target="_blank"
             rel="noopener noreferrer"
           >
