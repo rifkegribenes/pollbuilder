@@ -218,13 +218,13 @@ class Form extends React.Component {
             ) {
               this.props.history.push("/reset");
               this.props.toggleForm("reset");
-              this.forceUpdate();
+              window.location.reload();
               return;
             }
             if (this.props[reducer].modal.title === "Check your Email") {
               this.props.history.push("/login");
               this.props.toggleForm("login");
-              this.forceUpdate();
+              window.location.reload();
               return;
             }
             if (this.props.toggleform) {
