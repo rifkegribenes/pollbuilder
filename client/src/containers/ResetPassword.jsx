@@ -42,11 +42,9 @@ class ResetPassword extends React.Component {
       };
       this.props.api.resetPassword(body).then(result => {
         if (result === "RESET_PW_SUCCESS") {
-          const newState = { ...this.state };
-          newState.success = true;
-          this.setState({ ...newState }, () => {
-            console.log(`success: ${this.state.success}`);
-          });
+          console.log("forcing route update");
+          this.forceUpdate();
+
         } else if (result === "RESET_PW_FAILURE") {
           console.log("forcing route update");
           this.forceUpdate();
