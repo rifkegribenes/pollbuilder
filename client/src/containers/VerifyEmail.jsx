@@ -44,7 +44,7 @@ class VerifyEmail extends React.Component {
             if (this.props.appState.modal.type === "modal__error") {
               this.props.history.push("/login");
             } else {
-              this.props.history.push("/user");
+              this.props.history.push("/profile");
             }
           }}
         />
