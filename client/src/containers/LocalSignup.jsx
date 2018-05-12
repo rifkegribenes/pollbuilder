@@ -26,7 +26,6 @@ class LocalSignup extends React.Component {
   * from state, return to Home
   */
   register() {
-    console.log('register');
     const { firstName, lastName, email, password } = this.props.auth.form;
 
     // show validation errors
@@ -39,7 +38,6 @@ class LocalSignup extends React.Component {
     this.props.actions.setValidationErrors(validationErrors);
 
     if (!Object.values(this.props.auth.form.validationErrors).length) {
-      console.log('no errors, proceeding with register');
       const body = { firstName, lastName, email, password };
       this.props.api
         .registration(body)
@@ -48,8 +46,6 @@ class LocalSignup extends React.Component {
             console.log('registration failure');
             this.props.actions.showFormError();
             this.props.actions.setSubmit();
-          } else if (result.type === "REGISTRATION_SUCCESS") {
-            console.log('registration success');
           }
         })
         .catch(err => {
@@ -67,7 +63,6 @@ class LocalSignup extends React.Component {
           this.props.actions.setSubmit();
         });
     } else {
-      console.log('validation errors, LocalSignup > 70');
       console.log(this.props.auth.form.validationErrors);
       this.props.actions.setFormError("Please complete the form");
     }

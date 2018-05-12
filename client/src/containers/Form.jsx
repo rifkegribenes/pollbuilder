@@ -197,11 +197,7 @@ class Form extends React.Component {
                   id={`btn-${reducer}`}
                   type="button"
                   onClick={
-                    () => {
-                      console.log('formButtonClick');
-                      console.log(this.props.formAction);
-                      this.props.formAction()
-                    }
+                    () => this.props.formAction()
                   }
                 >
                   <span>{this.props.buttonText}</span>
