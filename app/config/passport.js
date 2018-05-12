@@ -73,6 +73,16 @@ module.exports = (passport) => {
     }
     return { firstName, lastName };
   }
+  
+  const avatarFormula = (platform, profile) => {
+    let avatarUrl;
+    if (platform === 'facebook') {
+      avatarUrl = `http://graph.facebook.com/${profile.id}/picture?height=400`
+    } else {
+      avatarUrl = profile.photos[0].value;
+    }
+    return avatarUrl;
+  }
 
   const findExistingUser = (profile, token, platform, done) => {
     // if mongo user exists with empty platform key,
@@ -94,7 +104,7 @@ module.exports = (passport) => {
         firstName,
         lastName,
         email: profile.emails[0].value,
-        avatarUrl: profile.photos[0].value
+        avatarUrl: avatarFormula(platform, profile)
       }
     };
     // return updated document rather than the original
@@ -140,7 +150,7 @@ module.exports = (passport) => {
         newUser.profile.firstName = firstName;
         newUser.profile.lastName = lastName;
         newUser.profile.email = profile.emails[0].value;
-        newUser.profile.avatarUrl = profile.photos[0].value;
+        newUser.profile.avatarUrl = avatarFormula(platform, profile);
         newUser.verified = true;
 
         // console.log(newUser);
@@ -158,7 +168,7 @@ module.exports = (passport) => {
         // found user with matching id and different platform key.
         // update & return new user
         console.log(`${platform} found and updated user with a different ${platform} id`);
-        console.log(user._doc);
+        // console.log(user._doc);
         return done(null, user);
       }
     }) // then
