@@ -224,7 +224,8 @@ class Form extends React.Component {
               window.location.reload();
               return;
             }
-            if (this.props[reducer].modal.title === "Check your Email") {
+            if (this.props[reducer].modal.title === "Check your Email" ||
+                this.props[reducer].modal.buttonText === "Sign in) {
               this.props.history.push("/login");
               this.props.toggleForm("login");
               window.location.reload();
