@@ -27,7 +27,7 @@ class Home extends React.Component {
           });
         }
       } else {
-        console.log("no token found in local storage");
+        // console.log("no token found in local storage");
       }
     } else {
       // console.log("logged in");
