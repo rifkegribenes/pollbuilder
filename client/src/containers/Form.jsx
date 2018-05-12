@@ -81,7 +81,7 @@ class Form extends React.Component {
 
     // hide validation errors for focused field
     const vErrors = run(this.props[reducer].form, runners(this.props.form));
-    vErrors[field] = "";
+    delete vErrors[field];
 
     let validationErrors;
 
