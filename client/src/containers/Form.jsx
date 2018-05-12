@@ -179,7 +179,13 @@ class Form extends React.Component {
             )}
             {this.props.form === "create" && <PollOptions />}
             <div className="form__input-group">
-              <div className={errorClass}>{this.props[reducer].errorMsg}</div>
+              <div className={
+                  this.props[reducer].form.error ||
+                    (this.props[reducer].showFormError &&
+                      this.state.submit &&
+                      Object.values(this.props[reducer].form.validationErrors).length)
+                  ? "error"
+        : "hidden"}>{this.props[reducer].errorMsg}</div>
             </div>
           </div>
           <div className="form__footer">

@@ -67,6 +67,8 @@ class LocalSignup extends React.Component {
           this.props.actions.setSubmit();
         });
     } else {
+      console.log('validation errors, LocalSignup > 70');
+      console.log(this.props.auth.form.validationErrors);
       this.props.actions.setFormError("Please complete the form");
     }
   }
