@@ -42,7 +42,7 @@ class LocalLogin extends React.Component {
         const { authToken } = this.props.appState;
         const { _id } = this.props.profile.user;
         if (result.type === "LOGIN_SUCCESS") {
-          this.props.history.push(`/user/${_id}/${authToken}`);
+          this.props.history.push(`/profile/${_id}/${authToken}`);
         }
       });
     } else {
