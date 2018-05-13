@@ -14,3 +14,13 @@ exports.generateToken = (user) => {
     expiresIn: '7d'
   });
 }
+
+exports.avatarFormula = (user) => {
+      let avatarUrl;
+      if (user.facebook.id) {
+        avatarUrl = `http://graph.facebook.com/${user.facebook.id}/picture?height=400`
+      } else {
+        avatarUrl = user.profile.avatarUrl;
+      }
+      return avatarUrl;
+    }

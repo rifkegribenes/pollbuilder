@@ -1,4 +1,5 @@
 const Poll = require('../models/poll');
+const helpers = require('../utils/index');
 
 // Get all polls
 exports.getAllPolls = (req, res, next) => {
@@ -39,12 +40,13 @@ exports.newPoll = (user, req, res, next) => {
   } else {
     console.log('poll.ctrl.js > 46');
     console.log(user._id);
+    
     const body = {
       question: req.body.question,
       options: [ ...req.body.options ],
       ownerId: user._id,
       ownerName: `${user.profile.firstName} ${user.profile.lastName}`,
-      ownerAvatar: user.profile.avatarUrl
+      ownerAvatar: avatarFormula(user)
     }
     // check if poll question is unique
     Poll.findOne({ question: req.body.question })
