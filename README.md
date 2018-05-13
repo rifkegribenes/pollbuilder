@@ -1,6 +1,6 @@
 ## pollbuilder (Freecodecamp Project)
 
-https://pollbuilder.glitch.me/
+### [pollbuilder.glitch.me](https://pollbuilder.glitch.me)
 
 ![pollbuilder screenshot](https://raw.githubusercontent.com/rifkegribenes/pollbuilder/master/client/public/img/screenshot1.png)
 
