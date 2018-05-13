@@ -14,13 +14,16 @@ exports.getAllPolls = (req, res, next) => {
 // Get all polls for a specific user
 exports.getUserPolls = (req, res, next) => {
   console.log(req.params.userId);
-  Poll.find( { ownerId: req.params.userId }, (err, polls) => {
-
-    if (err) { return handleError(res, err); }
-    console.log('poll.ctrl.js > 18');
-    console.log(polls);
-    return res.status(200).json({polls});
-  });
+  Poll.find({ ownerId: req.params.userId })
+    .sort({_id: -1})
+    .then((polls) => {
+      return res.status(200).json({polls});
+    })
+    .catch((err) => {
+      console.log('poll.ctrl.js > catch block 25');
+      console.log(err);
+      return handleError(res, err);
+    }); // catch (Poll.find)
 };
 
 // Get a single poll by id
@@ -46,7 +49,7 @@ exports.newPoll = (user, req, res, next) => {
       options: [ ...req.body.options ],
       ownerId: user._id,
       ownerName: `${user.profile.firstName} ${user.profile.lastName}`,
-      ownerAvatar: avatarFormula(user)
+      ownerAvatar: helpers.avatarFormula(user)
     }
     // check if poll question is unique
     Poll.findOne({ question: req.body.question })
@@ -98,7 +101,7 @@ exports.updatePoll = (user, req, res, next) => {
 
     updates.ownerId = user._id;
     updates.ownerName = `${user.profile.firstName} ${user.profile.lastName}`;
-    updates.ownerAvatar = user.profile.avatarUrl;
+    updates.ownerAvatar = helpers.avatarFormula(user);
 
     // return updated document rather than the original
     const options = { new: true };
